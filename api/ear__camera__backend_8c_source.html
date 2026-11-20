@@ -1,0 +1,2156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/ear_camera_backend.c Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('ear__camera__backend_8c_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">ear_camera_backend.c</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="ear__camera__backend_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @file ear_camera_backend.c</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @brief EAR-owned survey admission, finalization and generic point completions.</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * @details USHER's serial owner calls lifecycle/configuration/poll hooks. One</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * joinable worker solves immutable snapshots and writes evidence; it never owns</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * UART or live pose lookup. A small wake channel signals mailbox state, not data.</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include "<a class="code" href="ear__camera__backend_8h.html">ear_camera_backend.h</a>"</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include "<a class="code" href="ear__cam__pipe_8h.html">ear_cam_pipe.h</a>"</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include "<a class="code" href="image__exif_8h.html">image_exif.h</a>"</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &lt;errno.h&gt;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include &lt;limits.h&gt;</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include &lt;pthread.h&gt;</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &lt;sys/socket.h&gt;</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#ifndef USHER_SODA</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a973c3c74be57d705ddbcd4d1f89a9f37">   39</a></span><span class="preprocessor">  #define USHER_SODA "./bin/soda"</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="comment"></span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="comment">/** Two jobs match the adapter's two buffers: stopped evidence is never evicted. */</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a14e64a6c7dd3efe5deefe13ebde9ceaa">   43</a></span><span class="preprocessor">#define EAR_FINALIZE_JOB_COUNT 2</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#afa569059aedd72429154e652bb615667">   44</a></span><span class="preprocessor">#define EAR_COMPLETION_ENDPOINT_COUNT 2</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#aaa11afff446860830141e357c2271e0c">   45</a></span><span class="preprocessor">#define EAR_COMPLETION_DRAIN_BYTES 16</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#abc0c4bd8f6087bd893c6852963ccf186">   46</a></span><span class="preprocessor">#define EAR_EVIDENCE_PATH_CAPACITY 512</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a0e685a5cb7792dddb2ae9c3733ff3877">   47</a></span><span class="preprocessor">#define EAR_LATITUDE_LIMIT_DEG 90</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a8c3b85a2dc895f112649e441d0143587">   48</a></span><span class="preprocessor">#define EAR_LONGITUDE_LIMIT_DEG 180</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a812f691467dd5d852a235c8df5f20b79">   49</a></span><span class="preprocessor">#define EAR_COORDINATE_UNITS_PER_DEG 1e7</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a1d3a49d47dcd821535a8947588339ac1">   50</a></span><span class="preprocessor">#define EAR_MILLIMETERS_PER_METER 1000.0</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a2ab5a432c2c8c231b20ec277dd7a7d54">   51</a></span><span class="preprocessor">#define EAR_QUALITY_UNITS_PER_SCORE 1000.0</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a15d77694f6665f24408c0361033a0b7c">   52</a></span><span class="preprocessor">#define EAR_METRIC_UNITS_PER_DB 100.0</span><span class="comment"></span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="comment">/** Legacy dc_shot groundalt carries AGL in Q8 metres, unlike CAM_POINT_RESULT millimetres. */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#aff1fc47bdfa694dfa855cc831c9f6925">   54</a></span><span class="preprocessor">#define EAR_SHOT_AGL_UNITS_PER_METER 256.0</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="comment">/* Serial-owner state is separate from the mutex-protected worker mailbox. Do</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="comment"> * not call start/stop/poll/configure concurrently from additional owner threads. */</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a0b624d6d72e8f49f8984e57fe4a42df9">   58</a></span><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcamera__backend__host.html">camera_backend_host</a> <a class="code hl_variable" href="ear__camera__backend_8c.html#a0b624d6d72e8f49f8984e57fe4a42df9">ear_host</a>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">   59</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">earcam_active</a>, <a class="code hl_variable" href="ear__camera__backend_8c.html#a0d5bc6eafd93ff435fa697b49bb172f6">earcam_unavailable</a>, <a class="code hl_variable" href="ear__camera__backend_8c.html#ad05e8abfecdbfec576869967c9660a83">earcam_session_active</a>, <a class="code hl_variable" href="ear__camera__backend_8c.html#af240711e1b48fa88b62f2ccf0e66a38a">earcam_simulated</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="comment"> * @brief One reservation progressing through snapshot -&gt; point -&gt; evidence completion.</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="comment"> * @details Start reserves a slot before collecting audio. Stop attaches an owned</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="comment"> * immutable snapshot. Poll consumes the point, but the slot remains occupied</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment"> * until evidence work finishes, preventing reuse while the worker still uses it.</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00066">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="structear__finalize__job.html">   66</a></span><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a> {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="structear__finalize__job.html#aedadf2d46c3283c930aed76f0c84b8f6">   67</a></span> <span class="keyword">struct </span><a class="code hl_struct" href="structear__session__snapshot.html">ear_session_snapshot</a> *<a class="code hl_variable" href="structear__finalize__job.html#aedadf2d46c3283c930aed76f0c84b8f6">snapshot</a>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">   68</a></span> <span class="keyword">struct </span><a class="code hl_struct" href="structear__loudest__spot.html">ear_loudest_spot</a> <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="structear__finalize__job.html#a2ebd0e4fca500860e2d4f3d0bfc3e246">   69</a></span>  uint32_t <a class="code hl_variable" href="structear__finalize__job.html#a2ebd0e4fca500860e2d4f3d0bfc3e246">session_id</a>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="structear__finalize__job.html#a21093ebd43ddebb98879be1a7876ff2a">   70</a></span>  uint64_t <a class="code hl_variable" href="structear__finalize__job.html#a21093ebd43ddebb98879be1a7876ff2a">order</a>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="structear__finalize__job.html#a8c6dbfcb89d80717e5890c3b835330ce">   71</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structear__finalize__job.html#abee1e2b5d40f0a993b010a98b8a0f612">in_use</a>, <a class="code hl_variable" href="structear__finalize__job.html#ab371eeb13a3fe080c53982051400b173">taken</a>, <a class="code hl_variable" href="structear__finalize__job.html#ad6f8c48012b8f7da19a40d7b738c488d">point_ready</a>, <a class="code hl_variable" href="structear__finalize__job.html#a8c6dbfcb89d80717e5890c3b835330ce">evidence_done</a>, <a class="code hl_variable" href="structear__finalize__job.html#a41b50ceaa979a20cc25907f0a2e8fd0e">simulated</a>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#ad24e8811cff14a3796a42264a3e31972">   72</a></span>} <a class="code hl_variable" href="ear__camera__backend_8c.html#ad24e8811cff14a3796a42264a3e31972">ear_finalize_jobs</a>[<a class="code hl_define" href="ear__camera__backend_8c.html#a14e64a6c7dd3efe5deefe13ebde9ceaa">EAR_FINALIZE_JOB_COUNT</a>];</div>
+</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">   73</a></span><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a> *<a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a>;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#aae9d5ee74e07d6d93c226c4fb1fe0b29">   74</a></span><span class="keyword">static</span> uint64_t <a class="code hl_variable" href="ear__camera__backend_8c.html#aae9d5ee74e07d6d93c226c4fb1fe0b29">ear_finalize_order</a>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">   75</a></span><span class="keyword">static</span> pthread_mutex_t <a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a> = PTHREAD_MUTEX_INITIALIZER;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a43699b7b42fc57b665b3567821b83d5f">   76</a></span><span class="keyword">static</span> pthread_cond_t <a class="code hl_variable" href="ear__camera__backend_8c.html#a43699b7b42fc57b665b3567821b83d5f">ear_finalize_available</a> = PTHREAD_COND_INITIALIZER;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a2a0f1cfc6701a99d8552707a770efdbc">   77</a></span><span class="keyword">static</span> pthread_t <a class="code hl_variable" href="ear__camera__backend_8c.html#a2a0f1cfc6701a99d8552707a770efdbc">ear_finalize_thread</a>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a45b7a28914e1d34521493225ab006f01">   78</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a45b7a28914e1d34521493225ab006f01">ear_finalize_started</a>, <a class="code hl_variable" href="ear__camera__backend_8c.html#a04c4288c369aac3047ff033c9a88785c">ear_finalize_stopping</a>;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">   79</a></span><span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[<a class="code hl_define" href="ear__camera__backend_8c.html#afa569059aedd72429154e652bb615667">EAR_COMPLETION_ENDPOINT_COUNT</a>] = {-1, -1};</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="comment"></span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="comment">/** @brief Guard finite values and integer conversion ranges before marking a wire point valid. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00082">
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#ab695952cf9eca1290c873eb377034a7d">   82</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="ear__camera__backend_8c.html#ab695952cf9eca1290c873eb377034a7d">ear_point_valid</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structear__loudest__spot.html">ear_loudest_spot</a> *<a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>)</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>{</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> <span class="keywordflow">return</span> <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a> &amp;&amp; <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a4fd70cce02845a3ed339d17285b39ccd">valid</a> &amp;&amp; isfinite(<a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a646d10ca85c80d764d910a4b286d67a3">lat_deg</a>) &amp;&amp; isfinite(<a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a8cc202c498e4cad9f3d36033cfe69bb2">lon_deg</a>)</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>         &amp;&amp; fabs(<a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a646d10ca85c80d764d910a4b286d67a3">lat_deg</a>) &lt;= <a class="code hl_define" href="ear__camera__backend_8c.html#a0e685a5cb7792dddb2ae9c3733ff3877">EAR_LATITUDE_LIMIT_DEG</a> &amp;&amp; fabs(<a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a8cc202c498e4cad9f3d36033cfe69bb2">lon_deg</a>) &lt;= <a class="code hl_define" href="ear__camera__backend_8c.html#a8c3b85a2dc895f112649e441d0143587">EAR_LONGITUDE_LIMIT_DEG</a></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>         &amp;&amp; (<a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a646d10ca85c80d764d910a4b286d67a3">lat_deg</a> != 0 || <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a8cc202c498e4cad9f3d36033cfe69bb2">lon_deg</a> != 0)</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>         &amp;&amp; isfinite(<a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a4b926fdf5c501a07c2c3ff52f8ed70d2">agl_m</a>) &amp;&amp; <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a4b926fdf5c501a07c2c3ff52f8ed70d2">agl_m</a> &gt;= 0 &amp;&amp; <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a4b926fdf5c501a07c2c3ff52f8ed70d2">agl_m</a> &lt;= INT32_MAX / <a class="code hl_define" href="ear__camera__backend_8c.html#a1d3a49d47dcd821535a8947588339ac1">EAR_MILLIMETERS_PER_METER</a></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>         &amp;&amp; isfinite(<a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a79a92c29cda99a0bca1f98e22b627269">alt_m</a>) &amp;&amp; <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a79a92c29cda99a0bca1f98e22b627269">alt_m</a> &gt;= INT32_MIN / <a class="code hl_define" href="ear__camera__backend_8c.html#a1d3a49d47dcd821535a8947588339ac1">EAR_MILLIMETERS_PER_METER</a></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>         &amp;&amp; <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a79a92c29cda99a0bca1f98e22b627269">alt_m</a> &lt;= INT32_MAX / <a class="code hl_define" href="ear__camera__backend_8c.html#a1d3a49d47dcd821535a8947588339ac1">EAR_MILLIMETERS_PER_METER</a></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>         &amp;&amp; isfinite(<a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a365bc897134687bd1b3efd0fcaefcdf1">confidence</a>) &amp;&amp; <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a365bc897134687bd1b3efd0fcaefcdf1">confidence</a> &gt;= 0 &amp;&amp; <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a365bc897134687bd1b3efd0fcaefcdf1">confidence</a> &lt;= 1</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>         &amp;&amp; isfinite(<a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a69a6519926322dd86d1cedca0e8cd667">level_db</a>) &amp;&amp; <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a69a6519926322dd86d1cedca0e8cd667">level_db</a> &gt;= INT32_MIN / <a class="code hl_define" href="ear__camera__backend_8c.html#a15d77694f6665f24408c0361033a0b7c">EAR_METRIC_UNITS_PER_DB</a></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>         &amp;&amp; <a class="code hl_variable" href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">spot</a>-&gt;<a class="code hl_variable" href="structear__loudest__spot.html#a69a6519926322dd86d1cedca0e8cd667">level_db</a> &lt;= INT32_MAX / <a class="code hl_define" href="ear__camera__backend_8c.html#a15d77694f6665f24408c0361033a0b7c">EAR_METRIC_UNITS_PER_DB</a>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>}</div>
+</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment"></span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="comment">/** @brief Notify the serial owner without blocking; mailbox flags remain authoritative if full. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00096">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a1dfe98669dfc34e4f79ce5e5425364b4">   96</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="ear__camera__backend_8c.html#a1dfe98669dfc34e4f79ce5e5425364b4">wake_ear_result_owner</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>{</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> <span class="keyword">const</span> <span class="keywordtype">char</span> notification = 1;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  ssize_t <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> <span class="keywordflow">do</span> { <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a> = write(<a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[1], &amp;notification, <span class="keyword">sizeof</span>(notification)); } <span class="keywordflow">while</span> (<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a> &lt; 0 &amp;&amp; errno == EINTR);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a> &lt; 0 &amp;&amp; errno != EAGAIN &amp;&amp; errno != EWOULDBLOCK)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    fprintf(stderr, <span class="stringliteral">"USHER:\tEAR completion wake failed: %s\n"</span>, strerror(errno));</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>}</div>
+</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="comment"></span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="comment"> * @brief Drain stopped sessions in admission order until shutdown has no work left.</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="comment"> * @details The point mailbox is published before potentially slow CSV/JPEG/EXIF</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="comment"> * and optional SODA submission. Never perform UART sends or live pose lookups here.</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00110">
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a00b1bafc8e4a0316d1a60056d7bc74bc">  110</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> *<a class="code hl_function" href="ear__camera__backend_8c.html#a00b1bafc8e4a0316d1a60056d7bc74bc">finalize_ear_sessions</a>(<span class="keywordtype">void</span> *unused)</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>{</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  (void)unused;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> <span class="keywordflow">for</span> (;;) {</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    pthread_mutex_lock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> <span class="keyword">struct </span><a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a> *<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a> = NULL;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> <span class="keywordflow">for</span> (;;) {</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> slot = 0; slot &lt; <a class="code hl_define" href="ear__camera__backend_8c.html#a14e64a6c7dd3efe5deefe13ebde9ceaa">EAR_FINALIZE_JOB_COUNT</a>; ++slot) {</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> <span class="keyword">struct </span><a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a> *candidate = &amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ad24e8811cff14a3796a42264a3e31972">ear_finalize_jobs</a>[slot];</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> <span class="keywordflow">if</span> (candidate-&gt;<a class="code hl_variable" href="structear__finalize__job.html#abee1e2b5d40f0a993b010a98b8a0f612">in_use</a> &amp;&amp; candidate-&gt;<a class="code hl_variable" href="structear__finalize__job.html#aedadf2d46c3283c930aed76f0c84b8f6">snapshot</a> &amp;&amp; !candidate-&gt;<a class="code hl_variable" href="structear__finalize__job.html#ab371eeb13a3fe080c53982051400b173">taken</a></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            &amp;&amp; (!<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a> || candidate-&gt;<a class="code hl_variable" href="structear__finalize__job.html#a21093ebd43ddebb98879be1a7876ff2a">order</a> &lt; <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;order)) <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a> = candidate;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>      }</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a> || <a class="code hl_variable" href="ear__camera__backend_8c.html#a04c4288c369aac3047ff033c9a88785c">ear_finalize_stopping</a>) <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>      pthread_cond_wait(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#a43699b7b42fc57b665b3567821b83d5f">ear_finalize_available</a>, &amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>) { pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>); <span class="keywordflow">return</span> NULL; }</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;taken = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> <span class="keyword">struct </span><a class="code hl_struct" href="structear__loudest__spot.html">ear_loudest_spot</a> spot = {0};</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="ear__cam__pipe_8c.html#a185114f6545eb1720af369cce231aeae">ear_cam_pipe_snapshot_solve</a>(<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;snapshot, &amp;spot) != 0) spot.<a class="code hl_variable" href="structear__loudest__spot.html#a4fd70cce02845a3ed339d17285b39ccd">valid</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    spot.<a class="code hl_variable" href="structear__loudest__spot.html#a4fd70cce02845a3ed339d17285b39ccd">valid</a> = <a class="code hl_function" href="ear__camera__backend_8c.html#ab695952cf9eca1290c873eb377034a7d">ear_point_valid</a>(&amp;spot);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    pthread_mutex_lock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;spot = spot;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;point_ready = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> <a class="code hl_function" href="ear__camera__backend_8c.html#a1dfe98669dfc34e4f79ce5e5425364b4">wake_ear_result_owner</a>();</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> <span class="keywordtype">char</span> sound_picture[<a class="code hl_define" href="ear__camera__backend_8c.html#abc0c4bd8f6087bd893c6852963ccf186">EAR_EVIDENCE_PATH_CAPACITY</a>];</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="ear__cam__pipe_8c.html#a262860dc68b1aeb786d0c33626296157">ear_cam_pipe_snapshot_render</a>(<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;snapshot, <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;session_id, &amp;spot,</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                                     sound_picture, <span class="keyword">sizeof</span>(sound_picture), <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;simulated) == 0) {</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> <span class="keyword">union </span><a class="code hl_union" href="uniondc__shot__union.html">dc_shot_union</a> picture_shot = {0};</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>      picture_shot.<a class="code hl_variable" href="uniondc__shot__union.html#a5d64c9686e8977ec42a699e1ef983c2f">data</a>.<a class="code hl_variable" href="uniondc__shot__union.html#a6ef6a8ddeb0b969e163366460664c9f3">nr</a> = <a class="code hl_function" href="ear__cam__pipe_8c.html#a265d2e3b1f12c10ab4e65c9b94d91565">ear_cam_pipe_snapshot_number</a>(<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;snapshot);</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> <span class="keywordflow">if</span> (spot.<a class="code hl_variable" href="structear__loudest__spot.html#a4fd70cce02845a3ed339d17285b39ccd">valid</a>) {</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        picture_shot.<a class="code hl_variable" href="uniondc__shot__union.html#a5d64c9686e8977ec42a699e1ef983c2f">data</a>.<a class="code hl_variable" href="uniondc__shot__union.html#a1ae23de5dd6c278094e52e444ce8af74">lat</a> = (int32_t)llround(spot.<a class="code hl_variable" href="structear__loudest__spot.html#a646d10ca85c80d764d910a4b286d67a3">lat_deg</a> * <a class="code hl_define" href="ear__cam__pipe_8c.html#a812f691467dd5d852a235c8df5f20b79">EAR_COORDINATE_UNITS_PER_DEG</a>);</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        picture_shot.<a class="code hl_variable" href="uniondc__shot__union.html#a5d64c9686e8977ec42a699e1ef983c2f">data</a>.<a class="code hl_variable" href="uniondc__shot__union.html#a394635886c57803fea9ed7a7b9fcc15c">lon</a> = (int32_t)llround(spot.<a class="code hl_variable" href="structear__loudest__spot.html#a8cc202c498e4cad9f3d36033cfe69bb2">lon_deg</a> * <a class="code hl_define" href="ear__cam__pipe_8c.html#a812f691467dd5d852a235c8df5f20b79">EAR_COORDINATE_UNITS_PER_DEG</a>);</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        picture_shot.<a class="code hl_variable" href="uniondc__shot__union.html#a5d64c9686e8977ec42a699e1ef983c2f">data</a>.<a class="code hl_variable" href="uniondc__shot__union.html#afada7bd7dc1d8971906930816ac4b973">alt</a> = (int32_t)llround(spot.<a class="code hl_variable" href="structear__loudest__spot.html#a79a92c29cda99a0bca1f98e22b627269">alt_m</a> * <a class="code hl_define" href="ear__camera__backend_8c.html#a1d3a49d47dcd821535a8947588339ac1">EAR_MILLIMETERS_PER_METER</a>);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        picture_shot.<a class="code hl_variable" href="uniondc__shot__union.html#a5d64c9686e8977ec42a699e1ef983c2f">data</a>.<a class="code hl_variable" href="uniondc__shot__union.html#aeaf66aebbb64fc46484c42914e257a6f">groundalt</a> = (int32_t)llround(spot.<a class="code hl_variable" href="structear__loudest__spot.html#a4b926fdf5c501a07c2c3ff52f8ed70d2">agl_m</a> * <a class="code hl_define" href="ear__camera__backend_8c.html#aff1fc47bdfa694dfa855cc831c9f6925">EAR_SHOT_AGL_UNITS_PER_METER</a>);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>      }</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="image__exif_8c.html#ac79cb4f1a19141e4ee2de5ce29aa214f">image_exif_write</a>(sound_picture, &amp;picture_shot) == 0) {</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        printf(<span class="stringliteral">"USHER:\tEAR session %u sound picture %s\n"</span>, <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;session_id, sound_picture);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        printf(<span class="stringliteral">"Photo take %d\n"</span>, picture_shot.<a class="code hl_variable" href="uniondc__shot__union.html#a5d64c9686e8977ec42a699e1ef983c2f">data</a>.<a class="code hl_variable" href="uniondc__shot__union.html#a6ef6a8ddeb0b969e163366460664c9f3">nr</a>);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__camera__backend_8c.html#a0b624d6d72e8f49f8984e57fe4a42df9">ear_host</a>.queue_analysis) <a class="code hl_variable" href="ear__camera__backend_8c.html#a0b624d6d72e8f49f8984e57fe4a42df9">ear_host</a>.queue_analysis(sound_picture, &amp;picture_shot, <a class="code hl_define" href="usher__protocol_8h.html#a1de0c4d72f29c5fdacab8a94f9c7389d">USHER_CAMERA_EARCAM</a>);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>      } <span class="keywordflow">else</span> fprintf(stderr, <span class="stringliteral">"USHER:\tEAR session %u EXIF failed; image retained: %s\n"</span>, <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;session_id, sound_picture);</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    } <span class="keywordflow">else</span> fprintf(stderr, <span class="stringliteral">"USHER:\tEAR session %u sound-picture rendering failed\n"</span>, <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;session_id);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> <a class="code hl_function" href="ear__cam__pipe_8c.html#abd92f9833e25de5bc256703172bf1271">ear_cam_pipe_snapshot_release</a>(<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;snapshot);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    pthread_mutex_lock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;evidence_done = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> <a class="code hl_function" href="ear__camera__backend_8c.html#a1dfe98669dfc34e4f79ce5e5425364b4">wake_ear_result_owner</a>();</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  }</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>}</div>
+</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="comment"></span> </div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="comment"> * @brief Consume one completion on the serial owner and convert physical units once.</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="comment"> * @return True when result receives a correlated valid or invalid point.</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="comment"> * @details Wake bytes may coalesce; scan mailbox flags even after draining the</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="comment"> * socket. USHER retains responsibility for token correlation and actual UART delivery.</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00168">
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a5ccb3014c8ec53e5f4cfddb5f19bc894">  168</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="ear__camera__backend_8c.html#a5ccb3014c8ec53e5f4cfddb5f19bc894">ear_poll_result</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structcamera__point__result.html">camera_point_result</a> *<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>)</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>{</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[0] &gt;= 0) {</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> <span class="keywordtype">char</span> notifications[<a class="code hl_define" href="ear__camera__backend_8c.html#aaa11afff446860830141e357c2271e0c">EAR_COMPLETION_DRAIN_BYTES</a>];</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    ssize_t <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> <span class="keywordflow">do</span> { <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = read(<a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[0], notifications, <span class="keyword">sizeof</span>(notifications)); }</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> <span class="keywordflow">while</span> (<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &gt; 0 || (<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &lt; 0 &amp;&amp; errno == EINTR));</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>  }</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> slot = 0; slot &lt; <a class="code hl_define" href="ear__camera__backend_8c.html#a14e64a6c7dd3efe5deefe13ebde9ceaa">EAR_FINALIZE_JOB_COUNT</a>; ++slot) {</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    pthread_mutex_lock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> <span class="keyword">struct </span><a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a> *<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a> = &amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ad24e8811cff14a3796a42264a3e31972">ear_finalize_jobs</a>[slot];</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="ear__inference_8c.html#a65cf7d7f8e531611b245355ab91fd749">ready</a> = <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;in_use &amp;&amp; <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;point_ready;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> <span class="keyword">const</span> uint32_t <a class="code hl_variable" href="structear__finalize__job.html#a2ebd0e4fca500860e2d4f3d0bfc3e246">session_id</a> = <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;session_id;</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structear__loudest__spot.html">ear_loudest_spot</a> spot = <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;spot;</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;point_ready = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;in_use &amp;&amp; <a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a>-&gt;evidence_done) *<a class="code hl_variable" href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a> = (<span class="keyword">struct </span><a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a>) {0};</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="ear__inference_8c.html#a65cf7d7f8e531611b245355ab91fd749">ready</a>) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> <a class="code hl_function" href="ear__cam__pipe_8c.html#a41f57dd3628c97ffff58fc7639682439">ear_cam_pipe_log_result</a>(session_id, &amp;spot);</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    printf(<span class="stringliteral">"USHER:\tEAR session %u result valid=%d lat=%.7f lon=%.7f conf=%.3f samples=%u/%u\n"</span>,</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>           session_id, spot.<a class="code hl_variable" href="structear__loudest__spot.html#a4fd70cce02845a3ed339d17285b39ccd">valid</a>, spot.<a class="code hl_variable" href="structear__loudest__spot.html#a646d10ca85c80d764d910a4b286d67a3">lat_deg</a>, spot.<a class="code hl_variable" href="structear__loudest__spot.html#a8cc202c498e4cad9f3d36033cfe69bb2">lon_deg</a>, spot.<a class="code hl_variable" href="structear__loudest__spot.html#a365bc897134687bd1b3efd0fcaefcdf1">confidence</a>, spot.<a class="code hl_variable" href="structear__loudest__spot.html#aca9ee1ce6bce89c7fc73dca68078440a">used_count</a>, spot.<a class="code hl_variable" href="structear__loudest__spot.html#ac0d288a8c2749fa29defb457704d1e74">sample_count</a>);</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    *<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a> = (<span class="keyword">struct </span><a class="code hl_struct" href="structcamera__point__result.html">camera_point_result</a>) {.session_id = <a class="code hl_variable" href="structcamera__point__result.html#a6456f44d84a00ae352855816d19613c1">session_id</a>, .valid = <a class="code hl_function" href="ear__camera__backend_8c.html#ab695952cf9eca1290c873eb377034a7d">ear_point_valid</a>(&amp;spot)};</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>-&gt;valid) {</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>-&gt;lat = (int32_t)llround(spot.<a class="code hl_variable" href="structear__loudest__spot.html#a646d10ca85c80d764d910a4b286d67a3">lat_deg</a> * <a class="code hl_define" href="ear__cam__pipe_8c.html#a812f691467dd5d852a235c8df5f20b79">EAR_COORDINATE_UNITS_PER_DEG</a>);</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>-&gt;lon = (int32_t)llround(spot.<a class="code hl_variable" href="structear__loudest__spot.html#a8cc202c498e4cad9f3d36033cfe69bb2">lon_deg</a> * <a class="code hl_define" href="ear__cam__pipe_8c.html#a812f691467dd5d852a235c8df5f20b79">EAR_COORDINATE_UNITS_PER_DEG</a>);</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>-&gt;alt_mm = (int32_t)llround(spot.<a class="code hl_variable" href="structear__loudest__spot.html#a79a92c29cda99a0bca1f98e22b627269">alt_m</a> * <a class="code hl_define" href="ear__camera__backend_8c.html#a1d3a49d47dcd821535a8947588339ac1">EAR_MILLIMETERS_PER_METER</a>);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>-&gt;agl_mm = (int32_t)llround(spot.<a class="code hl_variable" href="structear__loudest__spot.html#a4b926fdf5c501a07c2c3ff52f8ed70d2">agl_m</a> * <a class="code hl_define" href="ear__camera__backend_8c.html#a1d3a49d47dcd821535a8947588339ac1">EAR_MILLIMETERS_PER_METER</a>);</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>-&gt;quality = (int32_t)llround(spot.<a class="code hl_variable" href="structear__loudest__spot.html#a365bc897134687bd1b3efd0fcaefcdf1">confidence</a> * <a class="code hl_define" href="ear__camera__backend_8c.html#a2ab5a432c2c8c231b20ec277dd7a7d54">EAR_QUALITY_UNITS_PER_SCORE</a>);</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>-&gt;metric = (int32_t)llround(spot.<a class="code hl_variable" href="structear__loudest__spot.html#a69a6519926322dd86d1cedca0e8cd667">level_db</a> * <a class="code hl_define" href="ear__camera__backend_8c.html#a15d77694f6665f24408c0361033a0b7c">EAR_METRIC_UNITS_PER_DB</a>);</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    }</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>  }</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>}</div>
+</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="comment"></span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="comment"> * @brief Reserve both finalizer capacity and adapter storage before listening.</span></div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="comment"> * @return False for zero token, shutdown, exhausted capacity or worker/buffer failure.</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="comment"> * @details Replacing an unfinished active session releases only its reservation;</span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span><span class="comment"> * stopped snapshots stay admitted. Generic USHER routing handles duplicate tokens.</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00210">
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#ae1bd3721082c5875d95dff6c5425d151">  210</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="ear__camera__backend_8c.html#ae1bd3721082c5875d95dff6c5425d151">ear_start</a>(uint32_t session_id)</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>{</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> <span class="keywordflow">if</span> (!session_id) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#ad05e8abfecdbfec576869967c9660a83">earcam_session_active</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">earcam_active</a> || !<a class="code hl_variable" href="ear__camera__backend_8c.html#a0b624d6d72e8f49f8984e57fe4a42df9">ear_host</a>.running || !<a class="code hl_function" href="camera__capture_8h.html#abe765483451abb35d08ef0807050e2c4">capture_running</a>(<a class="code hl_variable" href="ear__camera__backend_8c.html#a0b624d6d72e8f49f8984e57fe4a42df9">ear_host</a>.running)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>  pthread_mutex_lock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a>) { *<a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a> = (<span class="keyword">struct </span><a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a>) {0}; <a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a> = NULL; }</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__camera__backend_8c.html#a04c4288c369aac3047ff033c9a88785c">ear_finalize_stopping</a> || <a class="code hl_variable" href="ear__camera__backend_8c.html#aae9d5ee74e07d6d93c226c4fb1fe0b29">ear_finalize_order</a> == UINT64_MAX) { pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>); <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="ear__camera__backend_8c.html#a45b7a28914e1d34521493225ab006f01">ear_finalize_started</a>) {</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> <span class="keywordflow">if</span> (socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0, <a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>) != 0) {</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[0] = <a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[1] = -1;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>      pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>      fprintf(stderr, <span class="stringliteral">"USHER:\tEAR finalizer completion channel unavailable: %s\n"</span>, strerror(errno));</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    }</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a> = pthread_create(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#a2a0f1cfc6701a99d8552707a770efdbc">ear_finalize_thread</a>, NULL, <a class="code hl_function" href="ear__camera__backend_8c.html#a00b1bafc8e4a0316d1a60056d7bc74bc">finalize_ear_sessions</a>, NULL);</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a> != 0) {</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> <a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(<a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[0]); <a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(<a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[1]);</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[0] = <a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[1] = -1;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>      pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>      fprintf(stderr, <span class="stringliteral">"USHER:\tEAR finalizer unavailable: %s\n"</span>, strerror(<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>));</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    }</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a45b7a28914e1d34521493225ab006f01">ear_finalize_started</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>  }</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> slot = 0; slot &lt; <a class="code hl_define" href="ear__camera__backend_8c.html#a14e64a6c7dd3efe5deefe13ebde9ceaa">EAR_FINALIZE_JOB_COUNT</a>; ++slot) {</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="ear__camera__backend_8c.html#ad24e8811cff14a3796a42264a3e31972">ear_finalize_jobs</a>[slot].in_use) {</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a> = &amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ad24e8811cff14a3796a42264a3e31972">ear_finalize_jobs</a>[slot];</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>      *<a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a> = (<span class="keyword">struct </span><a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a>) {</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        .session_id = <a class="code hl_variable" href="structear__finalize__job.html#a2ebd0e4fca500860e2d4f3d0bfc3e246">session_id</a>,</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        .order = ++<a class="code hl_variable" href="ear__camera__backend_8c.html#aae9d5ee74e07d6d93c226c4fb1fe0b29">ear_finalize_order</a>, .in_use = <span class="keyword">true</span>, .simulated = <a class="code hl_variable" href="ear__camera__backend_8c.html#af240711e1b48fa88b62f2ccf0e66a38a">earcam_simulated</a></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>      };</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    }</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>  }</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>  pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="ear__cam__pipe_8c.html#a6f3d796df31e2ff49b72339612e0ac52">ear_cam_pipe_begin_session</a>(session_id)) { <a class="code hl_variable" href="ear__camera__backend_8c.html#ad05e8abfecdbfec576869967c9660a83">earcam_session_active</a> = <span class="keyword">true</span>; <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>  pthread_mutex_lock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>  *<a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a> = (<span class="keyword">struct </span><a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a>) {0}; <a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a> = NULL;</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>  pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>}</div>
+</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span><span class="comment"></span> </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span><span class="comment"> * @brief Validate the active token before a zero-copy snapshot handoff.</span></div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span><span class="comment"> * @return True only when an immutable session was queued for the worker.</span></div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span><span class="comment"> * @details Failed detach releases the reservation; a wrong token cannot stop listening.</span></div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00259">
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a08e8e3f69bb0e35483fb86ec6105ed56">  259</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="ear__camera__backend_8c.html#a08e8e3f69bb0e35483fb86ec6105ed56">ear_stop</a>(uint32_t session_id)</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>{</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> finalize = <a class="code hl_variable" href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">earcam_active</a> &amp;&amp; <a class="code hl_variable" href="ear__camera__backend_8c.html#ad05e8abfecdbfec576869967c9660a83">earcam_session_active</a> &amp;&amp; <a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a></div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                        &amp;&amp; <a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a>-&gt;session_id == session_id;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> <span class="keywordflow">if</span> (!finalize) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#ad05e8abfecdbfec576869967c9660a83">earcam_session_active</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> <span class="keyword">struct </span><a class="code hl_struct" href="structear__session__snapshot.html">ear_session_snapshot</a> *snapshot = <a class="code hl_function" href="ear__cam__pipe_8c.html#a66131ed70a2a4b909da31aa97ebd3e45">ear_cam_pipe_detach_session</a>();</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>  pthread_mutex_lock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> <span class="keywordflow">if</span> (snapshot) <a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a>-&gt;snapshot = snapshot;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> <span class="keywordflow">else</span> *<a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a> = (<span class="keyword">struct </span><a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a>) {0};</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a> = NULL;</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>  pthread_cond_signal(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#a43699b7b42fc57b665b3567821b83d5f">ear_finalize_available</a>);</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>  pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> <span class="keywordflow">return</span> snapshot != NULL;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>}</div>
+</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span><span class="comment"></span> </div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span><span class="comment"> * @brief Close admission and join all admitted stopped-session evidence work.</span></div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="comment"> * @details Completed point mailboxes remain pollable after the wake channel closes.</span></div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span><span class="comment"> * This is orderly draining, not a hard filesystem-I/O deadline or power-loss guarantee.</span></div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00280">
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#abdf572790273665bb596adce76b6470f">  280</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="ear__camera__backend_8c.html#abdf572790273665bb596adce76b6470f">ear_drain</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>{</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#ad05e8abfecdbfec576869967c9660a83">earcam_session_active</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>  pthread_mutex_lock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a04c4288c369aac3047ff033c9a88785c">ear_finalize_stopping</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>  pthread_cond_signal(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#a43699b7b42fc57b665b3567821b83d5f">ear_finalize_available</a>);</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>  pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__camera__backend_8c.html#a45b7a28914e1d34521493225ab006f01">ear_finalize_started</a>) pthread_join(<a class="code hl_variable" href="ear__camera__backend_8c.html#a2a0f1cfc6701a99d8552707a770efdbc">ear_finalize_thread</a>, NULL);</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a45b7a28914e1d34521493225ab006f01">ear_finalize_started</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; <a class="code hl_define" href="ear__camera__backend_8c.html#afa569059aedd72429154e652bb615667">EAR_COMPLETION_ENDPOINT_COUNT</a>; ++index) {</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[index] &gt;= 0) <a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(<a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[index]);</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[index] = -1;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>  }</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>}</div>
+</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span><span class="comment"></span> </div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="comment">/** @brief Whether the serial owner should admit EAR samples for the current session. */</span></div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#ac9cbcfc2c9575d09eaf86f56b8c0b170">  296</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="ear__camera__backend_8c.html#ac9cbcfc2c9575d09eaf86f56b8c0b170">ear_listening</a>(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">earcam_active</a> &amp;&amp; <a class="code hl_variable" href="ear__camera__backend_8c.html#ad05e8abfecdbfec576869967c9660a83">earcam_session_active</a>; }<span class="comment"></span></div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span><span class="comment">/** @brief Nonblocking completion descriptor, or -1 before start/after drain. */</span></div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#aae3fa2b9fb0d15ee2c4963ef3ec39850">  298</a></span><span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code hl_function" href="ear__camera__backend_8c.html#aae3fa2b9fb0d15ee2c4963ef3ec39850">ear_completion_fd</a>(<span class="keywordtype">void</span>) { <span class="keywordflow">return</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a>[0]; }<span class="comment"></span></div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="comment">/** @brief Copy startup-only host callbacks; worker-side queue_analysis must be thread-safe. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00300">
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a801fc59af5cb987dd75a51887e19f81f">  300</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="ear__camera__backend_8c.html#a801fc59af5cb987dd75a51887e19f81f">ear_configure</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcamera__backend__host.html">camera_backend_host</a> *host)</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>{</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> <span class="keywordflow">if</span> (!host || <a class="code hl_variable" href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">earcam_active</a> || <a class="code hl_variable" href="ear__camera__backend_8c.html#a45b7a28914e1d34521493225ab006f01">ear_finalize_started</a>) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a0b624d6d72e8f49f8984e57fe4a42df9">ear_host</a> = *host;</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span> <a class="code hl_function" href="ear__cam__pipe_8c.html#a3b609102b737b9fe6e463cc89ecbf827">ear_cam_pipe_set_pose_lookup</a>(host-&gt;<a class="code hl_variable" href="structcamera__backend__host.html#a221d6873fd19cdf0f3e4cff75f2123dd">pose_lookup</a>);</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>}<span class="comment"></span></div>
+</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span><span class="comment">/** @brief Initialize supervision, not microphone readiness; hard setup failure stays latched. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00307">
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#afb3b42fefa27e6633cbb76197ec8cde0">  307</a></span><span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code hl_function" href="ear__camera__backend_8c.html#afb3b42fefa27e6633cbb76197ec8cde0">ear_init</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *source)</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>{</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">earcam_active</a>) <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__camera__backend_8c.html#a0d5bc6eafd93ff435fa697b49bb172f6">earcam_unavailable</a>) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="ear__cam__pipe_8c.html#a23619e6ec8833c82e2868f01249397d0">ear_cam_pipe_init</a>(source) != 0) { <a class="code hl_variable" href="ear__camera__backend_8c.html#a0d5bc6eafd93ff435fa697b49bb172f6">earcam_unavailable</a> = <span class="keyword">true</span>; <span class="keywordflow">return</span> -1; }</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">earcam_active</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>  printf(<span class="stringliteral">"USHER:\tacoustic backend: earcam\n"</span>);</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>}<span class="comment"></span></div>
+</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span><span class="comment">/** @brief Drain before tearing down audio/storage, then reset quiescent finalizer state. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00317">
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#aa2e7c2237057c1691ff4e47c6d798f19">  317</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="ear__camera__backend_8c.html#aa2e7c2237057c1691ff4e47c6d798f19">ear_deinit</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>{</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> <a class="code hl_function" href="ear__camera__backend_8c.html#abdf572790273665bb596adce76b6470f">ear_drain</a>();</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcamera__point__result.html">camera_point_result</a> discarded;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span> <span class="keywordflow">while</span> (<a class="code hl_function" href="ear__camera__backend_8c.html#a5ccb3014c8ec53e5f4cfddb5f19bc894">ear_poll_result</a>(&amp;discarded)) {}</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> <a class="code hl_function" href="ear__cam__pipe_8c.html#a62fd6aea34ee6761e6aece7bca1271ae">ear_cam_pipe_deinit</a>();</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>  pthread_mutex_lock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> slot = 0; slot &lt; <a class="code hl_define" href="ear__camera__backend_8c.html#a14e64a6c7dd3efe5deefe13ebde9ceaa">EAR_FINALIZE_JOB_COUNT</a>; ++slot) <a class="code hl_variable" href="ear__camera__backend_8c.html#ad24e8811cff14a3796a42264a3e31972">ear_finalize_jobs</a>[slot] = (<span class="keyword">struct</span> <a class="code hl_struct" href="structear__finalize__job.html">ear_finalize_job</a>) {0};</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a> = NULL;</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#aae9d5ee74e07d6d93c226c4fb1fe0b29">ear_finalize_order</a> = 0;</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#a04c4288c369aac3047ff033c9a88785c">ear_finalize_stopping</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>  pthread_mutex_unlock(&amp;<a class="code hl_variable" href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a>);</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">earcam_active</a> = <a class="code hl_variable" href="ear__camera__backend_8c.html#ad05e8abfecdbfec576869967c9660a83">earcam_session_active</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>}</div>
+</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00332">
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a62b73c21b3836e7390b2e99de95c9e62">  332</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="ear__camera__backend_8c.html#a62b73c21b3836e7390b2e99de95c9e62">ear_camera_backend_set_device</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *device)</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>{</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> <span class="keywordflow">return</span> !<a class="code hl_variable" href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">earcam_active</a> &amp;&amp; !<a class="code hl_variable" href="ear__camera__backend_8c.html#a45b7a28914e1d34521493225ab006f01">ear_finalize_started</a> &amp;&amp; <a class="code hl_function" href="ear__cam__pipe_8c.html#a1081839049ed9cf77ed3d9db06ab2040">ear_cam_pipe_set_device</a>(device);</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>}</div>
+</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00337">
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a7214674a196a299c82263a425000bca9">  337</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="ear__camera__backend_8c.html#a7214674a196a299c82263a425000bca9">ear_camera_backend_set_simulated_source</a>(<span class="keywordtype">double</span> lat_deg, <span class="keywordtype">double</span> lon_deg, <span class="keywordtype">double</span> level_db_at_1m)</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>{</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span> <a class="code hl_variable" href="ear__camera__backend_8c.html#af240711e1b48fa88b62f2ccf0e66a38a">earcam_simulated</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span> <a class="code hl_function" href="ear__cam__pipe_8c.html#aff02dd02372e2706104cf25a36d8446a">ear_cam_pipe_set_simulated_source</a>(lat_deg, lon_deg, level_db_at_1m);</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>}</div>
+</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#a6141bdf03c5b556c9c7cf6bdd96fdb50">  342</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="ear__camera__backend_8c.html#a6141bdf03c5b556c9c7cf6bdd96fdb50">ear_camera_backend_set_band</a>(<span class="keywordtype">double</span> low_cut_hz, <span class="keywordtype">double</span> high_cut_hz) { <a class="code hl_function" href="ear__cam__pipe_8c.html#aa4482330e9cf0f2597cfe88e8a883a99">ear_cam_pipe_set_band</a>(low_cut_hz, high_cut_hz); }</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00344">
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno"><a class="line" href="ear__camera__backend_8c.html#ae6724871083af5dc337d167b2666a2c1">  344</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcamera__backend.html">camera_backend</a> <a class="code hl_function" href="ear__camera__backend_8c.html#ae6724871083af5dc337d167b2666a2c1">ear_camera_backend_get</a>(void)</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>{</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span> <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcamera__session__ops.html">camera_session_ops</a> <a class="code hl_variable" href="capture__arbiter_8c.html#aa4a3b02a2bdddd5c0b884234408f065e">session</a> = {</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    .start = <a class="code hl_function" href="ear__camera__backend_8c.html#ae1bd3721082c5875d95dff6c5425d151">ear_start</a>, .stop = <a class="code hl_function" href="ear__camera__backend_8c.html#a08e8e3f69bb0e35483fb86ec6105ed56">ear_stop</a>, .listening = <a class="code hl_function" href="ear__camera__backend_8c.html#ac9cbcfc2c9575d09eaf86f56b8c0b170">ear_listening</a>,</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>    .completion_fd = <a class="code hl_function" href="ear__camera__backend_8c.html#aae3fa2b9fb0d15ee2c4963ef3ec39850">ear_completion_fd</a>, .poll_result = <a class="code hl_function" href="ear__camera__backend_8c.html#a5ccb3014c8ec53e5f4cfddb5f19bc894">ear_poll_result</a>, .drain = <a class="code hl_function" href="ear__camera__backend_8c.html#abdf572790273665bb596adce76b6470f">ear_drain</a></div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>  };</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span> <span class="keywordflow">return</span> (<span class="keyword">struct</span> <a class="code hl_struct" href="structcamera__backend.html">camera_backend</a>) {</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>    .name = <span class="stringliteral">"earcam"</span>, .init = <a class="code hl_function" href="ear__camera__backend_8c.html#afb3b42fefa27e6633cbb76197ec8cde0">ear_init</a>, .deinit = <a class="code hl_function" href="ear__camera__backend_8c.html#aa2e7c2237057c1691ff4e47c6d798f19">ear_deinit</a>,</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>                                        .soda_application = <a class="code hl_define" href="camera__backend__registry_8c.html#a973c3c74be57d705ddbcd4d1f89a9f37">USHER_SODA</a>, .camera_id = <a class="code hl_define" href="usher__protocol_8h.html#a1de0c4d72f29c5fdacab8a94f9c7389d">USHER_CAMERA_EARCAM</a>, .prefix = <span class="charliteral">'e'</span>,</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>                                                                                                          .capabilities = <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda97ccd4f81bc5a5e1bec7220c85be4c0e">CAMERA_CAP_POINT_SESSION</a>, .soda_option = <span class="stringliteral">"--earcam"</span>, .record = <a class="code hl_function" href="ear__cam__pipe_8c.html#a9861737bfc3041a6d61c7fe00b5b28c3">ear_cam_pipe_record</a>,</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>                                                                                                                                                                               .session = &amp;<a class="code hl_variable" href="capture__arbiter_8c.html#aa4a3b02a2bdddd5c0b884234408f065e">session</a>, .configure = <a class="code hl_function" href="ear__camera__backend_8c.html#a801fc59af5cb987dd75a51887e19f81f">ear_configure</a>, .pose_updated = <a class="code hl_function" href="ear__cam__pipe_8c.html#a860ce54d7304e5c11077f2341c8e9fdb">ear_cam_pipe_update_pose</a></div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>  };</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>}</div>
+</div>
+<div class="ttc" id="acamera__backend_8h_html_a1e6ff383adaa2ff92f2574b0e97cbfbda97ccd4f81bc5a5e1bec7220c85be4c0e"><div class="ttname"><a href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda97ccd4f81bc5a5e1bec7220c85be4c0e">CAMERA_CAP_POINT_SESSION</a></div><div class="ttdeci">@ CAMERA_CAP_POINT_SESSION</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00043">camera_backend.h:43</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8c_html_a973c3c74be57d705ddbcd4d1f89a9f37"><div class="ttname"><a href="camera__backend__registry_8c.html#a973c3c74be57d705ddbcd4d1f89a9f37">USHER_SODA</a></div><div class="ttdeci">#define USHER_SODA</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8c_source.html#l00037">camera_backend_registry.c:37</a></div></div>
+<div class="ttc" id="acamera__capture_8h_html_abe765483451abb35d08ef0807050e2c4"><div class="ttname"><a href="camera__capture_8h.html#abe765483451abb35d08ef0807050e2c4">capture_running</a></div><div class="ttdeci">static bool capture_running(const volatile sig_atomic_t *running)</div><div class="ttdoc">Atomically poll a borrowed cancellation flag; NULL means no cancellation.</div><div class="ttdef"><b>Definition</b> <a href="camera__capture_8h_source.html#l00046">camera_capture.h:46</a></div></div>
+<div class="ttc" id="acapture__arbiter_8c_html_aa4a3b02a2bdddd5c0b884234408f065e"><div class="ttname"><a href="capture__arbiter_8c.html#aa4a3b02a2bdddd5c0b884234408f065e">session</a></div><div class="ttdeci">static uint32_t session</div><div class="ttdef"><b>Definition</b> <a href="capture__arbiter_8c_source.html#l00078">capture_arbiter.c:78</a></div></div>
+<div class="ttc" id="achdkbridge_8c_html_a176b06ffdcdd2008ad3cd0178c2a10cf"><div class="ttname"><a href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a></div><div class="ttdeci">void(* close)(struct usbfs_handle *)</div><div class="ttdef"><b>Definition</b> <a href="chdkbridge_8c_source.html#l00057">chdkbridge.c:57</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a1081839049ed9cf77ed3d9db06ab2040"><div class="ttname"><a href="ear__cam__pipe_8c.html#a1081839049ed9cf77ed3d9db06ab2040">ear_cam_pipe_set_device</a></div><div class="ttdeci">bool ear_cam_pipe_set_device(const char *device)</div><div class="ttdoc">Copy a startup ALSA PCM name into bounded adapter-owned storage.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00224">ear_cam_pipe.c:224</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a185114f6545eb1720af369cce231aeae"><div class="ttname"><a href="ear__cam__pipe_8c.html#a185114f6545eb1720af369cce231aeae">ear_cam_pipe_snapshot_solve</a></div><div class="ttdeci">int ear_cam_pipe_snapshot_solve(const struct ear_session_snapshot *snapshot, struct ear_loudest_spot *result)</div><div class="ttdoc">Solve immutable detached evidence without touching current-session state.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l01095">ear_cam_pipe.c:1095</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a23619e6ec8833c82e2868f01249397d0"><div class="ttname"><a href="ear__cam__pipe_8c.html#a23619e6ec8833c82e2868f01249397d0">ear_cam_pipe_init</a></div><div class="ttdeci">int ear_cam_pipe_init(const char *unused)</div><div class="ttdoc">Reset session storage and start or configure the acoustic backend.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00871">ear_cam_pipe.c:871</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a262860dc68b1aeb786d0c33626296157"><div class="ttname"><a href="ear__cam__pipe_8c.html#a262860dc68b1aeb786d0c33626296157">ear_cam_pipe_snapshot_render</a></div><div class="ttdeci">int ear_cam_pipe_snapshot_render(const struct ear_session_snapshot *snapshot, uint32_t session_id, const struct ear_loudest_spot *result, char *filename, size_t filename_size, bool simulated)</div><div class="ttdoc">Render detached evidence using collision-safe session-tagged JPEG/CSV names.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l01221">ear_cam_pipe.c:1221</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a265d2e3b1f12c10ab4e65c9b94d91565"><div class="ttname"><a href="ear__cam__pipe_8c.html#a265d2e3b1f12c10ab4e65c9b94d91565">ear_cam_pipe_snapshot_number</a></div><div class="ttdeci">int32_t ear_cam_pipe_snapshot_number(const struct ear_session_snapshot *snapshot)</div><div class="ttdoc">Read the last request number from immutable evidence.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l01102">ear_cam_pipe.c:1102</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a3b609102b737b9fe6e463cc89ecbf827"><div class="ttname"><a href="ear__cam__pipe_8c.html#a3b609102b737b9fe6e463cc89ecbf827">ear_cam_pipe_set_pose_lookup</a></div><div class="ttdeci">void ear_cam_pipe_set_pose_lookup(bool(*lookup)(struct capture_observation *, uint64_t))</div><div class="ttdoc">Set the startup-only pose callback, later called without waiting on the serial owner.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00219">ear_cam_pipe.c:219</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a41f57dd3628c97ffff58fc7639682439"><div class="ttname"><a href="ear__cam__pipe_8c.html#a41f57dd3628c97ffff58fc7639682439">ear_cam_pipe_log_result</a></div><div class="ttdeci">void ear_cam_pipe_log_result(uint32_t session_id, const struct ear_loudest_spot *result)</div><div class="ttdoc">Best-effort enqueue of a correlated result row on the serial owner.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l01247">ear_cam_pipe.c:1247</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a62fd6aea34ee6761e6aece7bca1271ae"><div class="ttname"><a href="ear__cam__pipe_8c.html#a62fd6aea34ee6761e6aece7bca1271ae">ear_cam_pipe_deinit</a></div><div class="ttdeci">void ear_cam_pipe_deinit(void)</div><div class="ttdoc">Stop the child and clear all bounded session state.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00909">ear_cam_pipe.c:909</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a66131ed70a2a4b909da31aa97ebd3e45"><div class="ttname"><a href="ear__cam__pipe_8c.html#a66131ed70a2a4b909da31aa97ebd3e45">ear_cam_pipe_detach_session</a></div><div class="ttdeci">struct ear_session_snapshot * ear_cam_pipe_detach_session(void)</div><div class="ttdoc">Transfer active storage to an immutable worker snapshot without copying samples.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l01078">ear_cam_pipe.c:1078</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a6f3d796df31e2ff49b72339612e0ac52"><div class="ttname"><a href="ear__cam__pipe_8c.html#a6f3d796df31e2ff49b72339612e0ac52">ear_cam_pipe_begin_session</a></div><div class="ttdeci">bool ear_cam_pipe_begin_session(uint32_t session_id)</div><div class="ttdoc">Begin/reset active collection without solving or waiting for log I/O.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l01054">ear_cam_pipe.c:1054</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a812f691467dd5d852a235c8df5f20b79"><div class="ttname"><a href="ear__cam__pipe_8c.html#a812f691467dd5d852a235c8df5f20b79">EAR_COORDINATE_UNITS_PER_DEG</a></div><div class="ttdeci">#define EAR_COORDINATE_UNITS_PER_DEG</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00113">ear_cam_pipe.c:113</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a860ce54d7304e5c11077f2341c8e9fdb"><div class="ttname"><a href="ear__cam__pipe_8c.html#a860ce54d7304e5c11077f2341c8e9fdb">ear_cam_pipe_update_pose</a></div><div class="ttdeci">void ear_cam_pipe_update_pose(void)</div><div class="ttdoc">Retry bounded pending audio windows when the serial owner receives new poses.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l01012">ear_cam_pipe.c:1012</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a9861737bfc3041a6d61c7fe00b5b28c3"><div class="ttname"><a href="ear__cam__pipe_8c.html#a9861737bfc3041a6d61c7fe00b5b28c3">ear_cam_pipe_record</a></div><div class="ttdeci">int ear_cam_pipe_record(const union dc_shot_union *shot)</div><div class="ttdoc">Associate the newest sound window with one flight-controller shot pose.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l01018">ear_cam_pipe.c:1018</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_aa4482330e9cf0f2597cfe88e8a883a99"><div class="ttname"><a href="ear__cam__pipe_8c.html#aa4482330e9cf0f2597cfe88e8a883a99">ear_cam_pipe_set_band</a></div><div class="ttdeci">void ear_cam_pipe_set_band(double low_cut_hz, double high_cut_hz)</div><div class="ttdoc">Set the detector band forwarded to a subsequently spawned EARcam child.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00254">ear_cam_pipe.c:254</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_abd92f9833e25de5bc256703172bf1271"><div class="ttname"><a href="ear__cam__pipe_8c.html#abd92f9833e25de5bc256703172bf1271">ear_cam_pipe_snapshot_release</a></div><div class="ttdeci">void ear_cam_pipe_snapshot_release(struct ear_session_snapshot *snapshot)</div><div class="ttdoc">Return detached storage to admission after all snapshot access has ended.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l01107">ear_cam_pipe.c:1107</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_aff02dd02372e2706104cf25a36d8446a"><div class="ttname"><a href="ear__cam__pipe_8c.html#aff02dd02372e2706104cf25a36d8446a">ear_cam_pipe_set_simulated_source</a></div><div class="ttdeci">void ear_cam_pipe_set_simulated_source(double lat_deg, double lon_deg, double level_db_at_1m)</div><div class="ttdoc">Select deterministic virtual acoustic measurements for simulation.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00241">ear_cam_pipe.c:241</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8h_html"><div class="ttname"><a href="ear__cam__pipe_8h.html">ear_cam_pipe.h</a></div><div class="ttdoc">Audio/pose adapter and zero-copy snapshot API for the EAR backend.</div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a00b1bafc8e4a0316d1a60056d7bc74bc"><div class="ttname"><a href="ear__camera__backend_8c.html#a00b1bafc8e4a0316d1a60056d7bc74bc">finalize_ear_sessions</a></div><div class="ttdeci">static void * finalize_ear_sessions(void *unused)</div><div class="ttdoc">Drain stopped sessions in admission order until shutdown has no work left.</div><div class="ttdef"><b>Definition</b> <a href="#l00110">ear_camera_backend.c:110</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a04c4288c369aac3047ff033c9a88785c"><div class="ttname"><a href="ear__camera__backend_8c.html#a04c4288c369aac3047ff033c9a88785c">ear_finalize_stopping</a></div><div class="ttdeci">static bool ear_finalize_stopping</div><div class="ttdef"><b>Definition</b> <a href="#l00078">ear_camera_backend.c:78</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a08e8e3f69bb0e35483fb86ec6105ed56"><div class="ttname"><a href="ear__camera__backend_8c.html#a08e8e3f69bb0e35483fb86ec6105ed56">ear_stop</a></div><div class="ttdeci">static bool ear_stop(uint32_t session_id)</div><div class="ttdoc">Validate the active token before a zero-copy snapshot handoff.</div><div class="ttdef"><b>Definition</b> <a href="#l00259">ear_camera_backend.c:259</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a0b624d6d72e8f49f8984e57fe4a42df9"><div class="ttname"><a href="ear__camera__backend_8c.html#a0b624d6d72e8f49f8984e57fe4a42df9">ear_host</a></div><div class="ttdeci">static struct camera_backend_host ear_host</div><div class="ttdef"><b>Definition</b> <a href="#l00058">ear_camera_backend.c:58</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a0d5bc6eafd93ff435fa697b49bb172f6"><div class="ttname"><a href="ear__camera__backend_8c.html#a0d5bc6eafd93ff435fa697b49bb172f6">earcam_unavailable</a></div><div class="ttdeci">static bool earcam_unavailable</div><div class="ttdef"><b>Definition</b> <a href="#l00059">ear_camera_backend.c:59</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a0e685a5cb7792dddb2ae9c3733ff3877"><div class="ttname"><a href="ear__camera__backend_8c.html#a0e685a5cb7792dddb2ae9c3733ff3877">EAR_LATITUDE_LIMIT_DEG</a></div><div class="ttdeci">#define EAR_LATITUDE_LIMIT_DEG</div><div class="ttdef"><b>Definition</b> <a href="#l00047">ear_camera_backend.c:47</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a14e64a6c7dd3efe5deefe13ebde9ceaa"><div class="ttname"><a href="ear__camera__backend_8c.html#a14e64a6c7dd3efe5deefe13ebde9ceaa">EAR_FINALIZE_JOB_COUNT</a></div><div class="ttdeci">#define EAR_FINALIZE_JOB_COUNT</div><div class="ttdef"><b>Definition</b> <a href="#l00043">ear_camera_backend.c:43</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a15d77694f6665f24408c0361033a0b7c"><div class="ttname"><a href="ear__camera__backend_8c.html#a15d77694f6665f24408c0361033a0b7c">EAR_METRIC_UNITS_PER_DB</a></div><div class="ttdeci">#define EAR_METRIC_UNITS_PER_DB</div><div class="ttdef"><b>Definition</b> <a href="#l00052">ear_camera_backend.c:52</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a193dd2157d2f689ac5ddd9f1466ddd89"><div class="ttname"><a href="ear__camera__backend_8c.html#a193dd2157d2f689ac5ddd9f1466ddd89">ear_finalize_wake</a></div><div class="ttdeci">static int ear_finalize_wake[EAR_COMPLETION_ENDPOINT_COUNT]</div><div class="ttdef"><b>Definition</b> <a href="#l00079">ear_camera_backend.c:79</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a1d3a49d47dcd821535a8947588339ac1"><div class="ttname"><a href="ear__camera__backend_8c.html#a1d3a49d47dcd821535a8947588339ac1">EAR_MILLIMETERS_PER_METER</a></div><div class="ttdeci">#define EAR_MILLIMETERS_PER_METER</div><div class="ttdef"><b>Definition</b> <a href="#l00050">ear_camera_backend.c:50</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a1dfe98669dfc34e4f79ce5e5425364b4"><div class="ttname"><a href="ear__camera__backend_8c.html#a1dfe98669dfc34e4f79ce5e5425364b4">wake_ear_result_owner</a></div><div class="ttdeci">static void wake_ear_result_owner(void)</div><div class="ttdoc">Notify the serial owner without blocking; mailbox flags remain authoritative if full.</div><div class="ttdef"><b>Definition</b> <a href="#l00096">ear_camera_backend.c:96</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a2a0f1cfc6701a99d8552707a770efdbc"><div class="ttname"><a href="ear__camera__backend_8c.html#a2a0f1cfc6701a99d8552707a770efdbc">ear_finalize_thread</a></div><div class="ttdeci">static pthread_t ear_finalize_thread</div><div class="ttdef"><b>Definition</b> <a href="#l00077">ear_camera_backend.c:77</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a2ab5a432c2c8c231b20ec277dd7a7d54"><div class="ttname"><a href="ear__camera__backend_8c.html#a2ab5a432c2c8c231b20ec277dd7a7d54">EAR_QUALITY_UNITS_PER_SCORE</a></div><div class="ttdeci">#define EAR_QUALITY_UNITS_PER_SCORE</div><div class="ttdef"><b>Definition</b> <a href="#l00051">ear_camera_backend.c:51</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a2ab67f9c8d84a9250f72a1bdbe9e8b7f"><div class="ttname"><a href="ear__camera__backend_8c.html#a2ab67f9c8d84a9250f72a1bdbe9e8b7f">current_ear_job</a></div><div class="ttdeci">static struct ear_finalize_job * current_ear_job</div><div class="ttdef"><b>Definition</b> <a href="#l00073">ear_camera_backend.c:73</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a43699b7b42fc57b665b3567821b83d5f"><div class="ttname"><a href="ear__camera__backend_8c.html#a43699b7b42fc57b665b3567821b83d5f">ear_finalize_available</a></div><div class="ttdeci">static pthread_cond_t ear_finalize_available</div><div class="ttdef"><b>Definition</b> <a href="#l00076">ear_camera_backend.c:76</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a45b7a28914e1d34521493225ab006f01"><div class="ttname"><a href="ear__camera__backend_8c.html#a45b7a28914e1d34521493225ab006f01">ear_finalize_started</a></div><div class="ttdeci">static bool ear_finalize_started</div><div class="ttdef"><b>Definition</b> <a href="#l00078">ear_camera_backend.c:78</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a5ccb3014c8ec53e5f4cfddb5f19bc894"><div class="ttname"><a href="ear__camera__backend_8c.html#a5ccb3014c8ec53e5f4cfddb5f19bc894">ear_poll_result</a></div><div class="ttdeci">static bool ear_poll_result(struct camera_point_result *result)</div><div class="ttdoc">Consume one completion on the serial owner and convert physical units once.</div><div class="ttdef"><b>Definition</b> <a href="#l00168">ear_camera_backend.c:168</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a6141bdf03c5b556c9c7cf6bdd96fdb50"><div class="ttname"><a href="ear__camera__backend_8c.html#a6141bdf03c5b556c9c7cf6bdd96fdb50">ear_camera_backend_set_band</a></div><div class="ttdeci">void ear_camera_backend_set_band(double low_cut_hz, double high_cut_hz)</div><div class="ttdoc">Forward startup tone-band selection to the audio adapter.</div><div class="ttdef"><b>Definition</b> <a href="#l00342">ear_camera_backend.c:342</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a62b73c21b3836e7390b2e99de95c9e62"><div class="ttname"><a href="ear__camera__backend_8c.html#a62b73c21b3836e7390b2e99de95c9e62">ear_camera_backend_set_device</a></div><div class="ttdeci">bool ear_camera_backend_set_device(const char *device)</div><div class="ttdoc">Copy an ALSA PCM name before initialization or worker startup.</div><div class="ttdef"><b>Definition</b> <a href="#l00332">ear_camera_backend.c:332</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a7214674a196a299c82263a425000bca9"><div class="ttname"><a href="ear__camera__backend_8c.html#a7214674a196a299c82263a425000bca9">ear_camera_backend_set_simulated_source</a></div><div class="ttdeci">void ear_camera_backend_set_simulated_source(double lat_deg, double lon_deg, double level_db_at_1m)</div><div class="ttdoc">Select deterministic synthetic audio before initialization, bypassing ALSA.</div><div class="ttdef"><b>Definition</b> <a href="#l00337">ear_camera_backend.c:337</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a801fc59af5cb987dd75a51887e19f81f"><div class="ttname"><a href="ear__camera__backend_8c.html#a801fc59af5cb987dd75a51887e19f81f">ear_configure</a></div><div class="ttdeci">static void ear_configure(const struct camera_backend_host *host)</div><div class="ttdoc">Copy startup-only host callbacks; worker-side queue_analysis must be thread-safe.</div><div class="ttdef"><b>Definition</b> <a href="#l00300">ear_camera_backend.c:300</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_a8c3b85a2dc895f112649e441d0143587"><div class="ttname"><a href="ear__camera__backend_8c.html#a8c3b85a2dc895f112649e441d0143587">EAR_LONGITUDE_LIMIT_DEG</a></div><div class="ttdeci">#define EAR_LONGITUDE_LIMIT_DEG</div><div class="ttdef"><b>Definition</b> <a href="#l00048">ear_camera_backend.c:48</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_aa2e7c2237057c1691ff4e47c6d798f19"><div class="ttname"><a href="ear__camera__backend_8c.html#aa2e7c2237057c1691ff4e47c6d798f19">ear_deinit</a></div><div class="ttdeci">static void ear_deinit(void)</div><div class="ttdoc">Drain before tearing down audio/storage, then reset quiescent finalizer state.</div><div class="ttdef"><b>Definition</b> <a href="#l00317">ear_camera_backend.c:317</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_aa7f8f2d426b44f95d36c8e8e939d37ee"><div class="ttname"><a href="ear__camera__backend_8c.html#aa7f8f2d426b44f95d36c8e8e939d37ee">earcam_active</a></div><div class="ttdeci">static bool earcam_active</div><div class="ttdef"><b>Definition</b> <a href="#l00059">ear_camera_backend.c:59</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_aaa11afff446860830141e357c2271e0c"><div class="ttname"><a href="ear__camera__backend_8c.html#aaa11afff446860830141e357c2271e0c">EAR_COMPLETION_DRAIN_BYTES</a></div><div class="ttdeci">#define EAR_COMPLETION_DRAIN_BYTES</div><div class="ttdef"><b>Definition</b> <a href="#l00045">ear_camera_backend.c:45</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_aae3fa2b9fb0d15ee2c4963ef3ec39850"><div class="ttname"><a href="ear__camera__backend_8c.html#aae3fa2b9fb0d15ee2c4963ef3ec39850">ear_completion_fd</a></div><div class="ttdeci">static int ear_completion_fd(void)</div><div class="ttdoc">Nonblocking completion descriptor, or -1 before start/after drain.</div><div class="ttdef"><b>Definition</b> <a href="#l00298">ear_camera_backend.c:298</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_aae9d5ee74e07d6d93c226c4fb1fe0b29"><div class="ttname"><a href="ear__camera__backend_8c.html#aae9d5ee74e07d6d93c226c4fb1fe0b29">ear_finalize_order</a></div><div class="ttdeci">static uint64_t ear_finalize_order</div><div class="ttdef"><b>Definition</b> <a href="#l00074">ear_camera_backend.c:74</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_ab695952cf9eca1290c873eb377034a7d"><div class="ttname"><a href="ear__camera__backend_8c.html#ab695952cf9eca1290c873eb377034a7d">ear_point_valid</a></div><div class="ttdeci">static bool ear_point_valid(const struct ear_loudest_spot *spot)</div><div class="ttdoc">Guard finite values and integer conversion ranges before marking a wire point valid.</div><div class="ttdef"><b>Definition</b> <a href="#l00082">ear_camera_backend.c:82</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_abc0c4bd8f6087bd893c6852963ccf186"><div class="ttname"><a href="ear__camera__backend_8c.html#abc0c4bd8f6087bd893c6852963ccf186">EAR_EVIDENCE_PATH_CAPACITY</a></div><div class="ttdeci">#define EAR_EVIDENCE_PATH_CAPACITY</div><div class="ttdef"><b>Definition</b> <a href="#l00046">ear_camera_backend.c:46</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_abdf572790273665bb596adce76b6470f"><div class="ttname"><a href="ear__camera__backend_8c.html#abdf572790273665bb596adce76b6470f">ear_drain</a></div><div class="ttdeci">static void ear_drain(void)</div><div class="ttdoc">Close admission and join all admitted stopped-session evidence work.</div><div class="ttdef"><b>Definition</b> <a href="#l00280">ear_camera_backend.c:280</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_ac9cbcfc2c9575d09eaf86f56b8c0b170"><div class="ttname"><a href="ear__camera__backend_8c.html#ac9cbcfc2c9575d09eaf86f56b8c0b170">ear_listening</a></div><div class="ttdeci">static bool ear_listening(void)</div><div class="ttdoc">Whether the serial owner should admit EAR samples for the current session.</div><div class="ttdef"><b>Definition</b> <a href="#l00296">ear_camera_backend.c:296</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_ad05e8abfecdbfec576869967c9660a83"><div class="ttname"><a href="ear__camera__backend_8c.html#ad05e8abfecdbfec576869967c9660a83">earcam_session_active</a></div><div class="ttdeci">static bool earcam_session_active</div><div class="ttdef"><b>Definition</b> <a href="#l00059">ear_camera_backend.c:59</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_ad24e8811cff14a3796a42264a3e31972"><div class="ttname"><a href="ear__camera__backend_8c.html#ad24e8811cff14a3796a42264a3e31972">ear_finalize_jobs</a></div><div class="ttdeci">static struct ear_finalize_job ear_finalize_jobs[EAR_FINALIZE_JOB_COUNT]</div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_ada18b184c2347dd99272f07fe7154aa7"><div class="ttname"><a href="ear__camera__backend_8c.html#ada18b184c2347dd99272f07fe7154aa7">ear_finalize_mutex</a></div><div class="ttdeci">static pthread_mutex_t ear_finalize_mutex</div><div class="ttdef"><b>Definition</b> <a href="#l00075">ear_camera_backend.c:75</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_ae1bd3721082c5875d95dff6c5425d151"><div class="ttname"><a href="ear__camera__backend_8c.html#ae1bd3721082c5875d95dff6c5425d151">ear_start</a></div><div class="ttdeci">static bool ear_start(uint32_t session_id)</div><div class="ttdoc">Reserve both finalizer capacity and adapter storage before listening.</div><div class="ttdef"><b>Definition</b> <a href="#l00210">ear_camera_backend.c:210</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_ae6724871083af5dc337d167b2666a2c1"><div class="ttname"><a href="ear__camera__backend_8c.html#ae6724871083af5dc337d167b2666a2c1">ear_camera_backend_get</a></div><div class="ttdeci">struct camera_backend ear_camera_backend_get(void)</div><div class="ttdoc">Return the EAR backend descriptor by value; its session hook table has static lifetime.</div><div class="ttdef"><b>Definition</b> <a href="#l00344">ear_camera_backend.c:344</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_af240711e1b48fa88b62f2ccf0e66a38a"><div class="ttname"><a href="ear__camera__backend_8c.html#af240711e1b48fa88b62f2ccf0e66a38a">earcam_simulated</a></div><div class="ttdeci">static bool earcam_simulated</div><div class="ttdef"><b>Definition</b> <a href="#l00059">ear_camera_backend.c:59</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_afa569059aedd72429154e652bb615667"><div class="ttname"><a href="ear__camera__backend_8c.html#afa569059aedd72429154e652bb615667">EAR_COMPLETION_ENDPOINT_COUNT</a></div><div class="ttdeci">#define EAR_COMPLETION_ENDPOINT_COUNT</div><div class="ttdef"><b>Definition</b> <a href="#l00044">ear_camera_backend.c:44</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_afb3b42fefa27e6633cbb76197ec8cde0"><div class="ttname"><a href="ear__camera__backend_8c.html#afb3b42fefa27e6633cbb76197ec8cde0">ear_init</a></div><div class="ttdeci">static int ear_init(const char *source)</div><div class="ttdoc">Initialize supervision, not microphone readiness; hard setup failure stays latched.</div><div class="ttdef"><b>Definition</b> <a href="#l00307">ear_camera_backend.c:307</a></div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_aff1fc47bdfa694dfa855cc831c9f6925"><div class="ttname"><a href="ear__camera__backend_8c.html#aff1fc47bdfa694dfa855cc831c9f6925">EAR_SHOT_AGL_UNITS_PER_METER</a></div><div class="ttdeci">#define EAR_SHOT_AGL_UNITS_PER_METER</div><div class="ttdef"><b>Definition</b> <a href="#l00054">ear_camera_backend.c:54</a></div></div>
+<div class="ttc" id="aear__camera__backend_8h_html"><div class="ttname"><a href="ear__camera__backend_8h.html">ear_camera_backend.h</a></div><div class="ttdoc">EAR-specific startup configuration behind USHER's generic backend interface.</div></div>
+<div class="ttc" id="aear__inference_8c_html_a65cf7d7f8e531611b245355ab91fd749"><div class="ttname"><a href="ear__inference_8c.html#a65cf7d7f8e531611b245355ab91fd749">ready</a></div><div class="ttdeci">static bool ready</div><div class="ttdef"><b>Definition</b> <a href="ear__inference_8c_source.html#l00038">ear_inference.c:38</a></div></div>
+<div class="ttc" id="aimage__exif_8c_html_ac79cb4f1a19141e4ee2de5ce29aa214f"><div class="ttname"><a href="image__exif_8c.html#ac79cb4f1a19141e4ee2de5ce29aa214f">image_exif_write</a></div><div class="ttdeci">int image_exif_write(const char *filename, const union dc_shot_union *shot)</div><div class="ttdoc">Add standard USHER flight metadata to a JPEG.</div><div class="ttdef"><b>Definition</b> <a href="image__exif_8c_source.html#l00408">image_exif.c:408</a></div></div>
+<div class="ttc" id="aimage__exif_8h_html"><div class="ttname"><a href="image__exif_8h.html">image_exif.h</a></div><div class="ttdoc">Flight, timing, and thermal-analysis metadata writing for captured JPEGs.</div></div>
+<div class="ttc" id="apose__log_8c_html_a76d971a3c552bc58ba9f0d5fceae9806"><div class="ttname"><a href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a></div><div class="ttdeci">static size_t count</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00079">pose_log.c:79</a></div></div>
+<div class="ttc" id="astructcamera__backend__host_html"><div class="ttname"><a href="structcamera__backend__host.html">camera_backend_host</a></div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00079">camera_backend.h:79</a></div></div>
+<div class="ttc" id="astructcamera__backend__host_html_a221d6873fd19cdf0f3e4cff75f2123dd"><div class="ttname"><a href="structcamera__backend__host.html#a221d6873fd19cdf0f3e4cff75f2123dd">camera_backend_host::pose_lookup</a></div><div class="ttdeci">bool(* pose_lookup)(struct capture_observation *observation, uint64_t maximum_age_us)</div><div class="ttdoc">Bounded pose lookup supplied by USHER's shared timing owner.</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00083">camera_backend.h:83</a></div></div>
+<div class="ttc" id="astructcamera__backend_html"><div class="ttname"><a href="structcamera__backend.html">camera_backend</a></div><div class="ttdoc">Function table describing one backend's owned camera operations.</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00094">camera_backend.h:94</a></div></div>
+<div class="ttc" id="astructcamera__point__result_html"><div class="ttname"><a href="structcamera__point__result.html">camera_point_result</a></div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00050">camera_backend.h:50</a></div></div>
+<div class="ttc" id="astructcamera__point__result_html_a6456f44d84a00ae352855816d19613c1"><div class="ttname"><a href="structcamera__point__result.html#a6456f44d84a00ae352855816d19613c1">camera_point_result::session_id</a></div><div class="ttdeci">uint32_t session_id</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00051">camera_backend.h:51</a></div></div>
+<div class="ttc" id="astructcamera__session__ops_html"><div class="ttname"><a href="structcamera__session__ops.html">camera_session_ops</a></div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00056">camera_backend.h:56</a></div></div>
+<div class="ttc" id="astructear__finalize__job_html"><div class="ttname"><a href="structear__finalize__job.html">ear_finalize_job</a></div><div class="ttdoc">One reservation progressing through snapshot -&gt; point -&gt; evidence completion.</div><div class="ttdef"><b>Definition</b> <a href="#l00066">ear_camera_backend.c:66</a></div></div>
+<div class="ttc" id="astructear__finalize__job_html_a1efe118784b86b35885342bad03f8d4c"><div class="ttname"><a href="structear__finalize__job.html#a1efe118784b86b35885342bad03f8d4c">ear_finalize_job::spot</a></div><div class="ttdeci">struct ear_loudest_spot spot</div><div class="ttdef"><b>Definition</b> <a href="#l00068">ear_camera_backend.c:68</a></div></div>
+<div class="ttc" id="astructear__finalize__job_html_a21093ebd43ddebb98879be1a7876ff2a"><div class="ttname"><a href="structear__finalize__job.html#a21093ebd43ddebb98879be1a7876ff2a">ear_finalize_job::order</a></div><div class="ttdeci">uint64_t order</div><div class="ttdef"><b>Definition</b> <a href="#l00070">ear_camera_backend.c:70</a></div></div>
+<div class="ttc" id="astructear__finalize__job_html_a2ebd0e4fca500860e2d4f3d0bfc3e246"><div class="ttname"><a href="structear__finalize__job.html#a2ebd0e4fca500860e2d4f3d0bfc3e246">ear_finalize_job::session_id</a></div><div class="ttdeci">uint32_t session_id</div><div class="ttdef"><b>Definition</b> <a href="#l00069">ear_camera_backend.c:69</a></div></div>
+<div class="ttc" id="astructear__finalize__job_html_a41b50ceaa979a20cc25907f0a2e8fd0e"><div class="ttname"><a href="structear__finalize__job.html#a41b50ceaa979a20cc25907f0a2e8fd0e">ear_finalize_job::simulated</a></div><div class="ttdeci">bool simulated</div><div class="ttdef"><b>Definition</b> <a href="#l00071">ear_camera_backend.c:71</a></div></div>
+<div class="ttc" id="astructear__finalize__job_html_a8c6dbfcb89d80717e5890c3b835330ce"><div class="ttname"><a href="structear__finalize__job.html#a8c6dbfcb89d80717e5890c3b835330ce">ear_finalize_job::evidence_done</a></div><div class="ttdeci">bool evidence_done</div><div class="ttdef"><b>Definition</b> <a href="#l00071">ear_camera_backend.c:71</a></div></div>
+<div class="ttc" id="astructear__finalize__job_html_ab371eeb13a3fe080c53982051400b173"><div class="ttname"><a href="structear__finalize__job.html#ab371eeb13a3fe080c53982051400b173">ear_finalize_job::taken</a></div><div class="ttdeci">bool taken</div><div class="ttdef"><b>Definition</b> <a href="#l00071">ear_camera_backend.c:71</a></div></div>
+<div class="ttc" id="astructear__finalize__job_html_abee1e2b5d40f0a993b010a98b8a0f612"><div class="ttname"><a href="structear__finalize__job.html#abee1e2b5d40f0a993b010a98b8a0f612">ear_finalize_job::in_use</a></div><div class="ttdeci">bool in_use</div><div class="ttdef"><b>Definition</b> <a href="#l00071">ear_camera_backend.c:71</a></div></div>
+<div class="ttc" id="astructear__finalize__job_html_ad6f8c48012b8f7da19a40d7b738c488d"><div class="ttname"><a href="structear__finalize__job.html#ad6f8c48012b8f7da19a40d7b738c488d">ear_finalize_job::point_ready</a></div><div class="ttdeci">bool point_ready</div><div class="ttdef"><b>Definition</b> <a href="#l00071">ear_camera_backend.c:71</a></div></div>
+<div class="ttc" id="astructear__finalize__job_html_aedadf2d46c3283c930aed76f0c84b8f6"><div class="ttname"><a href="structear__finalize__job.html#aedadf2d46c3283c930aed76f0c84b8f6">ear_finalize_job::snapshot</a></div><div class="ttdeci">struct ear_session_snapshot * snapshot</div><div class="ttdef"><b>Definition</b> <a href="#l00067">ear_camera_backend.c:67</a></div></div>
+<div class="ttc" id="astructear__loudest__spot_html"><div class="ttname"><a href="structear__loudest__spot.html">ear_loudest_spot</a></div><div class="ttdoc">Estimated ground source, not a surveyed target or guaranteed alarm detection.</div><div class="ttdef"><b>Definition</b> <a href="earcam__core_8h_source.html#l00037">earcam_core.h:37</a></div></div>
+<div class="ttc" id="astructear__loudest__spot_html_a365bc897134687bd1b3efd0fcaefcdf1"><div class="ttname"><a href="structear__loudest__spot.html#a365bc897134687bd1b3efd0fcaefcdf1">ear_loudest_spot::confidence</a></div><div class="ttdeci">double confidence</div><div class="ttdef"><b>Definition</b> <a href="earcam__core_8h_source.html#l00044">earcam_core.h:44</a></div></div>
+<div class="ttc" id="astructear__loudest__spot_html_a4b926fdf5c501a07c2c3ff52f8ed70d2"><div class="ttname"><a href="structear__loudest__spot.html#a4b926fdf5c501a07c2c3ff52f8ed70d2">ear_loudest_spot::agl_m</a></div><div class="ttdeci">double agl_m</div><div class="ttdef"><b>Definition</b> <a href="earcam__core_8h_source.html#l00041">earcam_core.h:41</a></div></div>
+<div class="ttc" id="astructear__loudest__spot_html_a4fd70cce02845a3ed339d17285b39ccd"><div class="ttname"><a href="structear__loudest__spot.html#a4fd70cce02845a3ed339d17285b39ccd">ear_loudest_spot::valid</a></div><div class="ttdeci">bool valid</div><div class="ttdef"><b>Definition</b> <a href="earcam__core_8h_source.html#l00038">earcam_core.h:38</a></div></div>
+<div class="ttc" id="astructear__loudest__spot_html_a646d10ca85c80d764d910a4b286d67a3"><div class="ttname"><a href="structear__loudest__spot.html#a646d10ca85c80d764d910a4b286d67a3">ear_loudest_spot::lat_deg</a></div><div class="ttdeci">double lat_deg</div><div class="ttdef"><b>Definition</b> <a href="earcam__core_8h_source.html#l00039">earcam_core.h:39</a></div></div>
+<div class="ttc" id="astructear__loudest__spot_html_a69a6519926322dd86d1cedca0e8cd667"><div class="ttname"><a href="structear__loudest__spot.html#a69a6519926322dd86d1cedca0e8cd667">ear_loudest_spot::level_db</a></div><div class="ttdeci">double level_db</div><div class="ttdef"><b>Definition</b> <a href="earcam__core_8h_source.html#l00043">earcam_core.h:43</a></div></div>
+<div class="ttc" id="astructear__loudest__spot_html_a79a92c29cda99a0bca1f98e22b627269"><div class="ttname"><a href="structear__loudest__spot.html#a79a92c29cda99a0bca1f98e22b627269">ear_loudest_spot::alt_m</a></div><div class="ttdeci">double alt_m</div><div class="ttdef"><b>Definition</b> <a href="earcam__core_8h_source.html#l00042">earcam_core.h:42</a></div></div>
+<div class="ttc" id="astructear__loudest__spot_html_a8cc202c498e4cad9f3d36033cfe69bb2"><div class="ttname"><a href="structear__loudest__spot.html#a8cc202c498e4cad9f3d36033cfe69bb2">ear_loudest_spot::lon_deg</a></div><div class="ttdeci">double lon_deg</div><div class="ttdef"><b>Definition</b> <a href="earcam__core_8h_source.html#l00040">earcam_core.h:40</a></div></div>
+<div class="ttc" id="astructear__loudest__spot_html_ac0d288a8c2749fa29defb457704d1e74"><div class="ttname"><a href="structear__loudest__spot.html#ac0d288a8c2749fa29defb457704d1e74">ear_loudest_spot::sample_count</a></div><div class="ttdeci">uint32_t sample_count</div><div class="ttdef"><b>Definition</b> <a href="earcam__core_8h_source.html#l00045">earcam_core.h:45</a></div></div>
+<div class="ttc" id="astructear__loudest__spot_html_aca9ee1ce6bce89c7fc73dca68078440a"><div class="ttname"><a href="structear__loudest__spot.html#aca9ee1ce6bce89c7fc73dca68078440a">ear_loudest_spot::used_count</a></div><div class="ttdeci">uint32_t used_count</div><div class="ttdef"><b>Definition</b> <a href="earcam__core_8h_source.html#l00046">earcam_core.h:46</a></div></div>
+<div class="ttc" id="astructear__session__snapshot_html"><div class="ttname"><a href="structear__session__snapshot.html">ear_session_snapshot</a></div><div class="ttdoc">Statically reserved sample buffer with a single active or detached owner.</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00187">ear_cam_pipe.c:187</a></div></div>
+<div class="ttc" id="auniondc__shot__union_html"><div class="ttname"><a href="uniondc__shot__union.html">dc_shot_union</a></div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00051">usher_protocol.h:51</a></div></div>
+<div class="ttc" id="auniondc__shot__union_html_a1ae23de5dd6c278094e52e444ce8af74"><div class="ttname"><a href="uniondc__shot__union.html#a1ae23de5dd6c278094e52e444ce8af74">dc_shot_union::lat</a></div><div class="ttdeci">int32_t lat</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00054">usher_protocol.h:54</a></div></div>
+<div class="ttc" id="auniondc__shot__union_html_a394635886c57803fea9ed7a7b9fcc15c"><div class="ttname"><a href="uniondc__shot__union.html#a394635886c57803fea9ed7a7b9fcc15c">dc_shot_union::lon</a></div><div class="ttdeci">int32_t lon</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00055">usher_protocol.h:55</a></div></div>
+<div class="ttc" id="auniondc__shot__union_html_a5d64c9686e8977ec42a699e1ef983c2f"><div class="ttname"><a href="uniondc__shot__union.html#a5d64c9686e8977ec42a699e1ef983c2f">dc_shot_union::data</a></div><div class="ttdeci">struct dc_shot_union::@351207206061007345226276304225222200157171312155 data</div></div>
+<div class="ttc" id="auniondc__shot__union_html_a6ef6a8ddeb0b969e163366460664c9f3"><div class="ttname"><a href="uniondc__shot__union.html#a6ef6a8ddeb0b969e163366460664c9f3">dc_shot_union::nr</a></div><div class="ttdeci">int32_t nr</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00053">usher_protocol.h:53</a></div></div>
+<div class="ttc" id="auniondc__shot__union_html_aeaf66aebbb64fc46484c42914e257a6f"><div class="ttname"><a href="uniondc__shot__union.html#aeaf66aebbb64fc46484c42914e257a6f">dc_shot_union::groundalt</a></div><div class="ttdeci">int32_t groundalt</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00062">usher_protocol.h:62</a></div></div>
+<div class="ttc" id="auniondc__shot__union_html_afada7bd7dc1d8971906930816ac4b973"><div class="ttname"><a href="uniondc__shot__union.html#afada7bd7dc1d8971906930816ac4b973">dc_shot_union::alt</a></div><div class="ttdeci">int32_t alt</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00056">usher_protocol.h:56</a></div></div>
+<div class="ttc" id="ausher_8c_html_a349e1179d2a6ecbcc88c95eb2751e226"><div class="ttname"><a href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a></div><div class="ttdeci">struct usher_control_result result</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00377">usher.c:377</a></div></div>
+<div class="ttc" id="ausher_8c_html_a7d3b0985b1d932d2d068e103c8330df9"><div class="ttname"><a href="usher_8c.html#a7d3b0985b1d932d2d068e103c8330df9">job</a></div><div class="ttdeci">struct capture_job job</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00370">usher.c:370</a></div></div>
+<div class="ttc" id="ausher__protocol_8h_html_a1de0c4d72f29c5fdacab8a94f9c7389d"><div class="ttname"><a href="usher__protocol_8h.html#a1de0c4d72f29c5fdacab8a94f9c7389d">USHER_CAMERA_EARCAM</a></div><div class="ttdeci">#define USHER_CAMERA_EARCAM</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00099">usher_protocol.h:99</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

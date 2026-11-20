@@ -1,0 +1,2158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/imx500_pipe.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('imx500__pipe_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">imx500_pipe.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Neutral native camera-worker supervision, independent of model results.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include "<a class="el" href="imx500__pipe_8h_source.html">imx500_pipe.h</a>"</code><br/>
+<code>#include "<a class="el" href="camera__capture_8h_source.html">camera_capture.h</a>"</code><br/>
+<code>#include "<a class="el" href="path__utils_8h_source.html">path_utils.h</a>"</code><br/>
+<code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &lt;fcntl.h&gt;</code><br/>
+<code>#include &lt;limits.h&gt;</code><br/>
+<code>#include &lt;poll.h&gt;</code><br/>
+<code>#include &lt;signal.h&gt;</code><br/>
+<code>#include &lt;spawn.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;sys/socket.h&gt;</code><br/>
+<code>#include &lt;sys/stat.h&gt;</code><br/>
+<code>#include &lt;sys/wait.h&gt;</code><br/>
+<code>#include &lt;time.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for imx500_pipe.c:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="imx500__pipe_8c__incl.png" usemap="#asrc_2imx500__pipe_8c"/></div>
+<map id="asrc_2imx500__pipe_8c" name="asrc_2imx500__pipe_8c">
+<area alt="" coords="1092,24,1087,18,1074,13,1054,9,1029,6,1002,5,974,6,949,9,929,13,916,18,912,24,916,30,929,35,949,39,974,42,1002,43,1029,42,1054,39,1074,35,1087,30" shape="poly" title="Neutral native camera-worker supervision, independent of model results."/>
+<area alt="" coords="336,110,332,104,322,99,305,95,285,92,262,91,239,92,218,95,201,99,191,104,187,110,191,116,201,121,218,125,239,128,262,129,285,128,305,125,322,121,332,116" href="imx500__pipe_8h.html" shape="poly" title="READY/SHOT/OK process ownership without model-analysis semantics."/>
+<area alt="" coords="915,32,662,56,506,73,349,94,332,96,331,91,348,88,505,67,662,50,920,31" shape="poly" title=" "/>
+<area alt="" coords="99,196,97,190,90,185,80,180,67,178,52,177,38,178,25,180,14,185,8,190,5,196,8,201,14,207,25,211,38,214,52,214,67,214,80,211,90,207,97,201" shape="poly" title=" "/>
+<area alt="" coords="909,26,736,32,523,41,417,50,320,61,237,75,176,94,147,108,121,127,78,168,75,164,118,123,145,104,174,89,236,70,319,56,416,45,522,36,736,26,914,25" shape="poly" title=" "/>
+<area alt="" coords="537,110,533,104,520,99,500,95,476,92,448,91,421,92,396,95,377,99,364,104,360,110,364,116,377,121,396,125,421,128,448,129,476,128,500,125,520,121,533,116" href="camera__capture_8h.html" shape="poly" title="Optional split-phase capture contract for USHER image backends."/>
+<area alt="" coords="928,37,534,98,533,93,933,35" shape="poly" title=" "/>
+<area alt="" coords="913,110,910,104,901,99,888,95,870,92,851,91,832,92,814,95,800,99,792,104,788,110,792,116,800,121,814,125,832,128,851,129,870,128,888,125,901,121,910,116" href="path__utils_8h.html" shape="poly" title="Small path and writable-directory helpers shared by USHER backends."/>
+<area alt="" coords="973,42,894,88,892,83,968,43" shape="poly" title=" "/>
+<area alt="" coords="612,196,609,190,603,185,594,180,582,178,568,177,555,178,543,180,533,185,527,190,525,196,527,201,533,207,543,211,555,214,568,214,582,214,594,211,603,207,609,201" shape="poly" title=" "/>
+<area alt="" coords="928,34,824,58,769,73,716,93,652,130,599,171,597,166,649,126,714,89,767,68,823,52,923,35" shape="poly" title=" "/>
+<area alt="" coords="717,196,715,190,709,185,700,180,689,178,676,177,664,178,652,180,643,185,638,190,636,196,638,201,643,207,652,211,664,214,676,214,689,214,700,211,709,207,715,201" shape="poly" title=" "/>
+<area alt="" coords="926,34,842,56,801,72,762,93,742,109,724,128,695,166,692,162,720,124,738,105,759,89,798,67,841,51,921,35" shape="poly" title=" "/>
+<area alt="" coords="830,196,828,190,822,185,812,180,799,178,786,177,772,178,759,180,749,185,743,190,741,196,743,201,749,207,759,211,772,214,786,214,799,214,812,211,822,207,828,201" shape="poly" title=" "/>
+<area alt="" coords="934,36,840,61,801,76,778,93,771,108,769,126,775,164,770,161,763,126,766,107,774,89,799,71,838,56,929,37" shape="poly" title=" "/>
+<area alt="" coords="940,196,938,190,932,185,923,180,911,178,898,177,884,178,872,180,863,185,857,190,855,196,857,201,863,207,872,211,884,214,898,214,911,214,923,211,932,207,938,201" shape="poly" title=" "/>
+<area alt="" coords="993,42,918,167,914,162,988,44" shape="poly" title=" "/>
+<area alt="" coords="1054,196,1052,190,1046,185,1036,180,1023,178,1010,177,996,178,983,180,973,185,967,190,965,196,967,201,973,207,983,211,996,214,1010,214,1023,214,1036,211,1046,207,1052,201" shape="poly" title=" "/>
+<area alt="" coords="1004,42,1010,163,1006,160,1001,45" shape="poly" title=" "/>
+<area alt="" coords="1170,196,1168,190,1161,185,1151,180,1138,178,1124,177,1110,178,1097,180,1087,185,1081,190,1079,196,1081,201,1087,207,1097,211,1110,214,1124,214,1138,214,1151,211,1161,207,1168,201" shape="poly" title=" "/>
+<area alt="" coords="1016,41,1105,166,1100,164,1013,45" shape="poly" title=" "/>
+<area alt="" coords="1306,196,1303,190,1295,185,1283,180,1267,178,1250,177,1232,178,1217,180,1204,185,1196,190,1193,196,1196,201,1204,207,1217,211,1232,214,1250,214,1267,214,1283,211,1295,207,1303,201" shape="poly" title=" "/>
+<area alt="" coords="1023,40,1074,81,1136,127,1210,172,1205,171,1133,131,1071,86,1021,45" shape="poly" title=" "/>
+<area alt="" coords="1425,196,1423,190,1416,185,1406,180,1392,178,1378,177,1363,178,1350,180,1339,185,1332,190,1330,196,1332,201,1339,207,1350,211,1363,214,1378,214,1392,214,1406,211,1416,207,1423,201" shape="poly" title=" "/>
+<area alt="" coords="1038,39,1131,89,1155,108,1180,126,1329,179,1324,178,1178,131,1152,113,1128,93,1037,45" shape="poly" title=" "/>
+<area alt="" coords="1265,110,1263,104,1258,99,1250,95,1240,92,1228,91,1217,92,1206,95,1198,99,1193,104,1191,110,1193,116,1198,121,1206,125,1217,128,1228,129,1240,128,1250,125,1258,121,1263,116" shape="poly" title=" "/>
+<area alt="" coords="1045,39,1188,93,1182,93,1044,44" shape="poly" title=" "/>
+<area alt="" coords="1389,110,1386,104,1379,99,1368,95,1354,92,1339,91,1324,92,1310,95,1299,99,1292,104,1289,110,1292,116,1299,121,1310,125,1324,128,1339,129,1354,128,1368,125,1379,121,1386,116" shape="poly" title=" "/>
+<area alt="" coords="1061,36,1278,88,1289,94,1284,93,1277,94,1061,41" shape="poly" title=" "/>
+<area alt="" coords="1548,110,1545,104,1535,99,1520,95,1501,92,1480,91,1459,92,1440,95,1425,99,1415,104,1412,110,1415,116,1425,121,1440,125,1459,128,1480,129,1501,128,1520,125,1535,121,1545,116" shape="poly" title=" "/>
+<area alt="" coords="1073,33,1401,88,1417,94,1411,94,1400,94,1073,39" shape="poly" title=" "/>
+<area alt="" coords="1687,110,1684,104,1676,99,1663,95,1647,92,1630,91,1612,92,1596,95,1583,99,1575,104,1572,110,1575,116,1583,121,1596,125,1612,128,1630,129,1647,128,1663,125,1676,121,1684,116" shape="poly" title=" "/>
+<area alt="" coords="1085,29,1301,51,1431,67,1561,88,1575,94,1570,93,1560,94,1430,73,1301,56,1085,35" shape="poly" title=" "/>
+<area alt="" coords="1793,110,1791,104,1785,99,1776,95,1765,92,1752,91,1740,92,1728,95,1719,99,1714,104,1712,110,1714,116,1719,121,1728,125,1740,128,1752,129,1765,128,1776,125,1785,121,1791,116" shape="poly" title=" "/>
+<area alt="" coords="1090,25,1212,30,1364,41,1532,60,1699,88,1710,93,1704,93,1698,94,1531,65,1364,47,1211,36,1091,30" shape="poly" title=" "/>
+<area alt="" coords="371,196,369,190,362,185,351,180,338,178,323,177,308,178,295,180,284,185,277,190,275,196,277,201,284,207,295,211,308,214,323,214,338,214,351,211,362,207,369,201" shape="poly" title=" "/>
+<area alt="" coords="276,126,304,166,299,164,273,131" shape="poly" title=" "/>
+<area alt="" coords="501,196,498,190,491,185,479,180,464,178,448,177,432,178,417,180,406,185,398,190,396,196,398,201,406,207,417,211,432,214,448,214,464,214,479,211,491,207,498,201" shape="poly" title=" "/>
+<area alt="" coords="298,124,406,174,400,174,297,130" shape="poly" title=" "/>
+<area alt="" coords="250,196,247,190,238,185,224,180,206,178,187,177,167,178,150,180,136,185,127,190,124,196,127,201,136,207,150,211,167,214,187,214,206,214,224,211,238,207,247,201" shape="poly" title=" "/>
+<area alt="" coords="248,128,214,168,211,164,243,130" shape="poly" title=" "/>
+<area alt="" coords="224,129,99,178,97,174,222,124" shape="poly" title=" "/>
+<area alt="" coords="425,128,360,173,358,168,420,129" shape="poly" title=" "/>
+<area alt="" coords="450,127,450,163,446,160,446,131" shape="poly" title=" "/>
+<area alt="" coords="383,126,113,179,104,182,102,177,112,174,383,121" shape="poly" title=" "/>
+<area alt="" coords="800,120,668,147,513,179,503,182,502,176,512,174,667,141,795,121" shape="poly" title=" "/>
+<area alt="" coords="809,123,625,179,618,182,617,176,623,174,804,124" shape="poly" title=" "/>
+<area alt="" coords="821,126,718,177,717,172,816,127" shape="poly" title=" "/>
+<area alt="" coords="839,128,810,168,807,163,835,130" shape="poly" title=" "/>
+<area alt="" coords="862,127,883,165,878,162,859,131" shape="poly" title=" "/>
+<area alt="" coords="881,124,972,173,966,173,880,129" shape="poly" title=" "/>
+<area alt="" coords="894,122,1068,174,1077,179,1071,179,1066,179,893,127" shape="poly" title=" "/>
+<area alt="" coords="903,118,1182,174,1195,180,1190,179,1181,179,903,123" shape="poly" title=" "/>
+<area alt="" coords="910,114,1093,136,1206,153,1318,174,1330,179,1324,179,1317,179,1205,158,1092,141,910,119" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="imx500__pipe_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-define-members"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a4854a47808f8227a4750785830525f61" id="r_a4854a47808f8227a4750785830525f61"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4854a47808f8227a4750785830525f61">IMX500_STARTUP_TIMEOUT_MS</a>   180000</td></tr>
+<tr class="memdesc:a4854a47808f8227a4750785830525f61"><td class="mdescLeft"> </td><td class="mdescRight">First-use RPK upload/warm-up needs more time than a warm still capture.  <br/></td></tr>
+<tr class="memitem:a6ed086ed1815dc577bd715b575a6448f" id="r_a6ed086ed1815dc577bd715b575a6448f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ed086ed1815dc577bd715b575a6448f">IMX500_SHOT_TIMEOUT_MS</a>   15000</td></tr>
+<tr class="memdesc:a6ed086ed1815dc577bd715b575a6448f"><td class="mdescLeft"> </td><td class="mdescRight">Bound response waiting so an abandoned shot cannot block the owner indefinitely.  <br/></td></tr>
+<tr class="memitem:aa0ae7ad0957b483720b11e893487bb00" id="r_aa0ae7ad0957b483720b11e893487bb00"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0ae7ad0957b483720b11e893487bb00">IMX500_RESPONSE_BYTES</a>   16</td></tr>
+<tr class="memdesc:aa0ae7ad0957b483720b11e893487bb00"><td class="mdescLeft"> </td><td class="mdescRight">Fixed space for short protocol replies, never arbitrary child diagnostics.  <br/></td></tr>
+<tr class="memitem:a27e47414b30dfd67d8630845082a7d41" id="r_a27e47414b30dfd67d8630845082a7d41"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a27e47414b30dfd67d8630845082a7d41">IMX500_EXIT_GRACE_MS</a>   2000</td></tr>
+<tr class="memitem:af433b39a0e902fe2b09a47bf882ffc99" id="r_af433b39a0e902fe2b09a47bf882ffc99"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#af433b39a0e902fe2b09a47bf882ffc99">IMX500_KILL_GRACE_MS</a>   1000</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ae308e1d51617b09ee7c8d4f855009353" id="r_ae308e1d51617b09ee7c8d4f855009353"><td align="right" class="memItemLeft" valign="top">static int64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae308e1d51617b09ee7c8d4f855009353">milliseconds</a> (void)</td></tr>
+<tr class="memdesc:ae308e1d51617b09ee7c8d4f855009353"><td class="mdescLeft"> </td><td class="mdescRight">Read elapsed-time evidence unaffected by wall-clock corrections.  <br/></td></tr>
+<tr class="memitem:aa63c19516e33fb05a07085dae7826c20" id="r_aa63c19516e33fb05a07085dae7826c20"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa63c19516e33fb05a07085dae7826c20">expect_response</a> (struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *pipe, const char *expected, int timeout)</td></tr>
+<tr class="memdesc:aa63c19516e33fb05a07085dae7826c20"><td class="mdescLeft"> </td><td class="mdescRight">Consume one exact line before an unchanged monotonic response deadline.  <br/></td></tr>
+<tr class="memitem:a7da012b11f1e4ce2608eef4988def2bf" id="r_a7da012b11f1e4ce2608eef4988def2bf"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7da012b11f1e4ce2608eef4988def2bf">reap_owned_camera</a> (struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *pipe, int timeout_ms)</td></tr>
+<tr class="memdesc:a7da012b11f1e4ce2608eef4988def2bf"><td class="mdescLeft"> </td><td class="mdescRight">Poll for exit of the camera child.  <br/></td></tr>
+<tr class="memitem:a6dd26e94f076a29bedec1839bfd558ec" id="r_a6dd26e94f076a29bedec1839bfd558ec"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6dd26e94f076a29bedec1839bfd558ec">imx500_pipe_stop</a> (struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *pipe)</td></tr>
+<tr class="memdesc:a6dd26e94f076a29bedec1839bfd558ec"><td class="mdescLeft"> </td><td class="mdescRight">Close the channel, allow an exit grace period, then kill/reap if needed.  <br/></td></tr>
+<tr class="memitem:ac68fe5ed8cbd4377692281f941c7e281" id="r_ac68fe5ed8cbd4377692281f941c7e281"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac68fe5ed8cbd4377692281f941c7e281">imx500_pipe_start</a> (struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *pipe)</td></tr>
+<tr class="memdesc:ac68fe5ed8cbd4377692281f941c7e281"><td class="mdescLeft"> </td><td class="mdescRight">Replace any owned worker and require its exact READY response.  <br/></td></tr>
+<tr class="memitem:a2507284a80ab94e01236b0cbc6bcff17" id="r_a2507284a80ab94e01236b0cbc6bcff17"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2507284a80ab94e01236b0cbc6bcff17">send_request</a> (struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *pipe, const char *<a class="el" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>, size_t length)</td></tr>
+<tr class="memdesc:a2507284a80ab94e01236b0cbc6bcff17"><td class="mdescLeft"> </td><td class="mdescRight">Send one request before a single absolute deadline, including partial writes.  <br/></td></tr>
+<tr class="memitem:adb0627d2843c1c0d4c6098db72e5b03b" id="r_adb0627d2843c1c0d4c6098db72e5b03b"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#adb0627d2843c1c0d4c6098db72e5b03b">imx500_pipe_analyze</a> (struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *pipe, const char *filename, unsigned number)</td></tr>
+<tr class="memdesc:adb0627d2843c1c0d4c6098db72e5b03b"><td class="mdescLeft"> </td><td class="mdescRight">Submit one saved-picture request to a warm analysis worker without recapturing pixels.  <br/></td></tr>
+<tr class="memitem:aa1352155aa912b4b2c42bc82d2cbcc53" id="r_aa1352155aa912b4b2c42bc82d2cbcc53"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1352155aa912b4b2c42bc82d2cbcc53">imx500_pipe_shoot</a> (struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *pipe, char *filename, size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, int number)</td></tr>
+<tr class="memdesc:aa1352155aa912b4b2c42bc82d2cbcc53"><td class="mdescLeft"> </td><td class="mdescRight">Request one saved photograph and qualify its acknowledgement/file.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-var-members"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aa006daaf11f1e2e45a6ababaf463212b" id="r_aa006daaf11f1e2e45a6ababaf463212b"><td align="right" class="memItemLeft" valign="top">char ** </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa006daaf11f1e2e45a6ababaf463212b">environ</a></td></tr>
+<tr class="memdesc:aa006daaf11f1e2e45a6ababaf463212b"><td class="mdescLeft"> </td><td class="mdescRight">Inherit the process environment; executable and model remain explicit argv.  <br/></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>Neutral native camera-worker supervision, independent of model results. </p>
+<p>Keep process transport separate from inference interpretation. The same READY/SHOT/OK exchange serves detector and LOOM owners without inventing object results for a feature-only capture. </p>
+<p class="definition">Definition in file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div><a id="doc-define-members" name="doc-define-members"></a><h2 class="groupheader" id="header-doc-define-members">Macro Definition Documentation</h2>
+<a id="a27e47414b30dfd67d8630845082a7d41" name="a27e47414b30dfd67d8630845082a7d41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27e47414b30dfd67d8630845082a7d41">◆ </a></span>IMX500_EXIT_GRACE_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define IMX500_EXIT_GRACE_MS   2000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00048">48</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="af433b39a0e902fe2b09a47bf882ffc99" name="af433b39a0e902fe2b09a47bf882ffc99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af433b39a0e902fe2b09a47bf882ffc99">◆ </a></span>IMX500_KILL_GRACE_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define IMX500_KILL_GRACE_MS   1000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00049">49</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aa0ae7ad0957b483720b11e893487bb00" name="aa0ae7ad0957b483720b11e893487bb00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0ae7ad0957b483720b11e893487bb00">◆ </a></span>IMX500_RESPONSE_BYTES</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define IMX500_RESPONSE_BYTES   16</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Fixed space for short protocol replies, never arbitrary child diagnostics. </p>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00047">47</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a6ed086ed1815dc577bd715b575a6448f" name="a6ed086ed1815dc577bd715b575a6448f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ed086ed1815dc577bd715b575a6448f">◆ </a></span>IMX500_SHOT_TIMEOUT_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define IMX500_SHOT_TIMEOUT_MS   15000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Bound response waiting so an abandoned shot cannot block the owner indefinitely. </p>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00045">45</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a4854a47808f8227a4750785830525f61" name="a4854a47808f8227a4750785830525f61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4854a47808f8227a4750785830525f61">◆ </a></span>IMX500_STARTUP_TIMEOUT_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define IMX500_STARTUP_TIMEOUT_MS   180000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>First-use RPK upload/warm-up needs more time than a warm still capture. </p>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00043">43</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="aa63c19516e33fb05a07085dae7826c20" name="aa63c19516e33fb05a07085dae7826c20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa63c19516e33fb05a07085dae7826c20">◆ </a></span>expect_response()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int expect_response </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *</td> <td class="paramname"><span class="paramname"><em>pipe</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>expected</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>timeout</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Consume one exact line before an unchanged monotonic response deadline. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">pipe</td><td>State containing the nonblocking status descriptor. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">expected</td><td>Complete expected line, including its newline. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>Response allowance in milliseconds. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero for an exact line, otherwise -1.</dd></dl>
+<p>Bytewise reads are cheap for these tiny replies and do not steal bytes belonging to a later exchange. EINTR retries retain the original deadline. </p>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00072">72</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="adb0627d2843c1c0d4c6098db72e5b03b" name="adb0627d2843c1c0d4c6098db72e5b03b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb0627d2843c1c0d4c6098db72e5b03b">◆ </a></span>imx500_pipe_analyze()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int imx500_pipe_analyze </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *</td> <td class="paramname"><span class="paramname"><em>pipe</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>number</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Submit one saved-picture request to a warm analysis worker without recapturing pixels. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">pipe</td><td>Running owner started with analyze=true and explicit settings. </td></tr>
+<tr><td class="paramname">filename</td><td>Immutable picture path, or a producer-owned private picture for private-image processing. </td></tr>
+<tr><td class="paramname">number</td><td>Positive increasing request number within this worker lifetime. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero for an exact successful reply, otherwise minus one after closing/reaping the failed worker.</dd></dl>
+<p>A failed exchange is not retried, preventing a late reply from qualifying another picture. </p>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00239">239</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aa1352155aa912b4b2c42bc82d2cbcc53" name="aa1352155aa912b4b2c42bc82d2cbcc53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1352155aa912b4b2c42bc82d2cbcc53">◆ </a></span>imx500_pipe_shoot()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int imx500_pipe_shoot </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *</td> <td class="paramname"><span class="paramname"><em>pipe</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>number</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Request one saved photograph and qualify its acknowledgement/file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">pipe</td><td>Running worker owned by the calling backend. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">filename</td><td>Private .pending path; consume it only after successful return. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Writable bytes in <code class="param">filename</code>, including its terminator. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">number</td><td>Nonnegative photo number used in the backend's filename. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero for an exact OK response and a nonempty regular file, otherwise -1.</dd></dl>
+<p>Absolute paths avoid dependence on the child's working directory. Newlines are rejected because the protocol is line-framed. A failed exchange closes/reaps the worker rather than pairing a late response with another shot. A later request starts a replacement worker only after the previous owner exits. The caller finishes metadata and calls usher_complete_photo before final-name publication. </p><dl class="section warning"><dt>Warning</dt><dd>This does not decode JPEG pixels, prove exposure timing, or establish valid inference. A failed shot is never automatically replayed. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00251">251</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ac68fe5ed8cbd4377692281f941c7e281" name="ac68fe5ed8cbd4377692281f941c7e281"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac68fe5ed8cbd4377692281f941c7e281">◆ </a></span>imx500_pipe_start()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int imx500_pipe_start </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *</td> <td class="paramname"><span class="paramname"><em>pipe</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Replace any owned worker and require its exact READY response. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">pipe</td><td>Initialized state with live command/model/directory strings. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero after readiness, otherwise -1 with newly acquired resources closed.</dd></dl>
+<p>The child owns the camera. Readiness includes its model-specific warm-up, not just successful process creation. Existing owned work is stopped before spawning, preventing a second child from competing for the same sensor. </p><dl class="section note"><dt>Note</dt><dd>No analysis sidecar or object/LOOM result is read by this interface. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00149">149</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a6dd26e94f076a29bedec1839bfd558ec" name="a6dd26e94f076a29bedec1839bfd558ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dd26e94f076a29bedec1839bfd558ec">◆ </a></span>imx500_pipe_stop()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void imx500_pipe_stop </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *</td> <td class="paramname"><span class="paramname"><em>pipe</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Close the channel, allow an exit grace period, then kill/reap if needed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">pipe</td><td>Initialized state; NULL is ignored.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Closing the command channel lets a healthy worker finish normally. Reaping keeps stale process state from being mistaken for an available camera. Monotonic grace periods bound polling; an unconfirmed exit retains PID ownership and prevents a replacement worker. Scheduling and kernel stalls are not preempted. </p><dl class="section note"><dt>Note</dt><dd>Repeated stops are harmless once the PID and descriptor are cleared. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00132">132</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ae308e1d51617b09ee7c8d4f855009353" name="ae308e1d51617b09ee7c8d4f855009353"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae308e1d51617b09ee7c8d4f855009353">◆ </a></span>milliseconds()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int64_t milliseconds </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read elapsed-time evidence unaffected by wall-clock corrections. </p>
+<dl class="section return"><dt>Returns</dt><dd>Monotonic milliseconds, or -1 if a deadline cannot be established. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00056">56</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a7da012b11f1e4ce2608eef4988def2bf" name="a7da012b11f1e4ce2608eef4988def2bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7da012b11f1e4ce2608eef4988def2bf">◆ </a></span>reap_owned_camera()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool reap_owned_camera </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *</td> <td class="paramname"><span class="paramname"><em>pipe</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>timeout_ms</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Poll for exit of the camera child. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">pipe</td><td>Subprocess owner; clears the PID once ownership ends. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">timeout_ms</td><td>Polling budget in milliseconds. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when no child remains owned.</dd></dl>
+<p>Leave the PID intact on timeout or hard wait errors so callers cannot launch another sensor owner while the previous child may be alive. </p>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00118">118</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a2507284a80ab94e01236b0cbc6bcff17" name="a2507284a80ab94e01236b0cbc6bcff17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2507284a80ab94e01236b0cbc6bcff17">◆ </a></span>send_request()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool send_request </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> *</td> <td class="paramname"><span class="paramname"><em>pipe</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>length</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Send one request before a single absolute deadline, including partial writes. </p>
+<p class="definition">Definition at line <a class="el" href="imx500__pipe_8c_source.html#l00215">215</a> of file <a class="el" href="imx500__pipe_8c_source.html">imx500_pipe.c</a>.</p>
+</div>
+</div>
+<a id="doc-var-members" name="doc-var-members"></a><h2 class="groupheader" id="header-doc-var-members">Variable Documentation</h2>
+<a id="aa006daaf11f1e2e45a6ababaf463212b" name="aa006daaf11f1e2e45a6ababaf463212b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa006daaf11f1e2e45a6ababaf463212b">◆ </a></span>environ</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">char** environ</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel extern">extern</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Inherit the process environment; executable and model remain explicit argv. </p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

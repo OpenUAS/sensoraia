@@ -1,0 +1,27 @@
+var spotter__camera__backend_8c =
+[
+    [ "SPOTTER_POINT_QUEUE_CAPACITY", "spotter__camera__backend_8c.html#aef70accf33a720f84278faacd186bc35", null ],
+    [ "USHER_AI_CAM_PHOTO_DIR", "spotter__camera__backend_8c.html#a347156874b5d235083f13f979f003d54", null ],
+    [ "USHER_SODA", "spotter__camera__backend_8c.html#a973c3c74be57d705ddbcd4d1f89a9f37", null ],
+    [ "USHER_SPOTTERCAM_PHOTO_DIR", "spotter__camera__backend_8c.html#aca13c70bad59aa35dac375d2f99bd1e1", null ],
+    [ "drain_notification_locked", "spotter__camera__backend_8c.html#a618ba89e92639bc23c25cd119c2a791f", null ],
+    [ "notify_locked", "spotter__camera__backend_8c.html#a28b3c0131aad288c0312562e150b3fcc", null ],
+    [ "spotter_camera_backend_get", "spotter__camera__backend_8c.html#a8f29f33e600d3d9f0477c079b603f738", null ],
+    [ "spotter_camera_backend_set_targets_profile", "spotter__camera__backend_8c.html#acb229998700ce4ebd0b7a7f54a8339e5", null ],
+    [ "spotter_camera_backend_targets_enabled", "spotter__camera__backend_8c.html#aa8ec1096b13fe5e1bc6e8e19a3a57f07", null ],
+    [ "spotter_image_saved", "spotter__camera__backend_8c.html#a57120e5cacec471da40d7070ad6c8f87", null ],
+    [ "spotter_stream_completion_fd", "spotter__camera__backend_8c.html#a742947e0c964a99885ceb324a1afc5de", null ],
+    [ "spotter_stream_drain", "spotter__camera__backend_8c.html#a242d2d38cc82b93434b61851642da916", null ],
+    [ "spotter_stream_init", "spotter__camera__backend_8c.html#a6ea4ebec380bb4b4d95a9c8599905300", null ],
+    [ "spotter_stream_poll_result", "spotter__camera__backend_8c.html#a3df7a304712c5f4827d2b5ad72fcf872", null ],
+    [ "last_admitted_shot", "spotter__camera__backend_8c.html#af5f5c0d4555fd9c0b64584c7d3e21c93", null ],
+    [ "notification_fd", "spotter__camera__backend_8c.html#a01d45a3e156d6d13cbaa5647a121c6b4", null ],
+    [ "parsed_detections", "spotter__camera__backend_8c.html#a5d2f3904a0084cb6529a44374c3b9a47", null ],
+    [ "pending_count", "spotter__camera__backend_8c.html#ad5c990962311cf1966c9ed9411425ded", null ],
+    [ "pending_head", "spotter__camera__backend_8c.html#abda35778b5ccf8f6f7f31d710084dab7", null ],
+    [ "pending_points", "spotter__camera__backend_8c.html#af06aa585bfd6ea03aaa79088a7e1c0f7", null ],
+    [ "target_mutex", "spotter__camera__backend_8c.html#a63b33b839ffe65dd4a30e5f9b5005a45", null ],
+    [ "target_profile", "spotter__camera__backend_8c.html#a2b57484b93acb3255b5a5ea247104146", null ],
+    [ "target_profile_loaded", "spotter__camera__backend_8c.html#aacdf48f4c780e4223049ef51f159a180", null ],
+    [ "target_store", "spotter__camera__backend_8c.html#a75402943ff9045cc1584985181c4a74a", null ]
+];

@@ -1,0 +1,2018 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/lwir_cam/lwir_mock.c Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('lwir__mock_8c_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">lwir_mock.c</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="lwir__mock_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @file lwir_mock.c</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @brief Development replay: convert an ordinary JPEG into LWIR evidence (LWIR_ENABLE_MOCK).</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * @details Two modes:</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * - layer only: keep the source's compressed bytes and insert LWIRSIM1 APP15</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *   temperature chunks derived from luminance;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * - full: decode, build a combined image+temperature frame, re-render it with the</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> *   normal LWIR renderer, and carry the source EXIF across.</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> * An existing embedded temperature layer is always reused rather than synthesized.</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Output goes to a same-directory temporary file, is fsynced, then published</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * without overwriting unrelated files. All buffers are static (no heap).</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include "<a class="code" href="lwir__mock_8h.html">lwir_mock.h</a>"</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include "<a class="code" href="lwir__container_8h.html">lwir_container.h</a>"</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include "<a class="code" href="lwir__frame_8h.html">lwir_frame.h</a>"</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include "<a class="code" href="lwir__image_8h.html">lwir_image.h</a>"</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include "<a class="code" href="lwir__render_8h.html">lwir_render.h</a>"</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include "<a class="code" href="exifite_8h.html">exifite.h</a>"</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &lt;errno.h&gt;</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &lt;limits.h&gt;</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &lt;setjmp.h&gt;</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#include &lt;jpeglib.h&gt;</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment"></span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="comment">/** @brief Static workspace: maximum-size buffers would be too large for the stack and the heap is avoided.</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment"> * @details frame holds the combined layout (image plane of Y/neutral-chroma pairs,</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="comment"> * then little-endian Kelvin*64 temperatures); thermal receives an embedded layer;</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="comment"> * marker is one APP15 segment body (20-byte header + 65000 data) and doubles as</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="comment"> * the copy buffer. Makes the module non-reentrant. */</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keyword">static</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">   55</a></span> <span class="keyword">struct </span>jpeg_decompress_struct <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#aded4335c2df32c709945a69dfe77220d">   56</a></span> <span class="keyword">struct </span>jpeg_error_mgr <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#acb24f3e1b52f2bd70650a1ffb1aa502d">   57</a></span>    jmp_buf <a class="code hl_variable" href="lwir__image_8c.html#acb24f3e1b52f2bd70650a1ffb1aa502d">recovery</a>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">   58</a></span>    uint8_t <a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>[<a class="code hl_define" href="lwir__frame_8h.html#ac1e0d1bc97ab9174c3f9e0179b53642c">LWIR_MAX_FRAME_BYTES</a>];</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#ae5ffcceadba6d431d06244f12ac11eea">   59</a></span>    uint8_t <a class="code hl_variable" href="lwir__mock_8c.html#ae5ffcceadba6d431d06244f12ac11eea">thermal</a>[<a class="code hl_define" href="lwir__frame_8h.html#a0b6e411350bc5b9500943d73cefdcb8c">LWIR_MAX_WIDTH</a> * <a class="code hl_define" href="lwir__frame_8h.html#af419b607d53b7ebf209b1660f3c7b933">LWIR_MAX_HEIGHT</a> * 2];</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#a8231aa5bcbc8369ab0c61249cb098ab0">   60</a></span>    uint8_t <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>[<a class="code hl_define" href="lwir__frame_8h.html#a0b6e411350bc5b9500943d73cefdcb8c">LWIR_MAX_WIDTH</a> * 3];</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#a54d4fdad617e2b16a9b77cfd29aa9762">   61</a></span>    uint8_t <a class="code hl_variable" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a>[65020];</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#aea223ec0012fcfc7d590c2cc843032dc">   62</a></span>    uint8_t <a class="code hl_variable" href="lwir__image_8c.html#a3dd1a064fd19d2f47866f699d7b3ff5d">exif</a>[<a class="code hl_define" href="group__exifite.html#ga775940776e633adca2e41c2ae084cdad">EXIF_MAX_PAYLOAD</a>];</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">   63</a></span>} <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment"></span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="comment"> * @brief libjpeg fatal-error hook.</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="comment"> * @param decoder Unused; the workspace is global.</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="comment"> * @details libjpeg's default handler calls exit(); jumping back to decode_mock()</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="comment"> * turns corrupt input into an ordinary false return.</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00071">
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#ad55970a28b6adbc833b11c74332d9ace">   71</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="lwir__mock_8c.html#ad55970a28b6adbc833b11c74332d9ace">mock_jpeg_error</a>(j_common_ptr <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>{</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    (void)<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    longjmp(<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.recovery, 1);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}</div>
+</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="comment"></span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="comment"> * @brief Map display luminance to a synthetic Kelvin*64 sample.</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="comment"> * @param luminance 0..255 grey level.</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="comment"> * @return round((celsius + 273.15) * 64).</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="comment"> * @details Piecewise: 0..128 spans 15..20 degC (background), 129..229 rises</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="comment"> * steeply to about 594 degC (hot objects), and &gt;= 230 saturates at 600 degC.</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment"> * Only gives tests a plausible scene; it is not a calibration.</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00085">
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#a10cd3a2577e2cd7797a057225370b918">   85</a></span><span class="keyword">static</span> uint16_t <a class="code hl_function" href="lwir__mock_8c.html#a10cd3a2577e2cd7797a057225370b918">synthetic_raw</a>(uint8_t luminance)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>{</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> <span class="keyword">const</span> <span class="keywordtype">double</span> celsius = luminance &lt;= 128 ? 15.0 + 5.0 * luminance / 128.0 :</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        luminance &lt; 230 ? 20.0 + 580.0 * (luminance - 128) / 102.0 : 600.0;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> <span class="keywordflow">return</span> (uint16_t)((celsius + 273.15) * 64.0 + 0.5);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>}</div>
+</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="comment"></span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment"> * @brief Decode a JPEG into the combined workspace frame.</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment"> * @param input Open stream positioned at the start of the JPEG.</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="comment"> * @param width In: required width when @p embedded; out: decoded width.</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="comment"> * @param height In: required height when @p embedded; out: decoded height.</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment"> * @param embedded True to take temperatures from the workspace thermal layer</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment"> * instead of synthesizing them.</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="comment"> * @return True only for a complete decode with no libjpeg warnings and a size</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="comment"> * accepted by lwir_frame_bytes(); false otherwise (frame contents undefined).</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="comment"> * @details Converts RGB to integer BT.601-style luma (77/150/29 &gt;&gt; 8) and stores</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="comment"> * Y with neutral chroma 128 so the image plane matches the camera's layout.</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00104">
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#ade8e3bb7b84ed7386bfb44d52c638fad">  104</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__mock_8c.html#ade8e3bb7b84ed7386bfb44d52c638fad">decode_mock</a>(FILE *input, <span class="keywordtype">unsigned</span> *width, <span class="keywordtype">unsigned</span> *height, <span class="keywordtype">bool</span> embedded)</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>{</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> <span class="keyword">struct </span>jpeg_decompress_struct *<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a> = &amp;<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.decoder;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    *<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a> = (<span class="keyword">struct </span>jpeg_decompress_struct){0};</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;err = jpeg_std_error(&amp;<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.error);</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.error.error_exit = <a class="code hl_function" href="lwir__mock_8c.html#ad55970a28b6adbc833b11c74332d9ace">mock_jpeg_error</a>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> <span class="comment">/* Every libjpeg failure lands here; only static state is touched afterwards, so no volatile is needed. */</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> <span class="keywordflow">if</span> (setjmp(<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.recovery)) {</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        jpeg_destroy_decompress(<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    jpeg_create_decompress(<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    jpeg_stdio_src(<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>, input);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> = jpeg_read_header(<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>, TRUE) == JPEG_HEADER_OK &amp;&amp;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> <a class="code hl_function" href="lwir__frame_8c.html#ac86507957dc55623fb98f8f8f9038ca7">lwir_frame_bytes</a>(<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;image_width, <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;image_height) != 0;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> <span class="keywordflow">if</span> (embedded &amp;&amp; (<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;image_width != *width || <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;image_height != *height)) <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;out_color_space = JCS_RGB;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a>) <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> = jpeg_start_decompress(<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>) &amp;&amp; <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;output_components == 3;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a>) {</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        *width = <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;output_width;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        *height = <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;output_height;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> pixels = (size_t)*width * *height;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> <span class="keywordflow">while</span> (<a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> &amp;&amp; <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;output_scanline &lt; <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;output_height) {</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> row_number = <a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>-&gt;output_scanline;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            JSAMPROW <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> = <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.row;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> = jpeg_read_scanlines(<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>, &amp;<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>, 1) == 1;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> column = 0; <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> &amp;&amp; column &lt; *width; ++column) {</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> pixel = row_number * *width + column;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> <span class="keyword">const</span> uint8_t *rgb = <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> + column * 3;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> <span class="keyword">const</span> uint8_t luminance = (uint8_t)((77U * rgb[0] + 150U * rgb[1] + 29U * rgb[2]) &gt;&gt; 8);</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.frame[pixel * 2] = luminance;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.frame[pixel * 2 + 1] = 128;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> <span class="keyword">const</span> uint16_t raw = embedded ? (uint16_t)<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.thermal[pixel * 2] |</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                    (uint16_t)((uint16_t)<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.thermal[pixel * 2 + 1] &lt;&lt; 8) : <a class="code hl_function" href="lwir__mock_8c.html#a10cd3a2577e2cd7797a057225370b918">synthetic_raw</a>(luminance);</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.frame[(pixels + pixel) * 2] = (uint8_t)raw;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.frame[(pixels + pixel) * 2 + 1] = (uint8_t)(raw &gt;&gt; 8);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            }</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        }</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> <span class="comment">/* Warnings mean libjpeg patched over damage; refuse rather than build evidence from guessed pixels. */</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a>) <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> = jpeg_finish_decompress(<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>) &amp;&amp; <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.error.num_warnings == 0;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    jpeg_destroy_decompress(<a class="code hl_variable" href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a>);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> <span class="keywordflow">return</span> <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a>;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>}</div>
+</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="comment"></span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="comment"> * @brief Store a 32-bit value little-endian.</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="comment"> * @param output Destination of at least 4 bytes.</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment"> * @param number Value to store.</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00154">
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#a08a184133166150a9dbf9ed5cafcae38">  154</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="lwir__mock_8c.html#a08a184133166150a9dbf9ed5cafcae38">write_u32</a>(uint8_t *<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, uint32_t number)</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>{</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> index = 0; index &lt; 4; ++index) <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>[index] = (uint8_t)(number &gt;&gt; (index * 8));</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>}</div>
+</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="comment"></span> </div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="comment"> * @brief Copy a JPEG while inserting the workspace temperature plane as LWIRSIM1 APP15 chunks.</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="comment"> * @param input Source JPEG; rewound here.</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="comment"> * @param output Destination stream.</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="comment"> * @param width Temperature width.</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="comment"> * @param height Temperature height.</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="comment"> * @return True if everything was copied; false on a non-JPEG source or any I/O error.</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="comment"> * @details Each chunk is "LWIRSIM1", width, height, byte offset (all u32 LE) and</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="comment"> * up to 65000 data bytes, keeping the segment under JPEG's 65535-byte limit.</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="comment"> * Chunks go right after SOI; the remaining source bytes, including its own</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="comment"> * segments and compressed pixels, are copied unchanged.</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00171">
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#afc3b5bf4c46cdff9a509a746a782f1df">  171</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__mock_8c.html#afc3b5bf4c46cdff9a509a746a782f1df">attach_layer</a>(FILE *input, FILE *<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height)</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>{</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    uint8_t <a class="code hl_variable" href="pose__log_8c.html#a2d5bf705d4e4df438762a5c261d6e530">header</a>[2];</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> <span class="keywordflow">if</span> (fseeko(input, 0, SEEK_SET) != 0 || fread(<a class="code hl_variable" href="pose__log_8c.html#a2d5bf705d4e4df438762a5c261d6e530">header</a>, 1, 2, input) != 2 ||</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> <a class="code hl_variable" href="pose__log_8c.html#a2d5bf705d4e4df438762a5c261d6e530">header</a>[0] != 0xff || <a class="code hl_variable" href="pose__log_8c.html#a2d5bf705d4e4df438762a5c261d6e530">header</a>[1] != 0xd8 || fwrite(<a class="code hl_variable" href="pose__log_8c.html#a2d5bf705d4e4df438762a5c261d6e530">header</a>, 1, 2, <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) != 2) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> pixels = (size_t)width * height;</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> offset = 0; offset &lt; pixels * 2;) {</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> chunk = pixels * 2 - offset &lt; 65000 ? pixels * 2 - offset : 65000;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        uint8_t *<a class="code hl_variable" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a> = <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.marker;</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; 8; ++index) <a class="code hl_variable" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a>[index] = (uint8_t)<span class="stringliteral">"LWIRSIM1"</span>[index];</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> <a class="code hl_function" href="lwir__mock_8c.html#a08a184133166150a9dbf9ed5cafcae38">write_u32</a>(<a class="code hl_variable" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a> + 8, width); <a class="code hl_function" href="lwir__mock_8c.html#a08a184133166150a9dbf9ed5cafcae38">write_u32</a>(<a class="code hl_variable" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a> + 12, height); <a class="code hl_function" href="lwir__mock_8c.html#a08a184133166150a9dbf9ed5cafcae38">write_u32</a>(<a class="code hl_variable" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a> + 16, (uint32_t)offset);</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; chunk; ++index)</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> <a class="code hl_variable" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a>[20 + index] = <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.frame[pixels * 2 + offset + index];</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> <span class="comment">/* The JPEG length field counts itself (2 bytes) plus the 20-byte header and data. */</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> length = chunk + 22;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> <span class="keyword">const</span> uint8_t prefix[4] = {0xff, 0xef, (uint8_t)(length &gt;&gt; 8), (uint8_t)length};</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> <span class="keywordflow">if</span> (fwrite(prefix, 1, <span class="keyword">sizeof</span>(prefix), <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) != <span class="keyword">sizeof</span>(prefix) ||</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            fwrite(<a class="code hl_variable" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a>, 1, chunk + 20, <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) != chunk + 20) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        offset += chunk;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    }</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> <span class="keywordtype">size_t</span> received;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> <span class="keywordflow">while</span> ((received = fread(<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.marker, 1, <span class="keyword">sizeof</span>(<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.marker), input)) != 0)</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> <span class="keywordflow">if</span> (fwrite(<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.marker, 1, received, <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) != received) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> <span class="keywordflow">return</span> !ferror(input);</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>}</div>
+</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="comment"></span> </div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="comment"> * @brief Produce mock LWIR evidence from @p input_path at @p output_path.</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="comment"> * @return 0 on success, -1 on any failure.</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="comment"> * @details Steps: open and identify the source; read any embedded layer; decode</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="comment"> * if needed; write a mode-matched temporary file next to the output; check that</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="comment"> * the source did not change meanwhile; publish with link() (fails if the name</span></div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="comment"> * exists) or, in place, rename() after confirming the path still names the same</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="comment"> * inode; finally fsync the directory.</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="comment"> * @warning -1 is also returned if only the final directory fsync fails, after the</span></div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="comment"> * file has already been published.</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00208">
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="lwir__mock_8c.html#a18f08d42eba0aae6b85d3c4791bec6ac">  208</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="lwir__mock_8c.html#a18f08d42eba0aae6b85d3c4791bec6ac">lwir_process_mock</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *input_path, <span class="keyword">const</span> <span class="keywordtype">char</span> *output_path, <span class="keywordtype">bool</span> layer_only)</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>{</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> <span class="keywordflow">if</span> (!input_path || !output_path) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> <span class="keyword">const</span> <span class="keywordtype">int</span> input_fd = <a class="code hl_variable" href="chdkbridge_8c.html#ad3eb2137f22498456a6964cef7b12fc6">open</a>(input_path, O_RDONLY | O_CLOEXEC | O_NOFOLLOW);</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> <span class="keywordflow">if</span> (input_fd &lt; 0) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> <span class="comment">/* Identity snapshot: used to detect concurrent modification and an in-place path swap. */</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> <span class="keyword">struct </span>stat original;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> <span class="keywordflow">if</span> (fstat(input_fd, &amp;original) != 0 || !S_ISREG(original.st_mode) ||</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        original.st_size &lt;= 0 || original.st_size &gt; 256 * 1024 * 1024) { <a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(input_fd); <span class="keywordflow">return</span> -1; }</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    FILE *input = fdopen(input_fd, <span class="stringliteral">"rb"</span>);</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> <span class="keywordflow">if</span> (!input) { <a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(input_fd); <span class="keywordflow">return</span> -1; }</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> <span class="keywordtype">unsigned</span> width = 0, height = 0;</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> <span class="comment">/* Stays true unless a sensor (LWIRRAW1) layer is found, so absent provenance defaults to synthetic. */</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> <span class="keywordtype">bool</span> synthetic = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> <span class="keyword">const</span> <span class="keywordtype">int</span> layer = <a class="code hl_function" href="lwir__container_8c.html#a50100c465c9fab731af001fd54a83a3d">lwir_read_temperature_stream</a>(input, <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.thermal,</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> <span class="keyword">sizeof</span>(<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.thermal), &amp;width, &amp;height, &amp;synthetic);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> <span class="comment">/* Existing evidence needs no visual decode, including an oriented display JPEG. */</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> <span class="keywordflow">if</span> (layer == 1 &amp;&amp; layer_only) <span class="keywordflow">return</span> fclose(input) == 0 ? 0 : -1;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> <span class="keywordtype">bool</span> success = layer &gt;= 0 &amp;&amp; fseeko(input, 0, SEEK_SET) == 0 &amp;&amp; <a class="code hl_function" href="lwir__mock_8c.html#ade8e3bb7b84ed7386bfb44d52c638fad">decode_mock</a>(input, &amp;width, &amp;height, layer == 1);</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> in_place = strcmp(input_path, output_path) == 0;</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> <span class="keyword">struct </span>stat existing;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> <span class="comment">/* Out-of-place output must not exist yet; any lstat error other than ENOENT is also a refusal. */</span></div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> <span class="keywordflow">if</span> (!in_place &amp;&amp; (lstat(output_path, &amp;existing) == 0 || errno != ENOENT)) success = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> <span class="keywordtype">char</span> temporary[<a class="code hl_define" href="path__utils_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> <span class="comment">/* Same directory as the output so link()/rename() stay on one filesystem. */</span></div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> <span class="keyword">const</span> <span class="keywordtype">int</span> length = snprintf(temporary, <span class="keyword">sizeof</span>(temporary), <span class="stringliteral">"%s.mock.XXXXXX"</span>, output_path);</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> <span class="keywordflow">if</span> (length &lt; 0 || (<span class="keywordtype">size_t</span>)length &gt;= <span class="keyword">sizeof</span>(temporary)) success = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a> = -1;</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> <span class="keywordflow">if</span> (success) <a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a> = mkstemp(temporary);</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> temporary_created = <a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a> &gt;= 0;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> <span class="keywordflow">if</span> (success &amp;&amp; <a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a> &lt; 0) success = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> <span class="keywordflow">if</span> (success &amp;&amp; fchmod(<a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a>, original.st_mode &amp; 0777) != 0) success = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    FILE *<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a> = NULL;</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> <span class="keywordflow">if</span> (success &amp;&amp; layer_only) {</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a> = fdopen(<a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a>, <span class="stringliteral">"wb"</span>);</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) success = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> <a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a> = -1;</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            success = <a class="code hl_function" href="lwir__mock_8c.html#afc3b5bf4c46cdff9a509a746a782f1df">attach_layer</a>(input, <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, width, height) &amp;&amp; fflush(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) == 0 &amp;&amp; fsync(fileno(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)) == 0;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        }</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (success) {</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> <span class="comment">/* The renderer creates its file by path, so release the reserved name; it is briefly unclaimed. */</span></div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        success = <a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(<a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a>) == 0 &amp;&amp; unlink(temporary) == 0;</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> <a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a> = -1;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> <span class="keyword">struct </span><a class="code hl_struct" href="structlwir__render__options.html">lwir_render_options</a> render = {.view = <a class="code hl_enumvalue" href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49ac7fed295f9a3d41a78bc11700ad4116b">LWIR_PERCENTILE</a>, .palette = <a class="code hl_enumvalue" href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da5dad1a871e129d1888f157e0bdfa7fa0">LWIR_WHITE_HOT</a>,</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>            .low_percentile = 2, .high_percentile = 98};</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> <span class="comment">/* NULL device state: synthetic or replayed imagery must never claim live camera provenance. */</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> <span class="keywordflow">if</span> (success) success = <a class="code hl_function" href="lwir__image_8c.html#a54563ac8e467bcea429427aabd7395ad">lwir_write_jpeg_rendered</a>(temporary, <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.frame,</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> <a class="code hl_function" href="lwir__frame_8c.html#ac86507957dc55623fb98f8f8f9038ca7">lwir_frame_bytes</a>(width, height), width, height, synthetic, NULL, &amp;render);</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> <span class="keywordflow">if</span> (success) success = chmod(temporary, original.st_mode &amp; 0777) == 0;</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> <span class="keywordtype">size_t</span> exif_size = 0;</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> <span class="comment">/* ENODATA means the source simply has no EXIF; any other read failure aborts. */</span></div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> <span class="keywordflow">if</span> (success &amp;&amp; <a class="code hl_function" href="group__exifite.html#ga4684583ba9a66243fb5aec629d8b6461">exif_read_jpeg</a>(input_path, <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.exif, <span class="keyword">sizeof</span>(<a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.exif), &amp;exif_size) == 0) {</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a> = fopen(temporary, <span class="stringliteral">"r+b"</span>);</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            success = <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a> &amp;&amp; <a class="code hl_function" href="group__exifite.html#gaf5d75131c5b759ad38db5f61105d81a0">exif_update_jpeg</a>(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <a class="code hl_variable" href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a>.exif, exif_size) == 0 &amp;&amp; fsync(fileno(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)) == 0;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (success &amp;&amp; errno != ENODATA) success = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    }</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) { <span class="keywordflow">if</span> (fclose(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) != 0) success = <span class="keyword">false</span>; }</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a> &gt;= 0) <a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(<a class="code hl_variable" href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a>);</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> <span class="keyword">struct </span>stat current;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> <span class="comment">/* A source rewritten mid-run would make the output inconsistent with it. */</span></div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> <span class="keywordflow">if</span> (fstat(input_fd, &amp;current) != 0 || original.st_size != current.st_size ||</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        original.st_mtim.tv_sec != current.st_mtim.tv_sec || original.st_mtim.tv_nsec != current.st_mtim.tv_nsec) success = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> <span class="keywordflow">if</span> (fclose(input) != 0) success = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> <span class="keywordflow">if</span> (success) {</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> <span class="keywordflow">if</span> (in_place) {</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> <span class="comment">/* Replace only if the path still names the file we read, not a substitute. */</span></div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> <span class="keyword">struct </span>stat named;</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>            success = lstat(input_path, &amp;named) == 0 &amp;&amp; named.st_dev == original.st_dev &amp;&amp; named.st_ino == original.st_ino &amp;&amp;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                rename(temporary, output_path) == 0;</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        } <span class="keywordflow">else</span> success = link(temporary, output_path) == 0;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    }</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> <span class="comment">/* After link() this drops the extra name; after rename() it fails harmlessly. */</span></div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> <span class="keywordflow">if</span> (temporary_created) unlink(temporary);</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> <span class="keywordflow">if</span> (success) {</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> <span class="comment">/* Persist the new directory entry, not just the file data. */</span></div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> <span class="keywordtype">char</span> parent[<a class="code hl_define" href="path__utils_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a>];</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> path_size = strlen(output_path);</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> <span class="keywordflow">if</span> (path_size &gt;= <span class="keyword">sizeof</span>(parent)) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt;= path_size; ++index) parent[index] = output_path[index];</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> <span class="keywordtype">char</span> *separator = strrchr(parent, <span class="charliteral">'/'</span>);</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> <span class="keywordflow">if</span> (!separator) { parent[0] = <span class="charliteral">'.'</span>; parent[1] = <span class="charliteral">'\0'</span>; }</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (separator == parent) separator[1] = <span class="charliteral">'\0'</span>;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> <span class="keywordflow">else</span> *separator = <span class="charliteral">'\0'</span>;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> <span class="keyword">const</span> <span class="keywordtype">int</span> directory = <a class="code hl_variable" href="chdkbridge_8c.html#ad3eb2137f22498456a6964cef7b12fc6">open</a>(parent, O_RDONLY | O_DIRECTORY | O_CLOEXEC);</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> <span class="keywordflow">if</span> (directory &lt; 0) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        success = fsync(directory) == 0;</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(directory) != 0) success = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    }</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> <span class="keywordflow">return</span> success ? 0 : -1;</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>}</div>
+</div>
+<div class="ttc" id="achdkbridge_8c_html_a176b06ffdcdd2008ad3cd0178c2a10cf"><div class="ttname"><a href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a></div><div class="ttdeci">void(* close)(struct usbfs_handle *)</div><div class="ttdef"><b>Definition</b> <a href="chdkbridge_8c_source.html#l00057">chdkbridge.c:57</a></div></div>
+<div class="ttc" id="achdkbridge_8c_html_ad3eb2137f22498456a6964cef7b12fc6"><div class="ttname"><a href="chdkbridge_8c.html#ad3eb2137f22498456a6964cef7b12fc6">open</a></div><div class="ttdeci">int(* open)(const struct usbfs_device *, struct usbfs_handle *)</div><div class="ttdef"><b>Definition</b> <a href="chdkbridge_8c_source.html#l00056">chdkbridge.c:56</a></div></div>
+<div class="ttc" id="aexifite_8h_html"><div class="ttname"><a href="exifite_8h.html">exifite.h</a></div><div class="ttdoc">Bounded C11 EXIF metadata and JPEG streaming interfaces.</div></div>
+<div class="ttc" id="agroup__exifite_html_ga4684583ba9a66243fb5aec629d8b6461"><div class="ttname"><a href="group__exifite.html#ga4684583ba9a66243fb5aec629d8b6461">exif_read_jpeg</a></div><div class="ttdeci">int exif_read_jpeg(const char *filename, unsigned char *payload, size_t capacity, size_t *size)</div><div class="ttdoc">Read the single EXIF APP1 segment before the first JPEG scan.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8c_source.html#l01022">exifite.c:1022</a></div></div>
+<div class="ttc" id="agroup__exifite_html_ga775940776e633adca2e41c2ae084cdad"><div class="ttname"><a href="group__exifite.html#ga775940776e633adca2e41c2ae084cdad">EXIF_MAX_PAYLOAD</a></div><div class="ttdeci">#define EXIF_MAX_PAYLOAD</div><div class="ttdoc">APP1 payload ceiling: the JPEG length includes its own two bytes.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8h_source.html#l00051">exifite.h:51</a></div></div>
+<div class="ttc" id="agroup__exifite_html_gaf5d75131c5b759ad38db5f61105d81a0"><div class="ttname"><a href="group__exifite.html#gaf5d75131c5b759ad38db5f61105d81a0">exif_update_jpeg</a></div><div class="ttdeci">int exif_update_jpeg(FILE *file, const unsigned char *payload, size_t size)</div><div class="ttdoc">Replace EXIF in a regular JPEG file without a temporary file.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8c_source.html#l01649">exifite.c:1649</a></div></div>
+<div class="ttc" id="alwir__container_8c_html_a50100c465c9fab731af001fd54a83a3d"><div class="ttname"><a href="lwir__container_8c.html#a50100c465c9fab731af001fd54a83a3d">lwir_read_temperature_stream</a></div><div class="ttdeci">int lwir_read_temperature_stream(FILE *input, uint8_t *destination, size_t capacity, unsigned *width, unsigned *height, bool *synthetic)</div><div class="ttdoc">Public stream reader without geometry; see lwir_container.h.</div><div class="ttdef"><b>Definition</b> <a href="lwir__container_8c_source.html#l00239">lwir_container.c:239</a></div></div>
+<div class="ttc" id="alwir__container_8h_html"><div class="ttname"><a href="lwir__container_8h.html">lwir_container.h</a></div><div class="ttdoc">Exact thermal evidence in JPEG containers, independent of analysis.</div></div>
+<div class="ttc" id="alwir__frame_8c_html_ac86507957dc55623fb98f8f8f9038ca7"><div class="ttname"><a href="lwir__frame_8c.html#ac86507957dc55623fb98f8f8f9038ca7">lwir_frame_bytes</a></div><div class="ttdeci">size_t lwir_frame_bytes(unsigned width, unsigned height)</div><div class="ttdoc">Combined frame size for supported geometry.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00056">lwir_frame.c:56</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html"><div class="ttname"><a href="lwir__frame_8h.html">lwir_frame.h</a></div><div class="ttdoc">Native frame arithmetic and camera measurements; no codec or flight dependencies.</div></div>
+<div class="ttc" id="alwir__frame_8h_html_a0b6e411350bc5b9500943d73cefdcb8c"><div class="ttname"><a href="lwir__frame_8h.html#a0b6e411350bc5b9500943d73cefdcb8c">LWIR_MAX_WIDTH</a></div><div class="ttdeci">#define LWIR_MAX_WIDTH</div><div class="ttdoc">Largest supported native width in pixels.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8h_source.html#l00047">lwir_frame.h:47</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_ac1e0d1bc97ab9174c3f9e0179b53642c"><div class="ttname"><a href="lwir__frame_8h.html#ac1e0d1bc97ab9174c3f9e0179b53642c">LWIR_MAX_FRAME_BYTES</a></div><div class="ttdeci">#define LWIR_MAX_FRAME_BYTES</div><div class="ttdoc">Largest combined frame: two planes of 2 bytes per pixel.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8h_source.html#l00051">lwir_frame.h:51</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_af419b607d53b7ebf209b1660f3c7b933"><div class="ttname"><a href="lwir__frame_8h.html#af419b607d53b7ebf209b1660f3c7b933">LWIR_MAX_HEIGHT</a></div><div class="ttdeci">#define LWIR_MAX_HEIGHT</div><div class="ttdoc">Largest supported native height in pixels.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8h_source.html#l00049">lwir_frame.h:49</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_a3dd1a064fd19d2f47866f699d7b3ff5d"><div class="ttname"><a href="lwir__image_8c.html#a3dd1a064fd19d2f47866f699d7b3ff5d">exif</a></div><div class="ttdeci">struct exif_document exif</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00064">lwir_image.c:64</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_a54563ac8e467bcea429427aabd7395ad"><div class="ttname"><a href="lwir__image_8c.html#a54563ac8e467bcea429427aabd7395ad">lwir_write_jpeg_rendered</a></div><div class="ttdeci">bool lwir_write_jpeg_rendered(const char *path, const uint8_t *frame, size_t bytes, unsigned width, unsigned height, bool synthetic, const struct lwir_evidence *evidence, const struct lwir_render_options *render)</div><div class="ttdoc">Publish a rendered view with provenance; see lwir_image.h.</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00522">lwir_image.c:522</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_a56de4403f4512c206057eb65760605c4"><div class="ttname"><a href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a></div><div class="ttdeci">uint8_t marker[LWIR_THERMAL_HEADER_BYTES+LWIR_THERMAL_CHUNK_CAPACITY]</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00062">lwir_image.c:62</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_a78fcdd2741e62c29ec72a8053a5bd79b"><div class="ttname"><a href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a></div><div class="ttdeci">uint8_t row[LWIR_MAX_WIDTH *3U]</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00063">lwir_image.c:63</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_acb24f3e1b52f2bd70650a1ffb1aa502d"><div class="ttname"><a href="lwir__image_8c.html#acb24f3e1b52f2bd70650a1ffb1aa502d">recovery</a></div><div class="ttdeci">jmp_buf recovery</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00061">lwir_image.c:61</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_aded4335c2df32c709945a69dfe77220d"><div class="ttname"><a href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a></div><div class="ttdeci">struct jpeg_error_mgr error</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00060">lwir_image.c:60</a></div></div>
+<div class="ttc" id="alwir__image_8h_html"><div class="ttname"><a href="lwir__image_8h.html">lwir_image.h</a></div><div class="ttdoc">JPEG encoding and durable no-overwrite publication of LWIR frames.</div></div>
+<div class="ttc" id="alwir__mock_8c_html_a08a184133166150a9dbf9ed5cafcae38"><div class="ttname"><a href="lwir__mock_8c.html#a08a184133166150a9dbf9ed5cafcae38">write_u32</a></div><div class="ttdeci">static void write_u32(uint8_t *output, uint32_t number)</div><div class="ttdoc">Store a 32-bit value little-endian.</div><div class="ttdef"><b>Definition</b> <a href="#l00154">lwir_mock.c:154</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_a10cd3a2577e2cd7797a057225370b918"><div class="ttname"><a href="lwir__mock_8c.html#a10cd3a2577e2cd7797a057225370b918">synthetic_raw</a></div><div class="ttdeci">static uint16_t synthetic_raw(uint8_t luminance)</div><div class="ttdoc">Map display luminance to a synthetic Kelvin*64 sample.</div><div class="ttdef"><b>Definition</b> <a href="#l00085">lwir_mock.c:85</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_a18f08d42eba0aae6b85d3c4791bec6ac"><div class="ttname"><a href="lwir__mock_8c.html#a18f08d42eba0aae6b85d3c4791bec6ac">lwir_process_mock</a></div><div class="ttdeci">int lwir_process_mock(const char *input_path, const char *output_path, bool layer_only)</div><div class="ttdoc">Produce mock LWIR evidence from input_path at output_path.</div><div class="ttdef"><b>Definition</b> <a href="#l00208">lwir_mock.c:208</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_a80e9950d898222997cbf7fb7e4904338"><div class="ttname"><a href="lwir__mock_8c.html#a80e9950d898222997cbf7fb7e4904338">decoder</a></div><div class="ttdeci">struct jpeg_decompress_struct decoder</div><div class="ttdef"><b>Definition</b> <a href="#l00055">lwir_mock.c:55</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_ace5fb39a154fc61f43993d0b435a27e5"><div class="ttname"><a href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a></div><div class="ttdeci">uint8_t frame[LWIR_MAX_FRAME_BYTES]</div><div class="ttdef"><b>Definition</b> <a href="#l00058">lwir_mock.c:58</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_ad55970a28b6adbc833b11c74332d9ace"><div class="ttname"><a href="lwir__mock_8c.html#ad55970a28b6adbc833b11c74332d9ace">mock_jpeg_error</a></div><div class="ttdeci">static void mock_jpeg_error(j_common_ptr decoder)</div><div class="ttdoc">libjpeg fatal-error hook.</div><div class="ttdef"><b>Definition</b> <a href="#l00071">lwir_mock.c:71</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_ade8e3bb7b84ed7386bfb44d52c638fad"><div class="ttname"><a href="lwir__mock_8c.html#ade8e3bb7b84ed7386bfb44d52c638fad">decode_mock</a></div><div class="ttdeci">static bool decode_mock(FILE *input, unsigned *width, unsigned *height, bool embedded)</div><div class="ttdoc">Decode a JPEG into the combined workspace frame.</div><div class="ttdef"><b>Definition</b> <a href="#l00104">lwir_mock.c:104</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_ae5ffcceadba6d431d06244f12ac11eea"><div class="ttname"><a href="lwir__mock_8c.html#ae5ffcceadba6d431d06244f12ac11eea">thermal</a></div><div class="ttdeci">uint8_t thermal[LWIR_MAX_WIDTH *LWIR_MAX_HEIGHT *2]</div><div class="ttdef"><b>Definition</b> <a href="#l00059">lwir_mock.c:59</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_ae80cd55bd0e1fa3f21f89043b00c08cf"><div class="ttname"><a href="lwir__mock_8c.html#ae80cd55bd0e1fa3f21f89043b00c08cf">mock_workspace</a></div><div class="ttdeci">static struct @327164226255333372052267047366105116027344330166 mock_workspace</div><div class="ttdoc">Static workspace: maximum-size buffers would be too large for the stack and the heap is avoided.</div></div>
+<div class="ttc" id="alwir__mock_8c_html_afc3b5bf4c46cdff9a509a746a782f1df"><div class="ttname"><a href="lwir__mock_8c.html#afc3b5bf4c46cdff9a509a746a782f1df">attach_layer</a></div><div class="ttdeci">static bool attach_layer(FILE *input, FILE *output, unsigned width, unsigned height)</div><div class="ttdoc">Copy a JPEG while inserting the workspace temperature plane as LWIRSIM1 APP15 chunks.</div><div class="ttdef"><b>Definition</b> <a href="#l00171">lwir_mock.c:171</a></div></div>
+<div class="ttc" id="alwir__mock_8h_html"><div class="ttname"><a href="lwir__mock_8h.html">lwir_mock.h</a></div><div class="ttdoc">Optional development replay adapter, independent of geographic analysis.</div></div>
+<div class="ttc" id="alwir__render_8h_html"><div class="ttname"><a href="lwir__render_8h.html">lwir_render.h</a></div><div class="ttdoc">Display rendering of Tiny1-C frames into JPEG-ready Y/Cb/Cr scanlines.</div></div>
+<div class="ttc" id="alwir__render_8h_html_aa17b3232393b27d2be55d8519226517da5dad1a871e129d1888f157e0bdfa7fa0"><div class="ttname"><a href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da5dad1a871e129d1888f157e0bdfa7fa0">LWIR_WHITE_HOT</a></div><div class="ttdeci">@ LWIR_WHITE_HOT</div><div class="ttdef"><b>Definition</b> <a href="lwir__render_8h_source.html#l00058">lwir_render.h:58</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_aeeb8b23ae3a096b836b61cf029f5aa49ac7fed295f9a3d41a78bc11700ad4116b"><div class="ttname"><a href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49ac7fed295f9a3d41a78bc11700ad4116b">LWIR_PERCENTILE</a></div><div class="ttdeci">@ LWIR_PERCENTILE</div><div class="ttdef"><b>Definition</b> <a href="lwir__render_8h_source.html#l00054">lwir_render.h:54</a></div></div>
+<div class="ttc" id="apath__utils_8h_html_ae688d728e1acdfe5988c7db45d6f0166"><div class="ttname"><a href="path__utils_8h.html#ae688d728e1acdfe5988c7db45d6f0166">PATH_MAX</a></div><div class="ttdeci">#define PATH_MAX</div><div class="ttdef"><b>Definition</b> <a href="path__utils_8h_source.html#l00039">path_utils.h:39</a></div></div>
+<div class="ttc" id="apose__log_8c_html_a2d5bf705d4e4df438762a5c261d6e530"><div class="ttname"><a href="pose__log_8c.html#a2d5bf705d4e4df438762a5c261d6e530">header</a></div><div class="ttdeci">static const char header[]</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00087">pose_log.c:87</a></div></div>
+<div class="ttc" id="apose__log_8c_html_ab41bf19330e50c3c7bf3544c53f30971"><div class="ttname"><a href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a></div><div class="ttdeci">static FILE * output</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00077">pose_log.c:77</a></div></div>
+<div class="ttc" id="aserial__tx_8c_html_a64b3d5cd64cf39d736548d644bc73079"><div class="ttname"><a href="serial__tx_8c.html#a64b3d5cd64cf39d736548d644bc73079">output_fd</a></div><div class="ttdeci">static int output_fd</div><div class="ttdef"><b>Definition</b> <a href="serial__tx_8c_source.html#l00039">serial_tx.c:39</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html"><div class="ttname"><a href="structlwir__render__options.html">lwir_render_options</a></div><div class="ttdoc">Display policy for one rendering request; never affects stored samples.</div><div class="ttdef"><b>Definition</b> <a href="lwir__render_8h_source.html#l00103">lwir_render.h:103</a></div></div>
+<div class="ttc" id="ausher_8c_html_a28e3c179a86f337095088b3ca02a2b2a"><div class="ttname"><a href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a></div><div class="ttdeci">bool valid</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00537">usher.c:537</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

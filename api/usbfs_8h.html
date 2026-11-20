@@ -1,0 +1,2828 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/chdkbridge/usbfs.h File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('usbfs_8h.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">usbfs.h File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Minimal header-only Linux usbfs access for one CHDKbridge camera.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;dirent.h&gt;</code><br/>
+<code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &lt;fcntl.h&gt;</code><br/>
+<code>#include &lt;limits.h&gt;</code><br/>
+<code>#include &lt;linux/usbdevice_fs.h&gt;</code><br/>
+<code>#include &lt;poll.h&gt;</code><br/>
+<code>#include &lt;signal.h&gt;</code><br/>
+<code>#include &lt;stdbool.h&gt;</code><br/>
+<code>#include &lt;stddef.h&gt;</code><br/>
+<code>#include &lt;stdint.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;sys/ioctl.h&gt;</code><br/>
+<code>#include &lt;sys/stat.h&gt;</code><br/>
+<code>#include &lt;sys/sysmacros.h&gt;</code><br/>
+<code>#include &lt;time.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for usbfs.h:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="usbfs_8h__incl.png" usemap="#amodules_2chdkbridge_2usbfs_8h"/></div>
+<map id="amodules_2chdkbridge_2usbfs_8h" name="amodules_2chdkbridge_2usbfs_8h">
+<area alt="" coords="1164,36,1159,26,1145,18,1124,11,1097,7,1067,5,1037,7,1010,11,988,18,974,26,970,36,974,45,988,53,1010,60,1037,64,1067,66,1097,64,1124,60,1145,53,1159,45" shape="poly" title="Minimal header-only Linux usbfs access for one CHDKbridge camera."/>
+<area alt="" coords="96,133,94,127,88,121,78,117,65,115,51,114,37,115,24,117,14,121,8,127,5,133,8,138,14,144,24,148,37,150,51,151,65,150,78,148,88,144,94,138" shape="poly" title=" "/>
+<area alt="" coords="967,38,805,45,590,57,350,80,228,96,109,116,100,118,99,113,108,111,227,91,349,75,590,52,805,40,972,37" shape="poly" title=" "/>
+<area alt="" coords="208,133,205,127,199,121,190,117,178,115,164,114,151,115,139,117,129,121,123,127,121,133,123,138,129,144,139,148,151,150,164,151,178,150,190,148,199,144,205,138" shape="poly" title=" "/>
+<area alt="" coords="967,39,824,48,637,61,429,83,221,116,212,118,211,113,220,111,428,77,636,55,824,43,973,39" shape="poly" title=" "/>
+<area alt="" coords="313,133,311,127,305,121,296,117,285,115,272,114,260,115,248,117,239,121,234,127,232,133,234,138,239,144,248,148,260,150,272,151,285,150,296,148,305,144,311,138" shape="poly" title=" "/>
+<area alt="" coords="968,40,841,50,680,63,502,85,325,116,318,118,317,113,324,111,501,79,679,58,841,44,973,40" shape="poly" title=" "/>
+<area alt="" coords="426,133,424,127,418,121,408,117,395,115,381,114,368,115,355,117,345,121,339,127,337,133,339,138,345,144,355,148,368,150,381,151,395,150,408,148,418,144,424,138" shape="poly" title=" "/>
+<area alt="" coords="970,44,730,70,584,90,439,116,430,118,430,113,438,111,583,85,729,64,975,43" shape="poly" title=" "/>
+<area alt="" coords="649,133,644,127,630,121,608,117,580,115,549,114,519,115,491,117,469,121,455,127,450,133,455,138,469,144,491,148,519,150,549,151,580,150,608,148,630,144,644,138" shape="poly" title=" "/>
+<area alt="" coords="987,52,634,118,633,113,982,52" shape="poly" title=" "/>
+<area alt="" coords="746,133,745,127,739,121,731,117,721,115,709,114,698,115,688,117,680,121,674,127,672,133,674,138,680,144,688,148,698,150,709,151,721,150,731,148,739,144,745,138" shape="poly" title=" "/>
+<area alt="" coords="992,54,880,83,760,116,753,118,752,113,758,111,879,78,986,54" shape="poly" title=" "/>
+<area alt="" coords="864,133,862,127,855,121,845,117,832,115,817,114,803,115,790,117,780,121,773,127,771,133,773,138,780,144,790,148,803,150,817,151,832,150,845,148,855,144,862,138" shape="poly" title=" "/>
+<area alt="" coords="1009,59,865,116,864,111,1004,60" shape="poly" title=" "/>
+<area alt="" coords="994,133,991,127,984,121,972,117,958,115,941,114,925,115,911,117,899,121,892,127,889,133,892,138,899,144,911,148,925,150,941,151,958,150,972,148,984,144,991,138" shape="poly" title=" "/>
+<area alt="" coords="1033,63,976,108,974,103,1028,65" shape="poly" title=" "/>
+<area alt="" coords="1115,133,1113,127,1106,121,1095,117,1082,115,1067,114,1052,115,1038,117,1028,121,1021,127,1019,133,1021,138,1028,144,1038,148,1052,150,1067,151,1082,150,1095,148,1106,144,1113,138" shape="poly" title=" "/>
+<area alt="" coords="1069,64,1069,100,1065,96,1065,68" shape="poly" title=" "/>
+<area alt="" coords="1230,133,1227,127,1221,121,1211,117,1198,115,1184,114,1170,115,1157,117,1147,121,1141,127,1139,133,1141,138,1147,144,1157,148,1170,150,1184,151,1198,150,1211,148,1221,144,1227,138" shape="poly" title=" "/>
+<area alt="" coords="1102,62,1155,106,1150,105,1100,67" shape="poly" title=" "/>
+<area alt="" coords="1339,133,1337,127,1331,121,1321,117,1309,115,1296,114,1283,115,1271,117,1262,121,1256,127,1253,133,1256,138,1262,144,1271,148,1283,150,1296,151,1309,150,1321,148,1331,144,1337,138" shape="poly" title=" "/>
+<area alt="" coords="1125,58,1255,113,1249,113,1124,63" shape="poly" title=" "/>
+<area alt="" coords="1453,133,1451,127,1444,121,1434,117,1422,115,1408,114,1394,115,1382,117,1372,121,1366,127,1363,133,1366,138,1372,144,1382,148,1394,150,1408,151,1422,150,1434,148,1444,144,1451,138" shape="poly" title=" "/>
+<area alt="" coords="1140,53,1352,111,1361,116,1356,116,1350,116,1140,59" shape="poly" title=" "/>
+<area alt="" coords="1592,133,1590,127,1581,121,1569,117,1553,115,1535,114,1517,115,1501,117,1488,121,1480,127,1477,133,1480,138,1488,144,1501,148,1517,150,1535,151,1553,150,1569,148,1581,144,1590,138" shape="poly" title=" "/>
+<area alt="" coords="1151,49,1298,76,1466,111,1479,117,1474,116,1465,116,1297,82,1150,54" shape="poly" title=" "/>
+<area alt="" coords="1728,133,1726,127,1718,121,1705,117,1689,115,1672,114,1655,115,1639,117,1627,121,1619,127,1616,133,1619,138,1627,144,1639,148,1655,150,1672,151,1689,150,1705,148,1718,144,1726,138" shape="poly" title=" "/>
+<area alt="" coords="1158,44,1363,71,1605,111,1618,116,1612,116,1604,116,1362,76,1158,49" shape="poly" title=" "/>
+<area alt="" coords="1923,133,1919,127,1907,121,1888,117,1864,115,1837,114,1811,115,1787,117,1768,121,1756,127,1752,133,1756,138,1768,144,1787,148,1811,150,1837,151,1864,150,1888,148,1907,144,1919,138" shape="poly" title=" "/>
+<area alt="" coords="1159,43,1421,70,1741,111,1763,117,1757,117,1740,116,1420,76,1159,48" shape="poly" title=" "/>
+<area alt="" coords="2029,133,2027,127,2021,121,2012,117,2001,115,1988,114,1976,115,1964,117,1955,121,1950,127,1948,133,1950,138,1955,144,1964,148,1976,150,1988,151,2001,150,2012,148,2021,144,2027,138" shape="poly" title=" "/>
+<area alt="" coords="1164,36,1314,41,1507,53,1721,76,1830,92,1935,111,1946,116,1940,115,1934,116,1829,97,1721,81,1507,59,1314,46,1164,41" shape="poly" title=" "/>
+<area alt="" coords="2148,133,2145,127,2139,121,2128,117,2115,115,2100,114,2085,115,2072,117,2062,121,2055,127,2053,133,2055,138,2062,144,2072,148,2085,150,2100,151,2115,150,2128,148,2139,144,2145,138" shape="poly" title=" "/>
+<area alt="" coords="1164,35,1331,40,1549,53,1795,75,1919,91,2041,111,2053,116,2048,116,2040,116,1918,96,1794,80,1549,58,1331,46,1164,41" shape="poly" title=" "/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="usbfs_8h__dep__incl.png" usemap="#amodules_2chdkbridge_2usbfs_8hdep"/></div>
+<map id="amodules_2chdkbridge_2usbfs_8hdep" name="amodules_2chdkbridge_2usbfs_8hdep">
+<area alt="" coords="200,36,195,26,181,18,160,11,132,7,102,5,72,7,45,11,24,18,10,26,5,36,10,45,24,53,45,60,72,64,102,66,132,64,160,60,181,53,195,45" shape="poly" title="Minimal header-only Linux usbfs access for one CHDKbridge camera."/>
+<area alt="" coords="200,144,195,135,181,126,160,119,132,115,102,114,72,115,45,119,24,126,10,135,5,144,10,153,24,162,45,168,72,173,102,174,132,173,160,168,181,162,195,153" href="chdkbridge_8c.html" shape="poly" title="Standalone USB PTP client for CHDK JPEG capture and normalized zoom."/>
+<area alt="" coords="104,79,105,114,100,112,101,84" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="usbfs_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-nested-classes"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:usbfs_5Fdevice" id="r_usbfs_5Fdevice"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structusbfs__device.html">usbfs_device</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">One enumerated USB device; a value copy, valid after enumeration ends.  <a href="structusbfs__device.html#details">More...</a><br/></td></tr>
+<tr class="memitem:usbfs_5Fendpoint" id="r_usbfs_5Fendpoint"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structusbfs__endpoint.html">usbfs_endpoint</a></td></tr>
+<tr class="memitem:usbfs_5Finterface" id="r_usbfs_5Finterface"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structusbfs__interface.html">usbfs_interface</a></td></tr>
+<tr class="memitem:usbfs_5Fdevices" id="r_usbfs_5Fdevices"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structusbfs__devices.html">usbfs_devices</a></td></tr>
+<tr class="memitem:usbfs_5Fhandle" id="r_usbfs_5Fhandle"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structusbfs__handle.html">usbfs_handle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Open usbfs file; fd is -1 when closed or dropped after a lost URB.  <a href="structusbfs__handle.html#details">More...</a><br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-define-members"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aea47247324d316888c3a20ca7dd0544d" id="r_aea47247324d316888c3a20ca7dd0544d"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aea47247324d316888c3a20ca7dd0544d">USBFS_SYSFS_ROOT</a>   "/sys/bus/<a class="el" href="chdkbridge_8c.html#a397bd9099191cbf659900d6b9914e8f4">usb</a>/devices"</td></tr>
+<tr class="memitem:a9c32c62f7b229e4af37241b85f9eca86" id="r_a9c32c62f7b229e4af37241b85f9eca86"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c32c62f7b229e4af37241b85f9eca86">USBFS_DEVICE_ROOT</a>   "/dev/bus/usb"</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-enum-members"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a528f218e52ac9303b1486cbfce1da8aa" id="r_a528f218e52ac9303b1486cbfce1da8aa"><td align="right" class="memItemLeft" valign="top">enum  </td><td class="memItemRight" valign="bottom">{ <br/>
+  <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaa4c0c0af78154991382343f07593fb0bc">USBFS_SUCCESS</a> = 0
+, <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaaf3e4d62ed79a45d0e57a8e42e5170e9f">USBFS_ERROR_IO</a> = -1
+, <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaa9cc5bb363768c995a269a3f494826360">USBFS_ERROR_INVALID_PARAM</a> = -2
+, <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaa271c4d637ea1e1f36d4fdab94191caae">USBFS_ERROR_ACCESS</a> = -3
+, <br/>
+  <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaaaf5a774c89b63fee4a3a93b2ffc18d9a">USBFS_ERROR_NO_DEVICE</a> = -4
+, <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaa9dc781c7682726f9e7cc9fdfaabaa7bd">USBFS_ERROR_NOT_FOUND</a> = -5
+, <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaa710e7be08dc7837978e4585069f3ca98">USBFS_ERROR_BUSY</a> = -6
+, <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaabd079b17e7d1e2dd38b2b0252f3915d3">USBFS_ERROR_TIMEOUT</a> = -7
+, <br/>
+  <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaa67f58d81838d99dd8478b8d0313ff845">USBFS_ERROR_OVERFLOW</a> = -8
+, <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaa103883273608bbbaf33f24c4ba51e3be">USBFS_ERROR_PIPE</a> = -9
+, <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaac8f90eb98784065988a7efb4c8547b6e">USBFS_ERROR_INTERRUPTED</a> = -10
+, <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaa6d11588e0342d6095337a148c1184498">USBFS_ERROR_NO_MEM</a> = -11
+, <br/>
+  <a class="el" href="#a528f218e52ac9303b1486cbfce1da8aaa951662554c0fac0e1c0912c941d0eb8d">USBFS_ERROR_OTHER</a> = -99
+<br/>
+ }</td></tr>
+<tr class="memdesc:a528f218e52ac9303b1486cbfce1da8aa"><td class="mdescLeft"> </td><td class="mdescRight">Result codes; negative values are errors, as in libusb.  <a href="#a528f218e52ac9303b1486cbfce1da8aa">More...</a><br/></td></tr>
+<tr class="memitem:aa59e378621d921b33c1cf06bf1462f16" id="r_aa59e378621d921b33c1cf06bf1462f16"><td align="right" class="memItemLeft" valign="top">enum  </td><td class="memItemRight" valign="bottom">{ <br/>
+  <a class="el" href="#aa59e378621d921b33c1cf06bf1462f16a9bbc198424aee5a8eadc9631381e5408">USBFS_ENDPOINT_IN</a> = 0x80
+, <a class="el" href="#aa59e378621d921b33c1cf06bf1462f16a2bc64c37ecc6eb101c3842032ffe63f2">USBFS_TRANSFER_TYPE_MASK</a> = 0x03
+, <a class="el" href="#aa59e378621d921b33c1cf06bf1462f16a42b3f4c13d3eda726c0a94016cd37b1e">USBFS_TRANSFER_TYPE_BULK</a> = 2
+, <a class="el" href="#aa59e378621d921b33c1cf06bf1462f16ada464aaefa666e39b6ab8388362a5633">USBFS_TRANSFER_TYPE_INTERRUPT</a> = 3
+, <br/>
+  <a class="el" href="#aa59e378621d921b33c1cf06bf1462f16ae58b9383c8cbe75223d9d38d4238103c">USBFS_MAX_ENDPOINTS</a> = 30
+, <a class="el" href="#aa59e378621d921b33c1cf06bf1462f16ae8f5c4a702003c08f316fdbc267ee2f2">USBFS_MAX_PORTS</a> = 7
+, <a class="el" href="#aa59e378621d921b33c1cf06bf1462f16afc260fec2ef67b9500d9b431cad510d6">USBFS_DESCRIPTOR_CAPACITY</a> = 16384
+, <a class="el" href="#aa59e378621d921b33c1cf06bf1462f16a89a1df51b24b3293099053fd6594f67f">USBFS_LEGACY_TRANSFER</a> = 16384
+, <br/>
+  <a class="el" href="#aa59e378621d921b33c1cf06bf1462f16a4682320c6f59d975de4c97a74cb1ceda">USBFS_DISCARD_MS</a> = 1000
+, <a class="el" href="#aa59e378621d921b33c1cf06bf1462f16a7e79ff31f3912fdc22b8eb2e5b5411e0">USBFS_DEVICE_MAJOR</a> = 189
+<br/>
+ }</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a489f906f7a61acbda7948a83dda7e7a4" id="r_a489f906f7a61acbda7948a83dda7e7a4"><td align="right" class="memItemLeft" valign="top">static const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a489f906f7a61acbda7948a83dda7e7a4">usbfs_error_name</a> (int <a class="el" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>)</td></tr>
+<tr class="memdesc:a489f906f7a61acbda7948a83dda7e7a4"><td class="mdescLeft"> </td><td class="mdescRight">Get the diagnostic name of a usbfs result.  <br/></td></tr>
+<tr class="memitem:a386d0e5420533b7a3744a38f1f0850cd" id="r_a386d0e5420533b7a3744a38f1f0850cd"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a386d0e5420533b7a3744a38f1f0850cd">usbfs_available</a> (void)</td></tr>
+<tr class="memdesc:a386d0e5420533b7a3744a38f1f0850cd"><td class="mdescLeft"> </td><td class="mdescRight">True when sysfs device listing and usbfs nodes are reachable.  <br/></td></tr>
+<tr class="memitem:abc7842e4d69a2cce21c840434a718d3a" id="r_abc7842e4d69a2cce21c840434a718d3a"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#abc7842e4d69a2cce21c840434a718d3a">usbfs_read_number</a> (const char *device, const char *attribute, int base, unsigned long maximum, unsigned long *value)</td></tr>
+<tr class="memdesc:abc7842e4d69a2cce21c840434a718d3a"><td class="mdescLeft"> </td><td class="mdescRight">Read one bounded unsigned numeric sysfs attribute.  <br/></td></tr>
+<tr class="memitem:a03ae2530c4f895c4afce9b0d527f730b" id="r_a03ae2530c4f895c4afce9b0d527f730b"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a03ae2530c4f895c4afce9b0d527f730b">usbfs_parse_name</a> (const char *name, struct <a class="el" href="structusbfs__device.html">usbfs_device</a> *device)</td></tr>
+<tr class="memdesc:a03ae2530c4f895c4afce9b0d527f730b"><td class="mdescLeft"> </td><td class="mdescRight">Parse "BUS-PORT[.PORT...]"; rejects root hubs and interface entries.  <br/></td></tr>
+<tr class="memitem:a9b73032e5294f4810d26294f6f2d5e2f" id="r_a9b73032e5294f4810d26294f6f2d5e2f"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b73032e5294f4810d26294f6f2d5e2f">usbfs_devices_open</a> (struct <a class="el" href="structusbfs__devices.html">usbfs_devices</a> *devices)</td></tr>
+<tr class="memdesc:a9b73032e5294f4810d26294f6f2d5e2f"><td class="mdescLeft"> </td><td class="mdescRight">Start a streaming sysfs enumeration.  <br/></td></tr>
+<tr class="memitem:aee306e190ce88c126e50e87247674cb7" id="r_aee306e190ce88c126e50e87247674cb7"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aee306e190ce88c126e50e87247674cb7">usbfs_devices_next</a> (struct <a class="el" href="structusbfs__devices.html">usbfs_devices</a> *devices, struct <a class="el" href="structusbfs__device.html">usbfs_device</a> *device)</td></tr>
+<tr class="memitem:a965e18010580c6c72ff1674d1878aef1" id="r_a965e18010580c6c72ff1674d1878aef1"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a965e18010580c6c72ff1674d1878aef1">usbfs_devices_close</a> (struct <a class="el" href="structusbfs__devices.html">usbfs_devices</a> *devices)</td></tr>
+<tr class="memdesc:a965e18010580c6c72ff1674d1878aef1"><td class="mdescLeft"> </td><td class="mdescRight">Release the sysfs enumeration stream.  <br/></td></tr>
+<tr class="memitem:a1b7b5410acea1efffec221eee646e4a1" id="r_a1b7b5410acea1efffec221eee646e4a1"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b7b5410acea1efffec221eee646e4a1">usbfs_select_config</a> (const uint8_t *descriptors, size_t length, unsigned value, const uint8_t **config, size_t *config_length)</td></tr>
+<tr class="memdesc:a1b7b5410acea1efffec221eee646e4a1"><td class="mdescLeft"> </td><td class="mdescRight">Locate configuration <code class="param">value</code> in raw sysfs descriptors.  <br/></td></tr>
+<tr class="memitem:a84cd4eb217eaacd073b5d06f632a390c" id="r_a84cd4eb217eaacd073b5d06f632a390c"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a84cd4eb217eaacd073b5d06f632a390c">usbfs_active_config</a> (const struct <a class="el" href="structusbfs__device.html">usbfs_device</a> *device, uint8_t *buffer, size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, const uint8_t **config, size_t *config_length)</td></tr>
+<tr class="memdesc:a84cd4eb217eaacd073b5d06f632a390c"><td class="mdescLeft"> </td><td class="mdescRight">Read the active configuration into <code class="param">buffer</code>; <code class="param">config</code> points inside it.  <br/></td></tr>
+<tr class="memitem:a16e8667615d8720ffbf113a2c7b9bb03" id="r_a16e8667615d8720ffbf113a2c7b9bb03"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a16e8667615d8720ffbf113a2c7b9bb03">usbfs_next_interface</a> (const uint8_t *config, size_t length, size_t *offset, struct <a class="el" href="structusbfs__interface.html">usbfs_interface</a> *interface)</td></tr>
+<tr class="memdesc:a16e8667615d8720ffbf113a2c7b9bb03"><td class="mdescLeft"> </td><td class="mdescRight">Return the next complete interface/alternate setting in a configuration.  <br/></td></tr>
+<tr class="memitem:abdcff09468852869e213e39707b7898f" id="r_abdcff09468852869e213e39707b7898f"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#abdcff09468852869e213e39707b7898f">usbfs_same_device</a> (const struct <a class="el" href="structusbfs__device.html">usbfs_device</a> *device)</td></tr>
+<tr class="memdesc:abdcff09468852869e213e39707b7898f"><td class="mdescLeft"> </td><td class="mdescRight">Compare a previously discovered USB identity with current sysfs.  <br/></td></tr>
+<tr class="memitem:aa827b9ae0443656bfec29be7ed2413ab" id="r_aa827b9ae0443656bfec29be7ed2413ab"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa827b9ae0443656bfec29be7ed2413ab">usbfs_open</a> (const struct <a class="el" href="structusbfs__device.html">usbfs_device</a> *device, struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle)</td></tr>
+<tr class="memdesc:aa827b9ae0443656bfec29be7ed2413ab"><td class="mdescLeft"> </td><td class="mdescRight">Open the device node, rejecting a node now owned by a different device.  <br/></td></tr>
+<tr class="memitem:afdf3678d305bf738da31ea881ee89292" id="r_afdf3678d305bf738da31ea881ee89292"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#afdf3678d305bf738da31ea881ee89292">usbfs_close</a> (struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle)</td></tr>
+<tr class="memdesc:afdf3678d305bf738da31ea881ee89292"><td class="mdescLeft"> </td><td class="mdescRight">Close the node; the kernel releases claimed interfaces and kills pending URBs.  <br/></td></tr>
+<tr class="memitem:a392121f6142b7645742f360f2c1e005f" id="r_a392121f6142b7645742f360f2c1e005f"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a392121f6142b7645742f360f2c1e005f">usbfs_interface_ioctl</a> (struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle, unsigned long <a class="el" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>, void *argument)</td></tr>
+<tr class="memdesc:a392121f6142b7645742f360f2c1e005f"><td class="mdescLeft"> </td><td class="mdescRight">Run a synchronous interface ioctl and translate its result.  <br/></td></tr>
+<tr class="memitem:afc3aeb0ebc3cf1e6ec99b5fba80ebbdd" id="r_afc3aeb0ebc3cf1e6ec99b5fba80ebbdd"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#afc3aeb0ebc3cf1e6ec99b5fba80ebbdd">usbfs_claim_interface</a> (struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle, int interface)</td></tr>
+<tr class="memdesc:afc3aeb0ebc3cf1e6ec99b5fba80ebbdd"><td class="mdescLeft"> </td><td class="mdescRight">Claim without detaching another owner; EBUSY is reported to the caller.  <br/></td></tr>
+<tr class="memitem:a6c52a8bcb13f9c01b6e8229a20ebf07a" id="r_a6c52a8bcb13f9c01b6e8229a20ebf07a"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c52a8bcb13f9c01b6e8229a20ebf07a">usbfs_release_interface</a> (struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle, int interface)</td></tr>
+<tr class="memdesc:a6c52a8bcb13f9c01b6e8229a20ebf07a"><td class="mdescLeft"> </td><td class="mdescRight">Release the numbered interface on an open device.  <br/></td></tr>
+<tr class="memitem:aebaf67f07de047f5be03ab581aa6505c" id="r_aebaf67f07de047f5be03ab581aa6505c"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aebaf67f07de047f5be03ab581aa6505c">usbfs_set_alternate</a> (struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle, int interface, int alternate)</td></tr>
+<tr class="memdesc:aebaf67f07de047f5be03ab581aa6505c"><td class="mdescLeft"> </td><td class="mdescRight">Select an alternate setting for an interface.  <br/></td></tr>
+<tr class="memitem:aa1c1ebb1f6f91c60bf2b9f68e6811f41" id="r_aa1c1ebb1f6f91c60bf2b9f68e6811f41"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1c1ebb1f6f91c60bf2b9f68e6811f41">usbfs_control_transfer</a> (struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle, uint8_t request_type, uint8_t <a class="el" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>, uint16_t value, uint16_t index, unsigned char *data, uint16_t length, unsigned timeout)</td></tr>
+<tr class="memdesc:aa1c1ebb1f6f91c60bf2b9f68e6811f41"><td class="mdescLeft"> </td><td class="mdescRight">Synchronous control transfer on endpoint zero.  <br/></td></tr>
+<tr class="memitem:a1e3969ab9f462ecaeca39de147fea750" id="r_a1e3969ab9f462ecaeca39de147fea750"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e3969ab9f462ecaeca39de147fea750">usbfs_clear_halt</a> (struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle, unsigned char endpoint)</td></tr>
+<tr class="memdesc:a1e3969ab9f462ecaeca39de147fea750"><td class="mdescLeft"> </td><td class="mdescRight">Clear a halted endpoint of a claimed interface; data toggles are reset by the kernel.  <br/></td></tr>
+<tr class="memitem:ae7e5f615aeeafde729245fe6b6ac4d77" id="r_ae7e5f615aeeafde729245fe6b6ac4d77"><td align="right" class="memItemLeft" valign="top">static uint64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7e5f615aeeafde729245fe6b6ac4d77">usbfs_now_ms</a> (void)</td></tr>
+<tr class="memdesc:ae7e5f615aeeafde729245fe6b6ac4d77"><td class="mdescLeft"> </td><td class="mdescRight">Read the clock used for bulk transfer deadlines.  <br/></td></tr>
+<tr class="memitem:a8199989d3f499ffcb2d61f43956b9401" id="r_a8199989d3f499ffcb2d61f43956b9401"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8199989d3f499ffcb2d61f43956b9401">usbfs_drop</a> (struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle, int <a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>)</td></tr>
+<tr class="memdesc:a8199989d3f499ffcb2d61f43956b9401"><td class="mdescLeft"> </td><td class="mdescRight">Abandon the fd; closing it is the only way the kernel guarantees the URB is gone.  <br/></td></tr>
+<tr class="memitem:a044af5f9a0a7ff28d5f5b81cebbed2fd" id="r_a044af5f9a0a7ff28d5f5b81cebbed2fd"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a044af5f9a0a7ff28d5f5b81cebbed2fd">usbfs_bulk_urb</a> (struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle, unsigned char endpoint, unsigned char *data, int length, int *actual, uint64_t deadline)</td></tr>
+<tr class="memdesc:a044af5f9a0a7ff28d5f5b81cebbed2fd"><td class="mdescLeft"> </td><td class="mdescRight">Submit one bulk URB and wait until it is reaped or <code class="param">deadline</code> passes.  <br/></td></tr>
+<tr class="memitem:a73a48b2c203086f5d9c0fbbef6819651" id="r_a73a48b2c203086f5d9c0fbbef6819651"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a73a48b2c203086f5d9c0fbbef6819651">usbfs_bulk_transfer</a> (struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *handle, unsigned char endpoint, unsigned char *data, int length, int *transferred, unsigned timeout)</td></tr>
+<tr class="memdesc:a73a48b2c203086f5d9c0fbbef6819651"><td class="mdescLeft"> </td><td class="mdescRight">Synchronous bulk transfer with libusb_bulk_transfer() semantics.  <br/></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>Minimal header-only Linux usbfs access for one CHDKbridge camera. </p>
+<p>Discovers devices through sysfs, parses the active configuration, owns one interface and performs synchronous bulk transfers through /dev/bus/usb ioctls. The wrapper allocates no heap storage and creates no threads. </p><dl class="section warning"><dt>Warning</dt><dd>Serialize all access to a handle, including close. A bulk call owns its submitted URB until completion or descriptor teardown; another caller must not reap it or close and reuse the descriptor. </dd></dl>
+<p class="definition">Definition in file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div><a id="doc-define-members" name="doc-define-members"></a><h2 class="groupheader" id="header-doc-define-members">Macro Definition Documentation</h2>
+<a id="a9c32c62f7b229e4af37241b85f9eca86" name="a9c32c62f7b229e4af37241b85f9eca86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c32c62f7b229e4af37241b85f9eca86">◆ </a></span>USBFS_DEVICE_ROOT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USBFS_DEVICE_ROOT   "/dev/bus/usb"</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00051">51</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="aea47247324d316888c3a20ca7dd0544d" name="aea47247324d316888c3a20ca7dd0544d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea47247324d316888c3a20ca7dd0544d">◆ </a></span>USBFS_SYSFS_ROOT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USBFS_SYSFS_ROOT   "/sys/bus/<a class="el" href="chdkbridge_8c.html#a397bd9099191cbf659900d6b9914e8f4">usb</a>/devices"</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00050">50</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="doc-enum-members" name="doc-enum-members"></a><h2 class="groupheader" id="header-doc-enum-members">Enumeration Type Documentation</h2>
+<a id="a528f218e52ac9303b1486cbfce1da8aa" name="a528f218e52ac9303b1486cbfce1da8aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a528f218e52ac9303b1486cbfce1da8aa">◆ </a></span>anonymous enum</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">anonymous enum</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Result codes; negative values are errors, as in libusb. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaa4c0c0af78154991382343f07593fb0bc" name="a528f218e52ac9303b1486cbfce1da8aaa4c0c0af78154991382343f07593fb0bc"></a>USBFS_SUCCESS </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaaf3e4d62ed79a45d0e57a8e42e5170e9f" name="a528f218e52ac9303b1486cbfce1da8aaaf3e4d62ed79a45d0e57a8e42e5170e9f"></a>USBFS_ERROR_IO </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaa9cc5bb363768c995a269a3f494826360" name="a528f218e52ac9303b1486cbfce1da8aaa9cc5bb363768c995a269a3f494826360"></a>USBFS_ERROR_INVALID_PARAM </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaa271c4d637ea1e1f36d4fdab94191caae" name="a528f218e52ac9303b1486cbfce1da8aaa271c4d637ea1e1f36d4fdab94191caae"></a>USBFS_ERROR_ACCESS </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaaaf5a774c89b63fee4a3a93b2ffc18d9a" name="a528f218e52ac9303b1486cbfce1da8aaaaf5a774c89b63fee4a3a93b2ffc18d9a"></a>USBFS_ERROR_NO_DEVICE </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaa9dc781c7682726f9e7cc9fdfaabaa7bd" name="a528f218e52ac9303b1486cbfce1da8aaa9dc781c7682726f9e7cc9fdfaabaa7bd"></a>USBFS_ERROR_NOT_FOUND </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaa710e7be08dc7837978e4585069f3ca98" name="a528f218e52ac9303b1486cbfce1da8aaa710e7be08dc7837978e4585069f3ca98"></a>USBFS_ERROR_BUSY </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaabd079b17e7d1e2dd38b2b0252f3915d3" name="a528f218e52ac9303b1486cbfce1da8aaabd079b17e7d1e2dd38b2b0252f3915d3"></a>USBFS_ERROR_TIMEOUT </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaa67f58d81838d99dd8478b8d0313ff845" name="a528f218e52ac9303b1486cbfce1da8aaa67f58d81838d99dd8478b8d0313ff845"></a>USBFS_ERROR_OVERFLOW </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaa103883273608bbbaf33f24c4ba51e3be" name="a528f218e52ac9303b1486cbfce1da8aaa103883273608bbbaf33f24c4ba51e3be"></a>USBFS_ERROR_PIPE </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaac8f90eb98784065988a7efb4c8547b6e" name="a528f218e52ac9303b1486cbfce1da8aaac8f90eb98784065988a7efb4c8547b6e"></a>USBFS_ERROR_INTERRUPTED </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaa6d11588e0342d6095337a148c1184498" name="a528f218e52ac9303b1486cbfce1da8aaa6d11588e0342d6095337a148c1184498"></a>USBFS_ERROR_NO_MEM </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a528f218e52ac9303b1486cbfce1da8aaa951662554c0fac0e1c0912c941d0eb8d" name="a528f218e52ac9303b1486cbfce1da8aaa951662554c0fac0e1c0912c941d0eb8d"></a>USBFS_ERROR_OTHER </td><td class="fielddoc"></td></tr>
+</table>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00054">54</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="aa59e378621d921b33c1cf06bf1462f16" name="aa59e378621d921b33c1cf06bf1462f16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa59e378621d921b33c1cf06bf1462f16">◆ </a></span>anonymous enum</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">anonymous enum</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa59e378621d921b33c1cf06bf1462f16a9bbc198424aee5a8eadc9631381e5408" name="aa59e378621d921b33c1cf06bf1462f16a9bbc198424aee5a8eadc9631381e5408"></a>USBFS_ENDPOINT_IN </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa59e378621d921b33c1cf06bf1462f16a2bc64c37ecc6eb101c3842032ffe63f2" name="aa59e378621d921b33c1cf06bf1462f16a2bc64c37ecc6eb101c3842032ffe63f2"></a>USBFS_TRANSFER_TYPE_MASK </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa59e378621d921b33c1cf06bf1462f16a42b3f4c13d3eda726c0a94016cd37b1e" name="aa59e378621d921b33c1cf06bf1462f16a42b3f4c13d3eda726c0a94016cd37b1e"></a>USBFS_TRANSFER_TYPE_BULK </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa59e378621d921b33c1cf06bf1462f16ada464aaefa666e39b6ab8388362a5633" name="aa59e378621d921b33c1cf06bf1462f16ada464aaefa666e39b6ab8388362a5633"></a>USBFS_TRANSFER_TYPE_INTERRUPT </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa59e378621d921b33c1cf06bf1462f16ae58b9383c8cbe75223d9d38d4238103c" name="aa59e378621d921b33c1cf06bf1462f16ae58b9383c8cbe75223d9d38d4238103c"></a>USBFS_MAX_ENDPOINTS </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa59e378621d921b33c1cf06bf1462f16ae8f5c4a702003c08f316fdbc267ee2f2" name="aa59e378621d921b33c1cf06bf1462f16ae8f5c4a702003c08f316fdbc267ee2f2"></a>USBFS_MAX_PORTS </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa59e378621d921b33c1cf06bf1462f16afc260fec2ef67b9500d9b431cad510d6" name="aa59e378621d921b33c1cf06bf1462f16afc260fec2ef67b9500d9b431cad510d6"></a>USBFS_DESCRIPTOR_CAPACITY </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aa59e378621d921b33c1cf06bf1462f16a89a1df51b24b3293099053fd6594f67f" name="aa59e378621d921b33c1cf06bf1462f16a89a1df51b24b3293099053fd6594f67f"></a>USBFS_LEGACY_TRANSFER </td><td class="fielddoc"><p>Per-URB limit without NO_PACKET_SIZE_LIM. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa59e378621d921b33c1cf06bf1462f16a4682320c6f59d975de4c97a74cb1ceda" name="aa59e378621d921b33c1cf06bf1462f16a4682320c6f59d975de4c97a74cb1ceda"></a>USBFS_DISCARD_MS </td><td class="fielddoc"><p>Grace for a cancelled URB before the fd is dropped. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa59e378621d921b33c1cf06bf1462f16a7e79ff31f3912fdc22b8eb2e5b5411e0" name="aa59e378621d921b33c1cf06bf1462f16a7e79ff31f3912fdc22b8eb2e5b5411e0"></a>USBFS_DEVICE_MAJOR </td><td class="fielddoc"></td></tr>
+</table>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00062">62</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="a84cd4eb217eaacd073b5d06f632a390c" name="a84cd4eb217eaacd073b5d06f632a390c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84cd4eb217eaacd073b5d06f632a390c">◆ </a></span>usbfs_active_config()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_active_config </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structusbfs__device.html">usbfs_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint8_t *</td> <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t **</td> <td class="paramname"><span class="paramname"><em>config</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t *</td> <td class="paramname"><span class="paramname"><em>config_length</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read the active configuration into <code class="param">buffer</code>; <code class="param">config</code> points inside it. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00256">256</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a386d0e5420533b7a3744a38f1f0850cd" name="a386d0e5420533b7a3744a38f1f0850cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a386d0e5420533b7a3744a38f1f0850cd">◆ </a></span>usbfs_available()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool usbfs_available </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>True when sysfs device listing and usbfs nodes are reachable. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00127">127</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a73a48b2c203086f5d9c0fbbef6819651" name="a73a48b2c203086f5d9c0fbbef6819651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73a48b2c203086f5d9c0fbbef6819651">◆ </a></span>usbfs_bulk_transfer()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_bulk_transfer </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned char</td> <td class="paramname"><span class="paramname"><em>endpoint</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned char *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>length</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int *</td> <td class="paramname"><span class="paramname"><em>transferred</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>timeout</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Synchronous bulk transfer with libusb_bulk_transfer() semantics. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">handle</td><td>Serialized device handle holding the interface claim. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">endpoint</td><td>Bulk endpoint address including the direction bit. </td></tr>
+<tr><td class="paramdir">[in,out]</td><td class="paramname">data</td><td>Buffer for <code class="param">length</code> bytes. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">length</td><td>Requested bytes, nonnegative. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">transferred</td><td>Required byte count; may be nonzero on failure. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">timeout</td><td>Nonzero total timeout in milliseconds. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>USBFS_SUCCESS or a negative wrapper error.</dd></dl>
+<p>IN transfers are capped at one URB; OUT transfers are split only on kernels without NO_PACKET_SIZE_LIM, sharing one deadline. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00563">563</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a044af5f9a0a7ff28d5f5b81cebbed2fd" name="a044af5f9a0a7ff28d5f5b81cebbed2fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a044af5f9a0a7ff28d5f5b81cebbed2fd">◆ </a></span>usbfs_bulk_urb()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_bulk_urb </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned char</td> <td class="paramname"><span class="paramname"><em>endpoint</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned char *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>length</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int *</td> <td class="paramname"><span class="paramname"><em>actual</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>deadline</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Submit one bulk URB and wait until it is reaped or <code class="param">deadline</code> passes. </p>
+<p>On expiry the URB is discarded and reaped, preserving any bytes already received. Data reaches <code class="param">data</code> only when the URB is reaped, so a URB that cannot be reaped within the discard grace is made harmless by closing. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00494">494</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="afc3aeb0ebc3cf1e6ec99b5fba80ebbdd" name="afc3aeb0ebc3cf1e6ec99b5fba80ebbdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc3aeb0ebc3cf1e6ec99b5fba80ebbdd">◆ </a></span>usbfs_claim_interface()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_claim_interface </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>interface</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Claim without detaching another owner; EBUSY is reported to the caller. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00400">400</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a1e3969ab9f462ecaeca39de147fea750" name="a1e3969ab9f462ecaeca39de147fea750"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e3969ab9f462ecaeca39de147fea750">◆ </a></span>usbfs_clear_halt()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_clear_halt </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned char</td> <td class="paramname"><span class="paramname"><em>endpoint</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Clear a halted endpoint of a claimed interface; data toggles are reset by the kernel. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00465">465</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="afdf3678d305bf738da31ea881ee89292" name="afdf3678d305bf738da31ea881ee89292"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdf3678d305bf738da31ea881ee89292">◆ </a></span>usbfs_close()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void usbfs_close </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Close the node; the kernel releases claimed interfaces and kills pending URBs. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00371">371</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="aa1c1ebb1f6f91c60bf2b9f68e6811f41" name="aa1c1ebb1f6f91c60bf2b9f68e6811f41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1c1ebb1f6f91c60bf2b9f68e6811f41">◆ </a></span>usbfs_control_transfer()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_control_transfer </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint8_t</td> <td class="paramname"><span class="paramname"><em>request_type</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint8_t</td> <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint16_t</td> <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint16_t</td> <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned char *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint16_t</td> <td class="paramname"><span class="paramname"><em>length</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>timeout</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Synchronous control transfer on endpoint zero. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">handle</td><td>Serialized device handle. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">request_type</td><td>USB bmRequestType, including direction. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">request</td><td>USB bRequest. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">value</td><td>USB wValue. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">index</td><td>USB wIndex. </td></tr>
+<tr><td class="paramdir">[in,out]</td><td class="paramname">data</td><td>Caller buffer; may be NULL only for a zero-length transfer. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">length</td><td>Size of the data stage in bytes. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">timeout</td><td>Nonzero kernel transfer timeout in milliseconds. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Bytes transferred (&gt;= 0) or a negative USBFS error.</dd></dl>
+<p>A short successful transfer can be meaningful; callers validate the returned length against the particular request's contract. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00444">444</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a965e18010580c6c72ff1674d1878aef1" name="a965e18010580c6c72ff1674d1878aef1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a965e18010580c6c72ff1674d1878aef1">◆ </a></span>usbfs_devices_close()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void usbfs_devices_close </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__devices.html">usbfs_devices</a> *</td> <td class="paramname"><span class="paramname"><em>devices</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Release the sysfs enumeration stream. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">devices</td><td>Initialized iterator.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Clear the stream pointer so repeated cleanup is safe. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00225">225</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="aee306e190ce88c126e50e87247674cb7" name="aee306e190ce88c126e50e87247674cb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee306e190ce88c126e50e87247674cb7">◆ </a></span>usbfs_devices_next()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_devices_next </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__devices.html">usbfs_devices</a> *</td> <td class="paramname"><span class="paramname"><em>devices</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structusbfs__device.html">usbfs_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>1 with a device, 0 at the end, or a negative error. Vanishing devices are skipped. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00200">200</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a9b73032e5294f4810d26294f6f2d5e2f" name="a9b73032e5294f4810d26294f6f2d5e2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b73032e5294f4810d26294f6f2d5e2f">◆ </a></span>usbfs_devices_open()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_devices_open </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__devices.html">usbfs_devices</a> *</td> <td class="paramname"><span class="paramname"><em>devices</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Start a streaming sysfs enumeration. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[out]</td><td class="paramname">devices</td><td>Iterator receiving the directory stream. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>USBFS_SUCCESS or a negative access/I/O error.</dd></dl>
+<p>Scan at iteration time rather than allocating a device list. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00192">192</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a8199989d3f499ffcb2d61f43956b9401" name="a8199989d3f499ffcb2d61f43956b9401"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8199989d3f499ffcb2d61f43956b9401">◆ </a></span>usbfs_drop()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_drop </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>result</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Abandon the fd; closing it is the only way the kernel guarantees the URB is gone. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00482">482</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a489f906f7a61acbda7948a83dda7e7a4" name="a489f906f7a61acbda7948a83dda7e7a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a489f906f7a61acbda7948a83dda7e7a4">◆ </a></span>usbfs_error_name()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const char * usbfs_error_name </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>error</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Get the diagnostic name of a usbfs result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">error</td><td>Result from this wrapper. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Borrowed static name, with OTHER for unknown values.</dd></dl>
+<p>Keep the diagnostic vocabulary stable independently of errno. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00107">107</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a392121f6142b7645742f360f2c1e005f" name="a392121f6142b7645742f360f2c1e005f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a392121f6142b7645742f360f2c1e005f">◆ </a></span>usbfs_interface_ioctl()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_interface_ioctl </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned long</td> <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>argument</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Run a synchronous interface ioctl and translate its result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">handle</td><td>Serialized open device handle. </td></tr>
+<tr><td class="paramname">request</td><td>Linux usbfs ioctl number. </td></tr>
+<tr><td class="paramname">argument</td><td>Request-specific argument storage. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>USBFS_SUCCESS or a negative wrapper error.</dd></dl>
+<p>Retry interruptions, preserving the distinction between busy, disconnected and inaccessible devices for the calling policy. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00384">384</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a16e8667615d8720ffbf113a2c7b9bb03" name="a16e8667615d8720ffbf113a2c7b9bb03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16e8667615d8720ffbf113a2c7b9bb03">◆ </a></span>usbfs_next_interface()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool usbfs_next_interface </td>
+<td>(</td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>config</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>length</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t *</td> <td class="paramname"><span class="paramname"><em>offset</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structusbfs__interface.html">usbfs_interface</a> *</td> <td class="paramname"><span class="paramname"><em>interface</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Return the next complete interface/alternate setting in a configuration. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">config</td><td>Borrowed descriptor block for the active configuration. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">length</td><td>Readable bytes in <code class="param">config</code>. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">offset</td><td>Start with 0; advanced past the returned interface. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">interface</td><td>Parsed interface; use only when the function returns true. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when a complete interface was found.</dd></dl>
+<p>Interfaces whose endpoint descriptors disagree with bNumEndpoints are skipped. Parsing stops at the first malformed descriptor header. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00293">293</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="ae7e5f615aeeafde729245fe6b6ac4d77" name="ae7e5f615aeeafde729245fe6b6ac4d77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7e5f615aeeafde729245fe6b6ac4d77">◆ </a></span>usbfs_now_ms()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint64_t usbfs_now_ms </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read the clock used for bulk transfer deadlines. </p>
+<dl class="section return"><dt>Returns</dt><dd>Monotonic milliseconds, or zero on failure.</dd></dl>
+<p>Keep a single time base across submit, wait and discard. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00474">474</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="aa827b9ae0443656bfec29be7ed2413ab" name="aa827b9ae0443656bfec29be7ed2413ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa827b9ae0443656bfec29be7ed2413ab">◆ </a></span>usbfs_open()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_open </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structusbfs__device.html">usbfs_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Open the device node, rejecting a node now owned by a different device. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00343">343</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a03ae2530c4f895c4afce9b0d527f730b" name="a03ae2530c4f895c4afce9b0d527f730b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03ae2530c4f895c4afce9b0d527f730b">◆ </a></span>usbfs_parse_name()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool usbfs_parse_name </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structusbfs__device.html">usbfs_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Parse "BUS-PORT[.PORT...]"; rejects root hubs and interface entries. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00166">166</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="abc7842e4d69a2cce21c840434a718d3a" name="abc7842e4d69a2cce21c840434a718d3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc7842e4d69a2cce21c840434a718d3a">◆ </a></span>usbfs_read_number()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool usbfs_read_number </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>attribute</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>base</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned long</td> <td class="paramname"><span class="paramname"><em>maximum</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned long *</td> <td class="paramname"><span class="paramname"><em>value</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read one bounded unsigned numeric sysfs attribute. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">device</td><td>Sysfs device directory name. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">attribute</td><td>Attribute basename. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">base</td><td>Number base, 10 or 16 for supported callers. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">maximum</td><td>Largest acceptable value. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Result written only on success. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the attribute could be read and parsed in range.</dd></dl>
+<p>Allow the newline used by sysfs, but reject signs and nonnumeric prefixes before conversion. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00141">141</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a6c52a8bcb13f9c01b6e8229a20ebf07a" name="a6c52a8bcb13f9c01b6e8229a20ebf07a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c52a8bcb13f9c01b6e8229a20ebf07a">◆ </a></span>usbfs_release_interface()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_release_interface </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>interface</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Release the numbered interface on an open device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">handle</td><td>Serialized device handle. </td></tr>
+<tr><td class="paramname">interface</td><td>Nonnegative USB interface number. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>USBFS_SUCCESS or a negative wrapper error.</dd></dl>
+<p>Release the claim without closing the device descriptor. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00411">411</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="abdcff09468852869e213e39707b7898f" name="abdcff09468852869e213e39707b7898f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdcff09468852869e213e39707b7898f">◆ </a></span>usbfs_same_device()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool usbfs_same_device </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structusbfs__device.html">usbfs_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Compare a previously discovered USB identity with current sysfs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Device snapshot with sysfs name, bus, address and IDs. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the checked attributes still match.</dd></dl>
+<p>Recheck after opening because disconnects and re-enumeration can invalidate a previously discovered bus address. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00333">333</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="a1b7b5410acea1efffec221eee646e4a1" name="a1b7b5410acea1efffec221eee646e4a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b7b5410acea1efffec221eee646e4a1">◆ </a></span>usbfs_select_config()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_select_config </td>
+<td>(</td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>descriptors</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>length</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t **</td> <td class="paramname"><span class="paramname"><em>config</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t *</td> <td class="paramname"><span class="paramname"><em>config_length</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Locate configuration <code class="param">value</code> in raw sysfs descriptors. </p>
+<p>sysfs stores the device descriptor followed by every configuration in bus (little-endian) order; a short final configuration is clamped. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00236">236</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+<a id="aebaf67f07de047f5be03ab581aa6505c" name="aebaf67f07de047f5be03ab581aa6505c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebaf67f07de047f5be03ab581aa6505c">◆ </a></span>usbfs_set_alternate()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int usbfs_set_alternate </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusbfs__handle.html">usbfs_handle</a> *</td> <td class="paramname"><span class="paramname"><em>handle</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>interface</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>alternate</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Select an alternate setting for an interface. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">handle</td><td>Serialized device handle. </td></tr>
+<tr><td class="paramname">interface</td><td>Nonnegative USB interface number. </td></tr>
+<tr><td class="paramname">alternate</td><td>Nonnegative alternate-setting number. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>USBFS_SUCCESS or a negative wrapper error.</dd></dl>
+<p>The caller must pair the setting with its matching endpoint descriptors. </p>
+<p class="definition">Definition at line <a class="el" href="usbfs_8h_source.html#l00423">423</a> of file <a class="el" href="usbfs_8h_source.html">usbfs.h</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

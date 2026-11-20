@@ -1,0 +1,3207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/lwir_cam/lwir_device_v4l2.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('lwir__device__v4l2_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">lwir_device_v4l2.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Native Linux UVC acquisition with bounded mapped-buffer ownership.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include "<a class="el" href="lwir__device_8h_source.html">lwir_device.h</a>"</code><br/>
+<code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &lt;time.h&gt;</code><br/>
+<code>#include &lt;linux/videodev2.h&gt;</code><br/>
+<code>#include &lt;linux/usbdevice_fs.h&gt;</code><br/>
+<code>#include &lt;fcntl.h&gt;</code><br/>
+<code>#include &lt;limits.h&gt;</code><br/>
+<code>#include &lt;poll.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;sys/file.h&gt;</code><br/>
+<code>#include &lt;sys/ioctl.h&gt;</code><br/>
+<code>#include &lt;sys/mman.h&gt;</code><br/>
+<code>#include &lt;sys/stat.h&gt;</code><br/>
+<code>#include &lt;sys/sysmacros.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for lwir_device_v4l2.c:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="lwir__device__v4l2_8c__incl.png" usemap="#amodules_2lwir__cam_2lwir__device__v4l2_8c"/></div>
+<map id="amodules_2lwir__cam_2lwir__device__v4l2_8c" name="amodules_2lwir__cam_2lwir__device__v4l2_8c">
+<area alt="" coords="1448,36,1443,26,1428,18,1404,11,1375,7,1342,5,1309,7,1279,11,1256,18,1241,26,1236,36,1241,45,1256,53,1279,60,1309,64,1342,66,1375,64,1404,60,1428,53,1443,45" shape="poly" title="Native Linux UVC acquisition with bounded mapped-buffer ownership."/>
+<area alt="" coords="324,133,321,127,311,121,296,117,276,115,255,114,234,115,215,117,200,121,190,127,186,133,190,138,200,144,215,148,234,150,255,151,276,150,296,148,311,144,321,138" href="lwir__device_8h.html" shape="poly" title="Tiny1C/TDK acquisition and Tiny1C state, without image or mission logic."/>
+<area alt="" coords="1234,41,1064,50,839,64,588,86,336,116,321,119,319,114,335,111,588,80,839,59,1064,45,1239,40" shape="poly" title=" "/>
+<area alt="" coords="435,133,432,127,426,121,417,117,405,115,391,114,378,115,366,117,356,121,350,127,348,133,350,138,356,144,366,148,378,150,391,151,405,150,417,148,426,144,432,138" shape="poly" title=" "/>
+<area alt="" coords="1233,39,1081,47,884,60,666,82,555,97,448,116,439,118,438,113,447,111,554,92,665,77,883,54,1081,42,1238,38" shape="poly" title=" "/>
+<area alt="" coords="540,133,538,127,532,121,523,117,512,115,499,114,487,115,475,117,466,121,461,127,459,133,461,138,466,144,475,148,487,150,499,151,512,150,523,148,532,144,538,138" shape="poly" title=" "/>
+<area alt="" coords="1233,40,1099,49,927,62,739,84,552,116,545,118,543,113,551,111,738,78,926,57,1098,43,1238,39" shape="poly" title=" "/>
+<area alt="" coords="736,133,732,127,720,121,701,117,677,115,650,114,623,115,599,117,580,121,568,127,563,133,568,138,580,144,599,148,623,150,650,151,677,150,701,148,720,144,732,138" shape="poly" title=" "/>
+<area alt="" coords="1242,49,1018,79,749,116,729,119,728,114,748,111,1017,73,1247,47" shape="poly" title=" "/>
+<area alt="" coords="958,133,954,127,940,121,918,117,890,115,859,114,829,115,801,117,779,121,765,127,760,133,765,138,779,144,801,148,829,150,859,151,890,150,918,148,940,144,954,138" shape="poly" title=" "/>
+<area alt="" coords="1253,54,941,118,940,113,1258,53" shape="poly" title=" "/>
+<area alt="" coords="1064,133,1062,127,1056,121,1047,117,1036,115,1023,114,1011,115,999,117,990,121,985,127,983,133,985,138,990,144,999,148,1011,150,1023,151,1036,150,1047,148,1056,144,1062,138" shape="poly" title=" "/>
+<area alt="" coords="1270,57,1076,116,1070,118,1069,113,1074,111,1264,58" shape="poly" title=" "/>
+<area alt="" coords="1177,133,1175,127,1169,121,1159,117,1146,115,1133,114,1119,115,1106,117,1096,121,1090,127,1088,133,1090,138,1096,144,1106,148,1119,150,1133,151,1146,150,1159,148,1169,144,1175,138" shape="poly" title=" "/>
+<area alt="" coords="1289,61,1177,114,1175,109,1284,62" shape="poly" title=" "/>
+<area alt="" coords="1275,133,1273,127,1268,121,1260,117,1249,115,1238,114,1226,115,1216,117,1208,121,1203,127,1201,133,1203,138,1208,144,1216,148,1226,150,1238,151,1249,150,1260,148,1268,144,1273,138" shape="poly" title=" "/>
+<area alt="" coords="1314,63,1268,107,1265,103,1309,66" shape="poly" title=" "/>
+<area alt="" coords="1385,133,1382,127,1376,121,1367,117,1355,115,1342,114,1329,115,1317,117,1307,121,1301,127,1299,133,1301,138,1307,144,1317,148,1329,150,1342,151,1355,150,1367,148,1376,144,1382,138" shape="poly" title=" "/>
+<area alt="" coords="1344,64,1344,100,1340,96,1340,68" shape="poly" title=" "/>
+<area alt="" coords="1499,133,1496,127,1490,121,1480,117,1468,115,1454,114,1440,115,1428,117,1418,121,1411,127,1409,133,1411,138,1418,144,1428,148,1440,150,1454,151,1468,150,1480,148,1490,144,1496,138" shape="poly" title=" "/>
+<area alt="" coords="1376,62,1426,106,1421,105,1374,67" shape="poly" title=" "/>
+<area alt="" coords="1614,133,1612,127,1605,121,1595,117,1583,115,1569,114,1555,115,1542,117,1532,121,1525,127,1523,133,1525,138,1532,144,1542,148,1555,150,1569,151,1583,150,1595,148,1605,144,1612,138" shape="poly" title=" "/>
+<area alt="" coords="1401,58,1526,113,1521,112,1400,64" shape="poly" title=" "/>
+<area alt="" coords="1744,133,1741,127,1734,121,1722,117,1707,115,1691,114,1675,115,1660,117,1649,121,1641,127,1639,133,1641,138,1649,144,1660,148,1675,150,1691,151,1707,150,1722,148,1734,144,1741,138" shape="poly" title=" "/>
+<area alt="" coords="1418,55,1638,116,1633,116,1417,60" shape="poly" title=" "/>
+<area alt="" coords="1883,133,1881,127,1872,121,1860,117,1844,115,1826,114,1808,115,1792,117,1779,121,1771,127,1768,133,1771,138,1779,144,1792,148,1808,150,1826,151,1844,150,1860,148,1872,144,1881,138" shape="poly" title=" "/>
+<area alt="" coords="1432,49,1584,77,1756,111,1770,117,1765,116,1755,116,1583,82,1432,55" shape="poly" title=" "/>
+<area alt="" coords="2040,133,2037,127,2027,121,2013,117,1994,115,1974,114,1954,115,1935,117,1921,121,1911,127,1908,133,1911,138,1921,144,1935,148,1954,150,1974,151,1994,150,2013,148,2027,144,2037,138" shape="poly" title=" "/>
+<area alt="" coords="1439,45,1650,72,1896,111,1912,117,1907,116,1895,116,1649,78,1439,51" shape="poly" title=" "/>
+<area alt="" coords="2177,133,2174,127,2166,121,2154,117,2138,115,2121,114,2103,115,2088,117,2075,121,2067,127,2064,133,2067,138,2075,144,2088,148,2103,150,2121,151,2138,150,2154,148,2166,144,2174,138" shape="poly" title=" "/>
+<area alt="" coords="1445,41,1720,65,1886,85,2052,111,2067,116,2061,116,2051,116,1885,91,1719,71,1445,46" shape="poly" title=" "/>
+<area alt="" coords="2372,133,2367,127,2355,121,2336,117,2312,115,2286,114,2259,115,2235,117,2216,121,2204,127,2200,133,2204,138,2216,144,2235,148,2259,150,2286,151,2312,150,2336,148,2355,144,2367,138" shape="poly" title=" "/>
+<area alt="" coords="1445,41,1777,66,1983,86,2189,111,2211,117,2206,117,2188,116,1982,92,1776,72,1445,46" shape="poly" title=" "/>
+<area alt="" coords="2491,133,2489,127,2482,121,2471,117,2458,115,2443,114,2429,115,2415,117,2405,121,2398,127,2396,133,2398,138,2405,144,2415,148,2429,150,2443,151,2458,150,2471,148,2482,144,2489,138" shape="poly" title=" "/>
+<area alt="" coords="1448,35,1627,39,1861,51,2122,74,2254,90,2384,111,2396,116,2391,116,2383,116,2254,96,2121,79,1860,56,1627,44,1449,40" shape="poly" title=" "/>
+<area alt="" coords="321,218,317,212,308,207,294,203,275,200,255,199,235,200,217,203,202,207,193,212,190,218,193,224,202,229,217,233,235,236,255,237,275,236,294,233,308,229,317,224" href="lwir__frame_8h.html" shape="poly" title="Native frame arithmetic and camera measurements; no codec or flight dependencies."/>
+<area alt="" coords="257,150,258,185,253,183,254,154" shape="poly" title=" "/>
+<area alt="" coords="166,218,163,212,154,207,140,203,123,200,103,199,84,200,67,203,53,207,44,212,41,218,44,224,53,229,67,233,84,236,103,237,123,236,140,233,154,229,163,224" href="lwir__state_8h.html" shape="poly" title="Tiny1-C vendor mailbox: bounded device-state snapshots and verified setting controls."/>
+<area alt="" coords="224,152,147,196,144,191,228,148" shape="poly" title=" "/>
+<area alt="" coords="438,218,436,212,429,207,419,203,406,200,391,199,377,200,364,203,353,207,347,212,344,218,347,224,353,229,364,233,377,236,391,237,406,236,419,233,429,229,436,224" shape="poly" title=" "/>
+<area alt="" coords="283,148,356,194,351,194,282,153" shape="poly" title=" "/>
+<area alt="" coords="110,304,108,298,100,293,89,289,74,286,58,285,42,286,27,289,15,293,8,298,5,304,8,310,15,315,27,319,42,322,58,323,74,322,89,319,100,315,108,310" shape="poly" title=" "/>
+<area alt="" coords="221,237,106,285,103,281,218,232" shape="poly" title=" "/>
+<area alt="" coords="232,304,229,298,222,293,212,289,198,286,183,285,168,286,155,289,144,293,137,298,135,304,137,310,144,315,155,319,168,322,183,323,198,322,212,319,222,315,229,310" shape="poly" title=" "/>
+<area alt="" coords="242,236,210,276,206,272,238,238" shape="poly" title=" "/>
+<area alt="" coords="346,304,344,298,337,293,327,289,315,286,301,285,287,286,274,289,264,293,257,298,255,304,257,310,264,315,274,319,287,322,301,323,315,322,327,319,337,315,344,310" shape="poly" title=" "/>
+<area alt="" coords="266,235,286,272,281,271,264,240" shape="poly" title=" "/>
+<area alt="" coords="96,235,77,273,73,270,92,239" shape="poly" title=" "/>
+<area alt="" coords="121,234,159,275,154,275,119,239" shape="poly" title=" "/>
+<area alt="" coords="139,232,258,282,253,285,138,237" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="lwir__device__v4l2_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-nested-classes"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:video_5Fstate_5Ftransport" id="r_video_5Fstate_5Ftransport"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structvideo__state__transport.html">video_state_transport</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Context handed to the <a class="el" href="lwir__state_8c.html" title="Tiny1-C vendor mailbox protocol: snapshot reads, controls and evidence text.">lwir_state.c</a> protocol through struct <a class="el" href="structlwir__state__io.html" title="Transport and clock callbacks driving the mailbox protocol.">lwir_state_io</a>.  <a href="structvideo__state__transport.html#details">More...</a><br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ae59d94906e0a5e0a9f887144ddad962c" id="r_ae59d94906e0a5e0a9f887144ddad962c"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae59d94906e0a5e0a9f887144ddad962c">video_format_valid</a> (const struct <a class="el" href="structlwir__device__options.html">lwir_device_options</a> *<a class="el" href="structoptions.html">options</a>, enum <a class="el" href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43d">lwir_frame_layout</a> layout, const struct v4l2_format *format)</td></tr>
+<tr class="memdesc:ae59d94906e0a5e0a9f887144ddad962c"><td class="mdescLeft"> </td><td class="mdescRight">Check that the format the driver actually granted is exactly the native camera format.  <br/></td></tr>
+<tr class="memitem:aab6a9adcb3abfc4359ac90838f9f4692" id="r_aab6a9adcb3abfc4359ac90838f9f4692"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#aab6a9adcb3abfc4359ac90838f9f4692">video_cancelled</a> (const struct <a class="el" href="structlwir__device.html">lwir_device</a> *device)</td></tr>
+<tr class="memdesc:aab6a9adcb3abfc4359ac90838f9f4692"><td class="mdescLeft"> </td><td class="mdescRight">Poll the borrowed cancellation flag.  <br/></td></tr>
+<tr class="memitem:a0859d9ecd33a1e675f6e65d77ac361f5" id="r_a0859d9ecd33a1e675f6e65d77ac361f5"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a0859d9ecd33a1e675f6e65d77ac361f5">video_now</a> (uint64_t *microseconds)</td></tr>
+<tr class="memdesc:a0859d9ecd33a1e675f6e65d77ac361f5"><td class="mdescLeft"> </td><td class="mdescRight">Read CLOCK_MONOTONIC in microseconds.  <br/></td></tr>
+<tr class="memitem:a2acf0530532f0916f875c121d04c126c" id="r_a2acf0530532f0916f875c121d04c126c"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2acf0530532f0916f875c121d04c126c">video_checkpoint</a> (const struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, uint64_t deadline)</td></tr>
+<tr class="memdesc:a2acf0530532f0916f875c121d04c126c"><td class="mdescLeft"> </td><td class="mdescRight">Combined cancellation and deadline check placed between setup steps.  <br/></td></tr>
+<tr class="memitem:a21ebd7915bde85cfcc687cbc11c6aee6" id="r_a21ebd7915bde85cfcc687cbc11c6aee6"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a21ebd7915bde85cfcc687cbc11c6aee6">video_ioctl</a> (int <a class="el" href="chdk__pipe_8c.html#afbe0a70d4d8f0e3df77ec516d0926b23">descriptor</a>, unsigned long <a class="el" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>, void *argument)</td></tr>
+<tr class="memdesc:a21ebd7915bde85cfcc687cbc11c6aee6"><td class="mdescLeft"> </td><td class="mdescRight">ioctl() with a bounded retry on EINTR.  <br/></td></tr>
+<tr class="memitem:adc03f90c58ab553f94a97c1d8c265288" id="r_adc03f90c58ab553f94a97c1d8c265288"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#adc03f90c58ab553f94a97c1d8c265288">video_text</a> (const char *directory, const char *name, char *text, size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</td></tr>
+<tr class="memdesc:adc03f90c58ab553f94a97c1d8c265288"><td class="mdescLeft"> </td><td class="mdescRight">Read one short sysfs/procfs attribute as a validated single-line string.  <br/></td></tr>
+<tr class="memitem:a9ced90796c6de1535483fb2764b31d59" id="r_a9ced90796c6de1535483fb2764b31d59"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ced90796c6de1535483fb2764b31d59">video_identity</a> (const struct stat *node, enum <a class="el" href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43d">lwir_frame_layout</a> *layout, char serial[64], char power_key[160], char power_port[64], unsigned *usb_bus, unsigned *usb_address)</td></tr>
+<tr class="memdesc:a9ced90796c6de1535483fb2764b31d59"><td class="mdescLeft"> </td><td class="mdescRight">Resolve a V4L2 character device to its USB camera identity through sysfs.  <br/></td></tr>
+<tr class="memitem:a5329c52391cc48592192153b2d08947a" id="r_a5329c52391cc48592192153b2d08947a"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5329c52391cc48592192153b2d08947a">video_probe</a> (const char *path, const struct <a class="el" href="structlwir__device__options.html">lwir_device_options</a> *<a class="el" href="structoptions.html">options</a>, struct <a class="el" href="structlwir__device.html">lwir_device</a> *candidate)</td></tr>
+<tr class="memdesc:a5329c52391cc48592192153b2d08947a"><td class="mdescLeft"> </td><td class="mdescRight">Test one V4L2 node and, if it is a usable camera, open and lock it.  <br/></td></tr>
+<tr class="memitem:ae5e3c50dcae1e26bb4743c608addc0f5" id="r_ae5e3c50dcae1e26bb4743c608addc0f5"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5e3c50dcae1e26bb4743c608addc0f5">video_power_marker</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, bool complete)</td></tr>
+<tr class="memdesc:ae5e3c50dcae1e26bb4743c608addc0f5"><td class="mdescLeft"> </td><td class="mdescRight">Read or publish the per-USB-instance startup qualification marker.  <br/></td></tr>
+<tr class="memitem:aec7d66704baf585f76e47658eb0dd155" id="r_aec7d66704baf585f76e47658eb0dd155"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#aec7d66704baf585f76e47658eb0dd155">lwir_device_close</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device)</td></tr>
+<tr class="memdesc:aec7d66704baf585f76e47658eb0dd155"><td class="mdescLeft"> </td><td class="mdescRight">Release a session in the reverse order of setup.  <br/></td></tr>
+<tr class="memitem:aa18cf846dcb84ce2ebfd5c195f6f30d2" id="r_aa18cf846dcb84ce2ebfd5c195f6f30d2"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa18cf846dcb84ce2ebfd5c195f6f30d2">video_setup</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, struct <a class="el" href="structlwir__device__options.html">lwir_device_options</a> *<a class="el" href="structoptions.html">options</a>, uint64_t deadline)</td></tr>
+<tr class="memdesc:aa18cf846dcb84ce2ebfd5c195f6f30d2"><td class="mdescLeft"> </td><td class="mdescRight">Negotiate the native format, map the capture buffers and start streaming.  <br/></td></tr>
+<tr class="memitem:a69875f13865f7d8afbaec96ffeffaf9c" id="r_a69875f13865f7d8afbaec96ffeffaf9c"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a69875f13865f7d8afbaec96ffeffaf9c">lwir_device_open</a> (struct <a class="el" href="structlwir__device__options.html">lwir_device_options</a> *<a class="el" href="structoptions.html">options</a>, struct <a class="el" href="structlwir__device.html">lwir_device</a> *device)</td></tr>
+<tr class="memdesc:a69875f13865f7d8afbaec96ffeffaf9c"><td class="mdescLeft"> </td><td class="mdescRight">Find, lock and start exactly one supported camera within the timeout.  <br/></td></tr>
+<tr class="memitem:a8abdde0a33120e3c6ac1f475c34c3d7a" id="r_a8abdde0a33120e3c6ac1f475c34c3d7a"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8abdde0a33120e3c6ac1f475c34c3d7a">video_sequence</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, uint32_t sequence, bool *continuous)</td></tr>
+<tr class="memdesc:a8abdde0a33120e3c6ac1f475c34c3d7a"><td class="mdescLeft"> </td><td class="mdescRight">Extend the kernel's 32-bit frame sequence to a monotonic 64-bit count.  <br/></td></tr>
+<tr class="memitem:ac7d91a1c5cb98bf0d59e8a80cccdc62a" id="r_ac7d91a1c5cb98bf0d59e8a80cccdc62a"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7d91a1c5cb98bf0d59e8a80cccdc62a">video_fail</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, int <a class="el" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>)</td></tr>
+<tr class="memdesc:ac7d91a1c5cb98bf0d59e8a80cccdc62a"><td class="mdescLeft"> </td><td class="mdescRight">Poison the session after a fatal kernel or protocol error.  <br/></td></tr>
+<tr class="memitem:ad50c9392f072e4e841a946c7b8b6d65c" id="r_ad50c9392f072e4e841a946c7b8b6d65c"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad50c9392f072e4e841a946c7b8b6d65c">video_ready</a> (const struct <a class="el" href="structlwir__device.html">lwir_device</a> *device)</td></tr>
+<tr class="memdesc:ad50c9392f072e4e841a946c7b8b6d65c"><td class="mdescLeft"> </td><td class="mdescRight">Verify session invariants before touching the stream.  <br/></td></tr>
+<tr class="memitem:ace8eb0abeeb5a730d60e940af7b8ab0b" id="r_ace8eb0abeeb5a730d60e940af7b8ab0b"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ace8eb0abeeb5a730d60e940af7b8ab0b">video_destination_valid</a> (const struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, const void *destination, size_t <a class="el" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>)</td></tr>
+<tr class="memdesc:ace8eb0abeeb5a730d60e940af7b8ab0b"><td class="mdescLeft"> </td><td class="mdescRight">Reject caller memory that overlaps any mapped camera buffer.  <br/></td></tr>
+<tr class="memitem:aadc8cc633f61efa6e0f5e4ba4b61d14d" id="r_aadc8cc633f61efa6e0f5e4ba4b61d14d"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#aadc8cc633f61efa6e0f5e4ba4b61d14d">video_ranges_separate</a> (const void *first, size_t first_bytes, const void *second, size_t second_bytes)</td></tr>
+<tr class="memdesc:aadc8cc633f61efa6e0f5e4ba4b61d14d"><td class="mdescLeft"> </td><td class="mdescRight">Test that two byte ranges do not overlap.  <br/></td></tr>
+<tr class="memitem:ad1c537d247a49905dd27c91354a879f2" id="r_ad1c537d247a49905dd27c91354a879f2"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1c537d247a49905dd27c91354a879f2">video_requeue</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, unsigned index)</td></tr>
+<tr class="memdesc:ad1c537d247a49905dd27c91354a879f2"><td class="mdescLeft"> </td><td class="mdescRight">Return a dequeued buffer to the driver.  <br/></td></tr>
+<tr class="memitem:a2191ed74d065cc940fdc00155a4704e5" id="r_a2191ed74d065cc940fdc00155a4704e5"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2191ed74d065cc940fdc00155a4704e5">video_dequeue</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, struct v4l2_buffer *buffer, bool *received)</td></tr>
+<tr class="memdesc:a2191ed74d065cc940fdc00155a4704e5"><td class="mdescLeft"> </td><td class="mdescRight">Non-blocking VIDIOC_DQBUF with validation of what the kernel returned.  <br/></td></tr>
+<tr class="memitem:afecdfe432f8c8dd23fde092b92af173f" id="r_afecdfe432f8c8dd23fde092b92af173f"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#afecdfe432f8c8dd23fde092b92af173f">video_timestamp_fresh</a> (const struct v4l2_buffer *buffer, uint64_t <a class="el" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>, uint64_t now)</td></tr>
+<tr class="memdesc:afecdfe432f8c8dd23fde092b92af173f"><td class="mdescLeft"> </td><td class="mdescRight">Check that a MONOTONIC kernel timestamp lies within [start, now].  <br/></td></tr>
+<tr class="memitem:a9da47dc6878c09f1a7787b6f74b1c886" id="r_a9da47dc6878c09f1a7787b6f74b1c886"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9da47dc6878c09f1a7787b6f74b1c886">video_frame_qualified</a> (const struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, const struct v4l2_buffer *buffer, uint64_t <a class="el" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>, uint64_t now)</td></tr>
+<tr class="memdesc:a9da47dc6878c09f1a7787b6f74b1c886"><td class="mdescLeft"> </td><td class="mdescRight">Structural and content check of a dequeued frame, independent of the request.  <br/></td></tr>
+<tr class="memitem:aeccc1b1bbcc09a736382d57034f1d5f3" id="r_aeccc1b1bbcc09a736382d57034f1d5f3"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#aeccc1b1bbcc09a736382d57034f1d5f3">video_qualification</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, bool <a class="el" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a>, bool continuous, uint64_t now)</td></tr>
+<tr class="memdesc:aeccc1b1bbcc09a736382d57034f1d5f3"><td class="mdescLeft"> </td><td class="mdescRight">Advance the eight-consecutive-good-frames startup counter.  <br/></td></tr>
+<tr class="memitem:a60ac505209a9ae6c129afeb19bdb0e1a" id="r_a60ac505209a9ae6c129afeb19bdb0e1a"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a60ac505209a9ae6c129afeb19bdb0e1a">lwir_device_acquire</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, const struct <a class="el" href="structlwir__device__options.html">lwir_device_options</a> *<a class="el" href="structoptions.html">options</a>, uint8_t *destination, size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, struct <a class="el" href="structlwir__device__observation.html">lwir_device_observation</a> *observation)</td></tr>
+<tr class="memdesc:a60ac505209a9ae6c129afeb19bdb0e1a"><td class="mdescLeft"> </td><td class="mdescRight">Wait for, validate and copy the first acceptable frame that started after this call.  <br/></td></tr>
+<tr class="memitem:a2ca636c957f14ae44305104171c556b8" id="r_a2ca636c957f14ae44305104171c556b8"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ca636c957f14ae44305104171c556b8">lwir_device_discard</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, bool *received)</td></tr>
+<tr class="memdesc:a2ca636c957f14ae44305104171c556b8"><td class="mdescLeft"> </td><td class="mdescRight">Dequeue and immediately requeue at most one pending frame.  <br/></td></tr>
+<tr class="memitem:acdb5683b3f0c24c9ab3069b40eb5b386" id="r_acdb5683b3f0c24c9ab3069b40eb5b386"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#acdb5683b3f0c24c9ab3069b40eb5b386">video_state_transfer</a> (void *context, bool input, uint16_t address, uint8_t *data, unsigned length, unsigned timeout)</td></tr>
+<tr class="memdesc:acdb5683b3f0c24c9ab3069b40eb5b386"><td class="mdescLeft"> </td><td class="mdescRight">One Tiny1-C vendor mailbox control transfer over usbfs.  <br/></td></tr>
+<tr class="memitem:a62b4ff411e1874a37508537aec67f0ae" id="r_a62b4ff411e1874a37508537aec67f0ae"><td align="right" class="memItemLeft" valign="top">static uint64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a62b4ff411e1874a37508537aec67f0ae">video_state_now</a> (void *context)</td></tr>
+<tr class="memdesc:a62b4ff411e1874a37508537aec67f0ae"><td class="mdescLeft"> </td><td class="mdescRight"><a class="el" href="survey_8cpp.html#a19bfb27380067c74ae297dd7dad5fb37">Clock</a> callback for <a class="el" href="lwir__state_8c.html" title="Tiny1-C vendor mailbox protocol: snapshot reads, controls and evidence text.">lwir_state.c</a>.  <br/></td></tr>
+<tr class="memitem:a2dc3445ca0565c57ccaf1e371afeeeee" id="r_a2dc3445ca0565c57ccaf1e371afeeeee"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dc3445ca0565c57ccaf1e371afeeeee">video_state_pause</a> (void *context, unsigned <a class="el" href="dipla__camera__backend_8c.html#a567b0b9633edf91a5cb142a5bdad7e61">milliseconds</a>)</td></tr>
+<tr class="memdesc:a2dc3445ca0565c57ccaf1e371afeeeee"><td class="mdescLeft"> </td><td class="mdescRight">Short cancellable delay between mailbox polls for <a class="el" href="lwir__state_8c.html" title="Tiny1-C vendor mailbox protocol: snapshot reads, controls and evidence text.">lwir_state.c</a>.  <br/></td></tr>
+<tr class="memitem:af7e385f5e25da9c2a9b3e7e91954b488" id="r_af7e385f5e25da9c2a9b3e7e91954b488"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#af7e385f5e25da9c2a9b3e7e91954b488">video_state_identity</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device)</td></tr>
+<tr class="memdesc:af7e385f5e25da9c2a9b3e7e91954b488"><td class="mdescLeft"> </td><td class="mdescRight">Confirm the streaming camera is still the same USB power instance.  <br/></td></tr>
+<tr class="memitem:a91118a1e94d67e0c9cad2c92c2c74acc" id="r_a91118a1e94d67e0c9cad2c92c2c74acc"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a91118a1e94d67e0c9cad2c92c2c74acc">video_state_open</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device)</td></tr>
+<tr class="memdesc:a91118a1e94d67e0c9cad2c92c2c74acc"><td class="mdescLeft"> </td><td class="mdescRight">Open the usbfs node of the streaming Tiny1-C for one state/control operation.  <br/></td></tr>
+<tr class="memitem:adb1130264376fe88e52a4101ed2fdd87" id="r_adb1130264376fe88e52a4101ed2fdd87"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#adb1130264376fe88e52a4101ed2fdd87">video_control</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, const struct <a class="el" href="structlwir__control__request.html">lwir_control_request</a> *<a class="el" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>, struct <a class="el" href="structlwir__control__result.html">lwir_control_result</a> *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>, bool read_only)</td></tr>
+<tr class="memdesc:adb1130264376fe88e52a4101ed2fdd87"><td class="mdescLeft"> </td><td class="mdescRight">Shared implementation of control write and read-back.  <br/></td></tr>
+<tr class="memitem:a814bb0274b3e319e6fe440d48be57f54" id="r_a814bb0274b3e319e6fe440d48be57f54"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a814bb0274b3e319e6fe440d48be57f54">lwir_device_control</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, const struct <a class="el" href="structlwir__control__request.html">lwir_control_request</a> *<a class="el" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>, struct <a class="el" href="structlwir__control__result.html">lwir_control_result</a> *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>)</td></tr>
+<tr class="memdesc:a814bb0274b3e319e6fe440d48be57f54"><td class="mdescLeft"> </td><td class="mdescRight">Public control write; see <a class="el" href="lwir__device_8h.html" title="Tiny1C/TDK acquisition and Tiny1C state, without image or mission logic.">lwir_device.h</a>.  <br/></td></tr>
+<tr class="memitem:aa3f521a8fb276252ef26ed782bbcef83" id="r_aa3f521a8fb276252ef26ed782bbcef83"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3f521a8fb276252ef26ed782bbcef83">lwir_device_control_read</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, enum <a class="el" href="lwir__state_8h.html#ac1ae77e93976b7177ae2c40bd6274038">lwir_control_kind</a> kind, struct <a class="el" href="structlwir__control__result.html">lwir_control_result</a> *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>)</td></tr>
+<tr class="memdesc:aa3f521a8fb276252ef26ed782bbcef83"><td class="mdescLeft"> </td><td class="mdescRight">Public control read; see <a class="el" href="lwir__device_8h.html" title="Tiny1C/TDK acquisition and Tiny1C state, without image or mission logic.">lwir_device.h</a>.  <br/></td></tr>
+<tr class="memitem:a5946d4ac894c6b03c99f36c6b6bf3656" id="r_a5946d4ac894c6b03c99f36c6b6bf3656"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5946d4ac894c6b03c99f36c6b6bf3656">lwir_device_read_state</a> (struct <a class="el" href="structlwir__device.html">lwir_device</a> *device, struct <a class="el" href="structlwir__device__state.html">lwir_device_state</a> *state)</td></tr>
+<tr class="memdesc:a5946d4ac894c6b03c99f36c6b6bf3656"><td class="mdescLeft"> </td><td class="mdescRight">Best-effort read-only snapshot of Tiny1-C state; never writes settings.  <br/></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>Native Linux UVC acquisition with bounded mapped-buffer ownership. </p>
+<p>Implements <a class="el" href="lwir__device_8h.html" title="Tiny1C/TDK acquisition and Tiny1C state, without image or mission logic.">lwir_device.h</a> directly on the kernel uvcvideo driver through V4L2 MMAP buffers and Linux usbfs control transfers.</p>
+<dl class="section user"><dt>Cameras</dt><dd><ul>
+<li>Tiny1-C, USB 0bda:5840: YUYV transport 256x384 = 256x192 image plane followed by a 256x192 temperature plane (Kelvin*64, little-endian), 196608 bytes per frame at 25 fps (<a class="el" href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43dad95aaf404dbe40c58c77b74654c5cfe2">LWIR_COMBINED</a>).</li>
+<li>TDK, USB 5474:5411: 640x512 YUYV image only (<a class="el" href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43daad4b9355ab9766c5eaec3ca6061ed283">LWIR_YUYV_IMAGE</a>).</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>How the pieces fit</dt><dd><ol type="1">
+<li>Discovery (<a class="el" href="#a5329c52391cc48592192153b2d08947a" title="Test one V4L2 node and, if it is a usable camera, open and lock it.">video_probe()</a>, <a class="el" href="#a9ced90796c6de1535483fb2764b31d59" title="Resolve a V4L2 character device to its USB camera identity through sysfs.">video_identity()</a>) maps a /dev/videoN node to its USB device through sysfs, checks vendor/product/serial and takes an exclusive non-blocking flock so no second process (for example a control command while USHER captures) can share the camera.</li>
+<li>Setup (<a class="el" href="#aa18cf846dcb84ce2ebfd5c195f6f30d2" title="Negotiate the native format, map the capture buffers and start streaming.">video_setup()</a>) negotiates the exact native format and maps <a class="el" href="lwir__device_8h.html#a8e6a3fb1af13909cf2ef2f51edc7d3ba" title="Number of V4L2 MMAP buffers requested from uvcvideo.">LWIR_VIDEO_BUFFERS</a> MMAP buffers, then starts streaming.</li>
+<li>Acquisition (<a class="el" href="#a60ac505209a9ae6c129afeb19bdb0e1a" title="Wait for, validate and copy the first acceptable frame that started after this call.">lwir_device_acquire()</a>) polls in 25 ms slices, dequeues a buffer, validates it, copies it if accepted and always requeues it.</li>
+<li>Startup qualification is persisted per USB power instance by a runtime marker (<a class="el" href="#ae5e3c50dcae1e26bb4743c608addc0f5" title="Read or publish the per-USB-instance startup qualification marker.">video_power_marker()</a>).</li>
+<li>Optional Tiny1-C state/control uses vendor control transfers over usbfs (<a class="el" href="#a91118a1e94d67e0c9cad2c92c2c74acc" title="Open the usbfs node of the streaming Tiny1-C for one state/control operation.">video_state_open()</a>, <a class="el" href="#acdb5683b3f0c24c9ab3069b40eb5b386" title="One Tiny1-C vendor mailbox control transfer over usbfs.">video_state_transfer()</a>) beside the running stream.</li>
+</ol>
+</dd></dl>
+<dl class="section user"><dt>Buffer ownership</dt><dd>A mapped buffer belongs to user space only between VIDIOC_DQBUF and VIDIOC_QBUF. Everything needed from it (pixels, sequence, timestamp, flags) is copied or snapshotted before requeue: after QBUF the kernel may refill the memory and the driver may rewrite buffer metadata at any moment. This ordering was required by a real hardware fault, not by theory.</dd></dl>
+<dl class="section user"><dt>Failure model</dt><dd>Fatal kernel or protocol errors set <a class="el" href="structlwir__device.html#a99fb23b049edfdc292820d4ec48cb2b0">lwir_device::video_failed</a>, poisoning the session until close and reopen; partial recovery of a V4L2 queue in an unknown state is not attempted. A failed munmap keeps ownership so a later close retries it and open refuses with EBUSY. <a class="el" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close()</a> is never retried because Linux releases the descriptor number even on error, and another thread may already have reused it.</dd></dl>
+<dl class="section user"><dt>Startup qualification</dt><dd>The first power-up of the camera needs eight consecutive valid frames. Linux exposes no sensor power-cycle counter, so a fresh USB enumeration is the observable power boundary: the marker /run/lock/sensoraia-lwir-UID/usb-PORT.ready stores "bootid:sysfs-inode:busnum:devnum". Qualification is never repeated for later requests, sequence gaps, bad frames, reopen or worker restart within the same instance. Marker failures are explicit errors rather than a silent fallback to another warmup.</dd></dl>
+<dl class="section user"><dt>Freshness and latency</dt><dd>A frame is accepted only when its kernel CLOCK_MONOTONIC timestamp (taken by uvcvideo at start of frame) is not earlier than the request, so the photo never predates the trigger. Measured cost is about 8.6 ms average wait for the next frame start plus about 36.1 ms USB delivery; that is the sensor/USB limit, not overhead of this code. For non-MONOTONIC clocks the already-queued buffers are drained once instead.</dd></dl>
+<dl class="section user"><dt>Policies</dt><dd><ul>
+<li>No heap allocation; all state is in the caller's struct <a class="el" href="structlwir__device.html" title="Caller-owned session, initialized to zero before opening.">lwir_device</a>.</li>
+<li>No memcpy by project policy: bounded byte loops are used. Compilers vectorize them; -fno-tree-loop-distribute-patterns stops them from being turned back into memcpy calls.</li>
+<li>Interrupted system calls are retried a bounded number of times so a signal storm cannot spin forever.</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Threading</dt><dd>Single-threaded per session. Only the borrowed cancellation flag is read asynchronously. </dd></dl>
+<p class="definition">Definition in file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div><a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="a60ac505209a9ae6c129afeb19bdb0e1a" name="a60ac505209a9ae6c129afeb19bdb0e1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60ac505209a9ae6c129afeb19bdb0e1a">◆ </a></span>lwir_device_acquire()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_device_acquire </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__device__options.html">lwir_device_options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint8_t *</td> <td class="paramname"><span class="paramname"><em>destination</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structlwir__device__observation.html">lwir_device_observation</a> *</td> <td class="paramname"><span class="paramname"><em>observation</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Wait for, validate and copy the first acceptable frame that started after this call. </p>
+<p>Copy a qualified, fresh camera-layout frame into caller-owned storage.</p>
+<p>Loop structure, each iteration bounded by a 25 ms poll() slice so that cancellation and the deadline are noticed promptly:</p><ol type="1">
+<li>poll() for a filled buffer; POLLERR/POLLHUP/POLLNVAL (for example an unplugged camera) poison the session.</li>
+<li>Dequeue one buffer and read the host clock immediately.</li>
+<li>Grade the frame in increasing strictness:<ul>
+<li><code>usable:</code> structurally valid, recent, correct sequence; feeds the startup qualification counter even when it predates the request.</li>
+<li><code>valid:</code> additionally started at or after the request (freshness).</li>
+<li><code>scene_valid:</code> additionally passes the optional scene check.</li>
+</ul>
+</li>
+<li>For non-MONOTONIC clocks freshness is unknowable, so the first good frame triggers a one-time drain of all already-queued buffers; the next frame is then certainly produced after the request.</li>
+<li>Accept when the instance is qualified (eight good frames), optional settling holds, and on first startup only, <code>warmup_ms</code> has elapsed.</li>
+<li>Copy what is needed and snapshot sequence/timestamp/flags, then requeue. The order matters: after QBUF the kernel may overwrite both pixels and metadata.</li>
+<li>Persist the startup marker once qualification and warmup are complete.</li>
+</ol>
+<p>Settling uses <code class="param">destination</code> as the previous-image store: the image plane of each scene-valid frame is copied there and the next frame is compared against it, so no extra buffer is needed. The temperature plane is copied only for the accepted frame. </p><dl class="section return"><dt>Returns</dt><dd>True with a fresh frame in <code class="param">destination</code>. </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>EINVAL arguments/aliasing; EIO poisoned session or poll error; ETIMEDOUT deadline, including completion that would land after it; EINTR cancelled; kernel errno from failed ioctls (session then poisoned). </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>On failure <code class="param">destination</code> may contain partial or settling data and must be ignored. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00963">963</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="aec7d66704baf585f76e47658eb0dd155" name="aec7d66704baf585f76e47658eb0dd155"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec7d66704baf585f76e47658eb0dd155">◆ </a></span>lwir_device_close()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void lwir_device_close </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Release a session in the reverse order of setup. </p>
+<p>Close an initialized session; safe repeatedly and preserves errno.</p>
+<ol type="1">
+<li>STREAMOFF returns all buffers from the driver queue to user space.</li>
+<li>munmap each mapping. A failed unmap keeps its entry marked as mapped and the session struct is not cleared, so a later close retries it and <a class="el" href="lwir__device_8h.html#a69875f13865f7d8afbaec96ffeffaf9c" title="Open/start a bounded camera-specific combined or image-only YUY2 stream.">lwir_device_open()</a> refuses with EBUSY rather than losing track of memory the process still maps.</li>
+<li>REQBUFS with count 0 frees the kernel buffers when the driver allows it.</li>
+<li><a class="el" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close()</a> the descriptor exactly once. Its state is cleared first and a close error is only logged: Linux frees the number even on error, so retrying could close an unrelated descriptor opened by another thread.</li>
+</ol>
+<p>Errors of STREAMOFF/REQBUFS are deliberately ignored; there is no better recovery than continuing teardown, and closing the descriptor ends the stream regardless. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session to release; NULL and already-closed sessions are accepted. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>errno is preserved so callers can close on an error path without losing the original cause. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00525">525</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a814bb0274b3e319e6fe440d48be57f54" name="a814bb0274b3e319e6fe440d48be57f54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a814bb0274b3e319e6fe440d48be57f54">◆ </a></span>lwir_device_control()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_device_control </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__control__request.html">lwir_control_request</a> *</td> <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structlwir__control__result.html">lwir_control_result</a> *</td> <td class="paramname"><span class="paramname"><em>result</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Public control write; see <a class="el" href="lwir__device_8h.html" title="Tiny1C/TDK acquisition and Tiny1C state, without image or mission logic.">lwir_device.h</a>. </p>
+<p>Submit one Tiny1-C vendor control write (or FFC action) as a standalone operation.</p>
+<dl class="section return"><dt>Returns</dt><dd>True when acknowledged. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l01289">1289</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="aa3f521a8fb276252ef26ed782bbcef83" name="aa3f521a8fb276252ef26ed782bbcef83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3f521a8fb276252ef26ed782bbcef83">◆ </a></span>lwir_device_control_read()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_device_control_read </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">enum <a class="el" href="lwir__state_8h.html#ac1ae77e93976b7177ae2c40bd6274038">lwir_control_kind</a></td> <td class="paramname"><span class="paramname"><em>kind</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structlwir__control__result.html">lwir_control_result</a> *</td> <td class="paramname"><span class="paramname"><em>result</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Public control read; see <a class="el" href="lwir__device_8h.html" title="Tiny1C/TDK acquisition and Tiny1C state, without image or mission logic.">lwir_device.h</a>. </p>
+<p>Read the current value of one Tiny1-C control without writing it.</p>
+<p>Builds a request only so the shared validation path can be reused. </p><dl class="section return"><dt>Returns</dt><dd>True when the value was read. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l01300">1300</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a2ca636c957f14ae44305104171c556b8" name="a2ca636c957f14ae44305104171c556b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ca636c957f14ae44305104171c556b8">◆ </a></span>lwir_device_discard()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_device_discard </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool *</td> <td class="paramname"><span class="paramname"><em>received</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Dequeue and immediately requeue at most one pending frame. </p>
+<p>Drain one pending frame without retaining the borrowed UVC buffer.</p>
+<p>Used to empty the queue (for example the non-MONOTONIC drain in <a class="el" href="lwir__device_8h.html#a60ac505209a9ae6c129afeb19bdb0e1a" title="Copy a qualified, fresh camera-layout frame into caller-owned storage.">lwir_device_acquire()</a>) and to keep the stream moving between requests. The frame still feeds startup qualification with the one-second recency window, and the marker is published as soon as eight good frames are seen; no warmup delay applies here because there is no request start to measure from. </p><dl class="section return"><dt>Returns</dt><dd>True on success, including when no frame was pending. </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>EINVAL bad arguments or session; EIO poisoned; EINTR cancelled; kernel or clock errno (session then poisoned). </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l01090">1090</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a69875f13865f7d8afbaec96ffeffaf9c" name="a69875f13865f7d8afbaec96ffeffaf9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69875f13865f7d8afbaec96ffeffaf9c">◆ </a></span>lwir_device_open()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_device_open </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device__options.html">lwir_device_options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Find, lock and start exactly one supported camera within the timeout. </p>
+<p>Open/start a bounded camera-specific combined or image-only YUY2 stream.</p>
+<ol type="1">
+<li>Validate options and refuse while the session still owns anything, including mappings kept after a failed munmap (EBUSY).</li>
+<li>Compute one absolute deadline covering discovery and setup.</li>
+<li>With an explicit device path, probe only that node. Otherwise probe /dev/video0..63. A second matching camera is an error (EEXIST) rather than "first wins": with two cameras attached the choice would depend on enumeration order, so the caller must disambiguate with a serial or path. Each match holds its own flock until the scan decides.</li>
+<li>Read the startup marker, then set up streaming.</li>
+</ol>
+<p>Every failure after a successful probe closes the session, so the caller never has to clean up after a false return. </p><dl class="section return"><dt>Returns</dt><dd>True when streaming; errno set otherwise (see <a class="el" href="lwir__device_8h.html" title="Tiny1C/TDK acquisition and Tiny1C state, without image or mission logic.">lwir_device.h</a>). </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00651">651</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a5946d4ac894c6b03c99f36c6b6bf3656" name="a5946d4ac894c6b03c99f36c6b6bf3656"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5946d4ac894c6b03c99f36c6b6bf3656">◆ </a></span>lwir_device_read_state()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void lwir_device_read_state </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structlwir__device__state.html">lwir_device_state</a> *</td> <td class="paramname"><span class="paramname"><em>state</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Best-effort read-only snapshot of Tiny1-C state; never writes settings. </p>
+<p>Read bounded optional state after acquisition, never writing device settings.</p>
+<p>All fields start as skipped and the first as an I/O error, so a failure to open usbfs is reported on a field instead of looking like an empty but successful read. <a class="el" href="lwir__state_8c.html#a36439708a5c353c6eff0d148d1eb2f94" title="Read all fields of struct lwir_device_state within LWIR_STATE_BUDGET_MS.">lwir_state_read()</a> overwrites what it reaches. The usbfs close result is ignored because nothing was written. Image-only sessions (or NULL) return a zero, not-requested snapshot without any USB traffic. </p><dl class="section note"><dt>Note</dt><dd>errno is preserved; outcomes are reported only through <code class="param">state</code>. </dd>
+<dd>
+The snapshot is taken after the frame and is not frame-atomic. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l01319">1319</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="aab6a9adcb3abfc4359ac90838f9f4692" name="aab6a9adcb3abfc4359ac90838f9f4692"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab6a9adcb3abfc4359ac90838f9f4692">◆ </a></span>video_cancelled()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_cancelled </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Poll the borrowed cancellation flag. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session whose optional flag is read. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when a flag is attached and set. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00144">144</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a2acf0530532f0916f875c121d04c126c" name="a2acf0530532f0916f875c121d04c126c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2acf0530532f0916f875c121d04c126c">◆ </a></span>video_checkpoint()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_checkpoint </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>deadline</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Combined cancellation and deadline check placed between setup steps. </p>
+<p>Setup issues several ioctls that can each take noticeable time on USB; checking between them keeps open within its timeout budget. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session whose cancellation flag is consulted. </td></tr>
+<tr><td class="paramname">deadline</td><td>Absolute CLOCK_MONOTONIC limit in microseconds. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True to continue. </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>EINTR cancelled; ETIMEDOUT deadline reached; clock errors from <a class="el" href="#a0859d9ecd33a1e675f6e65d77ac361f5" title="Read CLOCK_MONOTONIC in microseconds.">video_now()</a>. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00180">180</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="adb1130264376fe88e52a4101ed2fdd87" name="adb1130264376fe88e52a4101ed2fdd87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb1130264376fe88e52a4101ed2fdd87">◆ </a></span>video_control()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_control </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__control__request.html">lwir_control_request</a> *</td> <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structlwir__control__result.html">lwir_control_result</a> *</td> <td class="paramname"><span class="paramname"><em>result</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>read_only</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Shared implementation of control write and read-back. </p>
+<p>Validates the request, opens usbfs, runs the <a class="el" href="lwir__state_8c.html" title="Tiny1-C vendor mailbox protocol: snapshot reads, controls and evidence text.">lwir_state.c</a> mailbox protocol once, and closes usbfs. The reply status is mapped to errno for callers that only check errno. A close error turns the result into a failure even though a write may already have been submitted; nothing is replayed, so the caller should read back instead of retrying. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Open combined-layout session. </td></tr>
+<tr><td class="paramname">request</td><td>Control kind and value. </td></tr>
+<tr><td class="paramname">result</td><td>Output reply; reset to LWIR_STATE_INVALID first. </td></tr>
+<tr><td class="paramname">read_only</td><td>True for a read; FFC is an action and has no read form. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on success. </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>EINVAL invalid request; errno from <a class="el" href="#a91118a1e94d67e0c9cad2c92c2c74acc" title="Open the usbfs node of the streaming Tiny1-C for one state/control operation.">video_state_open()</a>; EINTR cancelled; ETIMEDOUT camera timeout; EIO any other protocol failure. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l01264">1264</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a2191ed74d065cc940fdc00155a4704e5" name="a2191ed74d065cc940fdc00155a4704e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2191ed74d065cc940fdc00155a4704e5">◆ </a></span>video_dequeue()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_dequeue </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct v4l2_buffer *</td> <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool *</td> <td class="paramname"><span class="paramname"><em>received</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Non-blocking VIDIOC_DQBUF with validation of what the kernel returned. </p>
+<p>EAGAIN (nothing ready on the O_NONBLOCK descriptor) and EINTR after the bounded retries are reported as "no frame", not errors. An index outside the mapped set is fatal without requeue, since an unknown index cannot be returned safely. A wrong type or memory model is requeued first, so the ring stays complete, and then treated as fatal. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session. </td></tr>
+<tr><td class="paramname">buffer</td><td>Output: dequeued buffer metadata, valid when <code class="param">received</code>. </td></tr>
+<tr><td class="paramname">received</td><td>Output: whether a buffer is now owned by the caller. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on success (with or without a frame); false after <a class="el" href="#ac7d91a1c5cb98bf0d59e8a80cccdc62a" title="Poison the session after a fatal kernel or protocol error.">video_fail()</a>. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>When <code class="param">received</code> is true the caller owns the buffer and must call <a class="el" href="#ad1c537d247a49905dd27c91354a879f2" title="Return a dequeued buffer to the driver.">video_requeue()</a> on every path. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00843">843</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="ace8eb0abeeb5a730d60e940af7b8ab0b" name="ace8eb0abeeb5a730d60e940af7b8ab0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace8eb0abeeb5a730d60e940af7b8ab0b">◆ </a></span>video_destination_valid()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_destination_valid </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const void *</td> <td class="paramname"><span class="paramname"><em>destination</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>bytes</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Reject caller memory that overlaps any mapped camera buffer. </p>
+<p>A destination inside a mapping would let the copy read and write the same kernel-owned memory, and the kernel may rewrite it after requeue. Address arithmetic is done on uintptr_t with explicit wrap checks, so a range that wraps around the address space is rejected instead of passing the overlap test by overflow. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session whose first <code>video_count</code> mappings are checked. </td></tr>
+<tr><td class="paramname">destination</td><td>Start of the caller range. </td></tr>
+<tr><td class="paramname">bytes</td><td>Length of the caller range. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the range is well-formed and disjoint from every mapping. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00781">781</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="ac7d91a1c5cb98bf0d59e8a80cccdc62a" name="ac7d91a1c5cb98bf0d59e8a80cccdc62a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7d91a1c5cb98bf0d59e8a80cccdc62a">◆ </a></span>video_fail()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_fail </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>error</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Poison the session after a fatal kernel or protocol error. </p>
+<p>After an unexpected DQBUF/QBUF/poll failure the driver queue is in an unknown state (a buffer may be lost or still owned by user space). Rather than guess, every later operation fails with EIO until the caller closes and reopens, which rebuilds the queue from scratch. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session to poison. </td></tr>
+<tr><td class="paramname">error</td><td>errno value to report. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Always false, for direct use in return statements. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00733">733</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="ae59d94906e0a5e0a9f887144ddad962c" name="ae59d94906e0a5e0a9f887144ddad962c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae59d94906e0a5e0a9f887144ddad962c">◆ </a></span>video_format_valid()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_format_valid </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structlwir__device__options.html">lwir_device_options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">enum <a class="el" href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43d">lwir_frame_layout</a></td> <td class="paramname"><span class="paramname"><em>layout</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct v4l2_format *</td> <td class="paramname"><span class="paramname"><em>format</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Check that the format the driver actually granted is exactly the native camera format. </p>
+<p>VIDIOC_S_FMT may silently adjust any requested field, so every field that affects buffer interpretation is compared after negotiation: geometry, YUYV, progressive field order, tightly packed rows and the exact frame size. For the combined layout the transport height is twice the plane height because the temperature plane follows the image plane. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">options</td><td>Caller policy; non-zero width/height must equal the native geometry and an optional measurement region must fit it. </td></tr>
+<tr><td class="paramname">layout</td><td>Layout implied by the USB identity. </td></tr>
+<tr><td class="paramname">format</td><td>Format returned by the driver. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True only for an exact match; false otherwise (errno untouched). </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00122">122</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a9da47dc6878c09f1a7787b6f74b1c886" name="a9da47dc6878c09f1a7787b6f74b1c886"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9da47dc6878c09f1a7787b6f74b1c886">◆ </a></span>video_frame_qualified()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_frame_qualified </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct v4l2_buffer *</td> <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>start</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>now</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Structural and content check of a dequeued frame, independent of the request. </p>
+<p>Rejects driver-flagged errors, short or oversized payloads, and stamps older than max(<code class="param">start</code>, now - 1 s). The one-second window lets frames that arrived before a request still count toward startup qualification while excluding stale backlog. For the combined layout, <a class="el" href="lwir__frame_8c.html#a6d31f7dcad650d4b851b9ee107708e04" title="Live-capture qualification.">lwir_frame_capture_valid()</a> rejects the neutral fill frames (all byte pairs 00,80) the Tiny1-C emits at transitions, and an invalid thermal plane. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session (layout, geometry, mappings). </td></tr>
+<tr><td class="paramname">buffer</td><td>Dequeued buffer, still owned by the caller. </td></tr>
+<tr><td class="paramname">start</td><td>Additional lower time bound; 0 for none. </td></tr>
+<tr><td class="paramname">now</td><td>Host time at dequeue. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the frame is usable for qualification. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00897">897</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a9ced90796c6de1535483fb2764b31d59" name="a9ced90796c6de1535483fb2764b31d59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ced90796c6de1535483fb2764b31d59">◆ </a></span>video_identity()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_identity </td>
+<td>(</td>
+<td class="paramtype">const struct stat *</td> <td class="paramname"><span class="paramname"><em>node</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">enum <a class="el" href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43d">lwir_frame_layout</a> *</td> <td class="paramname"><span class="paramname"><em>layout</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char</td> <td class="paramname"><span class="paramname"><em>serial</em></span>[64], </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char</td> <td class="paramname"><span class="paramname"><em>power_key</em></span>[160], </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char</td> <td class="paramname"><span class="paramname"><em>power_port</em></span>[64], </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned *</td> <td class="paramname"><span class="paramname"><em>usb_bus</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned *</td> <td class="paramname"><span class="paramname"><em>usb_address</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Resolve a V4L2 character device to its USB camera identity through sysfs. </p>
+<ol type="1">
+<li>/sys/dev/char/MAJOR:MINOR/device points at the USB interface that owns the video node; it is canonicalized with realpath().</li>
+<li>Walk up at most 16 directories to the first ancestor exposing idVendor/idProduct, which is the USB device itself. The first such ancestor decides: an unsupported vendor/product is rejected rather than walking further up to a hub.</li>
+<li>The last path component is the physical port name (digits, '-' and '.'), which is stable across re-enumeration and so names the marker.</li>
+<li>Build the power key from boot_id, the sysfs directory inode, busnum and devnum. A new boot, a new enumeration (new sysfs node, new address) or a different bus all change the key; that is how a sensor power cycle is detected without any counter from the camera.</li>
+</ol>
+<p>Bus and address are range-checked because they later form the usbfs path /dev/bus/usb/BBB/DDD and its expected device number (USB addresses are 1..127). </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">node</td><td>stat() of the video node; must be a character device. </td></tr>
+<tr><td class="paramname">layout</td><td>Output: layout implied by vendor/product. </td></tr>
+<tr><td class="paramname">serial</td><td>Output: USB serial or empty string. </td></tr>
+<tr><td class="paramname">power_key</td><td>Output: power-instance key (see above). </td></tr>
+<tr><td class="paramname">power_port</td><td>Output: USB port name. </td></tr>
+<tr><td class="paramname">usb_bus</td><td>Output: USB bus number. </td></tr>
+<tr><td class="paramname">usb_address</td><td>Output: USB device address. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the node belongs to a supported camera. </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>ENODEV not a supported camera or no USB ancestor; EPROTO malformed bus or address; EOVERFLOW key too long; other errno from realpath/stat/sysfs reads. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Outputs may be partially written on failure. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00290">290</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a21ebd7915bde85cfcc687cbc11c6aee6" name="a21ebd7915bde85cfcc687cbc11c6aee6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21ebd7915bde85cfcc687cbc11c6aee6">◆ </a></span>video_ioctl()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int video_ioctl </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>descriptor</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned long</td> <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>argument</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>ioctl() with a bounded retry on EINTR. </p>
+<p>Signals (including the one that sets the cancellation flag) may interrupt V4L2 calls. Retrying keeps transient interruptions harmless, while the eight-attempt cap guarantees a signal storm still returns so the caller can notice cancellation. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">descriptor</td><td>Open V4L2 descriptor. </td></tr>
+<tr><td class="paramname">request</td><td>V4L2 request code. </td></tr>
+<tr><td class="paramname">argument</td><td>Request-specific structure, updated by the kernel. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ioctl() result; -1 with errno set on failure (EINTR after the cap). </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00200">200</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a0859d9ecd33a1e675f6e65d77ac361f5" name="a0859d9ecd33a1e675f6e65d77ac361f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0859d9ecd33a1e675f6e65d77ac361f5">◆ </a></span>video_now()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_now </td>
+<td>(</td>
+<td class="paramtype">uint64_t *</td> <td class="paramname"><span class="paramname"><em>microseconds</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read CLOCK_MONOTONIC in microseconds. </p>
+<p>MONOTONIC is the clock uvcvideo uses for buffer timestamps, so host and kernel times are directly comparable. The conversion is checked for malformed values and 64-bit overflow instead of trusting the kernel. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">microseconds</td><td>Output, written only on success. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on success. </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>errno from clock_gettime(); EPROTO malformed timespec; EOVERFLOW unrepresentable. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00159">159</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="ae5e3c50dcae1e26bb4743c608addc0f5" name="ae5e3c50dcae1e26bb4743c608addc0f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5e3c50dcae1e26bb4743c608addc0f5">◆ </a></span>video_power_marker()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_power_marker </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>complete</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read or publish the per-USB-instance startup qualification marker. </p>
+<p>The marker /run/lock/sensoraia-lwir-UID/usb-PORT.ready holds the power key of the USB instance that already completed eight-frame qualification. /run is normally tmpfs, so a reboot clears it; boot_id inside the key covers the case where it does not.</p>
+<p>Security and integrity checks: the directory must be a real directory owned by the effective user with no group/other access, and the marker a regular single-link file with the same ownership. All opens use O_NOFOLLOW and *at() calls relative to the verified directory descriptor, so a symlink or hard link planted by another user cannot redirect or spoof the marker.</p>
+<p>Read mode (<code class="param">complete</code> false): a missing marker means "not yet qualified"; a marker with a different key (an earlier power instance) likewise. A matching key restores eight good frames so no wait is imposed after reopen or worker restart.</p>
+<p>Write mode (<code class="param">complete</code> true): the key is written to usb-PORT.pending, created with O_EXCL, and renamed over the .ready file. rename is atomic, so a concurrent reader or a crash sees either the old or the new complete marker, never a partial key.</p>
+<p>Any failure is returned as an error instead of being treated as "not
+ready": a silent fallback would quietly impose a new warmup on a camera that does not need one and hide a broken runtime directory. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session supplying the power key and port; <code>video_power_ready</code> and possibly <code>video_good_frames</code> are updated. </td></tr>
+<tr><td class="paramname">complete</td><td>False to read, true to publish completion. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on success (including "no marker" in read mode). </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>EINVAL missing key/port; EACCES unsafe ownership, mode or link count; EOVERFLOW name too long; EPROTO embedded NUL; EIO unexpected EOF/short write; other errno from mkdir/open/read/write/rename/close. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00431">431</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a5329c52391cc48592192153b2d08947a" name="a5329c52391cc48592192153b2d08947a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5329c52391cc48592192153b2d08947a">◆ </a></span>video_probe()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int video_probe </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__device__options.html">lwir_device_options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>candidate</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Test one V4L2 node and, if it is a usable camera, open and lock it. </p>
+<p>Identity is established from sysfs before opening, so unrelated video devices are never opened. After open, fstat() must report the same inode and device numbers as the earlier lstat(); otherwise the node was replaced in between and the descriptor might belong to a different device. The driver must be uvcvideo with capture and streaming capability.</p>
+<p>flock(LOCK_EX | LOCK_NB) gives exclusive ownership across processes: a second LWIRcam instance, or a control command issued while USHER is capturing, fails immediately instead of fighting over the stream. The lock is released automatically when the descriptor is closed.</p>
+<p>The return value has three states so the scan in <a class="el" href="#a69875f13865f7d8afbaec96ffeffaf9c" title="Find, lock and start exactly one supported camera within the timeout.">lwir_device_open()</a> can skip non-matching nodes but stop on a matching camera it cannot use: a busy or permission-denied camera must be reported, not silently ignored. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">path</td><td>Candidate node (symlinks resolved first). </td></tr>
+<tr><td class="paramname">options</td><td>Selection policy (serial filter, cancellation flag). </td></tr>
+<tr><td class="paramname">candidate</td><td>Output session, overwritten only on a match. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 matched, opened and locked; 0 not a candidate (errno says why); -1 hard failure on a matching node (errno from open/ioctl/flock). </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00360">360</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="aeccc1b1bbcc09a736382d57034f1d5f3" name="aeccc1b1bbcc09a736382d57034f1d5f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeccc1b1bbcc09a736382d57034f1d5f3">◆ </a></span>video_qualification()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void video_qualification </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>valid</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>continuous</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>now</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Advance the eight-consecutive-good-frames startup counter. </p>
+<p>Once eight is reached the counter latches for the rest of the USB power instance: later bad frames or gaps must not impose another startup wait. Before that, an invalid frame resets to zero and a sequence gap restarts the count with the current frame as the first good one. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session counter and last-good arrival time. </td></tr>
+<tr><td class="paramname">valid</td><td>Result of <a class="el" href="#a9da47dc6878c09f1a7787b6f74b1c886" title="Structural and content check of a dequeued frame, independent of the request.">video_frame_qualified()</a> and the sequence check. </td></tr>
+<tr><td class="paramname">continuous</td><td>Whether the frame directly follows the previous one. </td></tr>
+<tr><td class="paramname">now</td><td>Host arrival time of the frame. </td></tr>
+</table>
+</dd>
+</dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00919">919</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="aadc8cc633f61efa6e0f5e4ba4b61d14d" name="aadc8cc633f61efa6e0f5e4ba4b61d14d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadc8cc633f61efa6e0f5e4ba4b61d14d">◆ </a></span>video_ranges_separate()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_ranges_separate </td>
+<td>(</td>
+<td class="paramtype">const void *</td> <td class="paramname"><span class="paramname"><em>first</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>first_bytes</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const void *</td> <td class="paramname"><span class="paramname"><em>second</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>second_bytes</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Test that two byte ranges do not overlap. </p>
+<p>Compares the lengths against the gap between the start addresses instead of computing end addresses, so no addition can overflow. Used to keep the frame, the observation and the session struct apart: an overlap would let a frame copy corrupt the session or the observation. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">first</td><td>Start of the first range. </td></tr>
+<tr><td class="paramname">first_bytes</td><td>Length of the first range. </td></tr>
+<tr><td class="paramname">second</td><td>Start of the second range. </td></tr>
+<tr><td class="paramname">second_bytes</td><td>Length of the second range. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the ranges are disjoint (touching ranges are disjoint). </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00806">806</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="ad50c9392f072e4e841a946c7b8b6d65c" name="ad50c9392f072e4e841a946c7b8b6d65c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad50c9392f072e4e841a946c7b8b6d65c">◆ </a></span>video_ready()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_ready </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Verify session invariants before touching the stream. </p>
+<p>Re-derives the expected geometry and frame size from the layout and checks every mapping. This guards against use of a zeroed, closed, partially opened or caller-corrupted session, which would otherwise lead to reads outside a mapping. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session to check; NULL accepted. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when streaming and consistent. </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>EINVAL not open/streaming or inconsistent; EIO poisoned by <a class="el" href="#ac7d91a1c5cb98bf0d59e8a80cccdc62a" title="Poison the session after a fatal kernel or protocol error.">video_fail()</a>. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00751">751</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="ad1c537d247a49905dd27c91354a879f2" name="ad1c537d247a49905dd27c91354a879f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1c537d247a49905dd27c91354a879f2">◆ </a></span>video_requeue()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_requeue </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>index</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Return a dequeued buffer to the driver. </p>
+<p>A fresh v4l2_buffer is used rather than the dequeued one, so the caller's copy of sequence/timestamp/flags is not touched by the ioctl. Failure is fatal: the buffer has left the ring and the stream would silently run with fewer buffers. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session. </td></tr>
+<tr><td class="paramname">index</td><td>Buffer index previously dequeued. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on success; false after <a class="el" href="#ac7d91a1c5cb98bf0d59e8a80cccdc62a" title="Poison the session after a fatal kernel or protocol error.">video_fail()</a>. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00822">822</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a8abdde0a33120e3c6ac1f475c34c3d7a" name="a8abdde0a33120e3c6ac1f475c34c3d7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8abdde0a33120e3c6ac1f475c34c3d7a">◆ </a></span>video_sequence()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_sequence </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>sequence</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool *</td> <td class="paramname"><span class="paramname"><em>continuous</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Extend the kernel's 32-bit frame sequence to a monotonic 64-bit count. </p>
+<p>The forward distance is computed in unsigned 32-bit arithmetic, so wrap-around of the kernel counter is handled naturally. A zero distance (repeated number) or a distance above half the range (interpreted as going backwards) is rejected as inconsistent. Dropped frames advance the 64-bit count by the full distance so gaps stay visible in observations, and are reported as non-continuous to the qualification logic. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Session sequence state, updated on success. </td></tr>
+<tr><td class="paramname">sequence</td><td>Raw v4l2_buffer::sequence. </td></tr>
+<tr><td class="paramname">continuous</td><td>Output: true for the first frame or an exact successor. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>False for a duplicate, backwards or overflowing sequence (state unchanged). </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The first frame is numbered raw + 1. The reason for the offset is not documented in the code; it at least keeps the extended value non-zero. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00709">709</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="aa18cf846dcb84ce2ebfd5c195f6f30d2" name="aa18cf846dcb84ce2ebfd5c195f6f30d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa18cf846dcb84ce2ebfd5c195f6f30d2">◆ </a></span>video_setup()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_setup </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structlwir__device__options.html">lwir_device_options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>deadline</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Negotiate the native format, map the capture buffers and start streaming. </p>
+<ol type="1">
+<li>Request the native YUYV format; for the combined layout the transport height is doubled to carry the temperature plane.</li>
+<li>Verify the granted format exactly (<a class="el" href="#ae59d94906e0a5e0a9f887144ddad962c" title="Check that the format the driver actually granted is exactly the native camera format.">video_format_valid()</a>).</li>
+<li>REQBUFS for <a class="el" href="lwir__device_8h.html#a8e6a3fb1af13909cf2ef2f51edc7d3ba" title="Number of V4L2 MMAP buffers requested from uvcvideo.">LWIR_VIDEO_BUFFERS</a> MMAP buffers. The driver may grant a different count; it is recorded before validation so close frees the kernel buffers even when the count is rejected.</li>
+<li>For each buffer: QUERYBUF, check its size against both the frame and <a class="el" href="lwir__frame_8h.html#ac1e0d1bc97ab9174c3f9e0179b53642c" title="Largest combined frame: two planes of 2 bytes per pixel.">LWIR_MAX_FRAME_BYTES</a>, mmap it, record the mapping immediately (so close can unmap it on any later failure), and queue it to the driver.</li>
+<li>STREAMON. <a class="el" href="structlwir__device.html#ab2c7bc4e3271a0adab6a5e6287707128">lwir_device::video_streaming</a> is set beforehand so close issues STREAMOFF even if STREAMON failed half-way.</li>
+</ol>
+<p>Cancellation/deadline checkpoints sit between ioctls because each one may block on USB. On failure the partially built state is left for <a class="el" href="#aec7d66704baf585f76e47658eb0dd155" title="Release a session in the reverse order of setup.">lwir_device_close()</a>, which is the single teardown path. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Probed, locked session. </td></tr>
+<tr><td class="paramname">options</td><td>Policy; on success width, height and layout are written back. </td></tr>
+<tr><td class="paramname">deadline</td><td>Absolute CLOCK_MONOTONIC limit in microseconds. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when streaming. </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>ENOTSUP thermal data required from an image-only camera, unexpected format or buffer count; EPROTO inconsistent QUERYBUF; EFAULT NULL mapping; EINTR/ETIMEDOUT checkpoints; other errno from ioctl/mmap. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00585">585</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="af7e385f5e25da9c2a9b3e7e91954b488" name="af7e385f5e25da9c2a9b3e7e91954b488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7e385f5e25da9c2a9b3e7e91954b488">◆ </a></span>video_state_identity()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_state_identity </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Confirm the streaming camera is still the same USB power instance. </p>
+<p>Re-derives the identity from the open V4L2 descriptor and compares power key, bus and address with those recorded at open. If the camera re-enumerated meanwhile, the stored bus/address may now name a different device, and vendor writes must never reach it. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Open session. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when unchanged and combined-layout. </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>ENODEV identity changed or unavailable; errno from fstat(). </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l01196">1196</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a62b4ff411e1874a37508537aec67f0ae" name="a62b4ff411e1874a37508537aec67f0ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62b4ff411e1874a37508537aec67f0ae">◆ </a></span>video_state_now()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint64_t video_state_now </td>
+<td>(</td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p><a class="el" href="survey_8cpp.html#a19bfb27380067c74ae297dd7dad5fb37">Clock</a> callback for <a class="el" href="lwir__state_8c.html" title="Tiny1-C vendor mailbox protocol: snapshot reads, controls and evidence text.">lwir_state.c</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">context</td><td>Unused. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>CLOCK_MONOTONIC microseconds, or UINT64_MAX if the clock fails so that any deadline comparison in the protocol treats it as expired. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l01159">1159</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a91118a1e94d67e0c9cad2c92c2c74acc" name="a91118a1e94d67e0c9cad2c92c2c74acc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91118a1e94d67e0c9cad2c92c2c74acc">◆ </a></span>video_state_open()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int video_state_open </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structlwir__device.html">lwir_device</a> *</td> <td class="paramname"><span class="paramname"><em>device</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Open the usbfs node of the streaming Tiny1-C for one state/control operation. </p>
+<ol type="1">
+<li>Require a healthy combined-layout session and verify identity.</li>
+<li>Open /dev/bus/usb/BBB/DDD.</li>
+<li>Check the opened node is the expected usbfs character device: major 189, minor (bus - 1) * 128 + address - 1.</li>
+<li>Verify identity again after open, closing the window in which the camera could re-enumerate and another device take over the address.</li>
+</ol>
+<p>The node is opened per operation and closed on every path by the caller, so no usbfs handle outlives a single request. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">device</td><td>Open, healthy session. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>usbfs descriptor, or -1 with errno set. </dd></dl>
+<dl class="section user"><dt>Errors</dt><dd>EINVAL/EIO session not ready; ENOTSUP image-only camera; EINTR cancelled; ENODEV identity mismatch; EOVERFLOW path too long; errno from open/fstat. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l01227">1227</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="a2dc3445ca0565c57ccaf1e371afeeeee" name="a2dc3445ca0565c57ccaf1e371afeeeee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dc3445ca0565c57ccaf1e371afeeeee">◆ </a></span>video_state_pause()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_state_pause </td>
+<td>(</td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>milliseconds</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Short cancellable delay between mailbox polls for <a class="el" href="lwir__state_8c.html" title="Tiny1-C vendor mailbox protocol: snapshot reads, controls and evidence text.">lwir_state.c</a>. </p>
+<p>nanosleep() is resumed with the remaining time after signals, but cancellation is checked on every interruption so a cancel request ends the pause immediately. The 10 ms cap keeps cancellation latency small. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">context</td><td>struct <a class="el" href="structvideo__state__transport.html" title="Context handed to the lwir_state.c protocol through struct lwir_state_io.">video_state_transport</a>. </td></tr>
+<tr><td class="paramname">milliseconds</td><td>1..10. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the full delay elapsed without cancellation. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l01175">1175</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="acdb5683b3f0c24c9ab3069b40eb5b386" name="acdb5683b3f0c24c9ab3069b40eb5b386"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdb5683b3f0c24c9ab3069b40eb5b386">◆ </a></span>video_state_transfer()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int video_state_transfer </td>
+<td>(</td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>input</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint16_t</td> <td class="paramname"><span class="paramname"><em>address</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint8_t *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>length</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>timeout</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>One Tiny1-C vendor mailbox control transfer over usbfs. </p>
+<p>Reads use bmRequestType 0xc1 / bRequest 0x44 and writes 0x41 / 0x45 (vendor type, interface recipient), with wValue 0x78 and the mailbox address in wIndex. Linux usbfs permits vendor-type control requests without claiming the interface, so uvcvideo is never detached and streaming continues undisturbed. Length (64 bytes) and timeout (50 ms) caps keep a misbehaving camera from blocking the caller for long. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">context</td><td>struct <a class="el" href="structvideo__state__transport.html" title="Context handed to the lwir_state.c protocol through struct lwir_state_io.">video_state_transport</a>. </td></tr>
+<tr><td class="paramname">input</td><td>True for device-to-host (read), false for host-to-device (write). </td></tr>
+<tr><td class="paramname">address</td><td>Mailbox address placed in wIndex. </td></tr>
+<tr><td class="paramname">data</td><td>Transfer buffer of <code class="param">length</code> bytes. </td></tr>
+<tr><td class="paramname">length</td><td>1..64 bytes. </td></tr>
+<tr><td class="paramname">timeout</td><td>1..50 milliseconds. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Bytes transferred, or a negative code interpreted by <a class="el" href="lwir__state_8c.html" title="Tiny1-C vendor mailbox protocol: snapshot reads, controls and evidence text.">lwir_state.c</a>: -10 cancelled/interrupted, -7 timeout, -2 invalid argument, -1 other I/O error. These values follow the numbering of the retired libusb backend so <a class="el" href="lwir__state_8c.html" title="Tiny1-C vendor mailbox protocol: snapshot reads, controls and evidence text.">lwir_state.c</a> stays backend-neutral. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l01139">1139</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="adc03f90c58ab553f94a97c1d8c265288" name="adc03f90c58ab553f94a97c1d8c265288"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc03f90c58ab553f94a97c1d8c265288">◆ </a></span>video_text()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_text </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>directory</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>text</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>capacity</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read one short sysfs/procfs attribute as a validated single-line string. </p>
+<p>Reads until EOF into the caller buffer. If the buffer fills, one further byte is attempted: any data there means the value was truncated and the whole read is rejected, because a cut-off identity string could match the wrong device. Trailing newline characters are stripped, a terminator must still fit, and control characters are refused so the value is safe to embed in the marker file and log lines. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">directory</td><td>sysfs directory. </td></tr>
+<tr><td class="paramname">name</td><td>Attribute file name inside <code class="param">directory</code>. </td></tr>
+<tr><td class="paramname">text</td><td>Output buffer; NUL-terminated only on success. </td></tr>
+<tr><td class="paramname">capacity</td><td>Size of <code class="param">text</code>, at least 2. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for a non-empty, complete, printable value. errno is meaningful only for open/read failures; validation failures leave it unspecified. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00225">225</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+<a id="afecdfe432f8c8dd23fde092b92af173f" name="afecdfe432f8c8dd23fde092b92af173f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afecdfe432f8c8dd23fde092b92af173f">◆ </a></span>video_timestamp_fresh()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool video_timestamp_fresh </td>
+<td>(</td>
+<td class="paramtype">const struct v4l2_buffer *</td> <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>start</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>now</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Check that a MONOTONIC kernel timestamp lies within [start, now]. </p>
+<p>uvcvideo stamps buffers at start of frame. Requiring the stamp to be at or after the request start guarantees the image was not exposed before the trigger. A stamp after <code class="param">now</code> is impossible on one clock and is rejected as inconsistent. Buffers whose clock is not MONOTONIC cannot be compared and pass here; <a class="el" href="#a60ac505209a9ae6c129afeb19bdb0e1a" title="Wait for, validate and copy the first acceptable frame that started after this call.">lwir_device_acquire()</a> compensates by draining the already-queued buffers once. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">buffer</td><td>Dequeued buffer. </td></tr>
+<tr><td class="paramname">start</td><td>Earliest acceptable time, CLOCK_MONOTONIC microseconds. </td></tr>
+<tr><td class="paramname">now</td><td>Host time at dequeue, CLOCK_MONOTONIC microseconds. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when fresh or when freshness cannot be judged. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__device__v4l2_8c_source.html#l00874">874</a> of file <a class="el" href="lwir__device__v4l2_8c_source.html">lwir_device_v4l2.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

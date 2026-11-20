@@ -1,0 +1,2934 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/lwir_cam_pipe.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('lwir__cam__pipe_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">lwir_cam_pipe.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>USHER-side supervisor for the persistent LWIR capture-server process.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include "<a class="el" href="lwir__cam__pipe_8h_source.html">lwir_cam_pipe.h</a>"</code><br/>
+<code>#include "<a class="el" href="camera__capture_8h_source.html">camera_capture.h</a>"</code><br/>
+<code>#include "<a class="el" href="lwir__features_8h_source.html">../modules/lwir_cam/lwir_features.h</a>"</code><br/>
+<code>#include "<a class="el" href="path__utils_8h_source.html">path_utils.h</a>"</code><br/>
+<code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &lt;fcntl.h&gt;</code><br/>
+<code>#include &lt;limits.h&gt;</code><br/>
+<code>#include &lt;math.h&gt;</code><br/>
+<code>#include &lt;poll.h&gt;</code><br/>
+<code>#include &lt;signal.h&gt;</code><br/>
+<code>#include &lt;spawn.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;sys/stat.h&gt;</code><br/>
+<code>#include &lt;sys/types.h&gt;</code><br/>
+<code>#include &lt;sys/wait.h&gt;</code><br/>
+<code>#include &lt;time.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+<code>#include "<a class="el" href="camera__backend_8h_source.html">camera_backend.h</a>"</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for lwir_cam_pipe.c:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="lwir__cam__pipe_8c__incl.png" usemap="#asrc_2lwir__cam__pipe_8c"/></div>
+<map id="asrc_2lwir__cam__pipe_8c" name="asrc_2lwir__cam__pipe_8c">
+<area alt="" coords="1352,24,1347,18,1334,13,1312,9,1285,6,1255,5,1225,6,1198,9,1176,13,1163,18,1158,24,1163,30,1176,35,1198,39,1225,42,1255,43,1285,42,1312,39,1334,35,1347,30" shape="poly" title="USHER-side supervisor for the persistent LWIR capture-server process."/>
+<area alt="" coords="382,121,378,115,366,110,348,106,326,103,300,102,275,103,252,106,234,110,223,115,219,121,223,127,234,132,252,136,275,139,300,140,326,139,348,136,366,132,378,127" href="lwir__cam__pipe_8h.html" shape="poly" title="Parent-side protocol for USHER's persistent Tiny1-C LWIR capture server."/>
+<area alt="" coords="1155,26,1009,32,818,42,606,62,499,76,394,94,358,102,356,98,393,88,498,71,606,57,818,37,1009,27,1160,25" shape="poly" title=" "/>
+<area alt="" coords="574,304,572,298,565,293,555,289,541,286,527,285,512,286,499,289,489,293,482,298,480,304,482,310,489,315,499,319,512,322,527,323,541,322,555,319,565,315,572,310" shape="poly" title=" "/>
+<area alt="" coords="1155,26,1083,33,999,44,912,63,828,93,798,109,775,126,740,161,706,199,656,239,614,265,572,286,570,281,611,260,653,235,702,195,736,157,772,122,795,105,826,89,910,58,998,39,1083,28,1160,25" shape="poly" title=" "/>
+<area alt="" coords="644,218,639,212,627,207,607,203,582,200,555,199,528,200,503,203,483,207,471,212,466,218,471,224,483,229,503,233,528,236,555,237,582,236,607,233,627,229,639,224" href="camera__capture_8h.html" shape="poly" title="Optional split-phase capture contract for USHER image backends."/>
+<area alt="" coords="1156,28,1032,36,887,47,755,66,702,78,663,93,628,130,580,189,577,185,624,126,660,89,700,73,754,60,887,42,1031,30,1161,27" shape="poly" title=" "/>
+<area alt="" coords="1614,121,1609,112,1595,103,1574,97,1547,93,1516,91,1486,93,1459,97,1437,103,1423,112,1418,121,1423,131,1437,139,1459,146,1486,150,1516,151,1547,150,1574,146,1595,139,1609,131" href="lwir__features_8h.html" shape="poly" title="Positive opt-ins shared by the worker and its USHER adapter."/>
+<area alt="" coords="1300,39,1442,92,1437,92,1299,44" shape="poly" title=" "/>
+<area alt="" coords="1192,121,1189,115,1180,110,1166,106,1149,103,1130,102,1110,103,1093,106,1079,110,1070,115,1067,121,1070,127,1079,132,1093,136,1110,139,1130,140,1149,139,1166,136,1180,132,1189,127" href="path__utils_8h.html" shape="poly" title="Small path and writable-directory helpers shared by USHER backends."/>
+<area alt="" coords="1234,42,1165,96,1163,92,1230,44" shape="poly" title=" "/>
+<area alt="" coords="805,218,803,212,797,207,787,203,775,200,762,199,748,200,736,203,727,207,720,212,718,218,720,224,727,229,736,233,748,236,762,237,775,236,787,233,797,229,803,224" shape="poly" title=" "/>
+<area alt="" coords="1162,32,1045,53,981,70,920,93,882,115,846,141,789,192,786,187,843,136,879,110,918,89,980,65,1044,48,1167,31" shape="poly" title=" "/>
+<area alt="" coords="910,218,908,212,902,207,893,203,882,200,870,199,857,200,846,203,837,207,831,212,829,218,831,224,837,229,846,233,857,236,870,237,882,236,893,233,902,229,908,224" shape="poly" title=" "/>
+<area alt="" coords="1170,35,1085,57,1039,73,996,93,965,114,937,140,892,190,890,185,933,136,962,110,994,89,1037,68,1084,52,1175,34" shape="poly" title=" "/>
+<area alt="" coords="1024,218,1022,212,1015,207,1005,203,993,200,979,199,965,200,953,203,943,207,936,212,934,218,936,224,943,229,953,233,965,236,979,237,993,236,1005,233,1015,229,1022,224" shape="poly" title=" "/>
+<area alt="" coords="1170,35,1105,57,1072,72,1042,93,1023,113,1009,137,989,186,985,182,1004,135,1019,110,1039,89,1069,68,1103,52,1176,34" shape="poly" title=" "/>
+<area alt="" coords="1134,218,1132,212,1125,207,1116,203,1104,200,1091,199,1078,200,1066,203,1056,207,1050,212,1048,218,1050,224,1056,229,1066,233,1078,236,1091,237,1104,236,1116,233,1125,229,1132,224" shape="poly" title=" "/>
+<area alt="" coords="1163,32,1135,42,1106,54,1079,70,1057,92,1049,115,1050,139,1059,164,1072,188,1067,186,1054,166,1045,140,1043,114,1053,90,1076,66,1103,49,1134,37,1168,31" shape="poly" title=" "/>
+<area alt="" coords="1298,218,1296,212,1290,207,1280,203,1267,200,1254,199,1240,200,1227,203,1217,207,1211,212,1209,218,1211,224,1217,229,1227,233,1240,236,1254,237,1267,236,1280,233,1290,229,1296,224" shape="poly" title=" "/>
+<area alt="" coords="1257,42,1256,185,1252,182,1253,45" shape="poly" title=" "/>
+<area alt="" coords="1414,218,1412,212,1405,207,1395,203,1382,200,1368,199,1354,200,1342,203,1331,207,1325,212,1323,218,1325,224,1331,229,1342,233,1354,236,1368,237,1382,236,1395,233,1405,229,1412,224" shape="poly" title=" "/>
+<area alt="" coords="1263,41,1284,92,1315,150,1344,190,1339,188,1310,153,1279,94,1260,46" shape="poly" title=" "/>
+<area alt="" coords="1550,218,1547,212,1539,207,1527,203,1511,200,1494,199,1476,200,1461,203,1448,207,1440,212,1438,218,1440,224,1448,229,1461,233,1476,236,1494,237,1511,236,1527,233,1539,229,1547,224" shape="poly" title=" "/>
+<area alt="" coords="1271,41,1314,89,1338,121,1365,149,1404,175,1446,198,1441,197,1401,180,1361,153,1334,125,1310,93,1270,46" shape="poly" title=" "/>
+<area alt="" coords="1669,218,1667,212,1660,207,1650,203,1636,200,1622,199,1607,200,1594,203,1583,207,1576,212,1574,218,1576,224,1583,229,1594,233,1607,236,1622,237,1636,236,1650,233,1660,229,1667,224" shape="poly" title=" "/>
+<area alt="" coords="1287,40,1323,62,1358,89,1373,106,1383,121,1392,135,1408,149,1573,202,1567,201,1406,154,1388,139,1378,124,1369,109,1354,93,1320,66,1286,45" shape="poly" title=" "/>
+<area alt="" coords="1725,121,1723,115,1717,110,1707,106,1695,103,1682,102,1668,103,1656,106,1647,110,1640,115,1638,121,1640,127,1647,132,1656,136,1668,139,1682,140,1695,139,1707,136,1717,132,1723,127" shape="poly" title=" "/>
+<area alt="" coords="1341,31,1477,51,1553,67,1627,89,1647,99,1641,98,1625,94,1551,72,1476,56,1341,36" shape="poly" title=" "/>
+<area alt="" coords="1823,121,1821,115,1816,110,1807,106,1797,103,1786,102,1774,103,1764,106,1756,110,1750,115,1749,121,1750,127,1756,132,1764,136,1774,139,1786,140,1797,139,1807,136,1816,132,1821,127" shape="poly" title=" "/>
+<area alt="" coords="1351,25,1436,30,1534,41,1638,60,1739,89,1755,98,1749,97,1737,94,1636,65,1533,46,1435,35,1352,30" shape="poly" title=" "/>
+<area alt="" coords="1946,121,1944,115,1937,110,1926,106,1912,103,1896,102,1881,103,1867,106,1856,110,1849,115,1847,121,1849,127,1856,132,1867,136,1881,139,1896,140,1912,139,1926,136,1937,132,1944,127" shape="poly" title=" "/>
+<area alt="" coords="1352,24,1453,29,1575,40,1707,59,1836,88,1859,99,1853,98,1834,94,1706,64,1575,45,1453,35,1352,30" shape="poly" title=" "/>
+<area alt="" coords="2097,121,2094,115,2085,110,2071,106,2053,103,2034,102,2014,103,1997,106,1983,110,1974,115,1970,121,1974,127,1983,132,1997,136,2014,139,2034,140,2053,139,2071,136,2085,132,2094,127" shape="poly" title=" "/>
+<area alt="" coords="1351,24,1474,28,1627,39,1793,58,1958,88,1988,100,1983,99,1957,94,1792,63,1626,44,1474,33,1352,29" shape="poly" title=" "/>
+<area alt="" coords="2236,121,2234,115,2225,110,2213,106,2197,103,2179,102,2161,103,2145,106,2132,110,2124,115,2121,121,2124,127,2132,132,2145,136,2161,139,2179,140,2197,139,2213,136,2225,132,2234,127" shape="poly" title=" "/>
+<area alt="" coords="1349,26,1748,48,1957,66,2043,76,2109,88,2137,99,2132,99,2108,94,2042,82,1956,71,1747,53,1350,32" shape="poly" title=" "/>
+<area alt="" coords="2342,121,2340,115,2334,110,2325,106,2314,103,2302,102,2289,103,2278,106,2269,110,2263,115,2261,121,2263,127,2269,132,2278,136,2289,139,2302,140,2314,139,2325,136,2334,132,2340,127" shape="poly" title=" "/>
+<area alt="" coords="1351,24,1560,29,1819,39,2069,59,2171,72,2249,88,2268,98,2263,98,2248,94,2170,77,2068,64,1818,45,1559,34,1352,29" shape="poly" title=" "/>
+<area alt="" coords="592,121,587,115,574,110,554,106,528,103,499,102,470,103,444,106,424,110,411,115,406,121,411,127,424,132,444,136,470,139,499,140,528,139,554,136,574,132,587,127" href="camera__backend_8h.html" shape="poly" title="Shared capability and lifecycle contract for USHER camera backends."/>
+<area alt="" coords="1160,31,913,53,762,71,611,94,566,104,564,99,610,88,761,65,912,48,1165,30" shape="poly" title=" "/>
+<area alt="" coords="457,304,454,298,447,293,437,289,423,286,408,285,393,286,380,289,369,293,362,298,360,304,362,310,369,315,380,319,393,322,408,323,423,322,437,319,447,315,454,310" shape="poly" title=" "/>
+<area alt="" coords="310,138,363,236,388,274,383,273,358,238,307,143" shape="poly" title=" "/>
+<area alt="" coords="323,137,498,277,493,278,321,142" shape="poly" title=" "/>
+<area alt="" coords="291,218,287,212,275,207,257,203,234,200,208,199,183,200,160,203,141,207,129,212,125,218,129,224,141,229,160,233,183,236,208,237,234,236,257,233,275,229,287,224" href="capture__timing_8h.html" shape="poly" title="Sensor observation times, aligned poses, and optional frame-arrival evidence."/>
+<area alt="" coords="285,138,238,190,234,187,281,142" shape="poly" title=" "/>
+<area alt="" coords="468,390,465,384,457,379,446,374,431,372,415,371,399,372,384,374,372,379,365,384,362,390,365,395,372,401,384,405,399,408,415,409,431,408,446,405,457,401,465,395" shape="poly" title=" "/>
+<area alt="" coords="209,235,215,279,223,302,236,321,260,342,289,359,353,380,347,380,287,363,257,347,232,325,218,304,210,280,206,240" shape="poly" title=" "/>
+<area alt="" coords="336,304,334,298,328,293,318,289,305,286,291,285,277,286,264,289,254,293,248,298,245,304,248,310,254,315,264,319,277,322,291,323,305,322,318,319,328,315,334,310" shape="poly" title=" "/>
+<area alt="" coords="226,235,266,275,261,275,225,240" shape="poly" title=" "/>
+<area alt="" coords="171,304,167,298,155,293,137,289,114,286,88,285,63,286,40,289,21,293,9,298,5,304,9,310,21,315,40,319,63,322,88,323,114,322,137,319,155,315,167,310" href="usher__protocol_8h.html" shape="poly" title="Shared FC/MORA byte-stream UART framing, messages and payload layouts."/>
+<area alt="" coords="182,239,127,279,124,275,185,235" shape="poly" title=" "/>
+<area alt="" coords="142,316,360,372,357,376,141,322" shape="poly" title=" "/>
+<area alt="" coords="144,390,141,384,133,379,121,374,105,372,88,371,71,372,56,374,43,379,36,384,33,390,36,395,43,401,56,405,71,408,88,409,105,408,121,405,133,401,141,395" shape="poly" title=" "/>
+<area alt="" coords="90,321,91,356,86,355,87,325" shape="poly" title=" "/>
+<area alt="" coords="527,236,449,283,447,278,522,238" shape="poly" title=" "/>
+<area alt="" coords="551,236,540,272,536,269,547,239" shape="poly" title=" "/>
+<area alt="" coords="570,235,583,255,592,278,595,302,588,324,566,347,540,364,510,376,481,384,480,379,509,371,537,360,563,343,583,321,590,301,587,279,578,257,568,240" shape="poly" title=" "/>
+<area alt="" coords="1141,138,1151,161,1158,187,1159,214,1148,239,1128,258,1101,275,1031,305,943,329,844,348,643,375,482,388,482,382,643,369,844,343,942,324,1029,300,1099,270,1125,253,1143,236,1153,213,1153,188,1146,163,1138,143" shape="poly" title=" "/>
+<area alt="" coords="1079,134,818,202,810,204,809,199,817,197,1084,133" shape="poly" title=" "/>
+<area alt="" coords="1094,136,915,203,914,198,1089,137" shape="poly" title=" "/>
+<area alt="" coords="1106,138,1017,196,1015,191,1101,140" shape="poly" title=" "/>
+<area alt="" coords="1124,139,1106,187,1102,183,1120,142" shape="poly" title=" "/>
+<area alt="" coords="1152,137,1224,192,1218,192,1151,142" shape="poly" title=" "/>
+<area alt="" coords="1166,134,1325,199,1320,199,1166,140" shape="poly" title=" "/>
+<area alt="" coords="1176,132,1439,202,1433,202,1176,137" shape="poly" title=" "/>
+<area alt="" coords="1185,128,1354,155,1562,197,1574,202,1568,202,1561,202,1353,160,1185,133" shape="poly" title=" "/>
+<area alt="" coords="485,138,472,162,459,185,453,211,457,236,472,258,492,279,487,278,468,262,452,238,448,211,454,184,467,159,481,142" shape="poly" title=" "/>
+<area alt="" coords="450,140,270,200,267,195,454,136" shape="poly" title=" "/>
+<area alt="" coords="510,138,539,187,534,186,509,143" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="lwir__cam__pipe_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-define-members"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:acc97c4dc616c51d6a70d61145651faf8" id="r_acc97c4dc616c51d6a70d61145651faf8"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#acc97c4dc616c51d6a70d61145651faf8">USHER_LWIR_CAM_PHOTO_DIR</a>   "~/Pictures/sensoraia"</td></tr>
+<tr class="memitem:ade3eb6829abfb7913a976e0b2474df52" id="r_ade3eb6829abfb7913a976e0b2474df52"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ade3eb6829abfb7913a976e0b2474df52">USHER_LWIR_CAM_COMMAND</a>   "./bin/lwircam"</td></tr>
+<tr class="memitem:a87375b41892f2c2279ba390ce1f76bcf" id="r_a87375b41892f2c2279ba390ce1f76bcf"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a87375b41892f2c2279ba390ce1f76bcf">CHILD_STOP_GRACE_MS</a>   500</td></tr>
+<tr class="memitem:aed632d6f800745658ca4f005625cd13b" id="r_aed632d6f800745658ca4f005625cd13b"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aed632d6f800745658ca4f005625cd13b">CHILD_WAIT_INTERVAL_MS</a>   10</td></tr>
+<tr class="memitem:ac0426d22cf646398f38e5cccb974fb8f" id="r_ac0426d22cf646398f38e5cccb974fb8f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0426d22cf646398f38e5cccb974fb8f">IMAGE_PROCESS_TIMEOUT_MS</a>   30000</td></tr>
+<tr class="memitem:a488998b6d977b7a4dadafc1d9db5b045" id="r_a488998b6d977b7a4dadafc1d9db5b045"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a488998b6d977b7a4dadafc1d9db5b045">LWIR_SERVER_START_TIMEOUT_MS</a>   30000</td></tr>
+<tr class="memitem:ad2ba2689db415c7edc814bc7f3852514" id="r_ad2ba2689db415c7edc814bc7f3852514"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2ba2689db415c7edc814bc7f3852514">LWIR_WARMUP_TIMEOUT_MS</a>   30000</td></tr>
+<tr class="memitem:a9b1cbc25ff770ab038619b3ef3c43dae" id="r_a9b1cbc25ff770ab038619b3ef3c43dae"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b1cbc25ff770ab038619b3ef3c43dae">LWIR_REQUEST_TIMEOUT_MS</a>   8000</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ab6a10510dedea87d4911bc66e4b7e8e2" id="r_ab6a10510dedea87d4911bc66e4b7e8e2"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6a10510dedea87d4911bc66e4b7e8e2">lwir_cam_pipe_configure</a> (const struct <a class="el" href="structcamera__backend__host.html">camera_backend_host</a> *host)</td></tr>
+<tr class="memdesc:ab6a10510dedea87d4911bc66e4b7e8e2"><td class="mdescLeft"> </td><td class="mdescRight">Bind the owner's long-lived shutdown flag before starting workers.  <br/></td></tr>
+<tr class="memitem:af2ebbaa2f545ffd8f5068ac6a7ab4a42" id="r_af2ebbaa2f545ffd8f5068ac6a7ab4a42"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#af2ebbaa2f545ffd8f5068ac6a7ab4a42">lwir_cam_pipe_set_config</a> (const char *path)</td></tr>
+<tr class="memdesc:af2ebbaa2f545ffd8f5068ac6a7ab4a42"><td class="mdescLeft"> </td><td class="mdescRight">Apply a bounded worker configuration before starting the capture server.  <br/></td></tr>
+<tr class="memitem:a9cd152f10e344623f059b1268ac3245e" id="r_a9cd152f10e344623f059b1268ac3245e"><td align="right" class="memItemLeft" valign="top">static uint64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9cd152f10e344623f059b1268ac3245e">monotonic_ms</a> (void)</td></tr>
+<tr class="memdesc:a9cd152f10e344623f059b1268ac3245e"><td class="mdescLeft"> </td><td class="mdescRight">Read the capture-server watchdog clock.  <br/></td></tr>
+<tr class="memitem:aa7c5361b2347067b95b7dd19fb487a71" id="r_aa7c5361b2347067b95b7dd19fb487a71"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7c5361b2347067b95b7dd19fb487a71">wait_child</a> (pid_t pid, int *status, int timeout_ms)</td></tr>
+<tr class="memdesc:aa7c5361b2347067b95b7dd19fb487a71"><td class="mdescLeft"> </td><td class="mdescRight">Wait up to a bounded time for the capture child to exit.  <br/></td></tr>
+<tr class="memitem:aa787568d07b481a7a39b0b49eaa045cd" id="r_aa787568d07b481a7a39b0b49eaa045cd"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa787568d07b481a7a39b0b49eaa045cd">terminate_child</a> (pid_t pid, int *status)</td></tr>
+<tr class="memdesc:aa787568d07b481a7a39b0b49eaa045cd"><td class="mdescLeft"> </td><td class="mdescRight">Stop an owned capture child, escalating only after its grace period.  <br/></td></tr>
+<tr class="memitem:aa694b743fb60bc65e83ab5448b311a5f" id="r_aa694b743fb60bc65e83ab5448b311a5f"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa694b743fb60bc65e83ab5448b311a5f">create_cloexec_pipe</a> (int descriptors[2])</td></tr>
+<tr class="memdesc:aa694b743fb60bc65e83ab5448b311a5f"><td class="mdescLeft"> </td><td class="mdescRight">Open a close-on-exec pipe for child protocol setup.  <br/></td></tr>
+<tr class="memitem:a521371d2d7a90c4eb51a63e1ebd9d92d" id="r_a521371d2d7a90c4eb51a63e1ebd9d92d"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a521371d2d7a90c4eb51a63e1ebd9d92d">lwir_cam_pipe_set_photo_directory</a> (const char *directory)</td></tr>
+<tr class="memdesc:a521371d2d7a90c4eb51a63e1ebd9d92d"><td class="mdescLeft"> </td><td class="mdescRight">Override the output directory for an isolated standalone benchmark.  <br/></td></tr>
+<tr class="memitem:a521267767395fefabd3db07491db68a0" id="r_a521267767395fefabd3db07491db68a0"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a521267767395fefabd3db07491db68a0">lwir_cam_pipe_set_native_raw</a> (int <a class="el" href="dipla__camera__backend_8c.html#adce2780be75006bfa4c58fd8cc706556">enabled</a>)</td></tr>
+<tr class="memdesc:a521267767395fefabd3db07491db68a0"><td class="mdescLeft"> </td><td class="mdescRight">Select whether successful captures keep an explicit .raw companion.  <br/></td></tr>
+<tr class="memitem:aa66ad9d3fcd9ec67663eb151c58f6700" id="r_aa66ad9d3fcd9ec67663eb151c58f6700"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa66ad9d3fcd9ec67663eb151c58f6700">lwir_cam_pipe_set_calibration</a> (const char *path)</td></tr>
+<tr class="memdesc:aa66ad9d3fcd9ec67663eb151c58f6700"><td class="mdescLeft"> </td><td class="mdescRight">Set the optional calibration file used by server-side geolocation.  <br/></td></tr>
+<tr class="memitem:a90cdd7804a1b65490ea6f8d1413ee0f5" id="r_a90cdd7804a1b65490ea6f8d1413ee0f5"><td align="right" class="memItemLeft" valign="top">struct <a class="el" href="structcapture__timing.html">capture_timing</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#a90cdd7804a1b65490ea6f8d1413ee0f5">lwir_cam_pipe_capture_timing</a> (void)</td></tr>
+<tr class="memdesc:a90cdd7804a1b65490ea6f8d1413ee0f5"><td class="mdescLeft"> </td><td class="mdescRight">Return detailed callback or polling timing evidence for the last capture.  <br/></td></tr>
+<tr class="memitem:a79786091268d8b487e9c8110fa8ec451" id="r_a79786091268d8b487e9c8110fa8ec451"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a79786091268d8b487e9c8110fa8ec451">parse_capture_timing</a> (const char *text, struct <a class="el" href="structcapture__timing.html">capture_timing</a> *timing, bool callback)</td></tr>
+<tr class="memdesc:a79786091268d8b487e9c8110fa8ec451"><td class="mdescLeft"> </td><td class="mdescRight">Parse one server timing payload after its protocol prefix.  <br/></td></tr>
+<tr class="memitem:a67e3b9d518fb69b8697c75e6ffada341" id="r_a67e3b9d518fb69b8697c75e6ffada341"><td align="right" class="memItemLeft" valign="top">double </td><td class="memItemRight" valign="bottom"><a class="el" href="#a67e3b9d518fb69b8697c75e6ffada341">lwir_cam_pipe_capture_delay</a> (void)</td></tr>
+<tr class="memdesc:a67e3b9d518fb69b8697c75e6ffada341"><td class="mdescLeft"> </td><td class="mdescRight">Return the delay of the last successful capture request in seconds.  <br/></td></tr>
+<tr class="memitem:a7f7ea5377366dd08be6a58ab997c95b7" id="r_a7f7ea5377366dd08be6a58ab997c95b7"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f7ea5377366dd08be6a58ab997c95b7">read_server_status</a> (const char *expected, int timeout_ms, const volatile sig_atomic_t *<a class="el" href="earcam_8c.html#a69ed6cac8443e6accb95cd749c873604">keep_running</a>)</td></tr>
+<tr class="memdesc:a7f7ea5377366dd08be6a58ab997c95b7"><td class="mdescLeft"> </td><td class="mdescRight">Read server diagnostic lines until an expected terminal reply arrives.  <br/></td></tr>
+<tr class="memitem:a8687187825da6923af778136f5088889" id="r_a8687187825da6923af778136f5088889"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8687187825da6923af778136f5088889">stop_capture_server</a> (void)</td></tr>
+<tr class="memdesc:a8687187825da6923af778136f5088889"><td class="mdescLeft"> </td><td class="mdescRight">Close pipes and reap or terminate the owned capture server.  <br/></td></tr>
+<tr class="memitem:a2231389991a1ec60e47733e5c83bf63e" id="r_a2231389991a1ec60e47733e5c83bf63e"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2231389991a1ec60e47733e5c83bf63e">send_request_and_wait</a> (const char *<a class="el" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>, size_t request_size, int timeout_ms, const char *expected)</td></tr>
+<tr class="memdesc:a2231389991a1ec60e47733e5c83bf63e"><td class="mdescLeft"> </td><td class="mdescRight">Send one newline-terminated server request and require an OK reply.  <br/></td></tr>
+<tr class="memitem:a02740748811cf3069197788c8f5b8a5c" id="r_a02740748811cf3069197788c8f5b8a5c"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a02740748811cf3069197788c8f5b8a5c">start_capture_server</a> (const char *unused, const volatile sig_atomic_t *<a class="el" href="earcam_8c.html#a69ed6cac8443e6accb95cd749c873604">keep_running</a>)</td></tr>
+<tr class="memdesc:a02740748811cf3069197788c8f5b8a5c"><td class="mdescLeft"> </td><td class="mdescRight">Start the persistent thermal capture subprocess.  <br/></td></tr>
+<tr class="memitem:ab521dbc65ef4dcbd4d8b0e69466bd1fc" id="r_ab521dbc65ef4dcbd4d8b0e69466bd1fc"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab521dbc65ef4dcbd4d8b0e69466bd1fc">lwir_cam_pipe_init</a> (const char *unused)</td></tr>
+<tr class="memdesc:ab521dbc65ef4dcbd4d8b0e69466bd1fc"><td class="mdescLeft"> </td><td class="mdescRight">Start and qualify the persistent LWIR capture server.  <br/></td></tr>
+<tr class="memitem:a50f209297820faf9a351be5fd6580394" id="r_a50f209297820faf9a351be5fd6580394"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a50f209297820faf9a351be5fd6580394">lwir_cam_pipe_init_cancelable</a> (const char *unused, const volatile sig_atomic_t *<a class="el" href="earcam_8c.html#a69ed6cac8443e6accb95cd749c873604">keep_running</a>)</td></tr>
+<tr class="memdesc:a50f209297820faf9a351be5fd6580394"><td class="mdescLeft"> </td><td class="mdescRight">Start the server but abort promptly when USHER begins shutdown.  <br/></td></tr>
+<tr class="memitem:a35df80f37f5a753ae2baef9d8eab6443" id="r_a35df80f37f5a753ae2baef9d8eab6443"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a35df80f37f5a753ae2baef9d8eab6443">lwir_cam_pipe_warmup</a> (void)</td></tr>
+<tr class="memdesc:a35df80f37f5a753ae2baef9d8eab6443"><td class="mdescLeft"> </td><td class="mdescRight">Open, stabilize, and close the sensor without writing an image.  <br/></td></tr>
+<tr class="memitem:a26db227b5f16ba500c36be4da6f134ad" id="r_a26db227b5f16ba500c36be4da6f134ad"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a26db227b5f16ba500c36be4da6f134ad">lwir_cam_pipe_process_mock</a> (char *filename)</td></tr>
+<tr class="memdesc:a26db227b5f16ba500c36be4da6f134ad"><td class="mdescLeft"> </td><td class="mdescRight">Process a mock thermal image for hardware-free local testing.  <br/></td></tr>
+<tr class="memitem:abfc432f2c8af588a8e2141eb2491ebf2" id="r_abfc432f2c8af588a8e2141eb2491ebf2"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#abfc432f2c8af588a8e2141eb2491ebf2">lwir_cam_pipe_geolocate</a> (char *filename)</td></tr>
+<tr class="memdesc:abfc432f2c8af588a8e2141eb2491ebf2"><td class="mdescLeft"> </td><td class="mdescRight">Add thermal hotspot/geolocation metadata through the running server.  <br/></td></tr>
+<tr class="memitem:a16f290df8b2ead4aaa26a5bd0eaf6a83" id="r_a16f290df8b2ead4aaa26a5bd0eaf6a83"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a16f290df8b2ead4aaa26a5bd0eaf6a83">lwir_cam_pipe_shoot</a> (char *filename, size_t filename_size, int image_number)</td></tr>
+<tr class="memdesc:a16f290df8b2ead4aaa26a5bd0eaf6a83"><td class="mdescLeft"> </td><td class="mdescRight">Request one thermal JPEG from an initialized capture server.  <br/></td></tr>
+<tr class="memitem:a9d0912e9d43a0fd25f2a0dea0a396998" id="r_a9d0912e9d43a0fd25f2a0dea0a396998"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d0912e9d43a0fd25f2a0dea0a396998">lwir_cam_pipe_deinit</a> (void)</td></tr>
+<tr class="memdesc:a9d0912e9d43a0fd25f2a0dea0a396998"><td class="mdescLeft"> </td><td class="mdescRight">Stop, reap, and forget the persistent LWIR capture server.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-var-members"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aa006daaf11f1e2e45a6ababaf463212b" id="r_aa006daaf11f1e2e45a6ababaf463212b"><td align="right" class="memItemLeft" valign="top">char ** </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa006daaf11f1e2e45a6ababaf463212b">environ</a></td></tr>
+<tr class="memitem:a16cfa2adab87dcbab30bb28ac2c803fe" id="r_a16cfa2adab87dcbab30bb28ac2c803fe"><td align="right" class="memItemLeft" valign="top">static pid_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a16cfa2adab87dcbab30bb28ac2c803fe">capture_server_pid</a> = -1</td></tr>
+<tr class="memitem:a6e5c995e5119f284faa0dbbbd8ad00e6" id="r_a6e5c995e5119f284faa0dbbbd8ad00e6"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e5c995e5119f284faa0dbbbd8ad00e6">capture_server_input</a> = -1</td></tr>
+<tr class="memitem:aa8035cf61f43ce0bc827ab5360a39078" id="r_aa8035cf61f43ce0bc827ab5360a39078"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8035cf61f43ce0bc827ab5360a39078">capture_server_output</a> = -1</td></tr>
+<tr class="memitem:a9ccf3bf4ea342f2c79c447f109c8dd1e" id="r_a9ccf3bf4ea342f2c79c447f109c8dd1e"><td align="right" class="memItemLeft" valign="top">static char </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ccf3bf4ea342f2c79c447f109c8dd1e">status_buffer</a> [512]</td></tr>
+<tr class="memitem:a3e8e4fe82a3ce375912b4a808e0d0300" id="r_a3e8e4fe82a3ce375912b4a808e0d0300"><td align="right" class="memItemLeft" valign="top">static size_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e8e4fe82a3ce375912b4a808e0d0300">status_buffer_size</a></td></tr>
+<tr class="memitem:af53674c96fc06634ebac1765033b4386" id="r_af53674c96fc06634ebac1765033b4386"><td align="right" class="memItemLeft" valign="top">static size_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#af53674c96fc06634ebac1765033b4386">status_buffer_pos</a></td></tr>
+<tr class="memitem:a8056466a01ff55e82f610b90b4267c4e" id="r_a8056466a01ff55e82f610b90b4267c4e"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8056466a01ff55e82f610b90b4267c4e">capture_delay_s</a> = -1</td></tr>
+<tr class="memitem:ad2d5dedf5e57dc17bbcbdee9f61b6dbb" id="r_ad2d5dedf5e57dc17bbcbdee9f61b6dbb"><td align="right" class="memItemLeft" valign="top">static struct <a class="el" href="structcapture__timing.html">capture_timing</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2d5dedf5e57dc17bbcbdee9f61b6dbb">capture_times</a></td></tr>
+<tr class="memitem:ae58a1599e40c32a8c6af1435908c73f5" id="r_ae58a1599e40c32a8c6af1435908c73f5"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae58a1599e40c32a8c6af1435908c73f5">native_raw_enabled</a></td></tr>
+<tr class="memitem:a08f5f9d85b780b65adcbc992a518a73f" id="r_a08f5f9d85b780b65adcbc992a518a73f"><td align="right" class="memItemLeft" valign="top">static const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a08f5f9d85b780b65adcbc992a518a73f">calibration_path</a></td></tr>
+<tr class="memitem:a095bc18d7a7fd917d84752f0bf8dc59a" id="r_a095bc18d7a7fd917d84752f0bf8dc59a"><td align="right" class="memItemLeft" valign="top">static const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a095bc18d7a7fd917d84752f0bf8dc59a">photo_directory</a> = <a class="el" href="#acc97c4dc616c51d6a70d61145651faf8">USHER_LWIR_CAM_PHOTO_DIR</a></td></tr>
+<tr class="memitem:afd8ad0def67305c0b6816762b545a63a" id="r_afd8ad0def67305c0b6816762b545a63a"><td align="right" class="memItemLeft" valign="top">static const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#afd8ad0def67305c0b6816762b545a63a">capture_command</a> = <a class="el" href="#ade3eb6829abfb7913a976e0b2474df52">USHER_LWIR_CAM_COMMAND</a></td></tr>
+<tr class="memitem:aa48bb20aec241296d5662d30814f1c13" id="r_aa48bb20aec241296d5662d30814f1c13"><td align="right" class="memItemLeft" valign="top">static const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa48bb20aec241296d5662d30814f1c13">lwir_config</a></td></tr>
+<tr class="memitem:aa274929ae9be4791fb30a70d02827388" id="r_aa274929ae9be4791fb30a70d02827388"><td align="right" class="memItemLeft" valign="top">static const volatile sig_atomic_t * </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa274929ae9be4791fb30a70d02827388">running</a></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>USHER-side supervisor for the persistent LWIR capture-server process. </p>
+<p>The server holds the Tiny1-C stream open, avoiding per-shot sensor warmup. This parent owns its pipes and child lifecycle, validates line-protocol replies and capture timing. All failure paths clear state before returning so USHER's supervisor can schedule a later retry without reusing a stale descriptor. </p>
+<p class="definition">Definition in file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div><a id="doc-define-members" name="doc-define-members"></a><h2 class="groupheader" id="header-doc-define-members">Macro Definition Documentation</h2>
+<a id="a87375b41892f2c2279ba390ce1f76bcf" name="a87375b41892f2c2279ba390ce1f76bcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87375b41892f2c2279ba390ce1f76bcf">◆ </a></span>CHILD_STOP_GRACE_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CHILD_STOP_GRACE_MS   500</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00059">59</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aed632d6f800745658ca4f005625cd13b" name="aed632d6f800745658ca4f005625cd13b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed632d6f800745658ca4f005625cd13b">◆ </a></span>CHILD_WAIT_INTERVAL_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CHILD_WAIT_INTERVAL_MS   10</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00061">61</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ac0426d22cf646398f38e5cccb974fb8f" name="ac0426d22cf646398f38e5cccb974fb8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0426d22cf646398f38e5cccb974fb8f">◆ </a></span>IMAGE_PROCESS_TIMEOUT_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define IMAGE_PROCESS_TIMEOUT_MS   30000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00062">62</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a9b1cbc25ff770ab038619b3ef3c43dae" name="a9b1cbc25ff770ab038619b3ef3c43dae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b1cbc25ff770ab038619b3ef3c43dae">◆ </a></span>LWIR_REQUEST_TIMEOUT_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define LWIR_REQUEST_TIMEOUT_MS   8000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00068">68</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a488998b6d977b7a4dadafc1d9db5b045" name="a488998b6d977b7a4dadafc1d9db5b045"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a488998b6d977b7a4dadafc1d9db5b045">◆ </a></span>LWIR_SERVER_START_TIMEOUT_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define LWIR_SERVER_START_TIMEOUT_MS   30000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00064">64</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ad2ba2689db415c7edc814bc7f3852514" name="ad2ba2689db415c7edc814bc7f3852514"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2ba2689db415c7edc814bc7f3852514">◆ </a></span>LWIR_WARMUP_TIMEOUT_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define LWIR_WARMUP_TIMEOUT_MS   30000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00066">66</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ade3eb6829abfb7913a976e0b2474df52" name="ade3eb6829abfb7913a976e0b2474df52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade3eb6829abfb7913a976e0b2474df52">◆ </a></span>USHER_LWIR_CAM_COMMAND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_LWIR_CAM_COMMAND   "./bin/lwircam"</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00055">55</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="acc97c4dc616c51d6a70d61145651faf8" name="acc97c4dc616c51d6a70d61145651faf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc97c4dc616c51d6a70d61145651faf8">◆ </a></span>USHER_LWIR_CAM_PHOTO_DIR</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_LWIR_CAM_PHOTO_DIR   "~/Pictures/sensoraia"</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00051">51</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="aa694b743fb60bc65e83ab5448b311a5f" name="aa694b743fb60bc65e83ab5448b311a5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa694b743fb60bc65e83ab5448b311a5f">◆ </a></span>create_cloexec_pipe()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int create_cloexec_pipe </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>descriptors</em></span>[2]</td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Open a close-on-exec pipe for child protocol setup. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[out]</td><td class="paramname">descriptors</td><td>Read and write descriptors; valid only on success. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero on success, or -1 with errno on failure.</dd></dl>
+<p>Keep both descriptors above stderr so child's descriptor redirection cannot alias an endpoint when a standard descriptor was closed. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00156">156</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a67e3b9d518fb69b8697c75e6ffada341" name="a67e3b9d518fb69b8697c75e6ffada341"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67e3b9d518fb69b8697c75e6ffada341">◆ </a></span>lwir_cam_pipe_capture_delay()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double lwir_cam_pipe_capture_delay </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Return the delay of the last successful capture request in seconds. </p>
+<dl class="section return"><dt>Returns</dt><dd>Nonnegative delay, or a negative value when no timing is available. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00242">242</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a90cdd7804a1b65490ea6f8d1413ee0f5" name="a90cdd7804a1b65490ea6f8d1413ee0f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90cdd7804a1b65490ea6f8d1413ee0f5">◆ </a></span>lwir_cam_pipe_capture_timing()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">struct <a class="el" href="structcapture__timing.html">capture_timing</a> lwir_cam_pipe_capture_timing </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Return detailed callback or polling timing evidence for the last capture. </p>
+<dl class="section return"><dt>Returns</dt><dd>Timing structure; use <a class="el" href="capture__timing_8h.html#a1297814535155071b7528617af192444" title="Check whether timing evidence is internally consistent and recent.">capture_timing_valid()</a> before consuming it. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00202">202</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ab6a10510dedea87d4911bc66e4b7e8e2" name="ab6a10510dedea87d4911bc66e4b7e8e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6a10510dedea87d4911bc66e4b7e8e2">◆ </a></span>lwir_cam_pipe_configure()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void lwir_cam_pipe_configure </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structcamera__backend__host.html">camera_backend_host</a> *</td> <td class="paramname"><span class="paramname"><em>host</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Bind the owner's long-lived shutdown flag before starting workers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">host</td><td>Only its running flag is retained; NULL clears the binding. </td></tr>
+</table>
+</dd>
+</dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00090">90</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a9d0912e9d43a0fd25f2a0dea0a396998" name="a9d0912e9d43a0fd25f2a0dea0a396998"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d0912e9d43a0fd25f2a0dea0a396998">◆ </a></span>lwir_cam_pipe_deinit()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void lwir_cam_pipe_deinit </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Stop, reap, and forget the persistent LWIR capture server. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00707">707</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="abfc432f2c8af588a8e2141eb2491ebf2" name="abfc432f2c8af588a8e2141eb2491ebf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfc432f2c8af588a8e2141eb2491ebf2">◆ </a></span>lwir_cam_pipe_geolocate()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int lwir_cam_pipe_geolocate </td>
+<td>(</td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Add thermal hotspot/geolocation metadata through the running server. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>JPEG to update. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success or -1 if the operation cannot be completed. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00623">623</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ab521dbc65ef4dcbd4d8b0e69466bd1fc" name="ab521dbc65ef4dcbd4d8b0e69466bd1fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab521dbc65ef4dcbd4d8b0e69466bd1fc">◆ </a></span>lwir_cam_pipe_init()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int lwir_cam_pipe_init </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>unused</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Start and qualify the persistent LWIR capture server. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">unused</td><td>Reserved common backend argument. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 after the server reports ready, otherwise -1. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00520">520</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a50f209297820faf9a351be5fd6580394" name="a50f209297820faf9a351be5fd6580394"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50f209297820faf9a351be5fd6580394">◆ </a></span>lwir_cam_pipe_init_cancelable()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int lwir_cam_pipe_init_cancelable </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>unused</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const volatile sig_atomic_t *</td> <td class="paramname"><span class="paramname"><em>keep_running</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Start the server but abort promptly when USHER begins shutdown. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">unused</td><td>Reserved common backend argument. </td></tr>
+<tr><td class="paramname">keep_running</td><td>Signal-safe flag that remains nonzero while startup may continue. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 after the server reports ready, otherwise -1 after cleanup. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00525">525</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a26db227b5f16ba500c36be4da6f134ad" name="a26db227b5f16ba500c36be4da6f134ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26db227b5f16ba500c36be4da6f134ad">◆ </a></span>lwir_cam_pipe_process_mock()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int lwir_cam_pipe_process_mock </td>
+<td>(</td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Process a mock thermal image for hardware-free local testing. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">filename</td><td>Input/output image path. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success or -1 on processing failure. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00612">612</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aa66ad9d3fcd9ec67663eb151c58f6700" name="aa66ad9d3fcd9ec67663eb151c58f6700"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa66ad9d3fcd9ec67663eb151c58f6700">◆ </a></span>lwir_cam_pipe_set_calibration()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int lwir_cam_pipe_set_calibration </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Set the optional calibration file used by server-side geolocation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">path</td><td>Nonempty calibration YAML path. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on acceptance or -1 for an invalid path. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00194">194</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="af2ebbaa2f545ffd8f5068ac6a7ab4a42" name="af2ebbaa2f545ffd8f5068ac6a7ab4a42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2ebbaa2f545ffd8f5068ac6a7ab4a42">◆ </a></span>lwir_cam_pipe_set_config()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int lwir_cam_pipe_set_config </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Apply a bounded worker configuration before starting the capture server. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>Configuration file path. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 when accepted, otherwise -1; live reconfiguration is not implied. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00095">95</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a521267767395fefabd3db07491db68a0" name="a521267767395fefabd3db07491db68a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a521267767395fefabd3db07491db68a0">◆ </a></span>lwir_cam_pipe_set_native_raw()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void lwir_cam_pipe_set_native_raw </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>enabled</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Select whether successful captures keep an explicit .raw companion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">enabled</td><td>Nonzero to request native raw output. </td></tr>
+</table>
+</dd>
+</dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00189">189</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a521371d2d7a90c4eb51a63e1ebd9d92d" name="a521371d2d7a90c4eb51a63e1ebd9d92d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a521371d2d7a90c4eb51a63e1ebd9d92d">◆ </a></span>lwir_cam_pipe_set_photo_directory()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void lwir_cam_pipe_set_photo_directory </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>directory</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Override the output directory for an isolated standalone benchmark. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00184">184</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a16f290df8b2ead4aaa26a5bd0eaf6a83" name="a16f290df8b2ead4aaa26a5bd0eaf6a83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16f290df8b2ead4aaa26a5bd0eaf6a83">◆ </a></span>lwir_cam_pipe_shoot()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int lwir_cam_pipe_shoot </td>
+<td>(</td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>filename_size</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>image_number</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Request one thermal JPEG from an initialized capture server. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">filename</td><td>Output path buffer, cleared on failure. </td></tr>
+<tr><td class="paramname">filename_size</td><td>Output path capacity. </td></tr>
+<tr><td class="paramname">image_number</td><td>USHER shot sequence. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 only for a verified nonempty output image, otherwise -1; USHER owns retry policy. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00653">653</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a35df80f37f5a753ae2baef9d8eab6443" name="a35df80f37f5a753ae2baef9d8eab6443"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35df80f37f5a753ae2baef9d8eab6443">◆ </a></span>lwir_cam_pipe_warmup()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int lwir_cam_pipe_warmup </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Open, stabilize, and close the sensor without writing an image. </p>
+<dl class="section return"><dt>Returns</dt><dd>0 after a stable warmup frame, otherwise -1. </dd></dl>
+<p>Open the sensor once, wait past its power-on "wiggly" image, then close it again. Runs regardless of whether LWIR ends up selected for a shot, so a later real open (persistent server or standalone capture) never has to absorb that transient inline. Failure here is not fatal to USHER.</p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00531">531</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a9cd152f10e344623f059b1268ac3245e" name="a9cd152f10e344623f059b1268ac3245e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cd152f10e344623f059b1268ac3245e">◆ </a></span>monotonic_ms()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint64_t monotonic_ms </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read the capture-server watchdog clock. </p>
+<dl class="section return"><dt>Returns</dt><dd>Monotonic milliseconds, or zero on failure.</dd></dl>
+<p>Keep supervision independent of system time corrections. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00105">105</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a79786091268d8b487e9c8110fa8ec451" name="a79786091268d8b487e9c8110fa8ec451"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79786091268d8b487e9c8110fa8ec451">◆ </a></span>parse_capture_timing()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int parse_capture_timing </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>text</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structcapture__timing.html">capture_timing</a> *</td> <td class="paramname"><span class="paramname"><em>timing</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>callback</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Parse one server timing payload after its protocol prefix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">text</td><td>Space-separated unsigned timing fields. </td></tr>
+<tr><td class="paramname">timing</td><td>Receives validated timing evidence. </td></tr>
+<tr><td class="paramname">callback</td><td>True for callback sequence/drop fields, false for polling timing. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 for valid evidence, 0 for malformed or implausible evidence.</dd></dl>
+<p>Parsing is intentionally strict: timing metadata enriches EXIF but must never be accepted merely because a server process printed a vaguely similar line. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00214">214</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a7f7ea5377366dd08be6a58ab997c95b7" name="a7f7ea5377366dd08be6a58ab997c95b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f7ea5377366dd08be6a58ab997c95b7">◆ </a></span>read_server_status()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int read_server_status </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>expected</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>timeout_ms</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const volatile sig_atomic_t *</td> <td class="paramname"><span class="paramname"><em>keep_running</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read server diagnostic lines until an expected terminal reply arrives. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">expected</td><td>Success line required to complete the operation. </td></tr>
+<tr><td class="paramname">timeout_ms</td><td>Whole-operation deadline. </td></tr>
+<tr><td class="paramname">keep_running</td><td>Optional cancellation flag; checked between bounded polls so stopping USHER need not wait for a thermal camera's full startup deadline. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on the expected reply, -1 for cancellation, timeout, EOF, or server error.</dd></dl>
+<p>Informational timing lines are parsed before the terminal reply. The buffer avoids a syscall per character while retaining line framing. One absolute deadline prevents a noisy or malicious child from extending an operation indefinitely. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00256">256</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a2231389991a1ec60e47733e5c83bf63e" name="a2231389991a1ec60e47733e5c83bf63e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2231389991a1ec60e47733e5c83bf63e">◆ </a></span>send_request_and_wait()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int send_request_and_wait </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>request_size</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>timeout_ms</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>expected</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Send one newline-terminated server request and require an OK reply. </p>
+<p>Send one line request to the running server and wait for its reply. On any failure (broken pipe, dead process, or a timed-out/erroring reply) the server state is fully reset so a caller's retry starts with a clean respawn instead of repeatedly hitting the same stale, already-dead connection. </p><dl class="section return"><dt>Returns</dt><dd>0 on end-to-end success or -1 after fully resetting failed server state. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00363">363</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a02740748811cf3069197788c8f5b8a5c" name="a02740748811cf3069197788c8f5b8a5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02740748811cf3069197788c8f5b8a5c">◆ </a></span>start_capture_server()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int start_capture_server </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>unused</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const volatile sig_atomic_t *</td> <td class="paramname"><span class="paramname"><em>keep_running</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Start the persistent thermal capture subprocess. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">unused</td><td>Reserved backend argument. </td></tr>
+<tr><td class="paramname">keep_running</td><td>Optional shutdown flag used during the readiness wait. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero after readiness, or -1 on ownership, setup, or protocol failure.</dd></dl>
+<p>Resolve any old owner before launching. Connect separate command and response pipes and require the startup acknowledgement before capture. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00406">406</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a8687187825da6923af778136f5088889" name="a8687187825da6923af778136f5088889"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8687187825da6923af778136f5088889">◆ </a></span>stop_capture_server()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void stop_capture_server </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Close pipes and reap or terminate the owned capture server. </p>
+<p>Buffered response state is reset before the next spawn. Closing stdin asks cooperative server versions to exit; SIGTERM is used only when it remains alive. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00333">333</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aa787568d07b481a7a39b0b49eaa045cd" name="aa787568d07b481a7a39b0b49eaa045cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa787568d07b481a7a39b0b49eaa045cd">◆ </a></span>terminate_child()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int terminate_child </td>
+<td>(</td>
+<td class="paramtype">pid_t</td> <td class="paramname"><span class="paramname"><em>pid</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int *</td> <td class="paramname"><span class="paramname"><em>status</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Stop an owned capture child, escalating only after its grace period. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">pid</td><td>Owned positive child PID. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">status</td><td>Wait status, set if the child is reaped here. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>One if ownership ended, zero if still waiting after escalation, or -1 on error.</dd></dl>
+<p>Reap an already exited child first. Give normal teardown a chance to release the camera before sending SIGKILL. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00140">140</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aa7c5361b2347067b95b7dd19fb487a71" name="aa7c5361b2347067b95b7dd19fb487a71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7c5361b2347067b95b7dd19fb487a71">◆ </a></span>wait_child()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int wait_child </td>
+<td>(</td>
+<td class="paramtype">pid_t</td> <td class="paramname"><span class="paramname"><em>pid</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int *</td> <td class="paramname"><span class="paramname"><em>status</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>timeout_ms</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Wait up to a bounded time for the capture child to exit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">pid</td><td>Owned positive child PID. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">status</td><td>Wait status, set if this call reaps the child. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">timeout_ms</td><td>Nonnegative budget; zero checks without sleeping. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>One if reaped or no longer a child, zero on timeout, or -1 on error.</dd></dl>
+<p>Use nonblocking waits so a child stuck in a device call does not indefinitely block its supervisor. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00119">119</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="doc-var-members" name="doc-var-members"></a><h2 class="groupheader" id="header-doc-var-members">Variable Documentation</h2>
+<a id="a08f5f9d85b780b65adcbc992a518a73f" name="a08f5f9d85b780b65adcbc992a518a73f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08f5f9d85b780b65adcbc992a518a73f">◆ </a></span>calibration_path</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const char* calibration_path</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00084">84</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="afd8ad0def67305c0b6816762b545a63a" name="afd8ad0def67305c0b6816762b545a63a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd8ad0def67305c0b6816762b545a63a">◆ </a></span>capture_command</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const char* capture_command = <a class="el" href="#ade3eb6829abfb7913a976e0b2474df52">USHER_LWIR_CAM_COMMAND</a></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00086">86</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a8056466a01ff55e82f610b90b4267c4e" name="a8056466a01ff55e82f610b90b4267c4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8056466a01ff55e82f610b90b4267c4e">◆ </a></span>capture_delay_s</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double capture_delay_s = -1</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00081">81</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a6e5c995e5119f284faa0dbbbd8ad00e6" name="a6e5c995e5119f284faa0dbbbd8ad00e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e5c995e5119f284faa0dbbbd8ad00e6">◆ </a></span>capture_server_input</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int capture_server_input = -1</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00074">74</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aa8035cf61f43ce0bc827ab5360a39078" name="aa8035cf61f43ce0bc827ab5360a39078"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8035cf61f43ce0bc827ab5360a39078">◆ </a></span>capture_server_output</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int capture_server_output = -1</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00075">75</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a16cfa2adab87dcbab30bb28ac2c803fe" name="a16cfa2adab87dcbab30bb28ac2c803fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16cfa2adab87dcbab30bb28ac2c803fe">◆ </a></span>capture_server_pid</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">pid_t capture_server_pid = -1</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00073">73</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ad2d5dedf5e57dc17bbcbdee9f61b6dbb" name="ad2d5dedf5e57dc17bbcbdee9f61b6dbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2d5dedf5e57dc17bbcbdee9f61b6dbb">◆ </a></span>capture_times</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">struct <a class="el" href="structcapture__timing.html">capture_timing</a> capture_times</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00082">82</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aa006daaf11f1e2e45a6ababaf463212b" name="aa006daaf11f1e2e45a6ababaf463212b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa006daaf11f1e2e45a6ababaf463212b">◆ </a></span>environ</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">char** environ</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel extern">extern</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aa48bb20aec241296d5662d30814f1c13" name="aa48bb20aec241296d5662d30814f1c13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa48bb20aec241296d5662d30814f1c13">◆ </a></span>lwir_config</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const char* lwir_config</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00087">87</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ae58a1599e40c32a8c6af1435908c73f5" name="ae58a1599e40c32a8c6af1435908c73f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae58a1599e40c32a8c6af1435908c73f5">◆ </a></span>native_raw_enabled</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool native_raw_enabled</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00083">83</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a095bc18d7a7fd917d84752f0bf8dc59a" name="a095bc18d7a7fd917d84752f0bf8dc59a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a095bc18d7a7fd917d84752f0bf8dc59a">◆ </a></span>photo_directory</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const char* photo_directory = <a class="el" href="#acc97c4dc616c51d6a70d61145651faf8">USHER_LWIR_CAM_PHOTO_DIR</a></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00085">85</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aa274929ae9be4791fb30a70d02827388" name="aa274929ae9be4791fb30a70d02827388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa274929ae9be4791fb30a70d02827388">◆ </a></span>running</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const volatile sig_atomic_t* running</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00088">88</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a9ccf3bf4ea342f2c79c447f109c8dd1e" name="a9ccf3bf4ea342f2c79c447f109c8dd1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ccf3bf4ea342f2c79c447f109c8dd1e">◆ </a></span>status_buffer</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">char status_buffer[512]</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Buffered reassembly for <a class="el" href="#a7f7ea5377366dd08be6a58ab997c95b7" title="Read server diagnostic lines until an expected terminal reply arrives.">read_server_status()</a>: avoids one poll()+read() syscall pair per byte, which otherwise adds up to hundreds of syscalls per response line set on every single shot. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00079">79</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="af53674c96fc06634ebac1765033b4386" name="af53674c96fc06634ebac1765033b4386"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af53674c96fc06634ebac1765033b4386">◆ </a></span>status_buffer_pos</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">size_t status_buffer_pos</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00080">80</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a3e8e4fe82a3ce375912b4a808e0d0300" name="a3e8e4fe82a3ce375912b4a808e0d0300"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e8e4fe82a3ce375912b4a808e0d0300">◆ </a></span>status_buffer_size</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">size_t status_buffer_size</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="lwir__cam__pipe_8c_source.html#l00080">80</a> of file <a class="el" href="lwir__cam__pipe_8c_source.html">lwir_cam_pipe.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

@@ -1,0 +1,2640 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/spotter_cam_pipe.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('spotter__cam__pipe_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">spotter_cam_pipe.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Native USHER adapter for on-sensor IMX500 object detection.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &lt;fcntl.h&gt;</code><br/>
+<code>#include &lt;limits.h&gt;</code><br/>
+<code>#include &lt;math.h&gt;</code><br/>
+<code>#include &lt;poll.h&gt;</code><br/>
+<code>#include &lt;signal.h&gt;</code><br/>
+<code>#include &lt;spawn.h&gt;</code><br/>
+<code>#include &lt;stdint.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;sys/stat.h&gt;</code><br/>
+<code>#include &lt;sys/socket.h&gt;</code><br/>
+<code>#include &lt;sys/types.h&gt;</code><br/>
+<code>#include &lt;sys/wait.h&gt;</code><br/>
+<code>#include &lt;time.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+<code>#include "<a class="el" href="spotter__cam__pipe_8h_source.html">spotter_cam_pipe.h</a>"</code><br/>
+<code>#include "<a class="el" href="camera__backend_8h_source.html">camera_backend.h</a>"</code><br/>
+<code>#include "<a class="el" href="imx500__pipe_8h_source.html">imx500_pipe.h</a>"</code><br/>
+<code>#include "<a class="el" href="path__utils_8h_source.html">path_utils.h</a>"</code><br/>
+<code>#include "<a class="el" href="bounded__ini_8h_source.html">bounded_ini.h</a>"</code><br/>
+<code>#include "<a class="el" href="sha256fst_8h_source.html">sha256fst.h</a>"</code><br/>
+<code>#include "<a class="el" href="exifite_8h_source.html">exifite.h</a>"</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for spotter_cam_pipe.c:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="spotter__cam__pipe_8c__incl.png" usemap="#asrc_2spotter__cam__pipe_8c"/></div>
+<map id="asrc_2spotter__cam__pipe_8c" name="asrc_2spotter__cam__pipe_8c">
+<area alt="" coords="1944,24,1938,18,1922,13,1898,9,1867,6,1832,5,1798,6,1767,9,1742,13,1726,18,1721,24,1726,30,1742,35,1767,39,1798,42,1832,43,1867,42,1898,39,1922,35,1938,30" shape="poly" title="Native USHER adapter for on-sensor IMX500 object detection."/>
+<area alt="" coords="1864,196,1862,190,1855,185,1846,180,1834,178,1820,177,1807,178,1795,180,1785,185,1779,190,1777,196,1779,201,1785,207,1795,211,1807,214,1820,214,1834,214,1846,211,1855,207,1862,201" shape="poly" title=" "/>
+<area alt="" coords="1769,39,1727,62,1710,76,1696,92,1690,110,1696,127,1710,145,1728,159,1771,182,1766,181,1725,164,1706,149,1691,130,1684,110,1691,90,1706,72,1725,57,1764,41" shape="poly" title=" "/>
+<area alt="" coords="1969,196,1967,190,1961,185,1952,180,1941,178,1928,177,1916,178,1904,180,1896,185,1890,190,1888,196,1890,201,1896,207,1904,211,1916,214,1928,214,1941,214,1952,211,1961,207,1967,201" shape="poly" title=" "/>
+<area alt="" coords="1844,41,1913,165,1908,163,1841,46" shape="poly" title=" "/>
+<area alt="" coords="2617,196,2615,190,2609,185,2599,180,2586,178,2572,177,2558,178,2546,180,2536,185,2530,190,2528,196,2530,201,2536,207,2546,211,2558,214,2572,214,2586,214,2599,211,2609,207,2615,201" shape="poly" title=" "/>
+<area alt="" coords="1939,27,2012,34,2093,45,2176,63,2257,89,2275,98,2287,107,2299,117,2316,126,2370,145,2415,154,2460,161,2517,174,2526,179,2521,179,2516,179,2459,167,2414,160,2369,151,2314,131,2296,121,2284,112,2272,102,2255,94,2175,68,2092,51,2011,39,1940,32" shape="poly" title=" "/>
+<area alt="" coords="1586,196,1584,190,1578,185,1568,180,1556,178,1543,177,1530,178,1517,180,1508,185,1502,190,1500,196,1502,201,1508,207,1517,211,1530,214,1543,214,1556,214,1568,211,1578,207,1584,201" shape="poly" title=" "/>
+<area alt="" coords="1790,41,1737,66,1683,93,1625,132,1575,171,1572,166,1621,128,1680,89,1735,61,1785,43" shape="poly" title=" "/>
+<area alt="" coords="2401,110,2399,104,2394,99,2386,95,2376,92,2364,91,2353,92,2343,95,2334,99,2329,104,2327,110,2329,116,2334,121,2343,125,2353,128,2364,129,2376,128,2386,125,2394,121,2399,116" shape="poly" title=" "/>
+<area alt="" coords="1929,31,2107,53,2208,69,2309,88,2322,94,2317,94,2308,94,2207,74,2106,58,1929,37" shape="poly" title=" "/>
+<area alt="" coords="1079,281,1077,275,1070,270,1060,266,1047,263,1032,262,1018,263,1005,266,994,270,988,275,985,281,988,287,994,292,1005,297,1018,299,1032,300,1047,299,1060,297,1070,292,1077,287" shape="poly" title=" "/>
+<area alt="" coords="1725,31,1458,55,1326,72,1272,82,1232,94,1192,110,1163,127,1105,179,1075,215,1051,252,1048,247,1071,211,1101,175,1160,122,1189,105,1230,89,1271,77,1325,67,1457,49,1730,30" shape="poly" title=" "/>
+<area alt="" coords="2525,110,2522,104,2515,99,2504,95,2490,92,2475,91,2460,92,2446,95,2435,99,2428,104,2425,110,2428,116,2435,121,2446,125,2460,128,2475,129,2490,128,2504,125,2515,121,2522,116" shape="poly" title=" "/>
+<area alt="" coords="1935,29,2156,50,2286,67,2414,88,2426,93,2420,93,2413,94,2285,72,2156,55,1935,35" shape="poly" title=" "/>
+<area alt="" coords="512,281,510,275,504,270,494,266,481,263,467,262,453,263,440,266,430,270,424,275,421,281,424,287,430,292,440,297,453,299,467,300,481,299,494,297,504,292,510,287" shape="poly" title=" "/>
+<area alt="" coords="1719,27,1355,39,1122,48,881,62,653,82,456,107,375,122,310,139,263,158,236,178,229,196,236,213,246,222,262,231,307,247,412,271,406,272,305,252,260,236,243,227,231,216,223,196,232,175,260,153,308,134,374,117,455,102,652,76,881,57,1122,43,1355,33,1724,26" shape="poly" title=" "/>
+<area alt="" coords="1475,196,1473,190,1467,185,1457,180,1445,178,1432,177,1419,178,1407,180,1398,185,1392,190,1390,196,1392,201,1398,207,1407,211,1419,214,1432,214,1445,214,1457,211,1467,207,1473,201" shape="poly" title=" "/>
+<area alt="" coords="1775,40,1700,65,1621,93,1539,134,1470,174,1468,169,1537,129,1619,89,1698,60,1770,41" shape="poly" title=" "/>
+<area alt="" coords="2082,196,2080,190,2074,185,2064,180,2051,178,2038,177,2024,178,2011,180,2001,185,1995,190,1993,196,1995,201,2001,207,2011,211,2024,214,2038,214,2051,214,2064,211,2074,207,2080,201" shape="poly" title=" "/>
+<area alt="" coords="1855,41,2009,169,2004,168,1853,46" shape="poly" title=" "/>
+<area alt="" coords="2248,196,2246,190,2240,185,2230,180,2217,178,2203,177,2189,178,2176,180,2166,185,2160,190,2157,196,2160,201,2166,207,2176,211,2189,214,2203,214,2217,214,2230,211,2240,207,2246,201" shape="poly" title=" "/>
+<area alt="" coords="1930,31,2022,50,2069,67,2114,89,2136,105,2155,124,2187,165,2182,163,2151,127,2132,109,2111,93,2067,72,2021,55,1930,36" shape="poly" title=" "/>
+<area alt="" coords="2384,196,2382,190,2374,185,2361,180,2346,178,2328,177,2311,178,2295,180,2283,185,2275,190,2272,196,2275,201,2283,207,2295,211,2311,214,2328,214,2346,214,2361,211,2374,207,2382,201" shape="poly" title=" "/>
+<area alt="" coords="1922,33,2034,54,2095,69,2153,89,2292,171,2287,170,2151,93,2093,74,2033,59,1922,38" shape="poly" title=" "/>
+<area alt="" coords="2684,110,2681,104,2671,99,2656,95,2637,92,2616,91,2595,92,2576,95,2561,99,2552,104,2548,110,2552,116,2561,121,2576,125,2595,128,2616,129,2637,128,2656,125,2671,121,2681,116" shape="poly" title=" "/>
+<area alt="" coords="1937,29,2209,49,2373,66,2537,88,2554,94,2548,94,2536,94,2372,72,2209,55,1937,34" shape="poly" title=" "/>
+<area alt="" coords="1310,281,1307,275,1298,270,1284,266,1266,263,1247,262,1227,263,1210,266,1196,270,1187,275,1184,281,1187,287,1196,292,1210,297,1227,299,1247,300,1266,299,1284,297,1298,292,1307,287" shape="poly" title=" "/>
+<area alt="" coords="1719,28,1614,35,1499,46,1396,65,1357,78,1329,93,1305,119,1295,147,1290,178,1279,215,1263,251,1260,247,1274,214,1285,177,1290,145,1300,117,1325,89,1355,73,1395,60,1498,41,1614,30,1725,27" shape="poly" title=" "/>
+<area alt="" coords="2823,110,2820,104,2812,99,2799,95,2783,92,2766,91,2748,92,2732,95,2719,99,2711,104,2708,110,2711,116,2719,121,2732,125,2748,128,2766,129,2783,128,2799,125,2812,121,2820,116" shape="poly" title=" "/>
+<area alt="" coords="1942,25,2092,31,2280,42,2489,61,2697,88,2711,93,2706,93,2696,94,2488,66,2280,47,2092,36,1942,30" shape="poly" title=" "/>
+<area alt="" coords="2929,110,2927,104,2921,99,2912,95,2901,92,2888,91,2876,92,2864,95,2856,99,2850,104,2848,110,2850,116,2856,121,2864,125,2876,128,2888,129,2901,128,2912,125,2921,121,2927,116" shape="poly" title=" "/>
+<area alt="" coords="1940,26,2408,48,2655,66,2758,77,2835,88,2846,93,2840,93,2834,94,2757,82,2655,71,2408,53,1940,32" shape="poly" title=" "/>
+<area alt="" coords="2504,196,2502,190,2495,185,2484,180,2471,178,2456,177,2442,178,2428,180,2418,185,2411,190,2409,196,2411,201,2418,207,2428,211,2442,214,2456,214,2471,214,2484,211,2495,207,2502,201" shape="poly" title=" "/>
+<area alt="" coords="1930,31,2063,51,2135,67,2205,89,2239,107,2272,126,2341,154,2408,179,2402,179,2340,159,2270,131,2237,111,2203,94,2134,72,2062,56,1930,36" shape="poly" title=" "/>
+<area alt="" coords="437,196,433,190,419,185,398,180,371,178,342,177,312,178,285,180,264,185,251,190,246,196,251,201,264,207,285,211,312,214,342,214,371,214,398,211,419,207,433,201" href="spotter__cam__pipe_8h.html" shape="poly" title="Native USHER adapter for on-sensor detection or photo-only capture."/>
+<area alt="" coords="1718,25,1531,30,1283,39,1005,59,864,74,726,94,637,111,549,133,403,176,401,171,547,128,636,106,725,88,863,69,1005,53,1283,33,1531,24,1723,24" shape="poly" title=" "/>
+<area alt="" coords="1017,110,1013,104,999,99,979,95,953,92,924,91,896,92,870,95,849,99,836,104,831,110,836,116,849,121,870,125,896,128,924,129,953,128,979,125,999,121,1013,116" href="camera__backend_8h.html" shape="poly" title="Shared capability and lifecycle contract for USHER camera backends."/>
+<area alt="" coords="1729,33,1430,59,1059,94,1014,99,1013,94,1059,88,1430,53,1734,32" shape="poly" title=" "/>
+<area alt="" coords="1264,196,1260,190,1250,185,1233,180,1213,178,1190,177,1167,178,1146,180,1129,185,1119,190,1115,196,1119,201,1129,207,1146,211,1167,214,1190,214,1213,214,1233,211,1250,207,1260,201" href="imx500__pipe_8h.html" shape="poly" title="READY/SHOT/OK process ownership without model-analysis semantics."/>
+<area alt="" coords="1722,30,1608,39,1480,51,1365,69,1319,80,1284,93,1262,108,1242,126,1210,166,1207,161,1238,123,1259,104,1282,89,1317,75,1364,63,1480,46,1608,34,1727,29" shape="poly" title=" "/>
+<area alt="" coords="2100,110,2097,104,2088,99,2074,95,2057,92,2038,91,2018,92,2001,95,1987,99,1978,104,1975,110,1978,116,1987,121,2001,125,2018,128,2038,129,2057,128,2074,125,2088,121,2097,116" href="path__utils_8h.html" shape="poly" title="Small path and writable-directory helpers shared by USHER backends."/>
+<area alt="" coords="1874,39,1990,89,1985,88,1873,45" shape="poly" title=" "/>
+<area alt="" coords="1849,110,1846,104,1836,99,1820,95,1800,92,1778,91,1755,92,1736,95,1720,99,1709,104,1706,110,1709,116,1720,121,1736,125,1755,128,1778,129,1800,128,1820,125,1836,121,1846,116" href="bounded__ini_8h.html" shape="poly" title="Allocation-free flat key=value mechanics; callers own schemas and storage."/>
+<area alt="" coords="1823,42,1799,81,1796,76,1818,45" shape="poly" title=" "/>
+<area alt="" coords="689,196,686,190,677,185,663,180,645,178,626,177,606,178,589,180,575,185,566,190,562,196,566,201,575,207,589,211,606,214,626,214,645,214,663,211,677,207,686,201" href="sha256fst_8h.html" shape="poly" title="Allocation-free, portable SHA-256 checksums for memory and streams."/>
+<area alt="" coords="1719,27,1508,34,1248,45,999,64,897,77,820,94,776,109,733,129,662,172,660,167,731,125,774,104,818,88,896,72,998,59,1248,40,1508,29,1724,26" shape="poly" title=" "/>
+<area alt="" coords="1435,110,1432,104,1425,99,1415,95,1402,92,1387,91,1372,92,1359,95,1348,99,1342,104,1339,110,1342,116,1348,121,1359,125,1372,128,1387,129,1402,128,1415,125,1425,121,1432,116" href="exifite_8h.html" shape="poly" title="Bounded C11 EXIF metadata and JPEG streaming interfaces."/>
+<area alt="" coords="1756,39,1478,94,1444,100,1443,95,1477,88,1762,38" shape="poly" title=" "/>
+<area alt="" coords="368,212,434,256,429,256,367,217" shape="poly" title=" "/>
+<area alt="" coords="799,281,797,275,790,270,779,266,766,263,751,262,736,263,723,266,712,270,705,275,703,281,705,287,712,292,723,297,736,299,751,300,766,299,779,297,790,292,797,287" shape="poly" title=" "/>
+<area alt="" coords="406,207,696,267,692,270,406,213" shape="poly" title=" "/>
+<area alt="" coords="954,367,952,361,944,356,933,352,918,349,902,348,885,349,871,352,859,356,852,361,849,367,852,373,859,378,871,382,885,385,902,386,918,385,933,382,944,378,952,373" shape="poly" title=" "/>
+<area alt="" coords="349,213,373,258,390,280,411,298,444,313,489,325,604,344,728,355,837,364,831,364,728,360,603,349,488,330,442,318,408,302,386,284,368,260,347,217" shape="poly" title=" "/>
+<area alt="" coords="952,126,980,148,1004,175,1021,211,1030,248,1025,246,1016,213,999,178,976,152,951,131" shape="poly" title=" "/>
+<area alt="" coords="990,196,986,190,973,185,954,180,929,178,902,177,874,178,850,180,830,185,817,190,813,196,817,201,830,207,850,211,874,214,902,214,929,214,954,211,973,207,986,201" href="camera__capture_8h.html" shape="poly" title="Optional split-phase capture contract for USHER image backends."/>
+<area alt="" coords="921,127,912,163,909,160,917,131" shape="poly" title=" "/>
+<area alt="" coords="171,196,167,190,155,185,137,180,114,178,88,177,63,178,40,180,21,185,9,190,5,196,9,201,21,207,40,211,63,214,88,214,114,214,137,211,155,207,167,201" href="capture__timing_8h.html" shape="poly" title="Sensor observation times, aligned poses, and optional frame-arrival evidence."/>
+<area alt="" coords="840,121,234,179,175,186,173,181,233,174,841,116" shape="poly" title=" "/>
+<area alt="" coords="929,212,998,257,993,256,928,217" shape="poly" title=" "/>
+<area alt="" coords="874,213,792,260,790,255,869,215" shape="poly" title=" "/>
+<area alt="" coords="904,213,904,334,899,331,900,217" shape="poly" title=" "/>
+<area alt="" coords="146,207,415,266,411,270,146,212" shape="poly" title=" "/>
+<area alt="" coords="125,211,234,255,301,278,370,298,498,323,626,341,837,362,832,362,625,347,497,328,369,303,300,283,232,260,124,216" shape="poly" title=" "/>
+<area alt="" coords="181,281,177,275,165,270,146,266,123,263,98,262,72,263,49,266,31,270,19,275,15,281,19,287,31,292,49,297,72,299,98,300,123,299,146,297,165,292,177,287" href="usher__protocol_8h.html" shape="poly" title="Shared FC/MORA byte-stream UART framing, messages and payload layouts."/>
+<area alt="" coords="91,212,97,247,91,247,90,218" shape="poly" title=" "/>
+<area alt="" coords="172,288,266,298,837,356,836,362,265,303,172,293" shape="poly" title=" "/>
+<area alt="" coords="153,367,150,361,142,356,130,352,115,349,98,348,81,349,65,352,53,356,45,361,42,367,45,373,53,378,65,382,81,385,98,386,115,385,130,382,142,378,150,373" shape="poly" title=" "/>
+<area alt="" coords="99,299,100,334,95,332,96,303" shape="poly" title=" "/>
+<area alt="" coords="1161,213,1074,261,1072,256,1156,214" shape="poly" title=" "/>
+<area alt="" coords="1203,212,1229,251,1224,249,1201,217" shape="poly" title=" "/>
+<area alt="" coords="1134,207,809,272,808,266,1129,208" shape="poly" title=" "/>
+<area alt="" coords="1179,214,1143,259,1119,282,1092,302,1061,320,1027,335,962,355,961,350,1025,330,1058,315,1090,298,1116,278,1139,255,1175,216" shape="poly" title=" "/>
+<area alt="" coords="2003,125,1866,180,1865,174,1998,126" shape="poly" title=" "/>
+<area alt="" coords="2018,127,1962,172,1960,167,2013,129" shape="poly" title=" "/>
+<area alt="" coords="2097,113,2285,134,2401,152,2517,174,2527,179,2522,179,2516,179,2400,157,2285,140,2097,119" shape="poly" title=" "/>
+<area alt="" coords="1977,118,1702,151,1487,179,1479,181,1478,176,1486,174,1702,146,1982,117" shape="poly" title=" "/>
+<area alt="" coords="2039,127,2040,163,2036,160,2036,131" shape="poly" title=" "/>
+<area alt="" coords="2069,124,2165,174,2159,173,2068,129" shape="poly" title=" "/>
+<area alt="" coords="2082,121,2275,178,2270,178,2081,126" shape="poly" title=" "/>
+<area alt="" coords="2092,117,2231,140,2397,174,2408,179,2402,179,2396,179,2230,145,2092,122" shape="poly" title=" "/>
+<area alt="" coords="2060,126,2080,145,2097,168,2105,192,2104,205,2097,216,2074,233,2036,248,1922,275,1770,299,1595,319,1236,349,969,365,969,360,1236,343,1594,313,1769,293,1921,270,2034,243,2072,228,2093,213,2099,203,2100,193,2093,171,2076,149,2058,131" shape="poly" title=" "/>
+<area alt="" coords="1788,127,1807,164,1802,162,1786,132" shape="poly" title=" "/>
+<area alt="" coords="1808,125,1892,173,1887,173,1807,130" shape="poly" title=" "/>
+<area alt="" coords="1739,125,1591,180,1589,175,1734,126" shape="poly" title=" "/>
+<area alt="" coords="1708,118,552,179,522,208,489,252,485,248,518,205,550,174,1708,112" shape="poly" title=" "/>
+<area alt="" coords="1822,123,1992,179,1986,179,1821,128" shape="poly" title=" "/>
+<area alt="" coords="1834,120,2151,184,2145,184,1833,125" shape="poly" title=" "/>
+<area alt="" coords="1844,115,2032,137,2261,174,2274,179,2269,179,2260,179,2031,143,1844,120" shape="poly" title=" "/>
+<area alt="" coords="1844,115,2156,146,2397,174,2408,179,2403,179,2396,179,2155,151,1844,120" shape="poly" title=" "/>
+<area alt="" coords="1706,115,1180,148,921,166,803,179,788,193,776,210,760,249,756,245,771,208,784,189,801,174,920,161,1179,143,1711,114" shape="poly" title=" "/>
+<area alt="" coords="1774,128,1753,174,1736,197,1715,217,1689,233,1655,247,1571,274,1471,298,1361,317,1140,347,968,363,968,358,1140,341,1360,312,1470,292,1570,269,1653,242,1686,228,1712,212,1732,194,1748,171,1769,131" shape="poly" title=" "/>
+<area alt="" coords="1702,196,1700,190,1693,185,1683,180,1670,178,1656,177,1642,178,1630,180,1619,185,1613,190,1611,196,1613,201,1619,207,1630,211,1642,214,1656,214,1670,214,1683,211,1693,207,1700,201" shape="poly" title=" "/>
+<area alt="" coords="1756,127,1692,173,1690,168,1751,129" shape="poly" title=" "/>
+<area alt="" coords="598,212,508,261,506,256,593,214" shape="poly" title=" "/>
+<area alt="" coords="651,211,717,256,712,256,650,216" shape="poly" title=" "/>
+<area alt="" coords="634,212,656,256,673,279,693,298,727,319,764,336,840,358,835,357,763,341,724,324,689,302,669,282,652,259,631,217" shape="poly" title=" "/>
+<area alt="" coords="1337,114,870,141,627,160,546,170,508,179,495,193,485,210,473,249,469,245,480,208,490,190,506,174,545,165,626,155,869,136,1342,113" shape="poly" title=" "/>
+<area alt="" coords="1398,126,1418,164,1413,162,1395,131" shape="poly" title=" "/>
+<area alt="" coords="1337,113,1196,122,1012,134,846,152,789,165,759,179,750,193,745,211,745,249,741,246,740,210,745,191,756,175,788,160,845,147,1011,128,1195,116,1342,112" shape="poly" title=" "/>
+<area alt="" coords="1385,128,1362,223,1344,271,1323,302,1297,318,1260,330,1165,349,1061,360,969,366,969,361,1060,355,1164,344,1258,325,1295,313,1320,298,1339,269,1357,221,1381,131" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="spotter__cam__pipe_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-nested-classes"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:object_5Fdetection_5Fresult" id="r_object_5Fdetection_5Fresult"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structobject__detection__result.html">object_detection_result</a></td></tr>
+<tr class="memitem:detection_5Ffields" id="r_detection_5Ffields"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structdetection__fields.html">detection_fields</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-define-members"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aca13c70bad59aa35dac375d2f99bd1e1" id="r_aca13c70bad59aa35dac375d2f99bd1e1"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aca13c70bad59aa35dac375d2f99bd1e1">USHER_SPOTTERCAM_PHOTO_DIR</a>   <a class="el" href="ai__cam__pipe_8c.html#a347156874b5d235083f13f979f003d54">USHER_AI_CAM_PHOTO_DIR</a></td></tr>
+<tr class="memitem:a4b99dfe1f15a963267e114df7c1fe2c9" id="r_a4b99dfe1f15a963267e114df7c1fe2c9"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b99dfe1f15a963267e114df7c1fe2c9">OBJECT_METADATA_LIMIT</a>   32768</td></tr>
+<tr class="memitem:a6c0feef79ffca76af466d9571ab278da" id="r_a6c0feef79ffca76af466d9571ab278da"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c0feef79ffca76af466d9571ab278da">OBJECT_MAX_DETECTIONS</a>   64</td></tr>
+<tr class="memitem:a74ee39ec3f47d4681f69411d28bcff7a" id="r_a74ee39ec3f47d4681f69411d28bcff7a"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a74ee39ec3f47d4681f69411d28bcff7a">OBJECT_LABEL_SIZE</a>   64</td></tr>
+<tr class="memitem:a5ed2ea54dfdee413d4318ee4dfed54f2" id="r_a5ed2ea54dfdee413d4318ee4dfed54f2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ed2ea54dfdee413d4318ee4dfed54f2">OBJECT_COPY_BUFFER_SIZE</a>   (64U * 1024U)</td></tr>
+<tr class="memitem:a37b9268bcea8fa16079efdb5cce4481f" id="r_a37b9268bcea8fa16079efdb5cce4481f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a37b9268bcea8fa16079efdb5cce4481f">USHER_SPOTTERCAM_COMMAND</a>   "./bin/spottercam"</td></tr>
+<tr class="memdesc:a37b9268bcea8fa16079efdb5cce4481f"><td class="mdescLeft"> </td><td class="mdescRight">Standalone object-worker executable, never the LOOM entry point.  <br/></td></tr>
+<tr class="memitem:a7d1efed7225397fecb6f11f711ec8747" id="r_a7d1efed7225397fecb6f11f711ec8747"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d1efed7225397fecb6f11f711ec8747">USHER_SPOTTERCAM_MODEL</a>   "models/ai_cam/nn_vehicles.rpk"</td></tr>
+<tr class="memdesc:a7d1efed7225397fecb6f11f711ec8747"><td class="mdescLeft"> </td><td class="mdescRight">Native detector RPK path borrowed for the worker's lifetime.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a50892513ed0d8ae0e3a09acffd51908a" id="r_a50892513ed0d8ae0e3a09acffd51908a"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a50892513ed0d8ae0e3a09acffd51908a">spotter_cam_pipe_configure</a> (const struct <a class="el" href="structcamera__backend__host.html">camera_backend_host</a> *host)</td></tr>
+<tr class="memdesc:a50892513ed0d8ae0e3a09acffd51908a"><td class="mdescLeft"> </td><td class="mdescRight">Borrow USHER's shutdown flag for both serialized native worker owners.  <br/></td></tr>
+<tr class="memitem:af7c27f14ba3dec5d535174e30cb375b6" id="r_af7c27f14ba3dec5d535174e30cb375b6"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#af7c27f14ba3dec5d535174e30cb375b6">spotter_cam_pipe_set_photo_only</a> (bool <a class="el" href="dipla__camera__backend_8c.html#adce2780be75006bfa4c58fd8cc706556">enabled</a>)</td></tr>
+<tr class="memdesc:af7c27f14ba3dec5d535174e30cb375b6"><td class="mdescLeft"> </td><td class="mdescRight">Select or inspect the model-free capture mode before worker startup.  <br/></td></tr>
+<tr class="memitem:a1b49a0da55fb77ce78de27e8e3d008b8" id="r_a1b49a0da55fb77ce78de27e8e3d008b8"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b49a0da55fb77ce78de27e8e3d008b8">spotter_cam_pipe_photo_only</a> (void)</td></tr>
+<tr class="memdesc:a1b49a0da55fb77ce78de27e8e3d008b8"><td class="mdescLeft"> </td><td class="mdescRight">Report whether capture was configured without analysis.  <br/></td></tr>
+<tr class="memitem:ad977593c6f387572422611447d008c6b" id="r_ad977593c6f387572422611447d008c6b"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad977593c6f387572422611447d008c6b">metadata_path</a> (const char *filename, char *path, size_t path_size)</td></tr>
+<tr class="memitem:a5d5b4c8d1dce9b9877d3bb47bb04ef65" id="r_a5d5b4c8d1dce9b9877d3bb47bb04ef65"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d5b4c8d1dce9b9877d3bb47bb04ef65">detection_field</a> (void *context, const char *key, const char *value)</td></tr>
+<tr class="memdesc:a5d5b4c8d1dce9b9877d3bb47bb04ef65"><td class="mdescLeft"> </td><td class="mdescRight">Parse one bounded detector sidecar field.  <br/></td></tr>
+<tr class="memitem:a18e11ca665cf26e1406149b4248ce745" id="r_a18e11ca665cf26e1406149b4248ce745"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a18e11ca665cf26e1406149b4248ce745">read_detection_sidecar</a> (const char *filename, struct <a class="el" href="structobject__detection__result.html">object_detection_result</a> *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>, struct <a class="el" href="structspotter__detections.html">spotter_detections</a> *<a class="el" href="lwir__spotter_8c.html#ab6d1ec5ddb791910ad4c40b39a63045c">detections</a>)</td></tr>
+<tr class="memdesc:a18e11ca665cf26e1406149b4248ce745"><td class="mdescLeft"> </td><td class="mdescRight">Read a stable bounded sidecar and validate schema, dimensions, and every box.  <br/></td></tr>
+<tr class="memitem:a42e10c797e2429ecb20a614a03daa734" id="r_a42e10c797e2429ecb20a614a03daa734"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a42e10c797e2429ecb20a614a03daa734">parse_detection_sidecar</a> (const char *filename, struct <a class="el" href="structobject__detection__result.html">object_detection_result</a> *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>)</td></tr>
+<tr class="memdesc:a42e10c797e2429ecb20a614a03daa734"><td class="mdescLeft"> </td><td class="mdescRight">Read only the capture-facing detector summary.  <br/></td></tr>
+<tr class="memitem:acaf1a9f2956667791926cc7b7f0898c0" id="r_acaf1a9f2956667791926cc7b7f0898c0"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#acaf1a9f2956667791926cc7b7f0898c0">spotter_cam_pipe_read_detections</a> (const char *filename, struct <a class="el" href="structspotter__detections.html">spotter_detections</a> *<a class="el" href="lwir__spotter_8c.html#ab6d1ec5ddb791910ad4c40b39a63045c">detections</a>)</td></tr>
+<tr class="memdesc:acaf1a9f2956667791926cc7b7f0898c0"><td class="mdescLeft"> </td><td class="mdescRight">Read the full detector result associated with a JPEG.  <br/></td></tr>
+<tr class="memitem:ab92894ebfce735678f022fc4ec122ad3" id="r_ab92894ebfce735678f022fc4ec122ad3"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab92894ebfce735678f022fc4ec122ad3">spotter_cam_pipe_bind_frame</a> (uint64_t sequence, uint64_t sensor_timestamp_ns)</td></tr>
+<tr class="memdesc:ab92894ebfce735678f022fc4ec122ad3"><td class="mdescLeft"> </td><td class="mdescRight">Reject a detection result whose identity differs from the validated saved frame.  <br/></td></tr>
+<tr class="memitem:ae1e40915deb210f88a967d18ae4dbd4e" id="r_ae1e40915deb210f88a967d18ae4dbd4e"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1e40915deb210f88a967d18ae4dbd4e">spotter_cam_pipe_set_photo_directory</a> (const char *directory)</td></tr>
+<tr class="memdesc:ae1e40915deb210f88a967d18ae4dbd4e"><td class="mdescLeft"> </td><td class="mdescRight">Set the borrowed output directory before backend initialization.  <br/></td></tr>
+<tr class="memitem:a2d6a6e9dc5464e4df3185b240290cf90" id="r_a2d6a6e9dc5464e4df3185b240290cf90"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d6a6e9dc5464e4df3185b240290cf90">spotter_cam_pipe_last_detection_summary</a> (char *buffer, size_t buffer_size)</td></tr>
+<tr class="memdesc:a2d6a6e9dc5464e4df3185b240290cf90"><td class="mdescLeft"> </td><td class="mdescRight">Format the most recent shot's detection result for EXIF writing.  <br/></td></tr>
+<tr class="memitem:af65db18f204256d0d8fb0c188c7370cc" id="r_af65db18f204256d0d8fb0c188c7370cc"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#af65db18f204256d0d8fb0c188c7370cc">copy_file</a> (const char *source_path, const char *dest_path)</td></tr>
+<tr class="memdesc:af65db18f204256d0d8fb0c188c7370cc"><td class="mdescLeft"> </td><td class="mdescRight">Stream a review copy without allocating another image-sized buffer.  <br/></td></tr>
+<tr class="memitem:a33c5cf1225ffd638325c73cc2ed79504" id="r_a33c5cf1225ffd638325c73cc2ed79504"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a33c5cf1225ffd638325c73cc2ed79504">spotter_cam_pipe_save_detection_copy</a> (const char *filename)</td></tr>
+<tr class="memdesc:a33c5cf1225ffd638325c73cc2ed79504"><td class="mdescLeft"> </td><td class="mdescRight">Copy <code class="param">filename</code> into a "detections" subdirectory of the photo directory if the last <a class="el" href="spotter__cam__pipe_8h.html#aa63d588b1ffa081f7c7fdbf8bc072dd7" title="Request one JPEG and, when enabled, parse its matching detection sidecar.">spotter_cam_pipe_shoot()</a> call found an object.  <br/></td></tr>
+<tr class="memitem:ad14b4c662ce46e86359aa4570b8ef471" id="r_ad14b4c662ce46e86359aa4570b8ef471"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad14b4c662ce46e86359aa4570b8ef471">spotter_cam_pipe_init</a> (const char *unused)</td></tr>
+<tr class="memdesc:ad14b4c662ce46e86359aa4570b8ef471"><td class="mdescLeft"> </td><td class="mdescRight">Start and qualify native persistent capture with the selected analysis policy.  <br/></td></tr>
+<tr class="memitem:aa63d588b1ffa081f7c7fdbf8bc072dd7" id="r_aa63d588b1ffa081f7c7fdbf8bc072dd7"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa63d588b1ffa081f7c7fdbf8bc072dd7">spotter_cam_pipe_shoot</a> (char *filename, size_t filename_size, int image_number)</td></tr>
+<tr class="memdesc:aa63d588b1ffa081f7c7fdbf8bc072dd7"><td class="mdescLeft"> </td><td class="mdescRight">Request one JPEG and, when enabled, parse its matching detection sidecar.  <br/></td></tr>
+<tr class="memitem:a19c798b7828113f9218ecf43fbebead3" id="r_a19c798b7828113f9218ecf43fbebead3"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a19c798b7828113f9218ecf43fbebead3">spotter_cam_pipe_deinit</a> (void)</td></tr>
+<tr class="memdesc:a19c798b7828113f9218ecf43fbebead3"><td class="mdescLeft"> </td><td class="mdescRight">Stop the native camera process and clear detector-specific configuration.  <br/></td></tr>
+<tr class="memitem:a366cd22b55dc554fa9d3245aec2dec53" id="r_a366cd22b55dc554fa9d3245aec2dec53"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a366cd22b55dc554fa9d3245aec2dec53">spotter_cam_pipe_set_settings</a> (const char *settings)</td></tr>
+<tr class="memdesc:a366cd22b55dc554fa9d3245aec2dec53"><td class="mdescLeft"> </td><td class="mdescRight">Select the detector assignment before either capture or saved-picture analysis starts.  <br/></td></tr>
+<tr class="memitem:acfd082eeb3fbb2f75c08cf66789e987a" id="r_acfd082eeb3fbb2f75c08cf66789e987a"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#acfd082eeb3fbb2f75c08cf66789e987a">spotter_cam_pipe_analyze</a> (const char *filename, unsigned number)</td></tr>
+<tr class="memdesc:acfd082eeb3fbb2f75c08cf66789e987a"><td class="mdescLeft"> </td><td class="mdescRight">Analyze a saved simulation/private picture and bind results to its source hash and request.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-var-members"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:adff87eaed7c2a473ce0d66d7d1c16dee" id="r_adff87eaed7c2a473ce0d66d7d1c16dee"><td align="right" class="memItemLeft" valign="top">static struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#adff87eaed7c2a473ce0d66d7d1c16dee">spotter_capture</a> = <a class="el" href="imx500__pipe_8h.html#a2a73ab2607fb0e989800cd40658e4358">IMX500_PIPE_INITIALIZER</a></td></tr>
+<tr class="memitem:ac527b62cbf2b1cedf7b31463cfdd5ba5" id="r_ac527b62cbf2b1cedf7b31463cfdd5ba5"><td align="right" class="memItemLeft" valign="top">static struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac527b62cbf2b1cedf7b31463cfdd5ba5">spotter_analysis</a> = <a class="el" href="imx500__pipe_8h.html#a2a73ab2607fb0e989800cd40658e4358">IMX500_PIPE_INITIALIZER</a></td></tr>
+<tr class="memitem:a00ee1ff4a3e8a4326976b007b75ca2f0" id="r_a00ee1ff4a3e8a4326976b007b75ca2f0"><td align="right" class="memItemLeft" valign="top">static const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a00ee1ff4a3e8a4326976b007b75ca2f0">spotter_settings</a></td></tr>
+<tr class="memitem:a9126d1136d4206604d94c8bebe33555d" id="r_a9126d1136d4206604d94c8bebe33555d"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9126d1136d4206604d94c8bebe33555d">spotter_photo_only</a></td></tr>
+<tr class="memitem:a095bc18d7a7fd917d84752f0bf8dc59a" id="r_a095bc18d7a7fd917d84752f0bf8dc59a"><td align="right" class="memItemLeft" valign="top">static const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a095bc18d7a7fd917d84752f0bf8dc59a">photo_directory</a> = <a class="el" href="#aca13c70bad59aa35dac375d2f99bd1e1">USHER_SPOTTERCAM_PHOTO_DIR</a></td></tr>
+<tr class="memitem:a402e6cd5bc426df1d46920a64fd9ba7c" id="r_a402e6cd5bc426df1d46920a64fd9ba7c"><td align="right" class="memItemLeft" valign="top">static struct <a class="el" href="structobject__detection__result.html">object_detection_result</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#a402e6cd5bc426df1d46920a64fd9ba7c">last_detection</a></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>Native USHER adapter for on-sensor IMX500 object detection. </p>
+<p>The native Spottercam worker owns capture. This adapter checks its bounded object sidecar and retains the highest-confidence box for EXIF/SODA. Missing analysis does not delete a useful photograph, and a valid empty result is not a hit. Review copies happen only after USHER has tagged the original. Shared process supervision and frame timing deliberately remain separate from detector interpretation; LOOM does not use this adapter's result semantics. </p>
+<p class="definition">Definition in file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div><a id="doc-define-members" name="doc-define-members"></a><h2 class="groupheader" id="header-doc-define-members">Macro Definition Documentation</h2>
+<a id="a5ed2ea54dfdee413d4318ee4dfed54f2" name="a5ed2ea54dfdee413d4318ee4dfed54f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ed2ea54dfdee413d4318ee4dfed54f2">◆ </a></span>OBJECT_COPY_BUFFER_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define OBJECT_COPY_BUFFER_SIZE   (64U * 1024U)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Stream large photo copies in fixed chunks instead of allocating image-sized RAM. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00070">70</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a74ee39ec3f47d4681f69411d28bcff7a" name="a74ee39ec3f47d4681f69411d28bcff7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74ee39ec3f47d4681f69411d28bcff7a">◆ </a></span>OBJECT_LABEL_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define OBJECT_LABEL_SIZE   64</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Bound labels copied from model metadata into the fixed EXIF summary. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00068">68</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a6c0feef79ffca76af466d9571ab278da" name="a6c0feef79ffca76af466d9571ab278da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c0feef79ffca76af466d9571ab278da">◆ </a></span>OBJECT_MAX_DETECTIONS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define OBJECT_MAX_DETECTIONS   64</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Bound candidate records even when a producer sends a syntactically valid oversized array. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00066">66</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a4b99dfe1f15a963267e114df7c1fe2c9" name="a4b99dfe1f15a963267e114df7c1fe2c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b99dfe1f15a963267e114df7c1fe2c9">◆ </a></span>OBJECT_METADATA_LIMIT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define OBJECT_METADATA_LIMIT   32768</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>A sidecar is generated locally; 32 KiB bounds 64 boxes with precise centres. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00064">64</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a37b9268bcea8fa16079efdb5cce4481f" name="a37b9268bcea8fa16079efdb5cce4481f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37b9268bcea8fa16079efdb5cce4481f">◆ </a></span>USHER_SPOTTERCAM_COMMAND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SPOTTERCAM_COMMAND   "./bin/spottercam"</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Standalone object-worker executable, never the LOOM entry point. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00074">74</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a7d1efed7225397fecb6f11f711ec8747" name="a7d1efed7225397fecb6f11f711ec8747"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d1efed7225397fecb6f11f711ec8747">◆ </a></span>USHER_SPOTTERCAM_MODEL</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SPOTTERCAM_MODEL   "models/ai_cam/nn_vehicles.rpk"</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Native detector RPK path borrowed for the worker's lifetime. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00078">78</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aca13c70bad59aa35dac375d2f99bd1e1" name="aca13c70bad59aa35dac375d2f99bd1e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca13c70bad59aa35dac375d2f99bd1e1">◆ </a></span>USHER_SPOTTERCAM_PHOTO_DIR</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SPOTTERCAM_PHOTO_DIR   <a class="el" href="ai__cam__pipe_8c.html#a347156874b5d235083f13f979f003d54">USHER_AI_CAM_PHOTO_DIR</a></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Defaults to the same directory as plain AICam (USHER_AI_CAM_PHOTO_DIR, already defined globally via the build's CFLAGS): –spottercam is still conceptually "the
+AI camera", just with detection added, so it belongs in the same photo directory. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00060">60</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="af65db18f204256d0d8fb0c188c7370cc" name="af65db18f204256d0d8fb0c188c7370cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af65db18f204256d0d8fb0c188c7370cc">◆ </a></span>copy_file()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int copy_file </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>source_path</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>dest_path</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Stream a review copy without allocating another image-sized buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">source_path</td><td>Readable original photograph, which is never modified. </td></tr>
+<tr><td class="paramname">dest_path</td><td>New review destination; existing files and links are never replaced. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero after writes/close succeed, otherwise -1; opened partial output is removed.</dd></dl>
+<p>This is a convenience copy, not the exclusive flight-image publication path. It neither fsyncs the destination nor guarantees power-loss durability. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00395">395</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a5d5b4c8d1dce9b9877d3bb47bb04ef65" name="a5d5b4c8d1dce9b9877d3bb47bb04ef65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d5b4c8d1dce9b9877d3bb47bb04ef65">◆ </a></span>detection_field()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool detection_field </td>
+<td>(</td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>value</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Parse one bounded detector sidecar field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">context</td><td>Pointer to the parser's <a class="el" href="structdetection__fields.html">detection_fields</a> accumulator. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">key</td><td>Current key from the INI reader. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">value</td><td>Associated text value. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the field is accepted.</dd></dl>
+<p>Track field presence independently of values so duplicate metadata or box fields cannot replace the first reading silently. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00165">165</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ad977593c6f387572422611447d008c6b" name="ad977593c6f387572422611447d008c6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad977593c6f387572422611447d008c6b">◆ </a></span>metadata_path()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int metadata_path </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>path_size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Build the sidecar name by replacing the final <span class="tt">.jpg</span> suffix. </p><dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">filename</td><td>Completed JPEG filename. </td></tr>
+<tr><td class="paramname">path</td><td>Caller-owned output buffer. </td></tr>
+<tr><td class="paramname">path_size</td><td>Output capacity. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero on a bounded JPEG path, otherwise -1. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00136">136</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a42e10c797e2429ecb20a614a03daa734" name="a42e10c797e2429ecb20a614a03daa734"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42e10c797e2429ecb20a614a03daa734">◆ </a></span>parse_detection_sidecar()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool parse_detection_sidecar </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structobject__detection__result.html">object_detection_result</a> *</td> <td class="paramname"><span class="paramname"><em>result</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read only the capture-facing detector summary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">filename</td><td>JPEG paired with the sidecar. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">result</td><td>Summary; cleared on read or validation failure. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for valid evidence, including zero detections.</dd></dl>
+<p>Reuse the full parser so requesting only the summary never skips box or provenance validation. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00334">334</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a18e11ca665cf26e1406149b4248ce745" name="a18e11ca665cf26e1406149b4248ce745"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18e11ca665cf26e1406149b4248ce745">◆ </a></span>read_detection_sidecar()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool read_detection_sidecar </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structobject__detection__result.html">object_detection_result</a> *</td> <td class="paramname"><span class="paramname"><em>result</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structspotter__detections.html">spotter_detections</a> *</td> <td class="paramname"><span class="paramname"><em>detections</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read a stable bounded sidecar and validate schema, dimensions, and every box. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">filename</td><td>Matching JPEG path. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">result</td><td>Cleared on any I/O, parse, or schema failure. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">detections</td><td>Optional expanded detection list and provenance. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for valid metadata, including a valid zero-detection frame.</dd></dl>
+<p>Size/mtime checks reject ordinary changes during the read, while caller-owned buffers bound parser storage. Exposure association is a later exact sequence/timestamp check, not a property of INI syntax alone. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00235">235</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="acfd082eeb3fbb2f75c08cf66789e987a" name="acfd082eeb3fbb2f75c08cf66789e987a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfd082eeb3fbb2f75c08cf66789e987a">◆ </a></span>spotter_cam_pipe_analyze()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int spotter_cam_pipe_analyze </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>number</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Analyze a saved simulation/private picture and bind results to its source hash and request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">filename</td><td>Saved JPEG, still owned by the producer during analysis. </td></tr>
+<tr><td class="paramname">number</td><td>Positive increasing correlation number. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero when disabled or a matching result is accepted, minus one with retained detections cleared.</dd></dl>
+<p>A valid empty result remains distinct from failed or mismatched analysis. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00546">546</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ab92894ebfce735678f022fc4ec122ad3" name="ab92894ebfce735678f022fc4ec122ad3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab92894ebfce735678f022fc4ec122ad3">◆ </a></span>spotter_cam_pipe_bind_frame()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool spotter_cam_pipe_bind_frame </td>
+<td>(</td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>sequence</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>sensor_timestamp_ns</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Reject a detection result whose identity differs from the validated saved frame. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">sequence</td><td>Camera sequence obtained from that image's validated frame evidence. </td></tr>
+<tr><td class="paramname">sensor_timestamp_ns</td><td>Matching sensor timestamp, not the FC shot time. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for matching detector identity; false clears the retained analysis.</dd></dl>
+<p>INI parsing alone does not bind detections to pixels. Compare both fields after shared frame/file validation and before EXIF replacement changes the inode. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00351">351</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a50892513ed0d8ae0e3a09acffd51908a" name="a50892513ed0d8ae0e3a09acffd51908a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50892513ed0d8ae0e3a09acffd51908a">◆ </a></span>spotter_cam_pipe_configure()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void spotter_cam_pipe_configure </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structcamera__backend__host.html">camera_backend_host</a> *</td> <td class="paramname"><span class="paramname"><em>host</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Borrow USHER's shutdown flag for both serialized native worker owners. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00110">110</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a19c798b7828113f9218ecf43fbebead3" name="a19c798b7828113f9218ecf43fbebead3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19c798b7828113f9218ecf43fbebead3">◆ </a></span>spotter_cam_pipe_deinit()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void spotter_cam_pipe_deinit </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Stop the native camera process and clear detector-specific configuration. </p>
+<p>Stop the selected camera owner and release detector-specific configuration. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00532">532</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ad14b4c662ce46e86359aa4570b8ef471" name="ad14b4c662ce46e86359aa4570b8ef471"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad14b4c662ce46e86359aa4570b8ef471">◆ </a></span>spotter_cam_pipe_init()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int spotter_cam_pipe_init </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>unused</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Start and qualify native persistent capture with the selected analysis policy. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">unused</td><td>Reserved common backend argument. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 after the selected producer qualifies readiness, otherwise -1.</dd></dl>
+<p>Process startup alone is insufficient: the capture owner must report its initial frame and, when enabled, inference contract before accepting photographs. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00496">496</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a2d6a6e9dc5464e4df3185b240290cf90" name="a2d6a6e9dc5464e4df3185b240290cf90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d6a6e9dc5464e4df3185b240290cf90">◆ </a></span>spotter_cam_pipe_last_detection_summary()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void spotter_cam_pipe_last_detection_summary </td>
+<td>(</td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>buffer_size</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Format the most recent shot's detection result for EXIF writing. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">buffer</td><td>Caller-owned destination for a short human-readable summary. </td></tr>
+<tr><td class="paramname">buffer_size</td><td>Capacity of <code class="param">buffer</code>.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Reflects the last <a class="el" href="spotter__cam__pipe_8h.html#aa63d588b1ffa081f7c7fdbf8bc072dd7" title="Request one JPEG and, when enabled, parse its matching detection sidecar.">spotter_cam_pipe_shoot()</a> call only; safe to call even when that call failed (reports status=analysis_failed) or no server ever ran. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00374">374</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a1b49a0da55fb77ce78de27e8e3d008b8" name="a1b49a0da55fb77ce78de27e8e3d008b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b49a0da55fb77ce78de27e8e3d008b8">◆ </a></span>spotter_cam_pipe_photo_only()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool spotter_cam_pipe_photo_only </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Report whether capture was configured without analysis. </p>
+<dl class="section return"><dt>Returns</dt><dd>True in photo-only mode.</dd></dl>
+<p>This is a configuration check, not a camera readiness check. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00126">126</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="acaf1a9f2956667791926cc7b7f0898c0" name="acaf1a9f2956667791926cc7b7f0898c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaf1a9f2956667791926cc7b7f0898c0">◆ </a></span>spotter_cam_pipe_read_detections()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool spotter_cam_pipe_read_detections </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structspotter__detections.html">spotter_detections</a> *</td> <td class="paramname"><span class="paramname"><em>detections</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read the full detector result associated with a JPEG. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">filename</td><td>JPEG paired with the sidecar. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">detections</td><td>Required destination for boxes and provenance. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for a valid sidecar, including an empty detector result.</dd></dl>
+<p>Use the same validation as the capture summary so downstream projection cannot admit results the capture pipeline rejects. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00345">345</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a33c5cf1225ffd638325c73cc2ed79504" name="a33c5cf1225ffd638325c73cc2ed79504"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33c5cf1225ffd638325c73cc2ed79504">◆ </a></span>spotter_cam_pipe_save_detection_copy()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void spotter_cam_pipe_save_detection_copy </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Copy <code class="param">filename</code> into a "detections" subdirectory of the photo directory if the last <a class="el" href="spotter__cam__pipe_8h.html#aa63d588b1ffa081f7c7fdbf8bc072dd7" title="Request one JPEG and, when enabled, parse its matching detection sidecar.">spotter_cam_pipe_shoot()</a> call found an object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">filename</td><td>Path to the just-finished image (ideally already EXIF-tagged by the caller, so the copy carries the same metadata as the original).</td></tr>
+</table>
+</dd>
+</dl>
+<p>No-op when the last shot found nothing, never completed, or <code class="param">filename</code> is NULL/empty; safe to call unconditionally, mirroring <a class="el" href="spotter__cam__pipe_8h.html#a2d6a6e9dc5464e4df3185b240290cf90" title="Format the most recent shot's detection result for EXIF writing.">spotter_cam_pipe_last_detection_summary()</a>. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00459">459</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ae1e40915deb210f88a967d18ae4dbd4e" name="ae1e40915deb210f88a967d18ae4dbd4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1e40915deb210f88a967d18ae4dbd4e">◆ </a></span>spotter_cam_pipe_set_photo_directory()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void spotter_cam_pipe_set_photo_directory </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>directory</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Set the borrowed output directory before backend initialization. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">directory</td><td>Caller-owned path retained until configuration changes; NULL restores the build-time default. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>No capture is using the previous configuration. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00367">367</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="af7c27f14ba3dec5d535174e30cb375b6" name="af7c27f14ba3dec5d535174e30cb375b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7c27f14ba3dec5d535174e30cb375b6">◆ </a></span>spotter_cam_pipe_set_photo_only()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int spotter_cam_pipe_set_photo_only </td>
+<td>(</td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>enabled</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Select or inspect the model-free capture mode before worker startup. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00116">116</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a366cd22b55dc554fa9d3245aec2dec53" name="a366cd22b55dc554fa9d3245aec2dec53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a366cd22b55dc554fa9d3245aec2dec53">◆ </a></span>spotter_cam_pipe_set_settings()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int spotter_cam_pipe_set_settings </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>settings</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Select the detector assignment before either capture or saved-picture analysis starts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">settings</td><td>Nonempty borrowed application settings path, alive until both workers stop. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero if accepted; minus one for invalid input or an already active worker. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00539">539</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="aa63d588b1ffa081f7c7fdbf8bc072dd7" name="aa63d588b1ffa081f7c7fdbf8bc072dd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa63d588b1ffa081f7c7fdbf8bc072dd7">◆ </a></span>spotter_cam_pipe_shoot()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int spotter_cam_pipe_shoot </td>
+<td>(</td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>filename_size</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>image_number</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Request one JPEG and, when enabled, parse its matching detection sidecar. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">filename</td><td>Output path buffer, cleared on failure. </td></tr>
+<tr><td class="paramname">filename_size</td><td>Output path capacity. </td></tr>
+<tr><td class="paramname">image_number</td><td>USHER shot sequence. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 only for a qualified saved image, otherwise -1.</dd></dl>
+<p>Missing or malformed analysis leaves the photograph usable and makes the summary report analysis_failed. Clearing the old result prevents a previous hit being attached to the next exposure. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00510">510</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="doc-var-members" name="doc-var-members"></a><h2 class="groupheader" id="header-doc-var-members">Variable Documentation</h2>
+<a id="a402e6cd5bc426df1d46920a64fd9ba7c" name="a402e6cd5bc426df1d46920a64fd9ba7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a402e6cd5bc426df1d46920a64fd9ba7c">◆ </a></span>last_detection</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">struct <a class="el" href="structobject__detection__result.html">object_detection_result</a> last_detection</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Current shot only; cleared on capture/binding failure. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00108">108</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a095bc18d7a7fd917d84752f0bf8dc59a" name="a095bc18d7a7fd917d84752f0bf8dc59a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a095bc18d7a7fd917d84752f0bf8dc59a">◆ </a></span>photo_directory</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const char* photo_directory = <a class="el" href="#aca13c70bad59aa35dac375d2f99bd1e1">USHER_SPOTTERCAM_PHOTO_DIR</a></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Borrowed configured photo directory. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00086">86</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="ac527b62cbf2b1cedf7b31463cfdd5ba5" name="ac527b62cbf2b1cedf7b31463cfdd5ba5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac527b62cbf2b1cedf7b31463cfdd5ba5">◆ </a></span>spotter_analysis</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> spotter_analysis = <a class="el" href="imx500__pipe_8h.html#a2a73ab2607fb0e989800cd40658e4358">IMX500_PIPE_INITIALIZER</a></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00082">82</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="adff87eaed7c2a473ce0d66d7d1c16dee" name="adff87eaed7c2a473ce0d66d7d1c16dee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adff87eaed7c2a473ce0d66d7d1c16dee">◆ </a></span>spotter_capture</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">struct <a class="el" href="structimx500__pipe.html">imx500_pipe</a> spotter_capture = <a class="el" href="imx500__pipe_8h.html#a2a73ab2607fb0e989800cd40658e4358">IMX500_PIPE_INITIALIZER</a></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Exclusive native-detector process state. </p>
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00081">81</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a9126d1136d4206604d94c8bebe33555d" name="a9126d1136d4206604d94c8bebe33555d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9126d1136d4206604d94c8bebe33555d">◆ </a></span>spotter_photo_only</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool spotter_photo_only</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00084">84</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+<a id="a00ee1ff4a3e8a4326976b007b75ca2f0" name="a00ee1ff4a3e8a4326976b007b75ca2f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00ee1ff4a3e8a4326976b007b75ca2f0">◆ </a></span>spotter_settings</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const char* spotter_settings</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="spotter__cam__pipe_8c_source.html#l00083">83</a> of file <a class="el" href="spotter__cam__pipe_8c_source.html">spotter_cam_pipe.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

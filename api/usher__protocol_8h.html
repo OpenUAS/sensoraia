@@ -1,0 +1,3427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/usher_protocol.h File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('usher__protocol_8h.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">usher_protocol.h File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Shared FC/MORA byte-stream UART framing, messages and payload layouts.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;inttypes.h&gt;</code><br/>
+<code>#include &lt;stdbool.h&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for usher_protocol.h:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="usher__protocol_8h__incl.png" usemap="#asrc_2usher__protocol_8h"/></div>
+<map id="asrc_2usher__protocol_8h" name="asrc_2usher__protocol_8h">
+<area alt="" coords="225,24,220,18,206,13,184,9,157,6,126,5,96,6,68,9,46,13,32,18,28,24,32,30,46,35,68,39,96,42,126,43,157,42,184,39,206,35,220,30" shape="poly" title="Shared FC/MORA byte-stream UART framing, messages and payload layouts."/>
+<area alt="" coords="116,110,113,104,106,99,93,95,78,92,61,91,44,92,28,95,16,99,8,104,5,110,8,116,16,121,28,125,44,128,61,129,78,128,93,125,106,121,113,116" shape="poly" title=" "/>
+<area alt="" coords="114,42,85,81,82,78,110,45" shape="poly" title=" "/>
+<area alt="" coords="245,110,243,104,235,99,224,95,209,92,193,91,176,92,162,95,150,99,143,104,140,110,143,116,150,121,162,125,176,128,193,129,209,128,224,125,235,121,243,116" shape="poly" title=" "/>
+<area alt="" coords="141,41,172,80,167,80,139,46" shape="poly" title=" "/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="usher__protocol_8h__dep__incl.png" usemap="#asrc_2usher__protocol_8hdep"/></div>
+<map id="asrc_2usher__protocol_8hdep" name="asrc_2usher__protocol_8hdep">
+<area alt="" coords="4388,24,4383,18,4369,13,4347,9,4320,6,4289,5,4259,6,4231,9,4210,13,4196,18,4191,24,4196,30,4210,35,4231,39,4259,42,4289,43,4320,42,4347,39,4369,35,4383,30" shape="poly" title="Shared FC/MORA byte-stream UART framing, messages and payload layouts."/>
+<area alt="" coords="208,293,203,287,189,282,166,277,138,275,107,274,75,275,47,277,25,282,10,287,5,293,10,298,25,304,47,308,75,311,107,311,138,311,166,308,189,304,203,298" href="camera__control_8h.html" shape="poly" title="Fixed-size camera-control wire codec and FC-side ticket state."/>
+<area alt="" coords="4175,29,3560,55,2725,94,2343,111,2019,122,1468,136,1203,150,920,173,599,210,220,265,160,278,158,274,220,260,598,204,919,167,1203,144,1468,131,2019,116,2343,106,2725,88,3560,49,4181,29" shape="poly" title=" "/>
+<area alt="" coords="3215,401,3212,395,3204,390,3190,386,3173,383,3155,382,3136,383,3119,386,3106,390,3097,395,3094,401,3097,407,3106,412,3119,416,3136,419,3155,420,3173,419,3190,416,3204,412,3212,407" href="usher_8c.html" shape="poly" title="Main USHER daemon coordinating flight-controller triggers and camera backends."/>
+<area alt="" coords="4271,55,4164,218,4088,325,4047,334,3963,345,3711,366,3214,399,3214,394,3710,361,3962,339,4046,329,4085,321,4160,215,4267,57" shape="poly" title=" "/>
+<area alt="" coords="1945,196,1940,190,1926,185,1905,180,1877,178,1847,177,1816,178,1789,180,1767,185,1753,190,1748,196,1753,201,1767,207,1789,211,1816,214,1847,214,1877,214,1905,211,1926,207,1940,201" href="capture__arbiter_8h.html" shape="poly" title="Session-scoped survey admission and saved-image evidence for USHER."/>
+<area alt="" coords="4179,32,3304,91,2055,179,1934,189,1934,184,2054,174,3304,86,4185,32" shape="poly" title=" "/>
+<area alt="" coords="3864,110,3859,104,3845,99,3823,95,3796,92,3765,91,3735,92,3707,95,3686,99,3672,104,3667,110,3672,116,3686,121,3707,125,3735,128,3765,129,3796,128,3823,125,3845,121,3859,116" href="capture__timing_8h.html" shape="poly" title="Sensor observation times, aligned poses, and optional frame-arrival evidence."/>
+<area alt="" coords="4203,39,3839,100,3839,94,4198,40" shape="poly" title=" "/>
+<area alt="" coords="3861,196,3856,190,3843,185,3822,180,3795,178,3765,177,3736,178,3709,180,3688,185,3674,190,3670,196,3674,201,3688,207,3709,211,3736,214,3765,214,3795,214,3822,211,3843,207,3856,201" href="ear__cam__pipe_8h.html" shape="poly" title="Audio/pose adapter and zero-copy snapshot API for the EAR backend."/>
+<area alt="" coords="4229,45,3814,181,3813,176,4224,46" shape="poly" title=" "/>
+<area alt="" coords="4402,196,4398,190,4386,185,4367,180,4344,178,4319,177,4293,178,4270,180,4252,185,4240,190,4236,196,4240,201,4252,207,4270,211,4293,214,4319,214,4344,214,4367,211,4386,207,4398,201" href="image__exif_8h.html" shape="poly" title="Flight, timing, and thermal-analysis metadata writing for captured JPEGs."/>
+<area alt="" coords="4270,55,4257,92,4255,110,4258,128,4275,154,4297,178,4292,176,4271,158,4254,130,4250,110,4252,91,4266,58" shape="poly" title=" "/>
+<area alt="" coords="4428,110,4424,104,4413,99,4395,95,4373,92,4348,91,4323,92,4301,95,4283,99,4272,104,4268,110,4272,116,4283,121,4301,125,4323,128,4348,129,4373,128,4395,125,4413,121,4424,116" href="chdk__pipe_8c.html" shape="poly" title="Own and supervise bounded CHDKbridge child invocations for USHER."/>
+<area alt="" coords="4312,53,4338,92,4333,90,4310,58" shape="poly" title=" "/>
+<area alt="" coords="4662,110,4657,104,4642,99,4619,95,4590,92,4557,91,4525,92,4496,95,4472,99,4458,104,4452,110,4458,116,4472,121,4496,125,4525,128,4557,129,4590,128,4619,125,4642,121,4657,116" href="clock__alignment_8h.html" shape="poly" title="Bounded mapping between flight-controller microseconds and USHER monotonic time."/>
+<area alt="" coords="4354,43,4509,93,4504,93,4353,48" shape="poly" title=" "/>
+<area alt="" coords="5362,293,5358,287,5348,282,5331,277,5310,275,5287,274,5263,275,5242,277,5226,282,5215,287,5211,293,5215,298,5226,304,5242,308,5263,311,5287,311,5310,311,5331,308,5348,304,5358,298" href="pose__log_8c.html" shape="poly" title="Bounded asynchronous CSV recorder for flight-controller pose evidence."/>
+<area alt="" coords="4391,33,4527,53,4602,69,4675,88,4730,107,4771,125,4861,174,4890,195,4918,212,5048,242,5231,281,5225,280,5046,248,4916,217,4887,199,4859,179,4769,130,4728,112,4674,94,4601,74,4526,58,4391,38" shape="poly" title=" "/>
+<area alt="" coords="5655,293,5648,287,5629,282,5599,277,5562,275,5520,274,5478,275,5441,277,5411,282,5392,287,5385,293,5392,298,5411,304,5441,308,5478,311,5520,311,5562,311,5599,308,5629,304,5648,298" href="image__mock__transform_8h.html" shape="poly" title="Local-simulation JPEG attitude transform API."/>
+<area alt="" coords="4388,34,4554,56,4743,88,4954,135,5160,187,5468,275,5462,275,5158,192,4953,140,4742,94,4554,61,4387,39" shape="poly" title=" "/>
+<area alt="" coords="5120,110,5116,104,5106,99,5090,95,5069,92,5047,91,5024,92,5004,95,4988,99,4977,104,4974,110,4977,116,4988,121,5004,125,5024,128,5047,129,5069,128,5090,125,5106,121,5116,116" href="serial__tx_8c.html" shape="poly" title="Bounded mutex-protected output queue for USHER UART frames."/>
+<area alt="" coords="4395,30,4651,52,4955,88,4994,97,4989,97,4954,94,4650,58,4395,36" shape="poly" title=" "/>
+<area alt="" coords="5341,110,5336,104,5322,99,5301,95,5273,92,5243,91,5212,92,5185,95,5163,99,5149,104,5144,110,5149,116,5163,121,5185,125,5212,128,5243,129,5273,128,5301,125,5322,121,5336,116" href="usher__protocol_8c.html" shape="poly" title="Incremental parser for USHER's UART framing protocol."/>
+<area alt="" coords="4398,29,4727,50,4929,67,5132,88,5174,97,5169,96,5132,94,4929,73,4727,56,4398,34" shape="poly" title=" "/>
+<area alt="" coords="208,401,203,395,189,390,166,386,138,383,107,382,75,383,47,386,25,390,10,395,5,401,10,407,25,412,47,416,75,419,107,420,138,419,166,416,189,412,203,407" href="camera__control_8c.html" shape="poly" title="Serialize camera-control payloads and track bounded FC-side tickets."/>
+<area alt="" coords="109,325,109,382,104,381,105,329" shape="poly" title=" "/>
+<area alt="" coords="907,401,900,395,881,390,852,386,815,383,773,382,732,383,695,386,666,390,647,395,640,401,647,407,666,412,695,416,732,419,773,420,815,419,852,416,881,412,900,407" href="chdk__camera__backend_8c.html" shape="poly" title="Adapt CHDKbridge capture and lens controls to USHER's backend contract."/>
+<area alt="" coords="174,310,221,320,334,338,424,346,514,353,628,368,705,385,700,384,628,373,513,359,423,351,334,343,220,325,175,315" shape="poly" title=" "/>
+<area alt="" coords="171,311,220,320,349,333,498,342,843,347,1234,343,1648,333,2062,326,2453,325,2632,329,2798,337,2946,350,3074,368,3124,385,3118,385,3073,373,2945,355,2797,342,2632,334,2453,330,2062,331,1648,339,1235,348,843,353,497,347,349,339,220,325,172,316" shape="poly" title=" "/>
+<area alt="" coords="1808,222,1789,243,1776,264,1765,295,1766,308,1775,321,1796,329,1841,337,1988,348,2188,355,2416,359,2847,362,2999,364,3074,368,3123,385,3118,385,3073,373,2999,370,2847,368,2416,364,2188,360,1988,353,1840,342,1795,334,1772,325,1761,310,1760,294,1771,261,1785,239,1803,225" shape="poly" title=" "/>
+<area alt="" coords="429,293,424,287,410,282,389,277,361,275,331,274,300,275,273,277,251,282,237,287,232,293,237,298,251,304,273,308,300,311,331,311,361,311,389,308,410,304,424,298" href="capture__arbiter_8c.html" shape="poly" title="Bounded camera-independent capture admission, coverage and timing evidence."/>
+<area alt="" coords="1731,200,1073,222,708,240,557,252,442,265,382,278,380,273,441,260,556,247,707,235,1073,216,1737,199" shape="poly" title=" "/>
+<area alt="" coords="3650,114,2977,137,2520,155,2055,179,1933,189,1933,183,2055,174,2520,150,2977,131,3655,114" shape="poly" title=" "/>
+<area alt="" coords="2283,196,2278,190,2262,185,2238,180,2208,178,2175,177,2141,178,2111,180,2087,185,2072,190,2066,196,2072,201,2087,207,2111,211,2141,214,2175,214,2208,214,2238,211,2262,207,2278,201" href="camera__backend_8h.html" shape="poly" title="Shared capability and lifecycle contract for USHER camera backends."/>
+<area alt="" coords="3654,117,2277,192,2277,186,3659,117" shape="poly" title=" "/>
+<area alt="" coords="3767,142,3767,178,3763,174,3764,146" shape="poly" title=" "/>
+<area alt="" coords="3856,122,4254,184,4249,184,3856,127" shape="poly" title=" "/>
+<area alt="" coords="3528,196,3523,190,3509,185,3488,180,3461,178,3431,177,3401,178,3374,180,3352,185,3338,190,3334,196,3338,201,3352,207,3374,211,3401,214,3431,214,3461,214,3488,211,3509,207,3523,201" href="lwir__cam__pipe_8h.html" shape="poly" title="Parent-side protocol for USHER's persistent Tiny1-C LWIR capture server."/>
+<area alt="" coords="3695,129,3489,183,3488,177,3690,130" shape="poly" title=" "/>
+<area alt="" coords="4056,196,4052,190,4040,185,4021,180,3997,178,3971,177,3944,178,3921,180,3902,185,3890,190,3886,196,3890,201,3902,207,3921,211,3944,214,3971,214,3997,214,4021,211,4040,207,4052,201" href="lwir__spotter_8h.html" shape="poly" title="Serialized saved-LWIR object analysis with immutable frame and exposure evidence."/>
+<area alt="" coords="3820,131,3934,179,3929,178,3819,136" shape="poly" title=" "/>
+<area alt="" coords="2318,293,2311,287,2290,282,2259,277,2219,275,2175,274,2130,275,2091,277,2059,282,2039,287,2032,293,2039,298,2059,304,2091,308,2130,311,2175,311,2219,311,2259,308,2290,304,2311,298" href="loomcam_8c.html" shape="poly" title="Guarded retained-vector return processing and transactional T1 policy."/>
+<area alt="" coords="2177,228,2177,275,2173,272,2173,232" shape="poly" title=" "/>
+<area alt="" coords="2849,293,2844,287,2832,282,2812,277,2787,275,2759,274,2731,275,2706,277,2686,282,2673,287,2669,293,2673,298,2686,304,2706,308,2731,311,2759,311,2787,311,2812,308,2832,304,2844,298" href="ai__cam__pipe_8c.html" shape="poly" title="Supervise the selected system or native AI-camera owner and publish captured JPEGs."/>
+<area alt="" coords="2283,204,2459,226,2658,260,2713,276,2708,276,2657,265,2459,231,2283,210" shape="poly" title=" "/>
+<area alt="" coords="1711,293,1706,283,1692,275,1670,268,1642,264,1611,262,1580,264,1552,268,1529,275,1515,283,1510,293,1515,302,1529,310,1552,317,1580,321,1611,323,1642,321,1670,317,1692,310,1706,302" href="camera__backend__registry_8h.html" shape="poly" title="Backend definitions and physical-camera routing."/>
+<area alt="" coords="2085,211,1774,265,1696,279,1696,273,1773,260,2080,212" shape="poly" title=" "/>
+<area alt="" coords="907,293,900,287,881,282,852,277,815,275,773,274,732,275,695,277,666,282,647,287,640,293,647,298,666,304,695,308,732,311,773,311,815,311,852,308,881,304,900,298" href="chdk__camera__backend_8h.html" shape="poly" title="CHDK-owned download and photo publication."/>
+<area alt="" coords="2062,207,1958,217,1665,229,1437,231,1210,238,1076,248,919,265,841,278,840,273,918,260,1076,243,1210,233,1437,226,1665,224,1957,212,2068,206" shape="poly" title=" "/>
+<area alt="" coords="1486,293,1479,287,1461,282,1431,277,1394,275,1353,274,1312,275,1275,277,1246,282,1227,287,1221,293,1227,298,1246,304,1275,308,1312,311,1353,311,1394,311,1431,308,1461,304,1479,298" href="dipla__camera__backend_8h.html" shape="poly" title="Optional non-image camera adapter for the native Diplacam worker."/>
+<area alt="" coords="2062,207,1761,236,1499,265,1423,279,1423,273,1498,260,1760,231,2067,206" shape="poly" title=" "/>
+<area alt="" coords="2645,293,2639,287,2621,282,2593,277,2558,275,2519,274,2480,275,2445,277,2417,282,2399,287,2393,293,2399,298,2417,304,2445,308,2480,311,2519,311,2558,311,2593,308,2621,304,2639,298" href="ear__camera__backend_8h.html" shape="poly" title="EAR-specific startup configuration behind USHER's generic backend interface."/>
+<area alt="" coords="2246,214,2463,275,2458,275,2245,219" shape="poly" title=" "/>
+<area alt="" coords="3243,293,3240,287,3228,282,3211,277,3189,275,3164,274,3139,275,3117,277,3100,282,3088,287,3085,293,3088,298,3100,304,3117,308,3139,311,3164,311,3189,311,3211,308,3228,304,3240,298" href="local__pipe_8h.html" shape="poly" title="Local mock-camera backend API for simulator and desk testing."/>
+<area alt="" coords="2298,194,2454,198,2649,208,2862,228,2969,242,3074,260,3126,276,3120,276,3073,265,2968,247,2861,233,2648,213,2454,203,2298,199" shape="poly" title=" "/>
+<area alt="" coords="616,293,612,287,600,282,582,277,560,275,535,274,510,275,487,277,469,282,458,287,454,293,458,298,469,304,487,308,510,311,535,311,560,311,582,308,600,304,612,298" href="loom__cam_8h.html" shape="poly" title="Bounded asynchronous saved-photo adapter for LOOM_cam."/>
+<area alt="" coords="2063,207,1957,217,1666,225,1291,229,917,239,757,250,629,265,577,279,575,273,628,260,756,244,917,234,1291,224,1666,220,1957,212,2068,206" shape="poly" title=" "/>
+<area alt="" coords="1197,293,1191,287,1172,282,1142,277,1105,275,1064,274,1023,275,986,277,956,282,937,287,931,293,937,298,956,304,986,308,1023,311,1064,311,1105,311,1142,308,1172,304,1191,298" href="loom__camera__backend_8h.html" shape="poly" title="LOOM-owned capture specialization and stream lifecycle."/>
+<area alt="" coords="2062,206,1958,217,1747,229,1583,234,1419,243,1210,265,1133,279,1132,273,1209,260,1419,237,1583,229,1747,223,1957,212,2067,206" shape="poly" title=" "/>
+<area alt="" coords="3461,293,3456,287,3443,282,3421,277,3394,275,3364,274,3334,275,3307,277,3285,282,3272,287,3267,293,3272,298,3285,304,3307,308,3334,311,3364,311,3394,311,3421,308,3443,304,3456,298" href="lwir__cam__pipe_8c.html" shape="poly" title="USHER-side supervisor for the persistent LWIR capture-server process."/>
+<area alt="" coords="2298,194,2485,197,2724,206,2990,226,3125,241,3257,260,3317,276,3312,276,3256,265,3124,246,2990,231,2724,212,2485,202,2299,199" shape="poly" title=" "/>
+<area alt="" coords="2007,293,2002,287,1986,282,1961,277,1930,275,1896,274,1862,275,1831,277,1806,282,1790,287,1785,293,1790,298,1806,304,1831,308,1862,311,1896,311,1930,311,1961,308,1986,304,2002,298" href="spotter__cam__pipe_8c.html" shape="poly" title="Native USHER adapter for on-sensor IMX500 object detection."/>
+<area alt="" coords="2116,217,1945,278,1943,272,2110,218" shape="poly" title=" "/>
+<area alt="" coords="3061,293,3056,283,3043,275,3022,268,2996,264,2967,262,2938,264,2911,268,2890,275,2877,283,2872,293,2877,302,2890,310,2911,317,2938,321,2967,323,2996,321,3022,317,3043,310,3056,302" href="spotter__camera__backend_8h.html" shape="poly" title="Spottercam backend descriptor and optional native UART target projection."/>
+<area alt="" coords="2294,199,2556,219,2709,236,2862,260,2902,271,2897,271,2861,265,2709,241,2555,224,2294,205" shape="poly" title=" "/>
+<area alt="" coords="1698,315,1730,320,1933,341,2107,346,2260,342,2403,333,2546,325,2699,325,2872,337,2968,350,3074,368,3123,385,3118,385,3073,373,2968,355,2871,343,2699,330,2546,331,2403,338,2260,347,2107,352,1933,346,1729,325,1698,320" shape="poly" title=" "/>
+<area alt="" coords="2083,401,2078,392,2064,383,2042,377,2014,372,1983,371,1952,372,1924,377,1901,383,1887,392,1882,401,1887,410,1901,419,1924,425,1952,430,1983,431,2014,430,2042,425,2064,419,2078,410" href="camera__backend__registry_8c.html" shape="poly" title="Shared backend catalogue; the service schedules capabilities, not devices."/>
+<area alt="" coords="1698,316,1914,380,1909,379,1697,321" shape="poly" title=" "/>
+<area alt="" coords="775,325,775,383,771,380,771,329" shape="poly" title=" "/>
+<area alt="" coords="854,310,919,320,1016,328,1129,334,1390,337,1998,331,2310,329,2605,332,2865,343,2977,354,3074,368,3124,385,3118,385,3073,373,2976,359,2865,349,2605,337,2310,334,1998,337,1390,343,1129,339,1016,334,918,325,854,315" shape="poly" title=" "/>
+<area alt="" coords="856,310,919,320,1116,340,1386,360,1887,394,1881,394,1386,366,1115,345,918,325,856,315" shape="poly" title=" "/>
+<area alt="" coords="1435,310,1499,320,1652,331,1843,335,2287,335,2516,335,2731,339,2921,349,3003,357,3074,368,3123,385,3118,385,3073,373,3002,363,2921,354,2731,344,2516,340,2287,340,1843,341,1652,336,1498,325,1434,315" shape="poly" title=" "/>
+<area alt="" coords="1441,309,1499,320,1896,387,1891,387,1498,325,1441,315" shape="poly" title=" "/>
+<area alt="" coords="1486,401,1479,395,1461,390,1431,386,1394,383,1353,382,1312,383,1275,386,1246,390,1227,395,1221,401,1227,407,1246,412,1275,416,1312,419,1353,420,1394,419,1431,416,1461,412,1479,407" href="dipla__camera__backend_8c.html" shape="poly" title="Nonblocking USHER-to-Diplacam process admission and reply supervision."/>
+<area alt="" coords="1355,325,1355,383,1351,380,1351,329" shape="poly" title=" "/>
+<area alt="" coords="2600,310,2656,320,2774,334,2866,340,2958,347,3074,368,3122,386,3117,385,3073,373,2957,352,2865,345,2773,340,2656,325,2599,315" shape="poly" title=" "/>
+<area alt="" coords="2433,311,2374,325,2066,386,2065,381,2373,320,2428,312" shape="poly" title=" "/>
+<area alt="" coords="3942,401,3936,395,3918,390,3890,386,3855,383,3816,382,3777,383,3742,386,3714,390,3696,395,3690,401,3696,407,3714,412,3742,416,3777,419,3816,420,3855,419,3890,416,3918,412,3936,407" href="ear__camera__backend_8c.html" shape="poly" title="EAR-owned survey admission, finalization and generic point completions."/>
+<area alt="" coords="2598,310,2656,320,2867,341,3157,361,3701,394,3696,394,3156,367,2867,346,2656,325,2598,315" shape="poly" title=" "/>
+<area alt="" coords="3163,325,3158,384,3154,380,3159,329" shape="poly" title=" "/>
+<area alt="" coords="3111,314,3074,325,2936,349,2795,367,2517,390,2270,401,2084,403,2084,398,2269,395,2516,385,2794,361,2935,343,3073,320,3106,314" shape="poly" title=" "/>
+<area alt="" coords="4743,401,4740,395,4728,390,4711,386,4689,383,4664,382,4639,383,4617,386,4600,390,4588,395,4585,401,4588,407,4600,412,4617,416,4639,419,4664,420,4689,419,4711,416,4728,412,4740,407" href="local__pipe_8c.html" shape="poly" title="Hardware-free camera backend for fixture copies and cached map views."/>
+<area alt="" coords="3219,311,3255,320,3338,330,3479,340,3866,362,4589,397,4584,397,3866,367,3479,346,3338,335,3254,325,3219,317" shape="poly" title=" "/>
+<area alt="" coords="616,401,612,395,600,390,582,386,560,383,535,382,510,383,487,386,469,390,458,395,454,401,458,407,469,412,487,416,510,419,535,420,560,419,582,416,600,412,612,407" href="loom__cam_8c.html" shape="poly" title="Fresh-first saved-image requests to the standalone loomcam process."/>
+<area alt="" coords="537,325,537,383,533,380,533,329" shape="poly" title=" "/>
+<area alt="" coords="1197,401,1191,395,1172,390,1142,386,1105,383,1064,382,1023,383,986,386,956,390,937,395,931,401,937,407,956,412,986,416,1023,419,1064,420,1105,419,1142,416,1172,412,1191,407" href="loom__camera__backend_8c.html" shape="poly" title="Own LOOM's AIcam specialization outside the universal USHER service."/>
+<area alt="" coords="594,311,629,320,710,337,773,347,919,368,994,385,988,385,918,373,772,352,709,342,627,325,593,316" shape="poly" title=" "/>
+<area alt="" coords="1145,310,1210,320,1391,332,1617,336,2143,333,2413,332,2668,335,2893,346,2990,356,3074,368,3123,385,3118,384,3073,373,2989,361,2893,352,2668,341,2413,337,2143,338,1617,342,1391,338,1209,325,1145,315" shape="poly" title=" "/>
+<area alt="" coords="1149,310,1210,320,1397,345,1583,365,1888,393,1883,393,1583,370,1396,350,1209,325,1148,315" shape="poly" title=" "/>
+<area alt="" coords="1066,325,1066,383,1062,380,1062,329" shape="poly" title=" "/>
+<area alt="" coords="3026,324,3129,384,3124,383,3025,329" shape="poly" title=" "/>
+<area alt="" coords="2888,317,2862,325,2645,357,2429,379,2235,392,2083,399,2083,394,2234,387,2429,374,2645,352,2861,320,2883,318" shape="poly" title=" "/>
+<area alt="" coords="3061,401,3056,392,3043,383,3022,377,2996,372,2967,371,2938,372,2911,377,2890,383,2877,392,2872,401,2877,410,2890,419,2911,425,2938,430,2967,431,2996,430,3022,425,3043,419,3056,410" href="spotter__camera__backend_8c.html" shape="poly" title="Native Spottercam backend and optional C11 UART target-slot projection."/>
+<area alt="" coords="2969,337,2969,372,2965,369,2965,340" shape="poly" title=" "/>
+<area alt="" coords="3770,228,3766,279,3757,304,3742,325,3703,349,3646,367,3577,381,3500,390,3343,401,3215,403,3215,398,3343,395,3499,385,3576,375,3645,362,3700,344,3738,321,3753,301,3761,278,3766,232" shape="poly" title=" "/>
+<area alt="" coords="3776,227,3787,262,3814,383,3810,380,3781,263,3773,231" shape="poly" title=" "/>
+<area alt="" coords="3728,293,3723,287,3709,282,3688,277,3662,275,3632,274,3602,275,3576,277,3555,282,3541,287,3536,293,3541,298,3555,304,3576,308,3602,311,3632,311,3662,311,3688,308,3709,304,3723,298" href="ear__cam__pipe_8c.html" shape="poly" title="USHER-side audio supervision, pose association and immutable EAR snapshots."/>
+<area alt="" coords="3731,222,3658,276,3656,271,3726,224" shape="poly" title=" "/>
+<area alt="" coords="4268,218,4227,241,4190,265,4173,281,4163,296,4151,312,4132,325,4088,334,3999,344,3733,365,3214,399,3213,394,3733,360,3998,338,4087,329,4130,320,4148,308,4159,293,4169,277,4186,260,4225,236,4262,219" shape="poly" title=" "/>
+<area alt="" coords="4402,206,4452,212,4576,215,4784,219,4892,223,4987,231,5060,243,5085,251,5101,261,5111,276,5115,293,5111,309,5100,325,5056,334,4953,344,4628,364,3936,397,3936,392,4628,359,4953,338,5056,329,5097,321,5107,307,5110,293,5107,279,5097,264,5083,256,5059,248,4987,236,4891,229,4784,224,4576,220,4452,217,4402,211" shape="poly" title=" "/>
+<area alt="" coords="4850,293,4844,283,4827,275,4801,268,4768,264,4732,262,4696,264,4663,268,4637,275,4620,283,4614,293,4620,302,4637,310,4663,317,4696,321,4732,323,4768,321,4801,317,4827,310,4844,302" href="loom__capture_8cpp.html" shape="poly" title="LOOM executable entry point and neural-feature capture policy."/>
+<area alt="" coords="4390,211,4649,272,4643,271,4390,216" shape="poly" title=" "/>
+<area alt="" coords="5086,293,5081,283,5066,275,5043,268,5013,264,4980,262,4947,264,4918,268,4894,275,4879,283,4874,293,4879,302,4894,310,4918,317,4947,321,4980,323,5013,321,5043,317,5066,310,5081,302" href="lwir__analysis_8c.html" shape="poly" title="Serial saved-image analysis adapter, not part of the camera driver."/>
+<area alt="" coords="4404,206,4452,212,4658,232,4747,242,4862,260,4906,272,4901,271,4861,265,4747,247,4657,237,4452,217,4404,211" shape="poly" title=" "/>
+<area alt="" coords="4401,293,4396,287,4381,282,4359,277,4331,275,4300,274,4269,275,4241,277,4219,282,4204,287,4199,293,4204,298,4219,304,4241,308,4269,311,4300,311,4331,311,4359,308,4381,304,4396,298" href="camera__lens_8cpp.html" shape="poly" title="Bounded native lens and exposure correction for USHER JPEGs."/>
+<area alt="" coords="4314,228,4305,276,4302,272,4310,231" shape="poly" title=" "/>
+<area alt="" coords="4591,293,4587,287,4575,282,4557,277,4534,275,4508,274,4482,275,4459,277,4441,282,4429,287,4425,293,4429,298,4441,304,4459,308,4482,311,4508,311,4534,311,4557,308,4575,304,4587,298" href="image__exif_8c.html" shape="poly" title="JPEG EXIF updates for USHER flight and thermal-capture provenance."/>
+<area alt="" coords="4366,217,4477,275,4472,274,4364,223" shape="poly" title=" "/>
+<area alt="" coords="3456,224,3472,248,3483,274,3485,300,3476,324,3458,339,3432,352,3362,373,3284,388,3212,397,3212,392,3283,382,3361,368,3430,347,3455,335,3471,321,3480,299,3477,275,3467,250,3454,229" shape="poly" title=" "/>
+<area alt="" coords="3317,199,3077,208,2786,220,2526,238,2434,251,2381,265,2365,278,2357,293,2348,310,2331,325,2270,355,2205,376,2141,389,2082,397,2081,392,2140,384,2204,370,2268,350,2328,321,2343,306,2352,290,2361,274,2379,260,2433,245,2526,233,2785,214,3077,203,3322,199" shape="poly" title=" "/>
+<area alt="" coords="3412,226,3378,276,3375,271,3407,228" shape="poly" title=" "/>
+<area alt="" coords="3941,223,3867,278,3821,304,3773,325,3698,349,3619,367,3463,391,3323,401,3215,403,3215,398,3323,396,3463,385,3618,362,3696,344,3771,320,3819,299,3864,273,3936,224" shape="poly" title=" "/>
+<area alt="" coords="4074,293,4070,287,4058,282,4039,277,4016,275,3989,274,3963,275,3939,277,3921,282,3908,287,3904,293,3908,298,3921,304,3939,308,3963,311,3989,311,4016,311,4039,308,4058,304,4070,298" href="lwir__spotter_8c.html" shape="poly" title="Associate detections with the native thermal samples of a saved LWIR frame."/>
+<area alt="" coords="3979,228,3988,275,3984,272,3975,232" shape="poly" title=" "/>
+<area alt="" coords="4848,196,4842,190,4828,185,4804,180,4775,178,4743,177,4710,178,4681,180,4658,185,4643,190,4638,196,4643,201,4658,207,4681,211,4710,214,4743,214,4775,214,4804,211,4828,207,4842,201" href="clock__alignment_8c.html" shape="poly" title="Implementation of USHER's token-bound, interval-based clock alignment."/>
+<area alt="" coords="4609,132,4708,178,4703,177,4608,137" shape="poly" title=" "/>
+<area alt="" coords="4614,196,4610,190,4600,185,4583,180,4562,178,4539,177,4515,178,4494,180,4478,185,4467,190,4463,196,4467,201,4478,207,4494,211,4515,214,4539,214,4562,214,4583,211,4600,207,4610,201" href="pose__log_8h.html" shape="poly" title="Non-blocking pose-evidence CSV logging API."/>
+<area alt="" coords="4552,142,4544,178,4541,174,4548,146" shape="poly" title=" "/>
+<area alt="" coords="4609,209,4626,212,4713,219,4810,221,4998,220,5072,226,5099,233,5120,243,5131,257,5133,275,5123,298,5100,325,5075,335,5025,344,4865,356,4646,365,4397,369,3677,373,3214,399,3213,393,3677,368,4397,364,4646,359,4864,351,5025,338,5074,330,5097,321,5118,295,5128,274,5127,259,5116,247,5097,238,5071,231,4998,225,4810,226,4713,225,4625,217,4608,214" shape="poly" title=" "/>
+<area alt="" coords="4609,209,4626,212,4712,222,4785,228,4910,231,5035,237,5108,245,5194,260,5248,277,5243,276,5193,265,5107,251,5035,242,4910,236,4785,233,4711,227,4625,217,4608,214" shape="poly" title=" "/>
+<area alt="" coords="5441,312,5374,325,5116,350,4898,364,4706,369,4527,369,4155,364,3936,366,3677,373,3214,399,3213,393,3677,368,3936,360,4155,359,4527,364,4706,364,4898,359,5116,345,5373,320,5436,313" shape="poly" title=" "/>
+<area alt="" coords="5437,312,5374,325,5195,350,5018,370,4738,396,4738,391,5018,365,5195,345,5373,320,5431,312" shape="poly" title=" "/>
+<area alt="" coords="5655,401,5648,395,5629,390,5599,386,5562,383,5520,382,5478,383,5441,386,5411,390,5392,395,5385,401,5392,407,5411,412,5441,416,5478,419,5520,420,5562,419,5599,416,5629,412,5648,407" href="image__mock__transform_8c.html" shape="poly" title="Deterministic attitude-based JPEG transform used by local USHER simulation."/>
+<area alt="" coords="5522,325,5522,383,5518,380,5518,329" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="usher__protocol_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-nested-classes"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:dc_5Fshot_5Funion" id="r_dc_5Fshot_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="uniondc__shot__union.html">dc_shot_union</a></td></tr>
+<tr class="memitem:usher_5Fstatus_5Funion" id="r_usher_5Fstatus_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__status__union.html">usher_status_union</a></td></tr>
+<tr class="memitem:usher_5Fstatus_5Funion_3A_3Ausher_5Fstatus_5Fstruct" id="r_usher_5Fstatus_5Funion_3A_3Ausher_5Fstatus_5Fstruct"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structusher__status__union_1_1usher__status__struct.html">usher_status_union::usher_status_struct</a></td></tr>
+<tr class="memitem:dc_5Fshot_5Fmask_5Funion" id="r_dc_5Fshot_5Fmask_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="uniondc__shot__mask__union.html">dc_shot_mask_union</a></td></tr>
+<tr class="memitem:usher_5Fshot_5Fresult_5Funion" id="r_usher_5Fshot_5Fresult_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__shot__result__union.html">usher_shot_result_union</a></td></tr>
+<tr class="memitem:usher_5Fcamera_5Fsession_5Funion" id="r_usher_5Fcamera_5Fsession_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__camera__session__union.html">usher_camera_session_union</a></td></tr>
+<tr class="memitem:usher_5Fcam_5Fpoint_5Fresult_5Funion" id="r_usher_5Fcam_5Fpoint_5Fresult_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__cam__point__result__union.html">usher_cam_point_result_union</a></td></tr>
+<tr class="memitem:usher_5Fcam_5Fpoint_5Fupdate_5Funion" id="r_usher_5Fcam_5Fpoint_5Fupdate_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__cam__point__update__union.html">usher_cam_point_update_union</a></td></tr>
+<tr class="memitem:usher_5Fpose_5Fsample_5Funion" id="r_usher_5Fpose_5Fsample_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__pose__sample__union.html">usher_pose_sample_union</a></td></tr>
+<tr class="memitem:usher_5Fclock_5Frequest_5Funion" id="r_usher_5Fclock_5Frequest_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__clock__request__union.html">usher_clock_request_union</a></td></tr>
+<tr class="memitem:usher_5Fclock_5Freply_5Funion" id="r_usher_5Fclock_5Freply_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__clock__reply__union.html">usher_clock_reply_union</a></td></tr>
+<tr class="memitem:usher_5Fpose_5Fclocked_5Funion" id="r_usher_5Fpose_5Fclocked_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__pose__clocked__union.html">usher_pose_clocked_union</a></td></tr>
+<tr class="memitem:usher_5Fcapture_5Farbiter_5Fhello_5Funion" id="r_usher_5Fcapture_5Farbiter_5Fhello_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__capture__arbiter__hello__union.html">usher_capture_arbiter_hello_union</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">USHER-to-FC capability advertisement.  <a href="unionusher__capture__arbiter__hello__union.html#details">More...</a><br/></td></tr>
+<tr class="memitem:usher_5Fcapture_5Farbiter_5Fstate_5Funion" id="r_usher_5Fcapture_5Farbiter_5Fstate_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__capture__arbiter__state__union.html">usher_capture_arbiter_state_union</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">FC-to-USHER survey authorization, independent of individual shot requests.  <a href="unionusher__capture__arbiter__state__union.html#details">More...</a><br/></td></tr>
+<tr class="memitem:usher_5Fcapture_5Farbiter_5Fshoot_5Funion" id="r_usher_5Fcapture_5Farbiter_5Fshoot_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__capture__arbiter__shoot__union.html">usher_capture_arbiter_shoot_union</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">FC-to-USHER spatial observation request, not a physical shutter acknowledgement.  <a href="unionusher__capture__arbiter__shoot__union.html#details">More...</a><br/></td></tr>
+<tr class="memitem:usher_5Fcapture_5Farbiter_5Fresult_5Funion" id="r_usher_5Fcapture_5Farbiter_5Fresult_5Funion"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionusher__capture__arbiter__result__union.html">usher_capture_arbiter_result_union</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Best-effort USHER-to-FC terminal result for one camera and shot number.  <a href="unionusher__capture__arbiter__result__union.html#details">More...</a><br/></td></tr>
+<tr class="memitem:usher_5Ftransport" id="r_usher_5Ftransport"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structusher__transport.html">usher_transport</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Persistent state for incremental USHER UART frame parsing.  <a href="structusher__transport.html#details">More...</a><br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-define-members"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a3baf3b550db1e457bc4a743447a80693" id="r_a3baf3b550db1e457bc4a743447a80693"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3baf3b550db1e457bc4a743447a80693">USHER_SHOT_DATA_SIZE</a>   (4*10)</td></tr>
+<tr class="memitem:aa130760e5265ad3c4a1aee80f0629745" id="r_aa130760e5265ad3c4a1aee80f0629745"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa130760e5265ad3c4a1aee80f0629745">USHER_BUFFER_EMPTY</a>   2</td></tr>
+<tr class="memitem:a571c524564c892f07982e4d3db675c05" id="r_a571c524564c892f07982e4d3db675c05"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a571c524564c892f07982e4d3db675c05">USHER_PAYLOAD</a>   3</td></tr>
+<tr class="memitem:a58f8bf5797e656fa3469957a02abb730" id="r_a58f8bf5797e656fa3469957a02abb730"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a58f8bf5797e656fa3469957a02abb730">USHER_PAYLOAD_MSG_SIZE</a>   70</td></tr>
+<tr class="memitem:a06ec3925a1d66d8d22c802c9933a2fc8" id="r_a06ec3925a1d66d8d22c802c9933a2fc8"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a06ec3925a1d66d8d22c802c9933a2fc8">USHER_STATUS</a>   4</td></tr>
+<tr class="memitem:a26029b6ba1609f934df2805a0ac3ab9e" id="r_a26029b6ba1609f934df2805a0ac3ab9e"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a26029b6ba1609f934df2805a0ac3ab9e">USHER_STATUS_MSG_SIZE</a>   (4*2)</td></tr>
+<tr class="memitem:a0d23ad236aeba36dc214941fa139f5cd" id="r_a0d23ad236aeba36dc214941fa139f5cd"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d23ad236aeba36dc214941fa139f5cd">USHER_CAMERA_ALL</a>   0</td></tr>
+<tr class="memitem:afcaf9fcd35d51f50244ee778dd43444a" id="r_afcaf9fcd35d51f50244ee778dd43444a"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#afcaf9fcd35d51f50244ee778dd43444a">USHER_CAMERA_CHDK</a>   1</td></tr>
+<tr class="memitem:a26ee2250bb9c4f6ca3aa0209af39f198" id="r_a26ee2250bb9c4f6ca3aa0209af39f198"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a26ee2250bb9c4f6ca3aa0209af39f198">USHER_CAMERA_AICAM</a>   2</td></tr>
+<tr class="memitem:aa88380691247abff773ae427ece4ae0b" id="r_aa88380691247abff773ae427ece4ae0b"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa88380691247abff773ae427ece4ae0b">USHER_CAMERA_LWIRCAM</a>   3</td></tr>
+<tr class="memitem:a1de0c4d72f29c5fdacab8a94f9c7389d" id="r_a1de0c4d72f29c5fdacab8a94f9c7389d"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1de0c4d72f29c5fdacab8a94f9c7389d">USHER_CAMERA_EARCAM</a>   4</td></tr>
+<tr class="memitem:a80e102b4112da4d4a102dcf1137a80f8" id="r_a80e102b4112da4d4a102dcf1137a80f8"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a80e102b4112da4d4a102dcf1137a80f8">USHER_CAMERA_DIPLACAM</a>   5</td></tr>
+<tr class="memitem:a5b5dfaa8d5be468ff724fead0944c3cd" id="r_a5b5dfaa8d5be468ff724fead0944c3cd"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b5dfaa8d5be468ff724fead0944c3cd">USHER_CAMERA_MASK_NONE</a>   0x00U</td></tr>
+<tr class="memitem:aff0e796f05632adaa6af4f53026315b8" id="r_aff0e796f05632adaa6af4f53026315b8"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aff0e796f05632adaa6af4f53026315b8">USHER_CAMERA_MASK_CHDK</a>   0x01U</td></tr>
+<tr class="memitem:a91d4e2d757e672504eea5774937ad67f" id="r_a91d4e2d757e672504eea5774937ad67f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a91d4e2d757e672504eea5774937ad67f">USHER_CAMERA_MASK_AICAM</a>   0x02U</td></tr>
+<tr class="memitem:a8fb22dbe9c56a7288f831bb16a790e4c" id="r_a8fb22dbe9c56a7288f831bb16a790e4c"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fb22dbe9c56a7288f831bb16a790e4c">USHER_CAMERA_MASK_LWIR</a>   0x04U</td></tr>
+<tr class="memitem:a5bd8dd1c8d894ddfce583f8587480149" id="r_a5bd8dd1c8d894ddfce583f8587480149"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5bd8dd1c8d894ddfce583f8587480149">USHER_CAMERA_MASK_EAR</a>   0x08U</td></tr>
+<tr class="memitem:af163c0de95c0ceebe0cceb604590fb2a" id="r_af163c0de95c0ceebe0cceb604590fb2a"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#af163c0de95c0ceebe0cceb604590fb2a">USHER_CAMERA_MASK_DIPLA</a>   0x10U</td></tr>
+<tr class="memitem:a026801233cec52db58a2d9cd4db731f6" id="r_a026801233cec52db58a2d9cd4db731f6"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a026801233cec52db58a2d9cd4db731f6">USHER_CAMERA_MASK_SUPPORTED</a>   0x1FU</td></tr>
+<tr class="memitem:acee2681dee46cf6514d9e0436cd38b0f" id="r_acee2681dee46cf6514d9e0436cd38b0f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#acee2681dee46cf6514d9e0436cd38b0f">USHER_CAMERA_MASK_ALL</a>   0xFFU</td></tr>
+<tr class="memitem:a27bf67bef85ab51cc10c06fbb2fef914" id="r_a27bf67bef85ab51cc10c06fbb2fef914"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a27bf67bef85ab51cc10c06fbb2fef914">USHER_SHOOT_MASK</a>   12</td></tr>
+<tr class="memitem:a08585a6b886e3ce95a181715360fd36b" id="r_a08585a6b886e3ce95a181715360fd36b"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a08585a6b886e3ce95a181715360fd36b">USHER_SHOOT_MASK_MSG_SIZE</a>   (<a class="el" href="#a3baf3b550db1e457bc4a743447a80693">USHER_SHOT_DATA_SIZE</a> + 8)</td></tr>
+<tr class="memitem:afd44914f6db3e31375037e2eec5b5a0a" id="r_afd44914f6db3e31375037e2eec5b5a0a"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#afd44914f6db3e31375037e2eec5b5a0a">USHER_SHOT_RESULT</a>   17</td></tr>
+<tr class="memitem:a636888ed998a43b8a98b2e495197bf21" id="r_a636888ed998a43b8a98b2e495197bf21"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a636888ed998a43b8a98b2e495197bf21">USHER_SHOT_RESULT_MSG_SIZE</a>   16</td></tr>
+<tr class="memitem:aadd427d19e4b239eb3b864ce779cee53" id="r_aadd427d19e4b239eb3b864ce779cee53"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aadd427d19e4b239eb3b864ce779cee53">USHER_SHOT_SAVED</a>   1U</td></tr>
+<tr class="memitem:a1e62b4e2186e9a40b2f201b25d4f6cb1" id="r_a1e62b4e2186e9a40b2f201b25d4f6cb1"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e62b4e2186e9a40b2f201b25d4f6cb1">USHER_SHOT_FAILED</a>   2U</td></tr>
+<tr class="memitem:af4adfbc4c9107395adf3bfc8effd1abb" id="r_af4adfbc4c9107395adf3bfc8effd1abb"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#af4adfbc4c9107395adf3bfc8effd1abb">USHER_SHOT_SUPERSEDED</a>   3U</td></tr>
+<tr class="memitem:a9f0659c189d907e2ea7e7ea61880483f" id="r_a9f0659c189d907e2ea7e7ea61880483f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f0659c189d907e2ea7e7ea61880483f">USHER_SHOT_RECORDED</a>   4U</td></tr>
+<tr class="memitem:aaf159bd68ecfc90449bb6c30fb85417e" id="r_aaf159bd68ecfc90449bb6c30fb85417e"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf159bd68ecfc90449bb6c30fb85417e">USHER_SHOT_UNSUPPORTED</a>   5U</td></tr>
+<tr class="memitem:a25f82592d607849f0b2da521ee9fb1e2" id="r_a25f82592d607849f0b2da521ee9fb1e2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a25f82592d607849f0b2da521ee9fb1e2">USHER_STOP_TARGETED</a>   6</td></tr>
+<tr class="memitem:a9085c6566f35b229432022b0db80727f" id="r_a9085c6566f35b229432022b0db80727f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9085c6566f35b229432022b0db80727f">USHER_STOP_TARGETED_MSG_SIZE</a>   8</td></tr>
+<tr class="memitem:a5385f99c996b19528f0d344a3b620d84" id="r_a5385f99c996b19528f0d344a3b620d84"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5385f99c996b19528f0d344a3b620d84">USHER_START_TARGETED</a>   7</td></tr>
+<tr class="memitem:ae40e9780567653f5d93ff0df6e71ef94" id="r_ae40e9780567653f5d93ff0df6e71ef94"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae40e9780567653f5d93ff0df6e71ef94">USHER_START_TARGETED_MSG_SIZE</a>   8</td></tr>
+<tr class="memitem:a76ec934146232992310f225631a07a53" id="r_a76ec934146232992310f225631a07a53"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a76ec934146232992310f225631a07a53">USHER_CAM_POINT_RESULT</a>   18</td></tr>
+<tr class="memitem:a09ae18f8f715732631b7d63d1baf3c06" id="r_a09ae18f8f715732631b7d63d1baf3c06"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a09ae18f8f715732631b7d63d1baf3c06">USHER_CAM_POINT_RESULT_MSG_SIZE</a>   (4*9)</td></tr>
+<tr class="memitem:af58139d7a28152303b771e62c21312a7" id="r_af58139d7a28152303b771e62c21312a7"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#af58139d7a28152303b771e62c21312a7">USHER_CAM_POINT_INVALID</a>   0</td></tr>
+<tr class="memitem:add668fe0dbb6b1f780840336df3e5055" id="r_add668fe0dbb6b1f780840336df3e5055"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#add668fe0dbb6b1f780840336df3e5055">USHER_CAM_POINT_VALID</a>   1</td></tr>
+<tr class="memitem:ad59cff421d6a02521f4f81eaa7c2e39b" id="r_ad59cff421d6a02521f4f81eaa7c2e39b"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad59cff421d6a02521f4f81eaa7c2e39b">USHER_CAM_POINT_UPDATE</a>   19</td></tr>
+<tr class="memitem:a8a7a7f12a51601051d23eb8dc0cfe504" id="r_a8a7a7f12a51601051d23eb8dc0cfe504"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a7a7f12a51601051d23eb8dc0cfe504">USHER_CAM_POINT_UPDATE_MSG_SIZE</a>   (4*9)</td></tr>
+<tr class="memitem:ad7cf86eaea3cb38c0313da6a0043eb97" id="r_ad7cf86eaea3cb38c0313da6a0043eb97"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7cf86eaea3cb38c0313da6a0043eb97">USHER_CONTROL_NEGOTIATE</a>   20</td></tr>
+<tr class="memitem:a4a6721538394f0df4689c198f79c08e8" id="r_a4a6721538394f0df4689c198f79c08e8"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a6721538394f0df4689c198f79c08e8">USHER_CONTROL_HELLO</a>   21</td></tr>
+<tr class="memitem:a21cd9c463bd2d0cfcc300ceac27af6c4" id="r_a21cd9c463bd2d0cfcc300ceac27af6c4"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a21cd9c463bd2d0cfcc300ceac27af6c4">USHER_CONTROL_COMMAND</a>   22</td></tr>
+<tr class="memitem:a44f414cd2ac440fe94c367bbf55374c7" id="r_a44f414cd2ac440fe94c367bbf55374c7"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a44f414cd2ac440fe94c367bbf55374c7">USHER_CONTROL_RESULT</a>   23</td></tr>
+<tr class="memitem:a265ceccd0bbc580a7a69d323488d37e0" id="r_a265ceccd0bbc580a7a69d323488d37e0"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a265ceccd0bbc580a7a69d323488d37e0">USHER_CONTROL_VERSION</a>   1U</td></tr>
+<tr class="memitem:ac1670ff2c7015a7540323f0aa8eade73" id="r_ac1670ff2c7015a7540323f0aa8eade73"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac1670ff2c7015a7540323f0aa8eade73">USHER_CONTROL_NEGOTIATE_SIZE</a>   9U</td></tr>
+<tr class="memitem:a067227890f44201fc44911478657a58e" id="r_a067227890f44201fc44911478657a58e"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a067227890f44201fc44911478657a58e">USHER_CONTROL_HELLO_SIZE</a>   41U</td></tr>
+<tr class="memitem:ac7de3f3e3045e072e04d1d751c9140f1" id="r_ac7de3f3e3045e072e04d1d751c9140f1"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7de3f3e3045e072e04d1d751c9140f1">USHER_CONTROL_COMMAND_SIZE</a>   12U</td></tr>
+<tr class="memitem:ad9fb00a15f19033b114d620421f27f64" id="r_ad9fb00a15f19033b114d620421f27f64"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9fb00a15f19033b114d620421f27f64">USHER_CONTROL_RESULT_SIZE</a>   14U</td></tr>
+<tr class="memitem:a195ccef16f5126c644f9e3613247cc39" id="r_a195ccef16f5126c644f9e3613247cc39"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a195ccef16f5126c644f9e3613247cc39">CAM_CMD_ZOOM_ABSOLUTE</a>   1U</td></tr>
+<tr class="memitem:a31a87aa2dbd5da6154d8e7d3defb9ccb" id="r_a31a87aa2dbd5da6154d8e7d3defb9ccb"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a31a87aa2dbd5da6154d8e7d3defb9ccb">CAM_CMD_LENS_RETRACT</a>   2U</td></tr>
+<tr class="memitem:a9a991a15f1587abe5cb1b6b732c9a2c9" id="r_a9a991a15f1587abe5cb1b6b732c9a2c9"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a991a15f1587abe5cb1b6b732c9a2c9">CAM_CMD_KEEP_AWAKE</a>   3U</td></tr>
+<tr class="memitem:ab6a9926a8abe0b9e1c29078eafdc9dae" id="r_ab6a9926a8abe0b9e1c29078eafdc9dae"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6a9926a8abe0b9e1c29078eafdc9dae">CAM_CONTROL_CAP</a>(command)</td></tr>
+<tr class="memitem:a30d8c7b8858e112c8d72e94f95c91e64" id="r_a30d8c7b8858e112c8d72e94f95c91e64"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a30d8c7b8858e112c8d72e94f95c91e64">CAM_CONTROL_NOT_SENT</a>   0U</td></tr>
+<tr class="memitem:aa9753f9d81318233bb5a3af370c2dd4b" id="r_aa9753f9d81318233bb5a3af370c2dd4b"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9753f9d81318233bb5a3af370c2dd4b">CAM_CONTROL_PENDING</a>   1U</td></tr>
+<tr class="memitem:ad6ee708709ef174cef8a0c756b7918f6" id="r_ad6ee708709ef174cef8a0c756b7918f6"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6ee708709ef174cef8a0c756b7918f6">CAM_CONTROL_APPLIED</a>   2U</td></tr>
+<tr class="memitem:a363cfd55188c85f4f69b4c2ac91e3df1" id="r_a363cfd55188c85f4f69b4c2ac91e3df1"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a363cfd55188c85f4f69b4c2ac91e3df1">CAM_CONTROL_BUSY</a>   3U</td></tr>
+<tr class="memitem:a1ba13fc3e590c34c9892182c0677ddfe" id="r_a1ba13fc3e590c34c9892182c0677ddfe"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1ba13fc3e590c34c9892182c0677ddfe">CAM_CONTROL_UNSUPPORTED</a>   4U</td></tr>
+<tr class="memitem:a9ea29c08b2b05fd0ddf0a5e13b7ad4d5" id="r_a9ea29c08b2b05fd0ddf0a5e13b7ad4d5"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ea29c08b2b05fd0ddf0a5e13b7ad4d5">CAM_CONTROL_INVALID_VALUE</a>   5U</td></tr>
+<tr class="memitem:a2cdd680d02b56469b62c91dc47ef4762" id="r_a2cdd680d02b56469b62c91dc47ef4762"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cdd680d02b56469b62c91dc47ef4762">CAM_CONTROL_FAILED</a>   6U</td></tr>
+<tr class="memitem:a8378d93f05e8b57621a49e171697e4cd" id="r_a8378d93f05e8b57621a49e171697e4cd"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8378d93f05e8b57621a49e171697e4cd">CAM_CONTROL_UNKNOWN</a>   7U</td></tr>
+<tr class="memitem:a05b9083e0284e62a2db9e1a576f0fe02" id="r_a05b9083e0284e62a2db9e1a576f0fe02"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a05b9083e0284e62a2db9e1a576f0fe02">CAM_CONTROL_PARTIAL</a>   8U</td></tr>
+<tr class="memitem:a5e2ad79b8febe2450bdd0685fd5a7032" id="r_a5e2ad79b8febe2450bdd0685fd5a7032"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e2ad79b8febe2450bdd0685fd5a7032">CAM_CONTROL_EVIDENCE_NONE</a>   0U</td></tr>
+<tr class="memitem:a16965ea951b3c23d010e3cccd6a17ad2" id="r_a16965ea951b3c23d010e3cccd6a17ad2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a16965ea951b3c23d010e3cccd6a17ad2">CAM_CONTROL_EVIDENCE_VALUE</a>   1U</td></tr>
+<tr class="memitem:a2ca500dfa276a25967b0e5ce997bfa5e" id="r_a2ca500dfa276a25967b0e5ce997bfa5e"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ca500dfa276a25967b0e5ce997bfa5e">CAM_CONTROL_EVIDENCE_PLAYBACK</a>   2U</td></tr>
+<tr class="memitem:a555eeb429db14f250098ed18ce4678d9" id="r_a555eeb429db14f250098ed18ce4678d9"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a555eeb429db14f250098ed18ce4678d9">USHER_POSE_SAMPLE</a>   8</td></tr>
+<tr class="memitem:afd685c34c4603b373c93583c3c35f3d2" id="r_afd685c34c4603b373c93583c3c35f3d2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#afd685c34c4603b373c93583c3c35f3d2">USHER_POSE_SAMPLE_MSG_SIZE</a>   100</td></tr>
+<tr class="memitem:a55bde151ecc377666c49d4677a70e84a" id="r_a55bde151ecc377666c49d4677a70e84a"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a55bde151ecc377666c49d4677a70e84a">USHER_POSE_SAMPLE_GPS_PRESENT</a>   1U</td></tr>
+<tr class="memitem:a4e37be3c94840f15d74385bfb342e531" id="r_a4e37be3c94840f15d74385bfb342e531"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e37be3c94840f15d74385bfb342e531">USHER_POSE_SAMPLE_GPS_HELD</a>   2U</td></tr>
+<tr class="memitem:aa161fbfacd6d833db6bcdb60ad5faa12" id="r_aa161fbfacd6d833db6bcdb60ad5faa12"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa161fbfacd6d833db6bcdb60ad5faa12">USHER_POSE_SAMPLE_GPS_AGE_VALID</a>   4U</td></tr>
+<tr class="memitem:aa7d0ecbac4072a39455756a6a62ec138" id="r_aa7d0ecbac4072a39455756a6a62ec138"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7d0ecbac4072a39455756a6a62ec138">USHER_POSE_SAMPLE_GPS_AGE_SHIFT</a>   8U</td></tr>
+<tr class="memitem:a92e68e384820fcf6192063d4a406859e" id="r_a92e68e384820fcf6192063d4a406859e"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a92e68e384820fcf6192063d4a406859e">USHER_POSE_SAMPLE_GPS_AGE_MASK</a>   UINT32_C(0xffffff00)</td></tr>
+<tr class="memitem:a2d9fad12595345f5b26fec5920da8251" id="r_a2d9fad12595345f5b26fec5920da8251"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d9fad12595345f5b26fec5920da8251">USHER_CLOCK_REQUEST</a>   9</td></tr>
+<tr class="memitem:a8a2e991d44c71fbbbdabcb676712bcb0" id="r_a8a2e991d44c71fbbbdabcb676712bcb0"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a2e991d44c71fbbbdabcb676712bcb0">USHER_CLOCK_REQUEST_MSG_SIZE</a>   8</td></tr>
+<tr class="memitem:a2109a8d27bf82870f7feeb7719497b64" id="r_a2109a8d27bf82870f7feeb7719497b64"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2109a8d27bf82870f7feeb7719497b64">USHER_CLOCK_REPLY</a>   10</td></tr>
+<tr class="memitem:a41c0dd404065987e2868ef1973e154f2" id="r_a41c0dd404065987e2868ef1973e154f2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a41c0dd404065987e2868ef1973e154f2">USHER_CLOCK_REPLY_MSG_SIZE</a>   16</td></tr>
+<tr class="memitem:aeaa1319fd7ea6896dbdad265a30328a7" id="r_aeaa1319fd7ea6896dbdad265a30328a7"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaa1319fd7ea6896dbdad265a30328a7">USHER_POSE_CLOCKED</a>   11</td></tr>
+<tr class="memitem:a42adf0402314e70f6c08ff073eff4866" id="r_a42adf0402314e70f6c08ff073eff4866"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a42adf0402314e70f6c08ff073eff4866">USHER_POSE_CLOCKED_MSG_SIZE</a>   (<a class="el" href="#afd685c34c4603b373c93583c3c35f3d2">USHER_POSE_SAMPLE_MSG_SIZE</a> + 8)</td></tr>
+<tr class="memitem:aacd744a917e61146ec8b7175b4761683" id="r_aacd744a917e61146ec8b7175b4761683"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aacd744a917e61146ec8b7175b4761683">STX</a>   0x99</td></tr>
+<tr class="memitem:acd48dc618a14e3ac0e80b2403fe741bc" id="r_acd48dc618a14e3ac0e80b2403fe741bc"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#acd48dc618a14e3ac0e80b2403fe741bc">UsherSizeOf</a>(_payload)</td></tr>
+<tr class="memitem:ada2b526b745344dc62d219fd38fbd710" id="r_ada2b526b745344dc62d219fd38fbd710"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ada2b526b745344dc62d219fd38fbd710">UsherPutUint8</a>(_byte)</td></tr>
+<tr class="memitem:a71c810572e186f806c798b444bb0e44f" id="r_a71c810572e186f806c798b444bb0e44f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a71c810572e186f806c798b444bb0e44f">UsherHeader</a>(msg_id,  payload_len)</td></tr>
+<tr class="memitem:af5f850b7c55eb88aa6cf4884fe263fff" id="r_af5f850b7c55eb88aa6cf4884fe263fff"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#af5f850b7c55eb88aa6cf4884fe263fff">UsherTrailer</a>()</td></tr>
+<tr class="memitem:ab26bc4c223521a2d6c19fba8d0e94a6a" id="r_ab26bc4c223521a2d6c19fba8d0e94a6a"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab26bc4c223521a2d6c19fba8d0e94a6a">UsherPut1ByteByAddr</a>(_byte)</td></tr>
+<tr class="groupHeader" id="define-members-0"><td colspan="2"><div class="groupHeader">Negotiated survey messages</div></td></tr>
+<tr><td class="ititle" colspan="2"><div class="groupText"><p>Separate MORA survey extension; ordinary masked capture does not use it.</p>
+<p>A nonzero session token identifies the running USHER peer, not a persistent mission or an authenticated sender. The FC does not currently negotiate or emit this extension; ordinary masked shots use USHER_SHOT_RESULT for per-camera feedback. Preserve explicit sizes when extending structures. </p>
+</div></td></tr>
+<tr class="memitem:af4bd0ac34bda8613acefc34c8d3b95af" id="r_af4bd0ac34bda8613acefc34c8d3b95af"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#af4bd0ac34bda8613acefc34c8d3b95af">USHER_CAPTURE_ARBITER_VERSION</a>   1U</td></tr>
+<tr class="memitem:a763092a08bd2751805b3d3a0227344e9" id="r_a763092a08bd2751805b3d3a0227344e9"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a763092a08bd2751805b3d3a0227344e9">USHER_CAPTURE_ARBITER_HELLO</a>   13</td></tr>
+<tr class="memitem:a05afb8d17b7ca13c478d156928d3ce65" id="r_a05afb8d17b7ca13c478d156928d3ce65"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a05afb8d17b7ca13c478d156928d3ce65">USHER_CAPTURE_ARBITER_STATE</a>   14</td></tr>
+<tr class="memitem:a37066ccd663a60ab84bccc88a0013a17" id="r_a37066ccd663a60ab84bccc88a0013a17"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a37066ccd663a60ab84bccc88a0013a17">USHER_CAPTURE_ARBITER_SHOOT</a>   15</td></tr>
+<tr class="memitem:ac6ed15502a3408a30dddc477f159dc44" id="r_ac6ed15502a3408a30dddc477f159dc44"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6ed15502a3408a30dddc477f159dc44">USHER_CAPTURE_ARBITER_RESULT</a>   16</td></tr>
+<tr class="memitem:aa86db3d99439bee743d95e6536bdeba7" id="r_aa86db3d99439bee743d95e6536bdeba7"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa86db3d99439bee743d95e6536bdeba7">USHER_CAPTURE_ARBITER_HELLO_MSG_SIZE</a>   8</td></tr>
+<tr class="memitem:a1c1c878653c05e246aff558439849f0d" id="r_a1c1c878653c05e246aff558439849f0d"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c1c878653c05e246aff558439849f0d">USHER_CAPTURE_ARBITER_STATE_MSG_SIZE</a>   12</td></tr>
+<tr class="memitem:a4e6cae4e119d98bacae03ef0c9f75d7b" id="r_a4e6cae4e119d98bacae03ef0c9f75d7b"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e6cae4e119d98bacae03ef0c9f75d7b">USHER_CAPTURE_ARBITER_SHOOT_MSG_SIZE</a>   (<a class="el" href="#a3baf3b550db1e457bc4a743447a80693">USHER_SHOT_DATA_SIZE</a> + 12)</td></tr>
+<tr class="memitem:afae9ec3dea3d6a954436a831e9d29c40" id="r_afae9ec3dea3d6a954436a831e9d29c40"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#afae9ec3dea3d6a954436a831e9d29c40">USHER_CAPTURE_ARBITER_RESULT_MSG_SIZE</a>   24</td></tr>
+<tr class="memitem:a9a620e7114d87280d571ec4cbbb4ddf2" id="r_a9a620e7114d87280d571ec4cbbb4ddf2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a620e7114d87280d571ec4cbbb4ddf2">USHER_CAPTURE_ARBITER_SAVED</a>   1U</td></tr>
+<tr class="memitem:ad6a1a16d204304b603c30c19feca18dc" id="r_ad6a1a16d204304b603c30c19feca18dc"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6a1a16d204304b603c30c19feca18dc">USHER_CAPTURE_ARBITER_FAILED</a>   2U</td></tr>
+<tr class="memitem:a39ebc0cf2269d29acc1ec571c1c0c514" id="r_a39ebc0cf2269d29acc1ec571c1c0c514"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a39ebc0cf2269d29acc1ec571c1c0c514">USHER_CAPTURE_ARBITER_EXPIRED</a>   3U</td></tr>
+<tr class="memitem:a3d3670aed514ae279c32d1e14835be2e" id="r_a3d3670aed514ae279c32d1e14835be2e"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d3670aed514ae279c32d1e14835be2e">USHER_CAPTURE_ARBITER_COVERED</a>   4U</td></tr>
+<tr class="memitem:a862792d5d5d1675a895a824b81ecbf00" id="r_a862792d5d5d1675a895a824b81ecbf00"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a862792d5d5d1675a895a824b81ecbf00">USHER_CAPTURE_ARBITER_SUPERSEDED</a>   5U</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a96f12bda7386ddb30a8cb1d56734e744" id="r_a96f12bda7386ddb30a8cb1d56734e744"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a96f12bda7386ddb30a8cb1d56734e744">usher_pose_flags_valid</a> (uint32_t flags)</td></tr>
+<tr class="memdesc:a96f12bda7386ddb30a8cb1d56734e744"><td class="mdescLeft"> </td><td class="mdescRight">Check the structural consistency of pose-sample GPS flags.  <br/></td></tr>
+<tr class="memitem:af82292f192f4b91f2699b046c8b51924" id="r_af82292f192f4b91f2699b046c8b51924"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#af82292f192f4b91f2699b046c8b51924">parse_usher</a> (struct <a class="el" href="structusher__transport.html">usher_transport</a> *t, uint8_t c)</td></tr>
+<tr class="memdesc:af82292f192f4b91f2699b046c8b51924"><td class="mdescLeft"> </td><td class="mdescRight">Consume one byte from a USHER UART stream.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-var-members"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:abef26d84ae5bb7b74aed26545feef049" id="r_abef26d84ae5bb7b74aed26545feef049"><td align="right" class="memItemLeft" valign="top">uint8_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#abef26d84ae5bb7b74aed26545feef049">usher_ck_a</a></td></tr>
+<tr class="memitem:ab873f3a2b107321c5d65108b7ebaa827" id="r_ab873f3a2b107321c5d65108b7ebaa827"><td align="right" class="memItemLeft" valign="top">uint8_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab873f3a2b107321c5d65108b7ebaa827">usher_ck_b</a></td></tr>
+<tr class="memitem:a193f80dc2abd4fc9985bfe7dcb99ae79" id="r_a193f80dc2abd4fc9985bfe7dcb99ae79"><td align="right" class="memItemLeft" valign="top">struct <a class="el" href="structusher__transport.html">usher_transport</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#a193f80dc2abd4fc9985bfe7dcb99ae79">usher_protocol</a></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>Shared FC/MORA byte-stream UART framing, messages and payload layouts. </p>
+<p>This is the shared FC/MORA contract: commands and replies cross only the UART datastream. Both peers compile these message IDs, payload sizes and layouts; camera implementation, storage and capture scheduling are not part of the wire API. Multi-byte fields use the shared native layout; both peers must be upgraded together. The unions are serialization storage, not portable network byte order. There is no protocol-wide version field; the separate MORA survey extension declares its own version but is not negotiated by the FC.</p>
+<p>|STX|length|message ID|payload (length-5 bytes)|Checksum A|Checksum B|</p>
+<p>Length counts the entire frame. The checksum covers length, message ID and payload: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="#abef26d84ae5bb7b74aed26545feef049">usher_ck_a</a> = <a class="code hl_variable" href="#ab873f3a2b107321c5d65108b7ebaa827">usher_ck_b</a> = length</div>
+<div class="line"><span class="keywordflow">for each</span> <span class="keywordtype">byte</span> b in message ID followed by payload</div>
+<div class="line"> <a class="code hl_variable" href="#abef26d84ae5bb7b74aed26545feef049">usher_ck_a</a> += b;</div>
+<div class="line"> <a class="code hl_variable" href="#ab873f3a2b107321c5d65108b7ebaa827">usher_ck_b</a> += <a class="code hl_variable" href="#abef26d84ae5bb7b74aed26545feef049">usher_ck_a</a>;</div>
+<div class="ttc" id="ausher__protocol_8h_html_ab873f3a2b107321c5d65108b7ebaa827"><div class="ttname"><a href="#ab873f3a2b107321c5d65108b7ebaa827">usher_ck_b</a></div><div class="ttdeci">uint8_t usher_ck_b</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00376">usher_protocol.h:376</a></div></div>
+<div class="ttc" id="ausher__protocol_8h_html_abef26d84ae5bb7b74aed26545feef049"><div class="ttname"><a href="#abef26d84ae5bb7b74aed26545feef049">usher_ck_a</a></div><div class="ttdeci">uint8_t usher_ck_a</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8c_source.html#l00031">usher_protocol.c:31</a></div></div>
+</div><!-- fragment -->
+<p class="definition">Definition in file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div><a id="doc-define-members" name="doc-define-members"></a><h2 class="groupheader" id="header-doc-define-members">Macro Definition Documentation</h2>
+<a id="a9a991a15f1587abe5cb1b6b732c9a2c9" name="a9a991a15f1587abe5cb1b6b732c9a2c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a991a15f1587abe5cb1b6b732c9a2c9">◆ </a></span>CAM_CMD_KEEP_AWAKE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CMD_KEEP_AWAKE   3U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00217">217</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a31a87aa2dbd5da6154d8e7d3defb9ccb" name="a31a87aa2dbd5da6154d8e7d3defb9ccb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31a87aa2dbd5da6154d8e7d3defb9ccb">◆ </a></span>CAM_CMD_LENS_RETRACT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CMD_LENS_RETRACT   2U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00216">216</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a195ccef16f5126c644f9e3613247cc39" name="a195ccef16f5126c644f9e3613247cc39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a195ccef16f5126c644f9e3613247cc39">◆ </a></span>CAM_CMD_ZOOM_ABSOLUTE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CMD_ZOOM_ABSOLUTE   1U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00215">215</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ad6ee708709ef174cef8a0c756b7918f6" name="ad6ee708709ef174cef8a0c756b7918f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6ee708709ef174cef8a0c756b7918f6">◆ </a></span>CAM_CONTROL_APPLIED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_APPLIED   2U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00222">222</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a363cfd55188c85f4f69b4c2ac91e3df1" name="a363cfd55188c85f4f69b4c2ac91e3df1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a363cfd55188c85f4f69b4c2ac91e3df1">◆ </a></span>CAM_CONTROL_BUSY</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_BUSY   3U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00223">223</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ab6a9926a8abe0b9e1c29078eafdc9dae" name="ab6a9926a8abe0b9e1c29078eafdc9dae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6a9926a8abe0b9e1c29078eafdc9dae">◆ </a></span>CAM_CONTROL_CAP</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_CAP</td>
+<td>(</td>
+<td class="paramtype"></td> <td class="paramname"><span class="paramname"><em>command</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">(UINT32_C(1) &lt;&lt; (command))</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00218">218</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a5e2ad79b8febe2450bdd0685fd5a7032" name="a5e2ad79b8febe2450bdd0685fd5a7032"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e2ad79b8febe2450bdd0685fd5a7032">◆ </a></span>CAM_CONTROL_EVIDENCE_NONE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_EVIDENCE_NONE   0U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00230">230</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a2ca500dfa276a25967b0e5ce997bfa5e" name="a2ca500dfa276a25967b0e5ce997bfa5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ca500dfa276a25967b0e5ce997bfa5e">◆ </a></span>CAM_CONTROL_EVIDENCE_PLAYBACK</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_EVIDENCE_PLAYBACK   2U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00232">232</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a16965ea951b3c23d010e3cccd6a17ad2" name="a16965ea951b3c23d010e3cccd6a17ad2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16965ea951b3c23d010e3cccd6a17ad2">◆ </a></span>CAM_CONTROL_EVIDENCE_VALUE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_EVIDENCE_VALUE   1U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00231">231</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a2cdd680d02b56469b62c91dc47ef4762" name="a2cdd680d02b56469b62c91dc47ef4762"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cdd680d02b56469b62c91dc47ef4762">◆ </a></span>CAM_CONTROL_FAILED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_FAILED   6U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00226">226</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a9ea29c08b2b05fd0ddf0a5e13b7ad4d5" name="a9ea29c08b2b05fd0ddf0a5e13b7ad4d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ea29c08b2b05fd0ddf0a5e13b7ad4d5">◆ </a></span>CAM_CONTROL_INVALID_VALUE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_INVALID_VALUE   5U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00225">225</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a30d8c7b8858e112c8d72e94f95c91e64" name="a30d8c7b8858e112c8d72e94f95c91e64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30d8c7b8858e112c8d72e94f95c91e64">◆ </a></span>CAM_CONTROL_NOT_SENT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_NOT_SENT   0U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00220">220</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a05b9083e0284e62a2db9e1a576f0fe02" name="a05b9083e0284e62a2db9e1a576f0fe02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05b9083e0284e62a2db9e1a576f0fe02">◆ </a></span>CAM_CONTROL_PARTIAL</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_PARTIAL   8U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00228">228</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aa9753f9d81318233bb5a3af370c2dd4b" name="aa9753f9d81318233bb5a3af370c2dd4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9753f9d81318233bb5a3af370c2dd4b">◆ </a></span>CAM_CONTROL_PENDING</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_PENDING   1U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00221">221</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a8378d93f05e8b57621a49e171697e4cd" name="a8378d93f05e8b57621a49e171697e4cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8378d93f05e8b57621a49e171697e4cd">◆ </a></span>CAM_CONTROL_UNKNOWN</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_UNKNOWN   7U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00227">227</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a1ba13fc3e590c34c9892182c0677ddfe" name="a1ba13fc3e590c34c9892182c0677ddfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ba13fc3e590c34c9892182c0677ddfe">◆ </a></span>CAM_CONTROL_UNSUPPORTED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAM_CONTROL_UNSUPPORTED   4U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00224">224</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aacd744a917e61146ec8b7175b4761683" name="aacd744a917e61146ec8b7175b4761683"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacd744a917e61146ec8b7175b4761683">◆ </a></span>STX</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define STX   0x99</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00378">378</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aa130760e5265ad3c4a1aee80f0629745" name="aa130760e5265ad3c4a1aee80f0629745"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa130760e5265ad3c4a1aee80f0629745">◆ </a></span>USHER_BUFFER_EMPTY</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_BUFFER_EMPTY   2</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00068">68</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="af58139d7a28152303b771e62c21312a7" name="af58139d7a28152303b771e62c21312a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af58139d7a28152303b771e62c21312a7">◆ </a></span>USHER_CAM_POINT_INVALID</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAM_POINT_INVALID   0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00171">171</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a76ec934146232992310f225631a07a53" name="a76ec934146232992310f225631a07a53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76ec934146232992310f225631a07a53">◆ </a></span>USHER_CAM_POINT_RESULT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAM_POINT_RESULT   18</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>A geographic point one camera deduced from its own session, reported on stop. VALID means the camera produced an estimate, not that the estimate is accurate or that the object was identified. quality is the camera's own confidence and is not comparable between different camera types. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00168">168</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a09ae18f8f715732631b7d63d1baf3c06" name="a09ae18f8f715732631b7d63d1baf3c06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09ae18f8f715732631b7d63d1baf3c06">◆ </a></span>USHER_CAM_POINT_RESULT_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAM_POINT_RESULT_MSG_SIZE   (4*9)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00169">169</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ad59cff421d6a02521f4f81eaa7c2e39b" name="ad59cff421d6a02521f4f81eaa7c2e39b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad59cff421d6a02521f4f81eaa7c2e39b">◆ </a></span>USHER_CAM_POINT_UPDATE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAM_POINT_UPDATE   19</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Repeated point from a saved photo (LOOM_cam uses AIcam ID 2). The positive FC photo number correlates the reply; this is NOT a stopped-session answer. Units/status/quality are the same as CAM_POINT_RESULT. A no-match update is INVALID and must never move a waypoint. Old firmware safely ignores ID 19. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00193">193</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a8a7a7f12a51601051d23eb8dc0cfe504" name="a8a7a7f12a51601051d23eb8dc0cfe504"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a7a7f12a51601051d23eb8dc0cfe504">◆ </a></span>USHER_CAM_POINT_UPDATE_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAM_POINT_UPDATE_MSG_SIZE   (4*9)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00194">194</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="add668fe0dbb6b1f780840336df3e5055" name="add668fe0dbb6b1f780840336df3e5055"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add668fe0dbb6b1f780840336df3e5055">◆ </a></span>USHER_CAM_POINT_VALID</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAM_POINT_VALID   1</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00172">172</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a26ee2250bb9c4f6ca3aa0209af39f198" name="a26ee2250bb9c4f6ca3aa0209af39f198"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26ee2250bb9c4f6ca3aa0209af39f198">◆ </a></span>USHER_CAMERA_AICAM</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_AICAM   2</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00097">97</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a0d23ad236aeba36dc214941fa139f5cd" name="a0d23ad236aeba36dc214941fa139f5cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d23ad236aeba36dc214941fa139f5cd">◆ </a></span>USHER_CAMERA_ALL</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_ALL   0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00095">95</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="afcaf9fcd35d51f50244ee778dd43444a" name="afcaf9fcd35d51f50244ee778dd43444a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcaf9fcd35d51f50244ee778dd43444a">◆ </a></span>USHER_CAMERA_CHDK</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_CHDK   1</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00096">96</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a80e102b4112da4d4a102dcf1137a80f8" name="a80e102b4112da4d4a102dcf1137a80f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80e102b4112da4d4a102dcf1137a80f8">◆ </a></span>USHER_CAMERA_DIPLACAM</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_DIPLACAM   5</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00100">100</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a1de0c4d72f29c5fdacab8a94f9c7389d" name="a1de0c4d72f29c5fdacab8a94f9c7389d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1de0c4d72f29c5fdacab8a94f9c7389d">◆ </a></span>USHER_CAMERA_EARCAM</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_EARCAM   4</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00099">99</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aa88380691247abff773ae427ece4ae0b" name="aa88380691247abff773ae427ece4ae0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa88380691247abff773ae427ece4ae0b">◆ </a></span>USHER_CAMERA_LWIRCAM</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_LWIRCAM   3</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00098">98</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a91d4e2d757e672504eea5774937ad67f" name="a91d4e2d757e672504eea5774937ad67f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91d4e2d757e672504eea5774937ad67f">◆ </a></span>USHER_CAMERA_MASK_AICAM</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_MASK_AICAM   0x02U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00104">104</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="acee2681dee46cf6514d9e0436cd38b0f" name="acee2681dee46cf6514d9e0436cd38b0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acee2681dee46cf6514d9e0436cd38b0f">◆ </a></span>USHER_CAMERA_MASK_ALL</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_MASK_ALL   0xFFU</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00109">109</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aff0e796f05632adaa6af4f53026315b8" name="aff0e796f05632adaa6af4f53026315b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff0e796f05632adaa6af4f53026315b8">◆ </a></span>USHER_CAMERA_MASK_CHDK</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_MASK_CHDK   0x01U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00103">103</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="af163c0de95c0ceebe0cceb604590fb2a" name="af163c0de95c0ceebe0cceb604590fb2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af163c0de95c0ceebe0cceb604590fb2a">◆ </a></span>USHER_CAMERA_MASK_DIPLA</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_MASK_DIPLA   0x10U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00107">107</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a5bd8dd1c8d894ddfce583f8587480149" name="a5bd8dd1c8d894ddfce583f8587480149"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5bd8dd1c8d894ddfce583f8587480149">◆ </a></span>USHER_CAMERA_MASK_EAR</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_MASK_EAR   0x08U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00106">106</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a8fb22dbe9c56a7288f831bb16a790e4c" name="a8fb22dbe9c56a7288f831bb16a790e4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fb22dbe9c56a7288f831bb16a790e4c">◆ </a></span>USHER_CAMERA_MASK_LWIR</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_MASK_LWIR   0x04U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00105">105</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a5b5dfaa8d5be468ff724fead0944c3cd" name="a5b5dfaa8d5be468ff724fead0944c3cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b5dfaa8d5be468ff724fead0944c3cd">◆ </a></span>USHER_CAMERA_MASK_NONE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_MASK_NONE   0x00U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00102">102</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a026801233cec52db58a2d9cd4db731f6" name="a026801233cec52db58a2d9cd4db731f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a026801233cec52db58a2d9cd4db731f6">◆ </a></span>USHER_CAMERA_MASK_SUPPORTED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAMERA_MASK_SUPPORTED   0x1FU</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00108">108</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a3d3670aed514ae279c32d1e14835be2e" name="a3d3670aed514ae279c32d1e14835be2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d3670aed514ae279c32d1e14835be2e">◆ </a></span>USHER_CAPTURE_ARBITER_COVERED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_COVERED   4U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Suppressed using trusted same-camera coverage, not a new photo. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00334">334</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a39ebc0cf2269d29acc1ec571c1c0c514" name="a39ebc0cf2269d29acc1ec571c1c0c514"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39ebc0cf2269d29acc1ec571c1c0c514">◆ </a></span>USHER_CAPTURE_ARBITER_EXPIRED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_EXPIRED   3U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Intent or scope no longer current; no exposure is implied. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00333">333</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ad6a1a16d204304b603c30c19feca18dc" name="ad6a1a16d204304b603c30c19feca18dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6a1a16d204304b603c30c19feca18dc">◆ </a></span>USHER_CAPTURE_ARBITER_FAILED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_FAILED   2U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Capture/publication failed; other camera bits can still succeed. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00332">332</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a763092a08bd2751805b3d3a0227344e9" name="a763092a08bd2751805b3d3a0227344e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a763092a08bd2751805b3d3a0227344e9">◆ </a></span>USHER_CAPTURE_ARBITER_HELLO</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_HELLO   13</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00323">323</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aa86db3d99439bee743d95e6536bdeba7" name="aa86db3d99439bee743d95e6536bdeba7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa86db3d99439bee743d95e6536bdeba7">◆ </a></span>USHER_CAPTURE_ARBITER_HELLO_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_HELLO_MSG_SIZE   8</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00327">327</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ac6ed15502a3408a30dddc477f159dc44" name="ac6ed15502a3408a30dddc477f159dc44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6ed15502a3408a30dddc477f159dc44">◆ </a></span>USHER_CAPTURE_ARBITER_RESULT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_RESULT   16</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00326">326</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="afae9ec3dea3d6a954436a831e9d29c40" name="afae9ec3dea3d6a954436a831e9d29c40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afae9ec3dea3d6a954436a831e9d29c40">◆ </a></span>USHER_CAPTURE_ARBITER_RESULT_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_RESULT_MSG_SIZE   24</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00330">330</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a9a620e7114d87280d571ec4cbbb4ddf2" name="a9a620e7114d87280d571ec4cbbb4ddf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a620e7114d87280d571ec4cbbb4ddf2">◆ </a></span>USHER_CAPTURE_ARBITER_SAVED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_SAVED   1U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Original and required metadata published; not proof of an object detection. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00331">331</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a37066ccd663a60ab84bccc88a0013a17" name="a37066ccd663a60ab84bccc88a0013a17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37066ccd663a60ab84bccc88a0013a17">◆ </a></span>USHER_CAPTURE_ARBITER_SHOOT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_SHOOT   15</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00325">325</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a4e6cae4e119d98bacae03ef0c9f75d7b" name="a4e6cae4e119d98bacae03ef0c9f75d7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e6cae4e119d98bacae03ef0c9f75d7b">◆ </a></span>USHER_CAPTURE_ARBITER_SHOOT_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_SHOOT_MSG_SIZE   (<a class="el" href="#a3baf3b550db1e457bc4a743447a80693">USHER_SHOT_DATA_SIZE</a> + 12)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00329">329</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a05afb8d17b7ca13c478d156928d3ce65" name="a05afb8d17b7ca13c478d156928d3ce65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05afb8d17b7ca13c478d156928d3ce65">◆ </a></span>USHER_CAPTURE_ARBITER_STATE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_STATE   14</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00324">324</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a1c1c878653c05e246aff558439849f0d" name="a1c1c878653c05e246aff558439849f0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c1c878653c05e246aff558439849f0d">◆ </a></span>USHER_CAPTURE_ARBITER_STATE_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_STATE_MSG_SIZE   12</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00328">328</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a862792d5d5d1675a895a824b81ecbf00" name="a862792d5d5d1675a895a824b81ecbf00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a862792d5d5d1675a895a824b81ecbf00">◆ </a></span>USHER_CAPTURE_ARBITER_SUPERSEDED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_SUPERSEDED   5U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Waiting capacity reused within this camera; not successful recovery. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00335">335</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="af4bd0ac34bda8613acefc34c8d3b95af" name="af4bd0ac34bda8613acefc34c8d3b95af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4bd0ac34bda8613acefc34c8d3b95af">◆ </a></span>USHER_CAPTURE_ARBITER_VERSION</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CAPTURE_ARBITER_VERSION   1U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00322">322</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a2109a8d27bf82870f7feeb7719497b64" name="a2109a8d27bf82870f7feeb7719497b64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2109a8d27bf82870f7feeb7719497b64">◆ </a></span>USHER_CLOCK_REPLY</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CLOCK_REPLY   10</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00285">285</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a41c0dd404065987e2868ef1973e154f2" name="a41c0dd404065987e2868ef1973e154f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41c0dd404065987e2868ef1973e154f2">◆ </a></span>USHER_CLOCK_REPLY_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CLOCK_REPLY_MSG_SIZE   16</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00286">286</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a2d9fad12595345f5b26fec5920da8251" name="a2d9fad12595345f5b26fec5920da8251"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d9fad12595345f5b26fec5920da8251">◆ </a></span>USHER_CLOCK_REQUEST</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CLOCK_REQUEST   9</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00283">283</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a8a2e991d44c71fbbbdabcb676712bcb0" name="a8a2e991d44c71fbbbdabcb676712bcb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a2e991d44c71fbbbdabcb676712bcb0">◆ </a></span>USHER_CLOCK_REQUEST_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CLOCK_REQUEST_MSG_SIZE   8</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00284">284</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a21cd9c463bd2d0cfcc300ceac27af6c4" name="a21cd9c463bd2d0cfcc300ceac27af6c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21cd9c463bd2d0cfcc300ceac27af6c4">◆ </a></span>USHER_CONTROL_COMMAND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CONTROL_COMMAND   22</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00207">207</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ac7de3f3e3045e072e04d1d751c9140f1" name="ac7de3f3e3045e072e04d1d751c9140f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7de3f3e3045e072e04d1d751c9140f1">◆ </a></span>USHER_CONTROL_COMMAND_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CONTROL_COMMAND_SIZE   12U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00212">212</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a4a6721538394f0df4689c198f79c08e8" name="a4a6721538394f0df4689c198f79c08e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a6721538394f0df4689c198f79c08e8">◆ </a></span>USHER_CONTROL_HELLO</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CONTROL_HELLO   21</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00206">206</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a067227890f44201fc44911478657a58e" name="a067227890f44201fc44911478657a58e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a067227890f44201fc44911478657a58e">◆ </a></span>USHER_CONTROL_HELLO_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CONTROL_HELLO_SIZE   41U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00211">211</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ad7cf86eaea3cb38c0313da6a0043eb97" name="ad7cf86eaea3cb38c0313da6a0043eb97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7cf86eaea3cb38c0313da6a0043eb97">◆ </a></span>USHER_CONTROL_NEGOTIATE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CONTROL_NEGOTIATE   20</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00205">205</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ac1670ff2c7015a7540323f0aa8eade73" name="ac1670ff2c7015a7540323f0aa8eade73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1670ff2c7015a7540323f0aa8eade73">◆ </a></span>USHER_CONTROL_NEGOTIATE_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CONTROL_NEGOTIATE_SIZE   9U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00210">210</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a44f414cd2ac440fe94c367bbf55374c7" name="a44f414cd2ac440fe94c367bbf55374c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44f414cd2ac440fe94c367bbf55374c7">◆ </a></span>USHER_CONTROL_RESULT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CONTROL_RESULT   23</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00208">208</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ad9fb00a15f19033b114d620421f27f64" name="ad9fb00a15f19033b114d620421f27f64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9fb00a15f19033b114d620421f27f64">◆ </a></span>USHER_CONTROL_RESULT_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CONTROL_RESULT_SIZE   14U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00213">213</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a265ceccd0bbc580a7a69d323488d37e0" name="a265ceccd0bbc580a7a69d323488d37e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a265ceccd0bbc580a7a69d323488d37e0">◆ </a></span>USHER_CONTROL_VERSION</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_CONTROL_VERSION   1U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00209">209</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a571c524564c892f07982e4d3db675c05" name="a571c524564c892f07982e4d3db675c05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a571c524564c892f07982e4d3db675c05">◆ </a></span>USHER_PAYLOAD</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_PAYLOAD   3</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00072">72</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a58f8bf5797e656fa3469957a02abb730" name="a58f8bf5797e656fa3469957a02abb730"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58f8bf5797e656fa3469957a02abb730">◆ </a></span>USHER_PAYLOAD_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_PAYLOAD_MSG_SIZE   70</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00073">73</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aeaa1319fd7ea6896dbdad265a30328a7" name="aeaa1319fd7ea6896dbdad265a30328a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaa1319fd7ea6896dbdad265a30328a7">◆ </a></span>USHER_POSE_CLOCKED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_POSE_CLOCKED   11</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00287">287</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a42adf0402314e70f6c08ff073eff4866" name="a42adf0402314e70f6c08ff073eff4866"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42adf0402314e70f6c08ff073eff4866">◆ </a></span>USHER_POSE_CLOCKED_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_POSE_CLOCKED_MSG_SIZE   (<a class="el" href="#afd685c34c4603b373c93583c3c35f3d2">USHER_POSE_SAMPLE_MSG_SIZE</a> + 8)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00288">288</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a555eeb429db14f250098ed18ce4678d9" name="a555eeb429db14f250098ed18ce4678d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a555eeb429db14f250098ed18ce4678d9">◆ </a></span>USHER_POSE_SAMPLE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_POSE_SAMPLE   8</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00237">237</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a92e68e384820fcf6192063d4a406859e" name="a92e68e384820fcf6192063d4a406859e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92e68e384820fcf6192063d4a406859e">◆ </a></span>USHER_POSE_SAMPLE_GPS_AGE_MASK</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_POSE_SAMPLE_GPS_AGE_MASK   UINT32_C(0xffffff00)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00243">243</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aa7d0ecbac4072a39455756a6a62ec138" name="aa7d0ecbac4072a39455756a6a62ec138"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7d0ecbac4072a39455756a6a62ec138">◆ </a></span>USHER_POSE_SAMPLE_GPS_AGE_SHIFT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_POSE_SAMPLE_GPS_AGE_SHIFT   8U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00242">242</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aa161fbfacd6d833db6bcdb60ad5faa12" name="aa161fbfacd6d833db6bcdb60ad5faa12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa161fbfacd6d833db6bcdb60ad5faa12">◆ </a></span>USHER_POSE_SAMPLE_GPS_AGE_VALID</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_POSE_SAMPLE_GPS_AGE_VALID   4U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00241">241</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a4e37be3c94840f15d74385bfb342e531" name="a4e37be3c94840f15d74385bfb342e531"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e37be3c94840f15d74385bfb342e531">◆ </a></span>USHER_POSE_SAMPLE_GPS_HELD</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_POSE_SAMPLE_GPS_HELD   2U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00240">240</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a55bde151ecc377666c49d4677a70e84a" name="a55bde151ecc377666c49d4677a70e84a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55bde151ecc377666c49d4677a70e84a">◆ </a></span>USHER_POSE_SAMPLE_GPS_PRESENT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_POSE_SAMPLE_GPS_PRESENT   1U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00239">239</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="afd685c34c4603b373c93583c3c35f3d2" name="afd685c34c4603b373c93583c3c35f3d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd685c34c4603b373c93583c3c35f3d2">◆ </a></span>USHER_POSE_SAMPLE_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_POSE_SAMPLE_MSG_SIZE   100</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00238">238</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a27bf67bef85ab51cc10c06fbb2fef914" name="a27bf67bef85ab51cc10c06fbb2fef914"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27bf67bef85ab51cc10c06fbb2fef914">◆ </a></span>USHER_SHOOT_MASK</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SHOOT_MASK   12</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00111">111</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a08585a6b886e3ce95a181715360fd36b" name="a08585a6b886e3ce95a181715360fd36b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08585a6b886e3ce95a181715360fd36b">◆ </a></span>USHER_SHOOT_MASK_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SHOOT_MASK_MSG_SIZE   (<a class="el" href="#a3baf3b550db1e457bc4a743447a80693">USHER_SHOT_DATA_SIZE</a> + 8)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>One trigger number for a mask of up to eight cameras. request_id correlates per-camera feedback and is not a photo filename, cryptographic token or GCS ID. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00114">114</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a3baf3b550db1e457bc4a743447a80693" name="a3baf3b550db1e457bc4a743447a80693"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3baf3b550db1e457bc4a743447a80693">◆ </a></span>USHER_SHOT_DATA_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SHOT_DATA_SIZE   (4*10)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00049">49</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a1e62b4e2186e9a40b2f201b25d4f6cb1" name="a1e62b4e2186e9a40b2f201b25d4f6cb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e62b4e2186e9a40b2f201b25d4f6cb1">◆ </a></span>USHER_SHOT_FAILED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SHOT_FAILED   2U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00132">132</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a9f0659c189d907e2ea7e7ea61880483f" name="a9f0659c189d907e2ea7e7ea61880483f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f0659c189d907e2ea7e7ea61880483f">◆ </a></span>USHER_SHOT_RECORDED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SHOT_RECORDED   4U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00134">134</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="afd44914f6db3e31375037e2eec5b5a0a" name="afd44914f6db3e31375037e2eec5b5a0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd44914f6db3e31375037e2eec5b5a0a">◆ </a></span>USHER_SHOT_RESULT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SHOT_RESULT   17</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>A terminal observation for one requested camera bit. SAVED means original plus required flight metadata were published, not that SODA found an object. RECORDED is accepted non-image work, not an image saved to disk or a valid point. Missing feedback is UNKNOWN: neither successful capture nor failure is proven. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00129">129</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a636888ed998a43b8a98b2e495197bf21" name="a636888ed998a43b8a98b2e495197bf21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a636888ed998a43b8a98b2e495197bf21">◆ </a></span>USHER_SHOT_RESULT_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SHOT_RESULT_MSG_SIZE   16</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00130">130</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aadd427d19e4b239eb3b864ce779cee53" name="aadd427d19e4b239eb3b864ce779cee53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadd427d19e4b239eb3b864ce779cee53">◆ </a></span>USHER_SHOT_SAVED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SHOT_SAVED   1U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00131">131</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="af4adfbc4c9107395adf3bfc8effd1abb" name="af4adfbc4c9107395adf3bfc8effd1abb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4adfbc4c9107395adf3bfc8effd1abb">◆ </a></span>USHER_SHOT_SUPERSEDED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SHOT_SUPERSEDED   3U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00133">133</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="aaf159bd68ecfc90449bb6c30fb85417e" name="aaf159bd68ecfc90449bb6c30fb85417e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf159bd68ecfc90449bb6c30fb85417e">◆ </a></span>USHER_SHOT_UNSUPPORTED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_SHOT_UNSUPPORTED   5U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00135">135</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a5385f99c996b19528f0d344a3b620d84" name="a5385f99c996b19528f0d344a3b620d84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5385f99c996b19528f0d344a3b620d84">◆ </a></span>USHER_START_TARGETED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_START_TARGETED   7</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00153">153</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ae40e9780567653f5d93ff0df6e71ef94" name="ae40e9780567653f5d93ff0df6e71ef94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae40e9780567653f5d93ff0df6e71ef94">◆ </a></span>USHER_START_TARGETED_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_START_TARGETED_MSG_SIZE   8</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00154">154</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a06ec3925a1d66d8d22c802c9933a2fc8" name="a06ec3925a1d66d8d22c802c9933a2fc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06ec3925a1d66d8d22c802c9933a2fc8">◆ </a></span>USHER_STATUS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_STATUS   4</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00078">78</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a26029b6ba1609f934df2805a0ac3ab9e" name="a26029b6ba1609f934df2805a0ac3ab9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26029b6ba1609f934df2805a0ac3ab9e">◆ </a></span>USHER_STATUS_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_STATUS_MSG_SIZE   (4*2)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00079">79</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a25f82592d607849f0b2da521ee9fb1e2" name="a25f82592d607849f0b2da521ee9fb1e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25f82592d607849f0b2da521ee9fb1e2">◆ </a></span>USHER_STOP_TARGETED</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_STOP_TARGETED   6</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Session control for one camera. A camera that accumulates evidence over time (acoustic listening, recording, mapping) samples between start and stop; a camera without a session ignores both. A nonzero session_id is allocated by the FC and echoed in the point result; start and stop use the same token. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00151">151</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a9085c6566f35b229432022b0db80727f" name="a9085c6566f35b229432022b0db80727f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9085c6566f35b229432022b0db80727f">◆ </a></span>USHER_STOP_TARGETED_MSG_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define USHER_STOP_TARGETED_MSG_SIZE   8</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00152">152</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a71c810572e186f806c798b444bb0e44f" name="a71c810572e186f806c798b444bb0e44f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71c810572e186f806c798b444bb0e44f">◆ </a></span>UsherHeader</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define UsherHeader</td>
+<td>(</td>
+<td class="paramtype"></td> <td class="paramname"><span class="paramname"><em>msg_id</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype"></td> <td class="paramname"><span class="paramname"><em>payload_len</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    {           \</div>
+<div class="line">    CameraLinkTransmit(<a class="code hl_define" href="#aacd744a917e61146ec8b7175b4761683">STX</a>);                        \</div>
+<div class="line">    uint8_t msg_len = <a class="code hl_define" href="#acd48dc618a14e3ac0e80b2403fe741bc">UsherSizeOf</a>( payload_len);       \</div>
+<div class="line">    CameraLinkTransmit(msg_len);                    \</div>
+<div class="line"> <a class="code hl_variable" href="usher__protocol_8c.html#abef26d84ae5bb7b74aed26545feef049">usher_ck_a</a> = msg_len; <a class="code hl_variable" href="usher__protocol_8c.html#ab873f3a2b107321c5d65108b7ebaa827">usher_ck_b</a> = msg_len;         \</div>
+<div class="line">    UsherPutUint8(msg_id);                             \</div>
+<div class="line">  }</div>
+<div class="ttc" id="ausher__protocol_8c_html_ab873f3a2b107321c5d65108b7ebaa827"><div class="ttname"><a href="usher__protocol_8c.html#ab873f3a2b107321c5d65108b7ebaa827">usher_ck_b</a></div><div class="ttdeci">uint8_t usher_ck_b</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8c_source.html#l00031">usher_protocol.c:31</a></div></div>
+<div class="ttc" id="ausher__protocol_8c_html_abef26d84ae5bb7b74aed26545feef049"><div class="ttname"><a href="usher__protocol_8c.html#abef26d84ae5bb7b74aed26545feef049">usher_ck_a</a></div><div class="ttdeci">uint8_t usher_ck_a</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8c_source.html#l00031">usher_protocol.c:31</a></div></div>
+<div class="ttc" id="ausher__protocol_8h_html_aacd744a917e61146ec8b7175b4761683"><div class="ttname"><a href="#aacd744a917e61146ec8b7175b4761683">STX</a></div><div class="ttdeci">#define STX</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00378">usher_protocol.h:378</a></div></div>
+<div class="ttc" id="ausher__protocol_8h_html_acd48dc618a14e3ac0e80b2403fe741bc"><div class="ttname"><a href="#acd48dc618a14e3ac0e80b2403fe741bc">UsherSizeOf</a></div><div class="ttdeci">#define UsherSizeOf(_payload)</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00380">usher_protocol.h:380</a></div></div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00388">388</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ab26bc4c223521a2d6c19fba8d0e94a6a" name="ab26bc4c223521a2d6c19fba8d0e94a6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab26bc4c223521a2d6c19fba8d0e94a6a">◆ </a></span>UsherPut1ByteByAddr</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define UsherPut1ByteByAddr</td>
+<td>(</td>
+<td class="paramtype"></td> <td class="paramname"><span class="paramname"><em>_byte</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    {  \</div>
+<div class="line">    uint8_t _x = *(_byte);              \</div>
+<div class="line">    UsherPutUint8( _x);                  \</div>
+<div class="line">  }</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00401">401</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="ada2b526b745344dc62d219fd38fbd710" name="ada2b526b745344dc62d219fd38fbd710"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada2b526b745344dc62d219fd38fbd710">◆ </a></span>UsherPutUint8</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define UsherPutUint8</td>
+<td>(</td>
+<td class="paramtype"></td> <td class="paramname"><span class="paramname"><em>_byte</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    {     \</div>
+<div class="line"> <a class="code hl_variable" href="usher__protocol_8c.html#abef26d84ae5bb7b74aed26545feef049">usher_ck_a</a> += _byte;              \</div>
+<div class="line"> <a class="code hl_variable" href="usher__protocol_8c.html#ab873f3a2b107321c5d65108b7ebaa827">usher_ck_b</a> += <a class="code hl_variable" href="usher__protocol_8c.html#abef26d84ae5bb7b74aed26545feef049">usher_ck_a</a>;          \</div>
+<div class="line">    CameraLinkTransmit(_byte);     \</div>
+<div class="line">  }</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00382">382</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="acd48dc618a14e3ac0e80b2403fe741bc" name="acd48dc618a14e3ac0e80b2403fe741bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd48dc618a14e3ac0e80b2403fe741bc">◆ </a></span>UsherSizeOf</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define UsherSizeOf</td>
+<td>(</td>
+<td class="paramtype"></td> <td class="paramname"><span class="paramname"><em>_payload</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">(_payload+5)</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00380">380</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="af5f850b7c55eb88aa6cf4884fe263fff" name="af5f850b7c55eb88aa6cf4884fe263fff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5f850b7c55eb88aa6cf4884fe263fff">◆ </a></span>UsherTrailer</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define UsherTrailer</td>
+<td>(</td>
+<td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    {               \</div>
+<div class="line">    CameraLinkTransmit(<a class="code hl_variable" href="usher__protocol_8c.html#abef26d84ae5bb7b74aed26545feef049">usher_ck_a</a>);    \</div>
+<div class="line">    CameraLinkTransmit(<a class="code hl_variable" href="usher__protocol_8c.html#ab873f3a2b107321c5d65108b7ebaa827">usher_ck_b</a>);    \</div>
+<div class="line">  }</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00396">396</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="af82292f192f4b91f2699b046c8b51924" name="af82292f192f4b91f2699b046c8b51924"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af82292f192f4b91f2699b046c8b51924">◆ </a></span>parse_usher()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void parse_usher </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structusher__transport.html">usher_transport</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint8_t</td> <td class="paramname"><span class="paramname"><em>c</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Consume one byte from a USHER UART stream. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">t</td><td>Persistent parser state for that stream. </td></tr>
+<tr><td class="paramname">c</td><td>Newly received byte.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Frames may be arbitrarily split across calls. On a valid complete frame this sets <code>t-&gt;msg_received</code> and leaves the decoded bytes in <code>t-&gt;payload</code>. The caller must dispatch the message and clear that flag before supplying bytes for the next frame. </p><dl class="section warning"><dt>Warning</dt><dd>This function is not thread-safe. Serialize access to each <code class="param">t</code> instance and do not alter its fields while a frame is in progress.</dd></dl>
+<p>Consume one byte from a USHER UART stream.</p>
+<p>Checksums cover the length, message ID, and payload bytes. A complete, valid frame sets <code>t-&gt;msg_received</code>; the caller must clear that flag after dispatching. Any framing or checksum error increments <code>t-&gt;error</code> and resets the state machine, avoiding a poisoned partial frame affecting later traffic. </p><dl class="section warning"><dt>Warning</dt><dd><code class="param">t</code> must remain valid and unchanged by another thread for the duration of a frame; this parser intentionally contains no synchronization. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8c_source.html#l00054">54</a> of file <a class="el" href="usher__protocol_8c_source.html">usher_protocol.c</a>.</p>
+</div>
+</div>
+<a id="a96f12bda7386ddb30a8cb1d56734e744" name="a96f12bda7386ddb30a8cb1d56734e744"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96f12bda7386ddb30a8cb1d56734e744">◆ </a></span>usher_pose_flags_valid()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool usher_pose_flags_valid </td>
+<td>(</td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>flags</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Check the structural consistency of pose-sample GPS flags. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">flags</td><td>Received wire flags including the encoded age field. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if all bits are known and the GPS presence and age dependencies hold.</dd></dl>
+<p>Held GPS requires a present fix and valid age. Reject stray age bits rather than treating them as qualified timing evidence. </p>
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00250">250</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="doc-var-members" name="doc-var-members"></a><h2 class="groupheader" id="header-doc-var-members">Variable Documentation</h2>
+<a id="abef26d84ae5bb7b74aed26545feef049" name="abef26d84ae5bb7b74aed26545feef049"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abef26d84ae5bb7b74aed26545feef049">◆ </a></span>usher_ck_a</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint8_t usher_ck_a</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel extern">extern</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8c_source.html#l00031">31</a> of file <a class="el" href="usher__protocol_8c_source.html">usher_protocol.c</a>.</p>
+</div>
+</div>
+<a id="ab873f3a2b107321c5d65108b7ebaa827" name="ab873f3a2b107321c5d65108b7ebaa827"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab873f3a2b107321c5d65108b7ebaa827">◆ </a></span>usher_ck_b</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">uint8_t usher_ck_b</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8h_source.html#l00376">376</a> of file <a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>.</p>
+</div>
+</div>
+<a id="a193f80dc2abd4fc9985bfe7dcb99ae79" name="a193f80dc2abd4fc9985bfe7dcb99ae79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a193f80dc2abd4fc9985bfe7dcb99ae79">◆ </a></span>usher_protocol</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">struct <a class="el" href="structusher__transport.html">usher_transport</a> usher_protocol</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel extern">extern</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="usher__protocol_8c_source.html#l00042">42</a> of file <a class="el" href="usher__protocol_8c_source.html">usher_protocol.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

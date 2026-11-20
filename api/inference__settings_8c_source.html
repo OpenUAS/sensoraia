@@ -1,0 +1,1950 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/inference_settings.c Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('inference__settings_8c_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">inference_settings.c</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="inference__settings_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/** @file inference_settings.c</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @brief Strict shared fields and deterministic application_settings.ini lookup.</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @details Module callbacks own module-specific keys; this layer never guesses a model's meaning. */</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include "<a class="code" href="inference__settings_8h.html">inference_settings.h</a>"</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00028">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="inference__settings_8c.html#ae0687100ad960ada0e3ca8725aaf1f64">   28</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="inference__settings_8c.html#ae0687100ad960ada0e3ca8725aaf1f64">inference_settings_init</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structinference__settings.html">inference_settings</a> *settings,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> <span class="keyword">enum</span> <a class="code hl_enumeration" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830a">inference_backend</a> backend)</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>{</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> <span class="keywordflow">if</span> (!settings) <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a> = (<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *)settings;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; <span class="keyword">sizeof</span>(*settings); ++index) <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>[index] = 0;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> = backend;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  settings-&gt;<a class="code hl_variable" href="structinference__settings.html#ad0b2c0f90a20d1bde32e41240c0fe4bd">threads</a> = 1;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  settings-&gt;<a class="code hl_variable" href="structinference__settings.html#aeca49c44248b334e9653478d2373cd8e">timeout_ms</a> = 2000;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>}</div>
+</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment"></span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment">/** @brief Reject truncation and control characters before accepting configuration text. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00040">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="inference__settings_8c.html#a9f5e908782019c5f24899b573ee35fb2">   40</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="inference__settings_8c.html#a9f5e908782019c5f24899b573ee35fb2">text_copy</a>(<span class="keywordtype">char</span> *destination, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="keyword">const</span> <span class="keywordtype">char</span> *source)</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>{</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> <span class="keywordflow">if</span> (!source || !<a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> length = strlen(source);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> <span class="keywordflow">if</span> (length &gt;= <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt;= length; ++index) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> character = (<span class="keywordtype">unsigned</span> char)source[index];</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> <span class="keywordflow">if</span> ((character &lt; 32 &amp;&amp; character) || character == 127) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    destination[index] = source[index];</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  }</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
+</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00053">
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="inference__settings_8c.html#a9d988881fa39895f172bd902a884b61a">   53</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="inference__settings_8c.html#a9d988881fa39895f172bd902a884b61a">inference_settings_field</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structinference__settings.html">inference_settings</a> *settings,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *key, <span class="keyword">const</span> <span class="keywordtype">char</span> *value)</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>{</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> <span class="keywordflow">if</span> (!settings || !key || !value || !value[0]) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">const</span> keys[] = {<span class="stringliteral">"inference_backend"</span>, <span class="stringliteral">"input_source"</span>, <span class="stringliteral">"model"</span>, <span class="stringliteral">"model_descriptor"</span>,</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> <span class="stringliteral">"onnx_lib_path"</span>, <span class="stringliteral">"input"</span>, <span class="stringliteral">"onnx_threads"</span>, <span class="stringliteral">"inference_timeout_ms"</span>};</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> <span class="keywordtype">size_t</span> field = 0;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> <span class="keywordflow">while</span> (field &lt; <span class="keyword">sizeof</span>(keys) / <span class="keyword">sizeof</span>(keys[0]) &amp;&amp; strcmp(keys[field], key)) ++field;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> <span class="keywordflow">if</span> (field == <span class="keyword">sizeof</span>(keys) / <span class="keyword">sizeof</span>(keys[0])) <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> <span class="comment">/* Duplicates are errors instead of making behavior depend on field order. */</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> <span class="keyword">const</span> uint32_t bit = UINT32_C(1) &lt;&lt; field;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> <span class="keywordflow">if</span> (settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a6cc371c4b0623b4263a5d051e91ffa01">seen</a> &amp; bit) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a6cc371c4b0623b4263a5d051e91ffa01">seen</a> |= bit;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> <span class="keywordflow">if</span> (field == 0) {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> <span class="keywordflow">if</span> (!strcmp(value, <span class="stringliteral">"onnx"</span>)) settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> = <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa65fa95899b039f71954f4ef2e286a7b0">INFERENCE_ONNX</a>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(value, <span class="stringliteral">"imx500"</span>)) settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> = <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa78cff6fb349644b7d0c9185d5f688eee">INFERENCE_IMX500</a>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(value, <span class="stringliteral">"native"</span>)) settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> = <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa0725cf5f6d6090ee22666f287c8bca16">INFERENCE_NATIVE</a>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(value, <span class="stringliteral">"auto"</span>)) settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> = <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa50beef50dd8ca104e043a33860d45af6">INFERENCE_AUTO</a>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> <span class="keywordflow">else</span> <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> <span class="keywordflow">if</span> (field == 1) {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> <span class="keywordflow">if</span> (!strcmp(value, <span class="stringliteral">"live"</span>)) settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a9d6fb148e77c773c1c1f966fca21c623">source</a> = <a class="code hl_enumvalue" href="inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaa7376acd8c0e2432a875b4c84cc40676f">INFERENCE_LIVE</a>;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(value, <span class="stringliteral">"image"</span>)) settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a9d6fb148e77c773c1c1f966fca21c623">source</a> = <a class="code hl_enumvalue" href="inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaa719758e2910725a79b087c8d2b21922f">INFERENCE_IMAGE</a>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(value, <span class="stringliteral">"fake"</span>)) settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a9d6fb148e77c773c1c1f966fca21c623">source</a> = <a class="code hl_enumvalue" href="inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaadaf98fa660f2c4059e5e78d11bf1f2dc">INFERENCE_FAKE</a>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> <span class="keywordflow">else</span> <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  }</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> <span class="keywordflow">if</span> (field &gt;= 2 &amp;&amp; field &lt;= 5) {</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> <span class="keywordtype">char</span> *destination = field == 2 ? settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a93a5c227ffaca6f436357d3e5ecbed32">model</a> : field == 3 ? settings-&gt;<a class="code hl_variable" href="structinference__settings.html#ab7862d7d6da31147c5a1510d3e54d2c1">descriptor</a> :</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                        field == 4 ? settings-&gt;<a class="code hl_variable" href="structinference__settings.html#af95de132d4b6b44ca315eba6462b346e">library_directory</a> : settings-&gt;<a class="code hl_variable" href="structinference__settings.html#a9d5dccb97d161ab776eee53286911e4c">input</a>;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> <span class="keywordflow">return</span> <a class="code hl_function" href="inference__settings_8c.html#a9f5e908782019c5f24899b573ee35fb2">text_copy</a>(destination, <a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>, value) ? 1 : -1;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  }</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  uint64_t number = 0;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="bounded__ini_8h.html#a299282fea0cf096980cda7766370abdf">ini_uint</a>(value, &amp;number) || !number || number &gt; (field == 6 ? 32U : 120000U)) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> <span class="keywordflow">if</span> (field == 6) settings-&gt;<a class="code hl_variable" href="structinference__settings.html#ad0b2c0f90a20d1bde32e41240c0fe4bd">threads</a> = (unsigned)number;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> <span class="keywordflow">else</span> settings-&gt;<a class="code hl_variable" href="structinference__settings.html#aeca49c44248b334e9653478d2373cd8e">timeout_ms</a> = (unsigned)number;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>}</div>
+</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00093">
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="inference__settings_8c.html#a42c74a3e6321fc11b3e57f5140a0a723">   93</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="inference__settings_8c.html#a42c74a3e6321fc11b3e57f5140a0a723">inference_resolve_path</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *base_file, <span class="keyword">const</span> <span class="keywordtype">char</span> *value,</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> <span class="keywordtype">char</span> *destination, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>{</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> <span class="keywordflow">if</span> (!base_file || !value || !value[0] || !destination || !<a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> <span class="keywordtype">char</span> absolute[<a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>], joined[<a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>];</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> <span class="keywordflow">if</span> (base_file[0] == <span class="charliteral">'/'</span>) {</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="inference__settings_8c.html#a9f5e908782019c5f24899b573ee35fb2">text_copy</a>(absolute, <span class="keyword">sizeof</span>(absolute), base_file)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> <span class="keywordtype">char</span> working[<a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>];</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> <span class="keywordflow">if</span> (!getcwd(working, <span class="keyword">sizeof</span>(working))) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = snprintf(absolute, <span class="keyword">sizeof</span>(absolute), <span class="stringliteral">"%s/%s"</span>, working, base_file);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &lt; 0 || (<span class="keywordtype">size_t</span>)<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &gt;= <span class="keyword">sizeof</span>(absolute)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  }</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> <span class="keywordtype">char</span> *separator = strrchr(absolute, <span class="charliteral">'/'</span>);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> <span class="keywordflow">if</span> (!separator) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  separator[1] = <span class="charliteral">'\0'</span>;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = snprintf(joined, <span class="keyword">sizeof</span>(joined), <span class="stringliteral">"%s%s"</span>, value[0] == <span class="charliteral">'/'</span> ? <span class="stringliteral">""</span> : absolute, value);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &lt; 0 || (<span class="keywordtype">size_t</span>)<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &gt;= <span class="keyword">sizeof</span>(joined)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> <span class="keywordtype">size_t</span> used = 1;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> <span class="comment">/* Normalize lexically: a packaged output path need not exist on the development machine. */</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a> &lt; 2) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  destination[0] = <span class="charliteral">'/'</span>;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *cursor = joined;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> <span class="keywordflow">while</span> (*cursor) {</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> <span class="keywordflow">while</span> (*cursor == <span class="charliteral">'/'</span>) ++cursor;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a> = cursor;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> <span class="keywordflow">while</span> (*cursor &amp;&amp; *cursor != <span class="charliteral">'/'</span>) ++cursor;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> length = (size_t)(cursor - <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> <span class="keywordflow">if</span> (!length || (length == 1 &amp;&amp; <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>[0] == <span class="charliteral">'.'</span>)) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> <span class="keywordflow">if</span> (length == 2 &amp;&amp; <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>[0] == <span class="charliteral">'.'</span> &amp;&amp; <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>[1] == <span class="charliteral">'.'</span>) {</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> <span class="keywordflow">if</span> (used &gt; 1) {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        --used;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> <span class="keywordflow">while</span> (used &gt; 1 &amp;&amp; destination[used - 1] != <span class="charliteral">'/'</span>) --used;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>      }</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    }</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> <span class="keywordflow">if</span> (length &gt; <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a> - used - 1) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; length; ++index) {</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> character = (<span class="keywordtype">unsigned</span> char)<a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>[index];</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> <span class="keywordflow">if</span> (character &lt; 32 || character == 127) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>      destination[used++] = (char)character;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    }</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> <span class="keywordflow">if</span> (used &gt;= <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a> - 1) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    destination[used++] = <span class="charliteral">'/'</span>;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  }</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> <span class="keywordflow">if</span> (used &gt; 1) --used;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>  destination[used] = <span class="charliteral">'\0'</span>;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>}</div>
+</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="comment"></span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="comment">/** @brief Borrowed dispatch state scoped to one destructive INI parse. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00144">
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="structsettings__parser.html">  144</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structsettings__parser.html">settings_parser</a> {</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno"><a class="line" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">  145</a></span> <span class="keyword">struct </span><a class="code hl_struct" href="structinference__settings.html">inference_settings</a> *<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="structsettings__parser.html#a53070c0fbbd9a79473a41ea880f96785">  146</a></span> <a class="code hl_typedef" href="bounded__ini_8h.html#a5c170ab58ffd2b4524f0f64deb191769">ini_field_handler</a> <a class="code hl_variable" href="structsettings__parser.html#a53070c0fbbd9a79473a41ea880f96785">extra</a>;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="structsettings__parser.html#a63d28ff66a7a5cfba29be3c878a3d8a5">  147</a></span> <span class="keywordtype">void</span> *<a class="code hl_variable" href="structsettings__parser.html#a63d28ff66a7a5cfba29be3c878a3d8a5">context</a>;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>};</div>
+</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="comment"></span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="comment">/** @brief Delegate only unknown common keys; an invalid common key must not be accepted by a module. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00151">
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="inference__settings_8c.html#a00c66588abea6edd505f546917d26526">  151</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="inference__settings_8c.html#a00c66588abea6edd505f546917d26526">settings_field</a>(<span class="keywordtype">void</span> *context, <span class="keyword">const</span> <span class="keywordtype">char</span> *key, <span class="keyword">const</span> <span class="keywordtype">char</span> *value)</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>{</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> <span class="keyword">struct </span><a class="code hl_struct" href="structsettings__parser.html">settings_parser</a> *parser = <a class="code hl_variable" href="structsettings__parser.html#a63d28ff66a7a5cfba29be3c878a3d8a5">context</a>;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> <span class="keyword">const</span> <span class="keywordtype">int</span> common = <a class="code hl_function" href="inference__settings_8c.html#a9d988881fa39895f172bd902a884b61a">inference_settings_field</a>(parser-&gt;<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>, key, value);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> <span class="keywordflow">return</span> common ? common &gt; 0 : parser-&gt;<a class="code hl_variable" href="structsettings__parser.html#a53070c0fbbd9a79473a41ea880f96785">extra</a> &amp;&amp; parser-&gt;<a class="code hl_variable" href="structsettings__parser.html#a53070c0fbbd9a79473a41ea880f96785">extra</a>(parser-&gt;<a class="code hl_variable" href="structsettings__parser.html#a63d28ff66a7a5cfba29be3c878a3d8a5">context</a>, key, value);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>}</div>
+</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00158">
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="inference__settings_8c.html#ad4bf3aade46aa9534eef050f08909649">  158</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="inference__settings_8c.html#ad4bf3aade46aa9534eef050f08909649">inference_settings_read</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structinference__settings.html">inference_settings</a> *<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>, <span class="keyword">const</span> <span class="keywordtype">char</span> *filename,</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> <a class="code hl_typedef" href="bounded__ini_8h.html#a5c170ab58ffd2b4524f0f64deb191769">ini_field_handler</a> <a class="code hl_variable" href="structsettings__parser.html#a53070c0fbbd9a79473a41ea880f96785">extra</a>, <span class="keywordtype">void</span> *<a class="code hl_variable" href="structsettings__parser.html#a63d28ff66a7a5cfba29be3c878a3d8a5">context</a>,</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>{</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a> || !filename || !<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a> || !<a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>[0] = <span class="charliteral">'\0'</span>;</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> <span class="keywordtype">char</span> contents[8193];</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> <span class="keywordtype">size_t</span> length = 0;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> <span class="keyword">struct </span><a class="code hl_struct" href="structsettings__parser.html">settings_parser</a> parser = {.settings = <a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>, .extra = <a class="code hl_variable" href="structsettings__parser.html#a53070c0fbbd9a79473a41ea880f96785">extra</a>, .context = <a class="code hl_variable" href="structsettings__parser.html#a63d28ff66a7a5cfba29be3c878a3d8a5">context</a>};</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="bounded__ini_8h.html#a5413d33cc9e8dddd903a098a6627e95c">ini_read_file</a>(filename, contents, <span class="keyword">sizeof</span>(contents), &amp;length) ||</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>      !<a class="code hl_function" href="bounded__ini_8h.html#ae987922850b179f3602927c8dcffc8a7">ini_parse</a>(contents, length, <a class="code hl_function" href="inference__settings_8c.html#a00c66588abea6edd505f546917d26526">settings_field</a>, &amp;parser)) {</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Invalid inference settings: %s"</span>, filename);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>  }</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> <span class="keywordtype">char</span> *paths[] = {<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a93a5c227ffaca6f436357d3e5ecbed32">model</a>, <a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#ab7862d7d6da31147c5a1510d3e54d2c1">descriptor</a>, <a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#af95de132d4b6b44ca315eba6462b346e">library_directory</a>, <a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a9d5dccb97d161ab776eee53286911e4c">input</a>};</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; <span class="keyword">sizeof</span>(paths) / <span class="keyword">sizeof</span>(paths[0]); ++index) {</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> <span class="keywordflow">if</span> (!paths[index][0]) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> <span class="keywordtype">char</span> resolved[<a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>];</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="inference__settings_8c.html#a42c74a3e6321fc11b3e57f5140a0a723">inference_resolve_path</a>(filename, paths[index], resolved, <span class="keyword">sizeof</span>(resolved)) ||</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        !<a class="code hl_function" href="inference__settings_8c.html#a9f5e908782019c5f24899b573ee35fb2">text_copy</a>(paths[index], <a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>, resolved)) {</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>      snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Invalid inference settings path: %s"</span>, filename);</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    }</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>  }</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> == <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa50beef50dd8ca104e043a33860d45af6">INFERENCE_AUTO</a>) {</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *suffix = strrchr(<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a93a5c227ffaca6f436357d3e5ecbed32">model</a>, <span class="charliteral">'.'</span>);</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a93a5c227ffaca6f436357d3e5ecbed32">model</a>[0]) <a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> = <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa0725cf5f6d6090ee22666f287c8bca16">INFERENCE_NATIVE</a>;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (suffix &amp;&amp; !strcmp(suffix, <span class="stringliteral">".onnx"</span>)) {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> <a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> = <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa65fa95899b039f71954f4ef2e286a7b0">INFERENCE_ONNX</a>;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#ab7862d7d6da31147c5a1510d3e54d2c1">descriptor</a>[0]) {</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = snprintf(<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#ab7862d7d6da31147c5a1510d3e54d2c1">descriptor</a>, <span class="keyword">sizeof</span>(<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#ab7862d7d6da31147c5a1510d3e54d2c1">descriptor</a>), <span class="stringliteral">"%.*s.ini"</span>,</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                                   (<span class="keywordtype">int</span>)(suffix - <a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a93a5c227ffaca6f436357d3e5ecbed32">model</a>), <a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a93a5c227ffaca6f436357d3e5ecbed32">model</a>);</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &lt; 0 || (<span class="keywordtype">size_t</span>)<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &gt;= <span class="keyword">sizeof</span>(<a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#ab7862d7d6da31147c5a1510d3e54d2c1">descriptor</a>)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>      }</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    }</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (suffix &amp;&amp; !strcmp(suffix, <span class="stringliteral">".rpk"</span>)) <a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> = <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa78cff6fb349644b7d0c9185d5f688eee">INFERENCE_IMX500</a>;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>      snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Automatic inference requires a .onnx or .rpk model: %s"</span>, <a class="code hl_variable" href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings</a>-&gt;<a class="code hl_variable" href="structinference__settings.html#a93a5c227ffaca6f436357d3e5ecbed32">model</a>);</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    }</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>  }</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>}</div>
+</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00202">
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="inference__settings_8c.html#a0fd318d25fb606a6d2c5fed8cd60c01b">  202</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="inference__settings_8c.html#a0fd318d25fb606a6d2c5fed8cd60c01b">inference_settings_find</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *application, <span class="keyword">const</span> <span class="keywordtype">char</span> *module,</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> <span class="keywordtype">char</span> *filename, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>{</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> <span class="keywordflow">if</span> (!application || !module || !filename || !<a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a> ||</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>      strspn(application, <span class="stringliteral">"abcdefghijklmnopqrstuvwxyz0123456789_"</span>) != strlen(application) ||</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>      strspn(module, <span class="stringliteral">"abcdefghijklmnopqrstuvwxyz0123456789_"</span>) != strlen(module)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> <span class="keywordtype">char</span> executable[<a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>], relative[<a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>];</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> <span class="keyword">const</span> ssize_t length = readlink(<span class="stringliteral">"/proc/self/exe"</span>, executable, <span class="keyword">sizeof</span>(executable) - 1);</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> <span class="keywordflow">if</span> (length &lt;= 0 || (<span class="keywordtype">size_t</span>)length &gt;= <span class="keyword">sizeof</span>(executable) - 1) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>  executable[length] = <span class="charliteral">'\0'</span>;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> directory = 0; directory &lt; 5; ++directory) {</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> <span class="comment">/* Never search cwd: launching from another directory must not silently select another assignment. */</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> <span class="keywordflow">if</span> (!directory) <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = snprintf(relative, <span class="keyword">sizeof</span>(relative), <span class="stringliteral">"%s_settings.ini"</span>, application);</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (directory == 1) <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = snprintf(relative, <span class="keyword">sizeof</span>(relative), <span class="stringliteral">"../modules/%s/%s_settings.ini"</span>, module, application);</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (directory == 2) <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = snprintf(relative, <span class="keyword">sizeof</span>(relative), <span class="stringliteral">"../share/%s/%s_settings.ini"</span>, application, application);</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (directory == 3) <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = snprintf(relative, <span class="keyword">sizeof</span>(relative), <span class="stringliteral">"modules/%s/%s_settings.ini"</span>, module, application);</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> <span class="keywordflow">else</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = snprintf(relative, <span class="keyword">sizeof</span>(relative), <span class="stringliteral">"share/%s/%s_settings.ini"</span>, application, application);</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &lt; 0 || (<span class="keywordtype">size_t</span>)<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &gt;= <span class="keyword">sizeof</span>(relative) ||</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        !<a class="code hl_function" href="inference__settings_8c.html#a42c74a3e6321fc11b3e57f5140a0a723">inference_resolve_path</a>(executable, relative, filename, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> <span class="keyword">struct </span>stat status;</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> <span class="keywordflow">if</span> (!stat(filename, &amp;status)) <span class="keywordflow">return</span> S_ISREG(status.st_mode);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>  }</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>}</div>
+</div>
+<div class="ttc" id="abounded__ini_8h_html_a299282fea0cf096980cda7766370abdf"><div class="ttname"><a href="bounded__ini_8h.html#a299282fea0cf096980cda7766370abdf">ini_uint</a></div><div class="ttdeci">static bool ini_uint(const char *text, uint64_t *number)</div><div class="ttdoc">Parse digits-only uint64; overflow and signs are rejected.</div><div class="ttdef"><b>Definition</b> <a href="bounded__ini_8h_source.html#l00052">bounded_ini.h:52</a></div></div>
+<div class="ttc" id="abounded__ini_8h_html_a5413d33cc9e8dddd903a098a6627e95c"><div class="ttname"><a href="bounded__ini_8h.html#a5413d33cc9e8dddd903a098a6627e95c">ini_read_file</a></div><div class="ttdeci">static bool ini_read_file(const char *filename, char *buffer, size_t capacity, size_t *length)</div><div class="ttdoc">Read a nonempty regular file smaller than capacity and append NUL.</div><div class="ttdef"><b>Definition</b> <a href="bounded__ini_8h_source.html#l00098">bounded_ini.h:98</a></div></div>
+<div class="ttc" id="abounded__ini_8h_html_a5c170ab58ffd2b4524f0f64deb191769"><div class="ttname"><a href="bounded__ini_8h.html#a5c170ab58ffd2b4524f0f64deb191769">ini_field_handler</a></div><div class="ttdeci">bool(* ini_field_handler)(void *context, const char *key, const char *value)</div><div class="ttdef"><b>Definition</b> <a href="bounded__ini_8h_source.html#l00035">bounded_ini.h:35</a></div></div>
+<div class="ttc" id="abounded__ini_8h_html_ae987922850b179f3602927c8dcffc8a7"><div class="ttname"><a href="bounded__ini_8h.html#ae987922850b179f3602927c8dcffc8a7">ini_parse</a></div><div class="ttdeci">static bool ini_parse(char *buffer, size_t length, ini_field_handler handler, void *context)</div><div class="ttdoc">Destructively parse flat fields with blank lines and #/; comment lines.</div><div class="ttdef"><b>Definition</b> <a href="bounded__ini_8h_source.html#l00132">bounded_ini.h:132</a></div></div>
+<div class="ttc" id="acapture__arbiter_8c_html_a6d68504c09ee186ab8deb6b756b4bd66"><div class="ttname"><a href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a></div><div class="ttdeci">static unsigned capacity[COVERAGE_CAMERAS]</div><div class="ttdef"><b>Definition</b> <a href="capture__arbiter_8c_source.html#l00075">capture_arbiter.c:75</a></div></div>
+<div class="ttc" id="achdk__pipe_8c_html_ab8e091aaa3bb9fdbbb23aac0ecc744d5"><div class="ttname"><a href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a></div><div class="ttdeci">uint8_t bytes[CHDK_CONTROL_REPLY_SIZE]</div><div class="ttdef"><b>Definition</b> <a href="chdk__pipe_8c_source.html#l00144">chdk_pipe.c:144</a></div></div>
+<div class="ttc" id="adipla__camera__backend_8c_html_a107573c5257745586d1172d7ee57389a"><div class="ttname"><a href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a></div><div class="ttdeci">static bool start(uint32_t session)</div><div class="ttdoc">Admit a nonzero session and discard correlation from the previous one.</div><div class="ttdef"><b>Definition</b> <a href="dipla__camera__backend_8c_source.html#l00170">dipla_camera_backend.c:170</a></div></div>
+<div class="ttc" id="ainference__settings_8c_html_a00c66588abea6edd505f546917d26526"><div class="ttname"><a href="inference__settings_8c.html#a00c66588abea6edd505f546917d26526">settings_field</a></div><div class="ttdeci">static bool settings_field(void *context, const char *key, const char *value)</div><div class="ttdoc">Delegate only unknown common keys; an invalid common key must not be accepted by a module.</div><div class="ttdef"><b>Definition</b> <a href="#l00151">inference_settings.c:151</a></div></div>
+<div class="ttc" id="ainference__settings_8c_html_a0fd318d25fb606a6d2c5fed8cd60c01b"><div class="ttname"><a href="inference__settings_8c.html#a0fd318d25fb606a6d2c5fed8cd60c01b">inference_settings_find</a></div><div class="ttdeci">bool inference_settings_find(const char *application, const char *module, char *filename, size_t capacity)</div><div class="ttdoc">Discover application_settings.ini in adjacent, development-module, then installed-share order.</div><div class="ttdef"><b>Definition</b> <a href="#l00202">inference_settings.c:202</a></div></div>
+<div class="ttc" id="ainference__settings_8c_html_a42c74a3e6321fc11b3e57f5140a0a723"><div class="ttname"><a href="inference__settings_8c.html#a42c74a3e6321fc11b3e57f5140a0a723">inference_resolve_path</a></div><div class="ttdeci">bool inference_resolve_path(const char *base_file, const char *value, char *destination, size_t capacity)</div><div class="ttdoc">Resolve an INI-relative path without requiring its destination to exist yet.</div><div class="ttdef"><b>Definition</b> <a href="#l00093">inference_settings.c:93</a></div></div>
+<div class="ttc" id="ainference__settings_8c_html_a9d988881fa39895f172bd902a884b61a"><div class="ttname"><a href="inference__settings_8c.html#a9d988881fa39895f172bd902a884b61a">inference_settings_field</a></div><div class="ttdeci">int inference_settings_field(struct inference_settings *settings, const char *key, const char *value)</div><div class="ttdoc">Parse one common key without consuming module-specific keys.</div><div class="ttdef"><b>Definition</b> <a href="#l00053">inference_settings.c:53</a></div></div>
+<div class="ttc" id="ainference__settings_8c_html_a9f5e908782019c5f24899b573ee35fb2"><div class="ttname"><a href="inference__settings_8c.html#a9f5e908782019c5f24899b573ee35fb2">text_copy</a></div><div class="ttdeci">static bool text_copy(char *destination, size_t capacity, const char *source)</div><div class="ttdoc">Reject truncation and control characters before accepting configuration text.</div><div class="ttdef"><b>Definition</b> <a href="#l00040">inference_settings.c:40</a></div></div>
+<div class="ttc" id="ainference__settings_8c_html_ad4bf3aade46aa9534eef050f08909649"><div class="ttname"><a href="inference__settings_8c.html#ad4bf3aade46aa9534eef050f08909649">inference_settings_read</a></div><div class="ttdeci">bool inference_settings_read(struct inference_settings *settings, const char *filename, ini_field_handler extra, void *context, char *error, size_t capacity)</div><div class="ttdoc">Parse one flat INI, delegate application keys and resolve paths against the selected file.</div><div class="ttdef"><b>Definition</b> <a href="#l00158">inference_settings.c:158</a></div></div>
+<div class="ttc" id="ainference__settings_8c_html_ae0687100ad960ada0e3ca8725aaf1f64"><div class="ttname"><a href="inference__settings_8c.html#ae0687100ad960ada0e3ca8725aaf1f64">inference_settings_init</a></div><div class="ttdeci">void inference_settings_init(struct inference_settings *settings, enum inference_backend backend)</div><div class="ttdoc">Reset storage and select conservative thread/timeout defaults.</div><div class="ttdef"><b>Definition</b> <a href="#l00028">inference_settings.c:28</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html"><div class="ttname"><a href="inference__settings_8h.html">inference_settings.h</a></div><div class="ttdoc">Shared application_settings.ini discovery with module-owned extra keys.</div></div>
+<div class="ttc" id="ainference__settings_8h_html_a978ba079e8d31aa8214d06682913b1eaa719758e2910725a79b087c8d2b21922f"><div class="ttname"><a href="inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaa719758e2910725a79b087c8d2b21922f">INFERENCE_IMAGE</a></div><div class="ttdeci">@ INFERENCE_IMAGE</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00036">inference_settings.h:36</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_a978ba079e8d31aa8214d06682913b1eaa7376acd8c0e2432a875b4c84cc40676f"><div class="ttname"><a href="inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaa7376acd8c0e2432a875b4c84cc40676f">INFERENCE_LIVE</a></div><div class="ttdeci">@ INFERENCE_LIVE</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00036">inference_settings.h:36</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_a978ba079e8d31aa8214d06682913b1eaadaf98fa660f2c4059e5e78d11bf1f2dc"><div class="ttname"><a href="inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaadaf98fa660f2c4059e5e78d11bf1f2dc">INFERENCE_FAKE</a></div><div class="ttdeci">@ INFERENCE_FAKE</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00036">inference_settings.h:36</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_aa4d8d5cefef1dcae62c784bf4698f487"><div class="ttname"><a href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a></div><div class="ttdeci">#define INFERENCE_PATH_CAPACITY</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00031">inference_settings.h:31</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_aadc188775e8328e4b24e0fd77d64830a"><div class="ttname"><a href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830a">inference_backend</a></div><div class="ttdeci">inference_backend</div><div class="ttdoc">Backend selection; AUTO resolves the model suffix, never an execution error.</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00034">inference_settings.h:34</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_aadc188775e8328e4b24e0fd77d64830aa0725cf5f6d6090ee22666f287c8bca16"><div class="ttname"><a href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa0725cf5f6d6090ee22666f287c8bca16">INFERENCE_NATIVE</a></div><div class="ttdeci">@ INFERENCE_NATIVE</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00034">inference_settings.h:34</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_aadc188775e8328e4b24e0fd77d64830aa50beef50dd8ca104e043a33860d45af6"><div class="ttname"><a href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa50beef50dd8ca104e043a33860d45af6">INFERENCE_AUTO</a></div><div class="ttdeci">@ INFERENCE_AUTO</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00034">inference_settings.h:34</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_aadc188775e8328e4b24e0fd77d64830aa65fa95899b039f71954f4ef2e286a7b0"><div class="ttname"><a href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa65fa95899b039f71954f4ef2e286a7b0">INFERENCE_ONNX</a></div><div class="ttdeci">@ INFERENCE_ONNX</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00034">inference_settings.h:34</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_aadc188775e8328e4b24e0fd77d64830aa78cff6fb349644b7d0c9185d5f688eee"><div class="ttname"><a href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa78cff6fb349644b7d0c9185d5f688eee">INFERENCE_IMX500</a></div><div class="ttdeci">@ INFERENCE_IMX500</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00034">inference_settings.h:34</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_aded4335c2df32c709945a69dfe77220d"><div class="ttname"><a href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a></div><div class="ttdeci">struct jpeg_error_mgr error</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00060">lwir_image.c:60</a></div></div>
+<div class="ttc" id="apose__log_8c_html_a76d971a3c552bc58ba9f0d5fceae9806"><div class="ttname"><a href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a></div><div class="ttdeci">static size_t count</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00079">pose_log.c:79</a></div></div>
+<div class="ttc" id="astructinference__settings_html"><div class="ttname"><a href="structinference__settings.html">inference_settings</a></div><div class="ttdoc">Per-application configuration; all resolved paths belong to this caller-owned value.</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00039">inference_settings.h:39</a></div></div>
+<div class="ttc" id="astructinference__settings_html_a6be373cf4122e9e0df7a170864b03a7c"><div class="ttname"><a href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">inference_settings::backend</a></div><div class="ttdeci">enum inference_backend backend</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00040">inference_settings.h:40</a></div></div>
+<div class="ttc" id="astructinference__settings_html_a6cc371c4b0623b4263a5d051e91ffa01"><div class="ttname"><a href="structinference__settings.html#a6cc371c4b0623b4263a5d051e91ffa01">inference_settings::seen</a></div><div class="ttdeci">uint32_t seen</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00047">inference_settings.h:47</a></div></div>
+<div class="ttc" id="astructinference__settings_html_a93a5c227ffaca6f436357d3e5ecbed32"><div class="ttname"><a href="structinference__settings.html#a93a5c227ffaca6f436357d3e5ecbed32">inference_settings::model</a></div><div class="ttdeci">char model[INFERENCE_PATH_CAPACITY]</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00042">inference_settings.h:42</a></div></div>
+<div class="ttc" id="astructinference__settings_html_a9d5dccb97d161ab776eee53286911e4c"><div class="ttname"><a href="structinference__settings.html#a9d5dccb97d161ab776eee53286911e4c">inference_settings::input</a></div><div class="ttdeci">char input[INFERENCE_PATH_CAPACITY]</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00045">inference_settings.h:45</a></div></div>
+<div class="ttc" id="astructinference__settings_html_a9d6fb148e77c773c1c1f966fca21c623"><div class="ttname"><a href="structinference__settings.html#a9d6fb148e77c773c1c1f966fca21c623">inference_settings::source</a></div><div class="ttdeci">enum inference_source source</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00041">inference_settings.h:41</a></div></div>
+<div class="ttc" id="astructinference__settings_html_ab7862d7d6da31147c5a1510d3e54d2c1"><div class="ttname"><a href="structinference__settings.html#ab7862d7d6da31147c5a1510d3e54d2c1">inference_settings::descriptor</a></div><div class="ttdeci">char descriptor[INFERENCE_PATH_CAPACITY]</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00043">inference_settings.h:43</a></div></div>
+<div class="ttc" id="astructinference__settings_html_ad0b2c0f90a20d1bde32e41240c0fe4bd"><div class="ttname"><a href="structinference__settings.html#ad0b2c0f90a20d1bde32e41240c0fe4bd">inference_settings::threads</a></div><div class="ttdeci">unsigned threads</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00046">inference_settings.h:46</a></div></div>
+<div class="ttc" id="astructinference__settings_html_aeca49c44248b334e9653478d2373cd8e"><div class="ttname"><a href="structinference__settings.html#aeca49c44248b334e9653478d2373cd8e">inference_settings::timeout_ms</a></div><div class="ttdeci">unsigned timeout_ms</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00046">inference_settings.h:46</a></div></div>
+<div class="ttc" id="astructinference__settings_html_af95de132d4b6b44ca315eba6462b346e"><div class="ttname"><a href="structinference__settings.html#af95de132d4b6b44ca315eba6462b346e">inference_settings::library_directory</a></div><div class="ttdeci">char library_directory[INFERENCE_PATH_CAPACITY]</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00044">inference_settings.h:44</a></div></div>
+<div class="ttc" id="astructsettings__parser_html"><div class="ttname"><a href="structsettings__parser.html">settings_parser</a></div><div class="ttdoc">Borrowed dispatch state scoped to one destructive INI parse.</div><div class="ttdef"><b>Definition</b> <a href="#l00144">inference_settings.c:144</a></div></div>
+<div class="ttc" id="astructsettings__parser_html_a53070c0fbbd9a79473a41ea880f96785"><div class="ttname"><a href="structsettings__parser.html#a53070c0fbbd9a79473a41ea880f96785">settings_parser::extra</a></div><div class="ttdeci">ini_field_handler extra</div><div class="ttdef"><b>Definition</b> <a href="#l00146">inference_settings.c:146</a></div></div>
+<div class="ttc" id="astructsettings__parser_html_a63d28ff66a7a5cfba29be3c878a3d8a5"><div class="ttname"><a href="structsettings__parser.html#a63d28ff66a7a5cfba29be3c878a3d8a5">settings_parser::context</a></div><div class="ttdeci">void * context</div><div class="ttdef"><b>Definition</b> <a href="#l00147">inference_settings.c:147</a></div></div>
+<div class="ttc" id="astructsettings__parser_html_a9db035234cf800e37d98b8fd3c0eaa58"><div class="ttname"><a href="structsettings__parser.html#a9db035234cf800e37d98b8fd3c0eaa58">settings_parser::settings</a></div><div class="ttdeci">struct inference_settings * settings</div><div class="ttdef"><b>Definition</b> <a href="#l00145">inference_settings.c:145</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

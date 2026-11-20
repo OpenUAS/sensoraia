@@ -1,0 +1,2258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/sha256fst.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('sha256fst_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">sha256fst.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Portable SHA-256 block compression, streaming and digest formatting.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include "<a class="el" href="sha256fst_8h_source.html">sha256fst.h</a>"</code><br/>
+<code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &lt;fcntl.h&gt;</code><br/>
+<code>#include &lt;sys/stat.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for sha256fst.c:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="sha256fst_8c__incl.png" usemap="#asrc_2sha256fst_8c"/></div>
+<map id="asrc_2sha256fst_8c" name="asrc_2sha256fst_8c">
+<area alt="" coords="496,24,493,18,481,13,464,9,442,6,418,5,393,6,371,9,354,13,343,18,339,24,343,30,354,35,371,39,393,42,418,43,442,42,464,39,481,35,493,30" shape="poly" title="Portable SHA-256 block compression, streaming and digest formatting."/>
+<area alt="" coords="242,110,239,104,230,99,216,95,199,92,179,91,159,92,142,95,128,99,119,104,116,110,119,116,128,121,142,125,159,128,179,129,199,128,216,125,230,121,239,116" href="sha256fst_8h.html" shape="poly" title="Allocation-free, portable SHA-256 checksums for memory and streams."/>
+<area alt="" coords="372,42,234,92,232,87,377,39" shape="poly" title=" "/>
+<area alt="" coords="353,110,351,104,345,99,335,95,323,92,310,91,296,92,284,95,275,99,268,104,266,110,268,116,275,121,284,125,296,128,310,129,323,128,335,125,345,121,351,116" shape="poly" title=" "/>
+<area alt="" coords="398,41,343,86,341,81,393,44" shape="poly" title=" "/>
+<area alt="" coords="458,110,456,104,450,99,441,95,430,92,418,91,405,92,394,95,385,99,379,104,377,110,379,116,385,121,394,125,405,128,418,129,430,128,441,125,450,121,456,116" shape="poly" title=" "/>
+<area alt="" coords="419,41,420,77,415,74,416,46" shape="poly" title=" "/>
+<area alt="" coords="594,110,591,104,583,99,571,95,555,92,538,91,520,92,505,95,492,99,484,104,482,110,484,116,492,121,505,125,520,128,538,129,555,128,571,125,583,121,591,116" shape="poly" title=" "/>
+<area alt="" coords="443,40,504,84,499,83,442,45" shape="poly" title=" "/>
+<area alt="" coords="713,110,711,104,704,99,694,95,680,92,666,91,651,92,638,95,627,99,620,104,618,110,620,116,627,121,638,125,651,128,666,129,680,128,694,125,704,121,711,116" shape="poly" title=" "/>
+<area alt="" coords="462,38,619,92,613,92,462,43" shape="poly" title=" "/>
+<area alt="" coords="102,196,100,190,93,185,82,180,69,178,54,177,39,178,25,180,15,185,8,190,5,196,8,201,15,207,25,211,39,214,54,214,69,214,82,211,93,207,100,201" shape="poly" title=" "/>
+<area alt="" coords="157,127,91,173,88,168,152,129" shape="poly" title=" "/>
+<area alt="" coords="232,196,229,190,222,185,210,180,195,178,179,177,163,178,148,180,136,185,129,190,126,196,129,201,136,207,148,211,163,214,179,214,195,214,210,211,222,207,229,201" shape="poly" title=" "/>
+<area alt="" coords="181,127,181,163,177,160,177,131" shape="poly" title=" "/>
+<area alt="" coords="347,196,345,190,338,185,328,180,316,178,302,177,288,178,275,180,265,185,258,190,256,196,258,201,265,207,275,211,288,214,302,214,316,214,328,211,338,207,345,201" shape="poly" title=" "/>
+<area alt="" coords="204,125,269,170,264,171,202,130" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="sha256fst_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aef2922977c4383b78c7192a472f6853c" id="r_aef2922977c4383b78c7192a472f6853c"><td align="right" class="memItemLeft" valign="top">static uint32_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#aef2922977c4383b78c7192a472f6853c">rotate_right</a> (uint32_t value, unsigned <a class="el" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>)</td></tr>
+<tr class="memdesc:aef2922977c4383b78c7192a472f6853c"><td class="mdescLeft"> </td><td class="mdescRight">Rotate a 32-bit word without signed arithmetic.  <br/></td></tr>
+<tr class="memitem:ad2151128ef3bdaadf784aacf5e93898e" id="r_ad2151128ef3bdaadf784aacf5e93898e"><td align="right" class="memItemLeft" valign="top">static uint32_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2151128ef3bdaadf784aacf5e93898e">load_big_endian</a> (const uint8_t *<a class="el" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>)</td></tr>
+<tr class="memdesc:ad2151128ef3bdaadf784aacf5e93898e"><td class="mdescLeft"> </td><td class="mdescRight">Load a message word safely even when input is unaligned.  <br/></td></tr>
+<tr class="memitem:a2919d3c9b75d87725158c58b2c5f6ac7" id="r_a2919d3c9b75d87725158c58b2c5f6ac7"><td align="right" class="memItemLeft" valign="top">static uint32_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2919d3c9b75d87725158c58b2c5f6ac7">schedule_sigma_zero</a> (uint32_t value)</td></tr>
+<tr class="memdesc:a2919d3c9b75d87725158c58b2c5f6ac7"><td class="mdescLeft"> </td><td class="mdescRight">Lowercase sigma-0 for expansion of the message schedule.  <br/></td></tr>
+<tr class="memitem:afaf7d5f0529fb22e99c63ed63aafb502" id="r_afaf7d5f0529fb22e99c63ed63aafb502"><td align="right" class="memItemLeft" valign="top">static uint32_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#afaf7d5f0529fb22e99c63ed63aafb502">schedule_sigma_one</a> (uint32_t value)</td></tr>
+<tr class="memdesc:afaf7d5f0529fb22e99c63ed63aafb502"><td class="mdescLeft"> </td><td class="mdescRight">Lowercase sigma-1 for expansion of the message schedule.  <br/></td></tr>
+<tr class="memitem:a4c618c826c89f0ac42339aade373d5cd" id="r_a4c618c826c89f0ac42339aade373d5cd"><td align="right" class="memItemLeft" valign="top">static uint32_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c618c826c89f0ac42339aade373d5cd">round_sigma_zero</a> (uint32_t value)</td></tr>
+<tr class="memdesc:a4c618c826c89f0ac42339aade373d5cd"><td class="mdescLeft"> </td><td class="mdescRight">Uppercase Sigma-0 for the first working word in a compression round.  <br/></td></tr>
+<tr class="memitem:a1fe33d084a161180fdfcc2614c813108" id="r_a1fe33d084a161180fdfcc2614c813108"><td align="right" class="memItemLeft" valign="top">static uint32_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fe33d084a161180fdfcc2614c813108">round_sigma_one</a> (uint32_t value)</td></tr>
+<tr class="memdesc:a1fe33d084a161180fdfcc2614c813108"><td class="mdescLeft"> </td><td class="mdescRight">Uppercase Sigma-1 for the fifth working word in a compression round.  <br/></td></tr>
+<tr class="memitem:ac666adc916c684dfa903b449fbecf87a" id="r_ac666adc916c684dfa903b449fbecf87a"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac666adc916c684dfa903b449fbecf87a">compress_block</a> (struct <a class="el" href="structsha256.html">sha256</a> *context, const uint8_t *block)</td></tr>
+<tr class="memdesc:ac666adc916c684dfa903b449fbecf87a"><td class="mdescLeft"> </td><td class="mdescRight">Fold exactly one complete input block into the chaining state.  <br/></td></tr>
+<tr class="memitem:ab811616ea667b6b59559e930e0432364" id="r_ab811616ea667b6b59559e930e0432364"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab811616ea667b6b59559e930e0432364">sha256_init</a> (struct <a class="el" href="structsha256.html">sha256</a> *context)</td></tr>
+<tr class="memdesc:ab811616ea667b6b59559e930e0432364"><td class="mdescLeft"> </td><td class="mdescRight">Initialize or reset a context for a new message.  <br/></td></tr>
+<tr class="memitem:a27187cda020f95d4993a7bd2dc2fcb27" id="r_a27187cda020f95d4993a7bd2dc2fcb27"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a27187cda020f95d4993a7bd2dc2fcb27">sha256_append_byte</a> (struct <a class="el" href="structsha256.html">sha256</a> *context, uint8_t byte)</td></tr>
+<tr class="memdesc:a27187cda020f95d4993a7bd2dc2fcb27"><td class="mdescLeft"> </td><td class="mdescRight">Append one byte to an unfinished message.  <br/></td></tr>
+<tr class="memitem:ab717a1d9e5f49407dbde8dde7a998a0a" id="r_ab717a1d9e5f49407dbde8dde7a998a0a"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab717a1d9e5f49407dbde8dde7a998a0a">sha256_append</a> (struct <a class="el" href="structsha256.html">sha256</a> *context, const void *data, size_t length)</td></tr>
+<tr class="memdesc:ab717a1d9e5f49407dbde8dde7a998a0a"><td class="mdescLeft"> </td><td class="mdescRight">Append an arbitrarily aligned chunk; empty chunks are harmless.  <br/></td></tr>
+<tr class="memitem:a88f126c43e460e31ab186d4fad531ea8" id="r_a88f126c43e460e31ab186d4fad531ea8"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a88f126c43e460e31ab186d4fad531ea8">sha256_finalize</a> (struct <a class="el" href="structsha256.html">sha256</a> *context)</td></tr>
+<tr class="memdesc:a88f126c43e460e31ab186d4fad531ea8"><td class="mdescLeft"> </td><td class="mdescRight">Finish a message, leaving its eight digest words in context-&gt;state.  <br/></td></tr>
+<tr class="memitem:a4615c365b3ed68d796c0ece7ee4b44af" id="r_a4615c365b3ed68d796c0ece7ee4b44af"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4615c365b3ed68d796c0ece7ee4b44af">sha256_finalize_hex</a> (struct <a class="el" href="structsha256.html">sha256</a> *context, char *<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)</td></tr>
+<tr class="memdesc:a4615c365b3ed68d796c0ece7ee4b44af"><td class="mdescLeft"> </td><td class="mdescRight">Finish a message and write its lowercase hexadecimal digest.  <br/></td></tr>
+<tr class="memitem:af1c3ac270ddb58388089844416647ae1" id="r_af1c3ac270ddb58388089844416647ae1"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#af1c3ac270ddb58388089844416647ae1">sha256_finalize_bytes</a> (struct <a class="el" href="structsha256.html">sha256</a> *context, void *<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)</td></tr>
+<tr class="memdesc:af1c3ac270ddb58388089844416647ae1"><td class="mdescLeft"> </td><td class="mdescRight">Finish a message and write its standard big-endian digest bytes.  <br/></td></tr>
+<tr class="memitem:a43476e7d42462b2199cfc6748f99112e" id="r_a43476e7d42462b2199cfc6748f99112e"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a43476e7d42462b2199cfc6748f99112e">sha256_hex</a> (const void *data, size_t length, char *<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)</td></tr>
+<tr class="memdesc:a43476e7d42462b2199cfc6748f99112e"><td class="mdescLeft"> </td><td class="mdescRight">Hash one memory region to a lowercase hexadecimal string.  <br/></td></tr>
+<tr class="memitem:a1c61707e6db801f9fed91de37bf99b55" id="r_a1c61707e6db801f9fed91de37bf99b55"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c61707e6db801f9fed91de37bf99b55">sha256_bytes</a> (const void *data, size_t length, void *<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)</td></tr>
+<tr class="memdesc:a1c61707e6db801f9fed91de37bf99b55"><td class="mdescLeft"> </td><td class="mdescRight">Hash one memory region to its standard 32-byte binary digest.  <br/></td></tr>
+<tr class="memitem:a2923bd131218d4cbdadd3dbe46c024d1" id="r_a2923bd131218d4cbdadd3dbe46c024d1"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2923bd131218d4cbdadd3dbe46c024d1">sha256_file</a> (const char *filename, char <a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>[<a class="el" href="sha256fst_8h.html#ace12252bac90d8cc3399d19d116b7b78">SHA256_HEX_SIZE</a>])</td></tr>
+<tr class="memdesc:a2923bd131218d4cbdadd3dbe46c024d1"><td class="mdescLeft"> </td><td class="mdescRight">Hash an immutable nonempty regular file with bounded streaming scratch.  <br/></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>Portable SHA-256 block compression, streaming and digest formatting. </p>
+<p>Implements the SHA-256 operations from FIPS 180-4 using unsigned 32-bit arithmetic. Input words and output bytes are explicitly big-endian; neither pointer alignment nor the host byte order affects the result. Complete input blocks bypass the context buffer. The compression schedule occupies a fixed 256-byte local array; no heap or mutable global state is used. </p>
+<p class="definition">Definition in file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div><a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="ac666adc916c684dfa903b449fbecf87a" name="ac666adc916c684dfa903b449fbecf87a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac666adc916c684dfa903b449fbecf87a">◆ </a></span>compress_block()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void compress_block </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structsha256.html">sha256</a> *</td> <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>block</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Fold exactly one complete input block into the chaining state. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">context</td><td>Context whose eight chaining words are updated. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">block</td><td>Readable SHA256_BLOCK_SIZE-byte region of any alignment.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Does not change the byte count or pending buffer. Working words A-H and the schedule follow the standard directly; uint32_t addition provides the required modulo-2^32 wraparound on both supported architectures. </p>
+<p>FIPS 180-4 section 4.2.2 constants, ordered by compression round.</p>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00102">102</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="ad2151128ef3bdaadf784aacf5e93898e" name="ad2151128ef3bdaadf784aacf5e93898e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2151128ef3bdaadf784aacf5e93898e">◆ </a></span>load_big_endian()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint32_t load_big_endian </td>
+<td>(</td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>bytes</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Load a message word safely even when input is unaligned. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">bytes</td><td>Readable four-byte region, most significant byte first. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Decoded word.</dd></dl>
+<p>Explicit byte loads avoid alignment and strict-aliasing violations. Optimizing compilers can still select native load/byte-reversal instructions. </p>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00051">51</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="aef2922977c4383b78c7192a472f6853c" name="aef2922977c4383b78c7192a472f6853c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef2922977c4383b78c7192a472f6853c">◆ </a></span>rotate_right()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint32_t rotate_right </td>
+<td>(</td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>count</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Rotate a 32-bit word without signed arithmetic. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">value</td><td>Word to rotate. </td></tr>
+<tr><td class="paramname">count</td><td>Rotation distance; every caller uses a constant in [1, 31]. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Rotated word. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00040">40</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="a1fe33d084a161180fdfcc2614c813108" name="a1fe33d084a161180fdfcc2614c813108"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fe33d084a161180fdfcc2614c813108">◆ </a></span>round_sigma_one()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint32_t round_sigma_one </td>
+<td>(</td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Uppercase Sigma-1 for the fifth working word in a compression round. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">value</td><td>Current working word E. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>XOR of the three SHA-256 rotations. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00090">90</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="a4c618c826c89f0ac42339aade373d5cd" name="a4c618c826c89f0ac42339aade373d5cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c618c826c89f0ac42339aade373d5cd">◆ </a></span>round_sigma_zero()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint32_t round_sigma_zero </td>
+<td>(</td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Uppercase Sigma-0 for the first working word in a compression round. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">value</td><td>Current working word A. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>XOR of the three SHA-256 rotations. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00081">81</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="afaf7d5f0529fb22e99c63ed63aafb502" name="afaf7d5f0529fb22e99c63ed63aafb502"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afaf7d5f0529fb22e99c63ed63aafb502">◆ </a></span>schedule_sigma_one()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint32_t schedule_sigma_one </td>
+<td>(</td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Lowercase sigma-1 for expansion of the message schedule. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">value</td><td>Earlier schedule word. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Two rotations XORed with a logical right shift. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00072">72</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="a2919d3c9b75d87725158c58b2c5f6ac7" name="a2919d3c9b75d87725158c58b2c5f6ac7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2919d3c9b75d87725158c58b2c5f6ac7">◆ </a></span>schedule_sigma_zero()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint32_t schedule_sigma_zero </td>
+<td>(</td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Lowercase sigma-0 for expansion of the message schedule. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">value</td><td>Earlier schedule word. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Two rotations XORed with a logical right shift. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00063">63</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="ab717a1d9e5f49407dbde8dde7a998a0a" name="ab717a1d9e5f49407dbde8dde7a998a0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab717a1d9e5f49407dbde8dde7a998a0a">◆ </a></span>sha256_append()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void sha256_append </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structsha256.html">sha256</a> *</td> <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const void *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>length</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Append an arbitrarily aligned chunk; empty chunks are harmless. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">context</td><td>Initialized context that has not been finalized. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Readable input of at least length bytes; may be NULL only when length is zero. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">length</td><td>Number of bytes to consume. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The input region must not overlap context storage.</dd></dl>
+<p>Complete blocks are compressed directly from data. Only partial blocks are copied into the bounded context buffer; no input is retained. </p>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00190">190</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="a27187cda020f95d4993a7bd2dc2fcb27" name="a27187cda020f95d4993a7bd2dc2fcb27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27187cda020f95d4993a7bd2dc2fcb27">◆ </a></span>sha256_append_byte()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void sha256_append_byte </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structsha256.html">sha256</a> *</td> <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint8_t</td> <td class="paramname"><span class="paramname"><em>byte</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Append one byte to an unfinished message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">context</td><td>Initialized context that has not been finalized. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">byte</td><td>Next input byte. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Prefer <a class="el" href="sha256fst_8h.html#ab717a1d9e5f49407dbde8dde7a998a0a" title="Append an arbitrarily aligned chunk; empty chunks are harmless.">sha256_append()</a> for chunks to use its direct-block fast path. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00181">181</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="a1c61707e6db801f9fed91de37bf99b55" name="a1c61707e6db801f9fed91de37bf99b55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c61707e6db801f9fed91de37bf99b55">◆ </a></span>sha256_bytes()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void sha256_bytes </td>
+<td>(</td>
+<td class="paramtype">const void *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>length</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>output</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Hash one memory region to its standard 32-byte binary digest. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Readable input of at least length bytes; may be NULL only when length is zero. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">length</td><td>Input byte count. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Writable SHA256_BYTES_SIZE-byte region, with no trailing NUL.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Uses a temporary stack context; output may overlap the input. </p>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00279">279</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="a2923bd131218d4cbdadd3dbe46c024d1" name="a2923bd131218d4cbdadd3dbe46c024d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2923bd131218d4cbdadd3dbe46c024d1">◆ </a></span>sha256_file()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool sha256_file </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char</td> <td class="paramname"><span class="paramname"><em>output</em></span>[SHA256_HEX_SIZE] )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Hash an immutable nonempty regular file with bounded streaming scratch. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">filename</td><td>Input whose size/identity/mtime must remain stable during the read. </td></tr>
+<tr><td class="paramname">output</td><td>Writable SHA256_HEX_SIZE bytes, meaningful only after success. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True after a complete stable read and close, false for I/O or observed mutation. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Integrity is not authentication; the producer still owns file/path stability. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00286">286</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="a88f126c43e460e31ab186d4fad531ea8" name="a88f126c43e460e31ab186d4fad531ea8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88f126c43e460e31ab186d4fad531ea8">◆ </a></span>sha256_finalize()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void sha256_finalize </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structsha256.html">sha256</a> *</td> <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Finish a message, leaving its eight digest words in context-&gt;state. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">context</td><td>Initialized context that has not been finalized.</td></tr>
+</table>
+</dd>
+</dl>
+<p>This consumes the context. Read the final state if needed, then reinitialize; do not append or call another finalizer on the same message. n_bits retains the original input length and buffer_counter becomes zero. </p>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00226">226</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="af1c3ac270ddb58388089844416647ae1" name="af1c3ac270ddb58388089844416647ae1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1c3ac270ddb58388089844416647ae1">◆ </a></span>sha256_finalize_bytes()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void sha256_finalize_bytes </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structsha256.html">sha256</a> *</td> <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>output</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Finish a message and write its standard big-endian digest bytes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">context</td><td>Initialized context that has not been finalized. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Writable SHA256_BYTES_SIZE-byte region, with no trailing NUL. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>Output must not overlap context storage. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This consumes the context, just like <a class="el" href="sha256fst_8h.html#a88f126c43e460e31ab186d4fad531ea8" title="Finish a message, leaving its eight digest words in context-&gt;state.">sha256_finalize()</a>. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00262">262</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="a4615c365b3ed68d796c0ece7ee4b44af" name="a4615c365b3ed68d796c0ece7ee4b44af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4615c365b3ed68d796c0ece7ee4b44af">◆ </a></span>sha256_finalize_hex()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void sha256_finalize_hex </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structsha256.html">sha256</a> *</td> <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>output</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Finish a message and write its lowercase hexadecimal digest. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">context</td><td>Initialized context that has not been finalized. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Writable SHA256_HEX_SIZE-byte region, including the trailing NUL. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>Output must not overlap context storage. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This consumes the context, just like <a class="el" href="sha256fst_8h.html#a88f126c43e460e31ab186d4fad531ea8" title="Finish a message, leaving its eight digest words in context-&gt;state.">sha256_finalize()</a>. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00249">249</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="a43476e7d42462b2199cfc6748f99112e" name="a43476e7d42462b2199cfc6748f99112e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43476e7d42462b2199cfc6748f99112e">◆ </a></span>sha256_hex()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void sha256_hex </td>
+<td>(</td>
+<td class="paramtype">const void *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>length</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>output</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Hash one memory region to a lowercase hexadecimal string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Readable input of at least length bytes; may be NULL only when length is zero. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">length</td><td>Input byte count. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Writable SHA256_HEX_SIZE-byte region, including the trailing NUL.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Uses a temporary stack context. Output may overlap the input because all input is consumed before the digest is written. </p>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00272">272</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+<a id="ab811616ea667b6b59559e930e0432364" name="ab811616ea667b6b59559e930e0432364"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab811616ea667b6b59559e930e0432364">◆ </a></span>sha256_init()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void sha256_init </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structsha256.html">sha256</a> *</td> <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Initialize or reset a context for a new message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[out]</td><td class="paramname">context</td><td>Writable caller-owned context. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Initialization is not a secure erasure of previous buffer contents. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="sha256fst_8c_source.html#l00168">168</a> of file <a class="el" href="sha256fst_8c_source.html">sha256fst.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

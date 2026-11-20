@@ -1,0 +1,1950 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/lwir_cam/lwir_frame.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('lwir__frame_8h_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">lwir_frame.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="lwir__frame_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifndef LWIRCAM_LWIR_FRAME_H</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#define LWIRCAM_LWIR_FRAME_H</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"></span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">/** @file</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * @brief Native frame arithmetic and camera measurements; no codec or flight dependencies.</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * @details Combined frames contain packed YUY2 followed by LE uint16 Kelvin*64.</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * Display transforms never change these coordinates or original samples.</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> * Tiny1-C combined frame layout (width W, height H, W even):</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * - Bytes [0, 2WH): YUYV image plane, `Y0 U Y1 V` per horizontal pixel pair; both pixels</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> *   of a pair share U and V.</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment"> * - Bytes [2WH, 4WH): thermal plane, one little-endian uint16 per pixel in raster order.</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment"> *   raw / 64 - 273.15 is degC as reported by the device; calibration is unverified.</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment"> *   Codes 0 and 65535 are endpoint/invalid codes.</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment"> * Invariants: sizes are exact (lwir_frame_bytes()), all coordinates are native and</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment"> * unrotated, inputs are borrowed read-only and nothing is allocated. Live capture qualifies</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment"> * frames with lwir_frame_capture_valid() (and optionally lwir_frame_plausible()/</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment"> * lwir_frame_settled()) before rendering or measuring; replay only needs lwir_frame_valid().</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment"> * Measurements have a scalar reference path; on little-endian ARM64 NEON processes</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment"> * eight-pixel blocks with identical results (exact integer averages, first-occurrence</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment"> * extrema), verified by parity tests.</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment"></span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment">/** @brief Largest supported native width in pixels. */</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="lwir__frame_8h.html#a0b6e411350bc5b9500943d73cefdcb8c">   47</a></span><span class="preprocessor">#define LWIR_MAX_WIDTH 640U</span><span class="comment"></span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment">/** @brief Largest supported native height in pixels. */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="lwir__frame_8h.html#af419b607d53b7ebf209b1660f3c7b933">   49</a></span><span class="preprocessor">#define LWIR_MAX_HEIGHT 512U</span><span class="comment"></span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment">/** @brief Largest combined frame: two planes of 2 bytes per pixel. */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="lwir__frame_8h.html#ac1e0d1bc97ab9174c3f9e0179b53642c">   51</a></span><span class="preprocessor">#define LWIR_MAX_FRAME_BYTES (LWIR_MAX_WIDTH * LWIR_MAX_HEIGHT * 4U)</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="comment"></span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="comment">/** @brief Buffer content kinds: full image+thermal frame, or the YUYV image plane alone. */</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43dad95aaf404dbe40c58c77b74654c5cfe2">   54</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43d">lwir_frame_layout</a> { <a class="code hl_enumvalue" href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43dad95aaf404dbe40c58c77b74654c5cfe2">LWIR_COMBINED</a>, <a class="code hl_enumvalue" href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43daad4b9355ab9766c5eaec3ca6061ed283">LWIR_YUYV_IMAGE</a> };</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">extern</span> <span class="stringliteral">"C"</span> {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="comment"></span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="comment">/** @brief Native rectangle; a zero width/height pair selects the full image. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00061">
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="structlwir__roi.html">   61</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structlwir__roi.html">lwir_roi</a> {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="structlwir__roi.html#af0867fb1b0140086c4b1ddfbc1209c9e">   62</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__roi.html#af0867fb1b0140086c4b1ddfbc1209c9e">x</a>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="structlwir__roi.html#a2300520459781488ec6ed381fbe8c2c1">   63</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__roi.html#a2300520459781488ec6ed381fbe8c2c1">y</a>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="structlwir__roi.html#a823883769899351fee0d1789af84f56b">   64</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__roi.html#a823883769899351fee0d1789af84f56b">width</a>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="structlwir__roi.html#ae1986da523eaf220aa4091a3052f3e3e">   65</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__roi.html#ae1986da523eaf220aa4091a3052f3e3e">height</a>;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>};</div>
+</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="comment"></span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="comment">/** @brief Ordinary camera measurements, independent of optional hotspot analysis. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00069">
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2">   69</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2">lwir_measurement_kind</a> {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2abf04aa1325845c7b40d5da5cca26fe81">   70</a></span> <a class="code hl_enumvalue" href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2abf04aa1325845c7b40d5da5cca26fe81">LWIR_RECTANGLE</a>,  <span class="comment">/**&lt; roi rectangle; an all-zero roi means the full image. */</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2a3a1eb984d9f44b3ccbfb87e7968a6134">   71</a></span> <a class="code hl_enumvalue" href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2a3a1eb984d9f44b3ccbfb87e7968a6134">LWIR_POINT</a>,      <span class="comment">/**&lt; Single pixel at roi.x, roi.y; roi width/height ignored. */</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2a72478d826f425d08d4084fe53f47ccce">   72</a></span> <a class="code hl_enumvalue" href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2a72478d826f425d08d4084fe53f47ccce">LWIR_LINE</a> <span class="comment">/**&lt; Inclusive line from roi.x, roi.y to end_x, end_y. */</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>};</div>
+</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment"></span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment">/** @brief One native-coordinate measurement request. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00076">
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="structlwir__measurement.html">   76</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structlwir__measurement.html">lwir_measurement</a> {</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="structlwir__measurement.html#ac9f43d94ddbb48178253af2b4284786c">   77</a></span> <span class="keyword">enum</span> <a class="code hl_enumeration" href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2">lwir_measurement_kind</a> <a class="code hl_variable" href="structlwir__measurement.html#ac9f43d94ddbb48178253af2b4284786c">kind</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="comment">    /** Rectangle, or the start point for LWIR_POINT/LWIR_LINE. */</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="structlwir__measurement.html#a70783fc1d09a5c760a15777087b733d4">   79</a></span> <span class="keyword">struct </span><a class="code hl_struct" href="structlwir__roi.html">lwir_roi</a> <a class="code hl_variable" href="structlwir__measurement.html#a70783fc1d09a5c760a15777087b733d4">roi</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="comment">    /** Line end point; unused otherwise. */</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="structlwir__measurement.html#a428f45df674411b0f02c30b5e432bc56">   81</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__measurement.html#a428f45df674411b0f02c30b5e432bc56">end_x</a>;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="structlwir__measurement.html#a1f0355fa220847a7213863d88bff57fc">   82</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__measurement.html#a1f0355fa220847a7213863d88bff57fc">end_y</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment">    /** Replace each valid center by the rounded mean of the valid samples in its</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="comment">     * edge-clipped 3x3 neighbourhood; coverage still uses the original center. */</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="structlwir__measurement.html#a4f151555d68400ba25e4e91eca30e192">   85</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structlwir__measurement.html#a4f151555d68400ba25e4e91eca30e192">average_3x3</a>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>};</div>
+</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="comment"></span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="comment">/** @brief Optional coverage band counted alongside measurement statistics. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00089">
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="structlwir__thresholds.html">   89</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structlwir__thresholds.html">lwir_thresholds</a> {</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> <span class="comment">/* Inclusive raw Kelvin*64 band, NOT a display window or detector gain range. */</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="structlwir__thresholds.html#a531b7ae87b808dad16a293c74b93ee6e">   91</a></span>    uint16_t <a class="code hl_variable" href="structlwir__thresholds.html#a531b7ae87b808dad16a293c74b93ee6e">low</a>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="structlwir__thresholds.html#ac05fe6d646c48b9da2b18c0dff6a4ded">   92</a></span>    uint16_t <a class="code hl_variable" href="structlwir__thresholds.html#ac05fe6d646c48b9da2b18c0dff6a4ded">high</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment">    /** When false the below/within/above counters stay zero. Enabled requires low &lt; high. */</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="structlwir__thresholds.html#a038b3a52edb1b15b715c163f4b567b51">   94</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structlwir__thresholds.html#a038b3a52edb1b15b715c163f4b567b51">enabled</a>;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>};</div>
+</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="comment"></span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment">/** @brief Raw-unit measurement results; derive mean/variance from the sums and pixels. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00098">
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html">   98</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structlwir__temperature__stats.html">lwir_temperature_stats</a> {<span class="comment"></span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="comment">    /** Extremes of measured samples (after optional averaging), in Kelvin*64. */</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a7a9e62be5d51c7a005d546eeb1dbfe56">  100</a></span>    uint16_t <a class="code hl_variable" href="structlwir__temperature__stats.html#a7a9e62be5d51c7a005d546eeb1dbfe56">min_raw</a>;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a230990c017e9918348148483f10c2687">  101</a></span>    uint16_t <a class="code hl_variable" href="structlwir__temperature__stats.html#a230990c017e9918348148483f10c2687">max_raw</a>;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> <span class="comment">/* Native coordinates; ties keep the first visited sample (raster order for ROI). */</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a58d79497fb8dbfa15e7ce04a6f3dffc8">  103</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__temperature__stats.html#a58d79497fb8dbfa15e7ce04a6f3dffc8">min_x</a>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a8e7fea7e8266662f579a53a0c625b8e6">  104</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__temperature__stats.html#a8e7fea7e8266662f579a53a0c625b8e6">min_y</a>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a50fa1f25b804d2ac28cd8b9c18c2a718">  105</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__temperature__stats.html#a50fa1f25b804d2ac28cd8b9c18c2a718">max_x</a>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a400e7f21ff1bd6f9ea435f2e4a614683">  106</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__temperature__stats.html#a400e7f21ff1bd6f9ea435f2e4a614683">max_y</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="comment">    /** Sum and sum of squares of measured samples; 64-bit cannot overflow at max geometry. */</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a4070cd3a979c3c53428ed9424c23bf17">  108</a></span>    uint64_t <a class="code hl_variable" href="structlwir__temperature__stats.html#a4070cd3a979c3c53428ed9424c23bf17">sum_raw</a>;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a6efa00c28e334370815bb81d53427b41">  109</a></span>    uint64_t <a class="code hl_variable" href="structlwir__temperature__stats.html#a6efa00c28e334370815bb81d53427b41">sum_squared_raw</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="comment">    /** Number of measured samples (centers visited). */</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#ac8c9f232d97121746b269ec25bfef44f">  111</a></span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structlwir__temperature__stats.html#ac8c9f232d97121746b269ec25bfef44f">pixels</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="comment">    /** Samples whose code is 0 or 65535. */</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a615c961e9ad7a77e674989a1cdd8949b">  113</a></span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structlwir__temperature__stats.html#a615c961e9ad7a77e674989a1cdd8949b">endpoint_codes</a>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> <span class="comment">/* Endpoints 0/65535 are excluded ONLY from coverage, not raw sums/extrema. */</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a348947b7b528522f6ad7d5399c663640">  115</a></span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structlwir__temperature__stats.html#a348947b7b528522f6ad7d5399c663640">below</a>;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#a03dbfabbe2a0293b357ddf55f1330f3c">  116</a></span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structlwir__temperature__stats.html#a03dbfabbe2a0293b357ddf55f1330f3c">within</a>;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="structlwir__temperature__stats.html#ad13feb008f8075e013e84014255b0e50">  117</a></span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structlwir__temperature__stats.html#ad13feb008f8075e013e84014255b0e50">above</a>;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>};</div>
+</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="comment"></span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="comment">/** @brief Bounded combined-frame size, or zero for unsupported native geometry.</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="comment"> * @param width Even native width from 2 through LWIR_MAX_WIDTH.</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="comment"> * @param height Native height from 1 through LWIR_MAX_HEIGHT.</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="comment"> * @return width * height * 4, or zero.</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="keywordtype">size_t</span> <a class="code hl_function" href="lwir__frame_8h.html#ac86507957dc55623fb98f8f8f9038ca7">lwir_frame_bytes</a>(<span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height);<span class="comment"></span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="comment">/** @brief Validate a native rectangle without clipping an operator's request.</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="comment"> * @param roi Requested region.</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="comment"> * @return True when every requested sample is within the image.</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__frame_8h.html#a75aecc91e4991cc6e62b44aabd244e0a">lwir_roi_valid</a>(<span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__roi.html">lwir_roi</a> *roi);<span class="comment"></span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="comment">/** @brief Validate ROI/point/line geometry before any sample is accessed.</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="comment"> * @param measurement Requested native measurement.</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="comment"> * @return True when the request is supported and in bounds.</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__frame_8h.html#a1f6046a8af769b24666f01f886f57d48">lwir_measurement_valid</a>(<span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__measurement.html">lwir_measurement</a> *<a class="code hl_variable" href="ear__cam__pipe_8c.html#a13643edff1e57fb073a3360d16152cdc">measurement</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="comment">/** @brief Measure apparent device temperatures, keeping diagnostic coverage separate.</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="comment"> * @param frame Immutable combined frame.</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="comment"> * @param bytes Exact frame size.</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="comment"> * @param measurement ROI/point/line and optional measurement-only averaging.</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="comment"> * @param thresholds Optional inclusive raw coverage band, not a display window.</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="comment"> * @param statistics Output; ignore on failure. Endpoint codes remain in raw extrema/sums.</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="comment"> * @return True on success. No surface correction or object identity is inferred.</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="comment"> * False (errno untouched) for NULL pointers, invalid geometry or measurement, a size</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="comment"> * mismatch, or enabled thresholds with low &gt;= high.</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__frame_8h.html#a371026bbf45d6c740760854c4243737b">lwir_measure_temperature</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height,</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__measurement.html">lwir_measurement</a> *<a class="code hl_variable" href="ear__cam__pipe_8c.html#a13643edff1e57fb073a3360d16152cdc">measurement</a>, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__thresholds.html">lwir_thresholds</a> *thresholds,</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__temperature__stats.html">lwir_temperature_stats</a> *statistics);<span class="comment"></span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="comment">/** @brief Rectangle convenience interface to lwir_measure_temperature.</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="comment"> * @param frame Combined frame.</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="comment"> * @param bytes Exact size.</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="comment"> * @param roi Native region.</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="comment"> * @param statistics Output, valid only on success.</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="comment"> * @return True on success.</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__frame_8h.html#abd9b96aa85e5ce28335a24e2cc90992c">lwir_temperature_statistics</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height,</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__roi.html">lwir_roi</a> *roi, <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__temperature__stats.html">lwir_temperature_stats</a> *statistics);<span class="comment"></span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="comment">/** @brief Check pointer, geometry and exact combined layout, not physical accuracy.</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="comment"> * @param frame Borrowed bytes.</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="comment"> * @param bytes Accessible size.</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="comment"> * @return True for a structurally valid combined frame.</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__frame_8h.html#a382c7eaf294ae2446cf6b5cbe75abb36">lwir_frame_valid</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height);<span class="comment"></span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="comment">/** @brief Recognize the all-black YUYV/0x8000 thermal fill observed during camera transitions.</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="comment"> * @details This whole-frame signature contains no usable sensor information.</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="comment"> * An isolated 0x8000 temperature or any other uniform scene is not rejected.</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="comment"> * Every byte pair in BOTH planes must be (0x00, 0x80): Y = 0 with neutral chroma in the</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="comment"> * image, little-endian 0x8000 in the thermal plane.</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="comment"> * @param frame Borrowed bytes.</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="comment"> * @param bytes Accessible size.</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="comment"> * @return True only for a structurally valid frame that is entirely neutral fill.</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__frame_8h.html#a153c4b63ea7f1af72653541de2cdff03">lwir_frame_is_neutral_fill</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height);<span class="comment"></span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="comment">/** @brief Qualify live combined data, rejecting neutral fill and an entirely invalid thermal plane.</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="comment"> * @details Structural replay validation remains independent. This is not physical calibration.</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="comment"> * Legitimate uniform scenes pass as long as one thermal code is neither 0 nor 65535.</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span><span class="comment"> * @param frame Borrowed bytes.</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="comment"> * @param bytes Accessible size.</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="comment"> * @return True for a structurally valid, non-fill frame with at least one valid temperature.</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__frame_8h.html#a6d31f7dcad650d4b851b9ee107708e04">lwir_frame_capture_valid</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height);<span class="comment"></span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="comment">/** @brief Optional conservative scene check; unusual valid scenes may be rejected.</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="comment"> * @details Rejects frames where more than 1% of image chroma bytes leave 120..136, the</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="comment"> * mean absolute horizontal luma step exceeds 45, or more than 10% of every-eighth-pixel</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="comment"> * thermal samples fall outside raw 14000..40000 (about -54..352 degC).</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="comment"> * @param frame Borrowed bytes.</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="comment"> * @param bytes Accessible size.</span></div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="comment"> * @return True for a structurally valid frame that passes all three heuristics.</span></div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__frame_8h.html#a74fe30622e39d359413ec62608eeb41f">lwir_frame_plausible</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height);<span class="comment"></span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span><span class="comment">/** @brief Optional image-stability heuristic, never exposure or shutter certification.</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="comment"> * @param frame Current combined frame.</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="comment"> * @param previous_image Previous image half (width * height * 2 bytes), kept by the acquisition owner.</span></div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="comment"> * @return True when bounded luma change meets the existing settling policy</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="comment"> *         (mean absolute luma difference &lt;= 12); false for NULL inputs or bad geometry.</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__frame_8h.html#affcc3a7fce9e227d7b57bb6fb8efa1a2">lwir_frame_settled</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, <span class="keyword">const</span> uint8_t *previous_image,</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height);</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>}</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="achdk__pipe_8c_html_ab8e091aaa3bb9fdbbb23aac0ecc744d5"><div class="ttname"><a href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a></div><div class="ttdeci">uint8_t bytes[CHDK_CONTROL_REPLY_SIZE]</div><div class="ttdef"><b>Definition</b> <a href="chdk__pipe_8c_source.html#l00144">chdk_pipe.c:144</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a13643edff1e57fb073a3360d16152cdc"><div class="ttname"><a href="ear__cam__pipe_8c.html#a13643edff1e57fb073a3360d16152cdc">measurement</a></div><div class="ttdeci">struct latest_measurement measurement</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00210">ear_cam_pipe.c:210</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a153c4b63ea7f1af72653541de2cdff03"><div class="ttname"><a href="lwir__frame_8h.html#a153c4b63ea7f1af72653541de2cdff03">lwir_frame_is_neutral_fill</a></div><div class="ttdeci">bool lwir_frame_is_neutral_fill(const uint8_t *frame, size_t bytes, unsigned width, unsigned height)</div><div class="ttdoc">Recognize the all-black YUYV/0x8000 thermal fill observed during camera transitions.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00432">lwir_frame.c:432</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a1a1c6aa2985b2833cce4353acd8204f2"><div class="ttname"><a href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2">lwir_measurement_kind</a></div><div class="ttdeci">lwir_measurement_kind</div><div class="ttdoc">Ordinary camera measurements, independent of optional hotspot analysis.</div><div class="ttdef"><b>Definition</b> <a href="#l00069">lwir_frame.h:69</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a1a1c6aa2985b2833cce4353acd8204f2a3a1eb984d9f44b3ccbfb87e7968a6134"><div class="ttname"><a href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2a3a1eb984d9f44b3ccbfb87e7968a6134">LWIR_POINT</a></div><div class="ttdeci">@ LWIR_POINT</div><div class="ttdef"><b>Definition</b> <a href="#l00071">lwir_frame.h:71</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a1a1c6aa2985b2833cce4353acd8204f2a72478d826f425d08d4084fe53f47ccce"><div class="ttname"><a href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2a72478d826f425d08d4084fe53f47ccce">LWIR_LINE</a></div><div class="ttdeci">@ LWIR_LINE</div><div class="ttdef"><b>Definition</b> <a href="#l00072">lwir_frame.h:72</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a1a1c6aa2985b2833cce4353acd8204f2abf04aa1325845c7b40d5da5cca26fe81"><div class="ttname"><a href="lwir__frame_8h.html#a1a1c6aa2985b2833cce4353acd8204f2abf04aa1325845c7b40d5da5cca26fe81">LWIR_RECTANGLE</a></div><div class="ttdeci">@ LWIR_RECTANGLE</div><div class="ttdef"><b>Definition</b> <a href="#l00070">lwir_frame.h:70</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a1f6046a8af769b24666f01f886f57d48"><div class="ttname"><a href="lwir__frame_8h.html#a1f6046a8af769b24666f01f886f57d48">lwir_measurement_valid</a></div><div class="ttdeci">bool lwir_measurement_valid(unsigned width, unsigned height, const struct lwir_measurement *measurement)</div><div class="ttdoc">Validate ROI/point/line geometry before any sample is accessed.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00084">lwir_frame.c:84</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a371026bbf45d6c740760854c4243737b"><div class="ttname"><a href="lwir__frame_8h.html#a371026bbf45d6c740760854c4243737b">lwir_measure_temperature</a></div><div class="ttdeci">bool lwir_measure_temperature(const uint8_t *frame, size_t bytes, unsigned width, unsigned height, const struct lwir_measurement *measurement, const struct lwir_thresholds *thresholds, struct lwir_temperature_stats *statistics)</div><div class="ttdoc">Measure apparent device temperatures, keeping diagnostic coverage separate.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00326">lwir_frame.c:326</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a382c7eaf294ae2446cf6b5cbe75abb36"><div class="ttname"><a href="lwir__frame_8h.html#a382c7eaf294ae2446cf6b5cbe75abb36">lwir_frame_valid</a></div><div class="ttdeci">bool lwir_frame_valid(const uint8_t *frame, size_t bytes, unsigned width, unsigned height)</div><div class="ttdoc">Check pointer, geometry and exact combined layout, not physical accuracy.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00420">lwir_frame.c:420</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a6d31f7dcad650d4b851b9ee107708e04"><div class="ttname"><a href="lwir__frame_8h.html#a6d31f7dcad650d4b851b9ee107708e04">lwir_frame_capture_valid</a></div><div class="ttdeci">bool lwir_frame_capture_valid(const uint8_t *frame, size_t bytes, unsigned width, unsigned height)</div><div class="ttdoc">Qualify live combined data, rejecting neutral fill and an entirely invalid thermal plane.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00446">lwir_frame.c:446</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a74fe30622e39d359413ec62608eeb41f"><div class="ttname"><a href="lwir__frame_8h.html#a74fe30622e39d359413ec62608eeb41f">lwir_frame_plausible</a></div><div class="ttdeci">bool lwir_frame_plausible(const uint8_t *frame, size_t bytes, unsigned width, unsigned height)</div><div class="ttdoc">Optional conservative scene check; unusual valid scenes may be rejected.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00465">lwir_frame.c:465</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_a75aecc91e4991cc6e62b44aabd244e0a"><div class="ttname"><a href="lwir__frame_8h.html#a75aecc91e4991cc6e62b44aabd244e0a">lwir_roi_valid</a></div><div class="ttdeci">bool lwir_roi_valid(unsigned width, unsigned height, const struct lwir_roi *roi)</div><div class="ttdoc">Validate a native rectangle without clipping an operator's request.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00070">lwir_frame.c:70</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_ab8ba185762565d7119425bc4b2d6f43d"><div class="ttname"><a href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43d">lwir_frame_layout</a></div><div class="ttdeci">lwir_frame_layout</div><div class="ttdoc">Buffer content kinds: full image+thermal frame, or the YUYV image plane alone.</div><div class="ttdef"><b>Definition</b> <a href="#l00054">lwir_frame.h:54</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_ab8ba185762565d7119425bc4b2d6f43daad4b9355ab9766c5eaec3ca6061ed283"><div class="ttname"><a href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43daad4b9355ab9766c5eaec3ca6061ed283">LWIR_YUYV_IMAGE</a></div><div class="ttdeci">@ LWIR_YUYV_IMAGE</div><div class="ttdef"><b>Definition</b> <a href="#l00054">lwir_frame.h:54</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_ab8ba185762565d7119425bc4b2d6f43dad95aaf404dbe40c58c77b74654c5cfe2"><div class="ttname"><a href="lwir__frame_8h.html#ab8ba185762565d7119425bc4b2d6f43dad95aaf404dbe40c58c77b74654c5cfe2">LWIR_COMBINED</a></div><div class="ttdeci">@ LWIR_COMBINED</div><div class="ttdef"><b>Definition</b> <a href="#l00054">lwir_frame.h:54</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_abd9b96aa85e5ce28335a24e2cc90992c"><div class="ttname"><a href="lwir__frame_8h.html#abd9b96aa85e5ce28335a24e2cc90992c">lwir_temperature_statistics</a></div><div class="ttdeci">bool lwir_temperature_statistics(const uint8_t *frame, size_t bytes, unsigned width, unsigned height, const struct lwir_roi *roi, struct lwir_temperature_stats *statistics)</div><div class="ttdoc">Rectangle convenience interface to lwir_measure_temperature.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00394">lwir_frame.c:394</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_ac86507957dc55623fb98f8f8f9038ca7"><div class="ttname"><a href="lwir__frame_8h.html#ac86507957dc55623fb98f8f8f9038ca7">lwir_frame_bytes</a></div><div class="ttdeci">size_t lwir_frame_bytes(unsigned width, unsigned height)</div><div class="ttdoc">Bounded combined-frame size, or zero for unsupported native geometry.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00056">lwir_frame.c:56</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_affcc3a7fce9e227d7b57bb6fb8efa1a2"><div class="ttname"><a href="lwir__frame_8h.html#affcc3a7fce9e227d7b57bb6fb8efa1a2">lwir_frame_settled</a></div><div class="ttdeci">bool lwir_frame_settled(const uint8_t *frame, const uint8_t *previous_image, unsigned width, unsigned height)</div><div class="ttdoc">Optional image-stability heuristic, never exposure or shutter certification.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8c_source.html#l00498">lwir_frame.c:498</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_ace5fb39a154fc61f43993d0b435a27e5"><div class="ttname"><a href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a></div><div class="ttdeci">uint8_t frame[LWIR_MAX_FRAME_BYTES]</div><div class="ttdef"><b>Definition</b> <a href="lwir__mock_8c_source.html#l00058">lwir_mock.c:58</a></div></div>
+<div class="ttc" id="astructlwir__measurement_html"><div class="ttname"><a href="structlwir__measurement.html">lwir_measurement</a></div><div class="ttdoc">One native-coordinate measurement request.</div><div class="ttdef"><b>Definition</b> <a href="#l00076">lwir_frame.h:76</a></div></div>
+<div class="ttc" id="astructlwir__measurement_html_a1f0355fa220847a7213863d88bff57fc"><div class="ttname"><a href="structlwir__measurement.html#a1f0355fa220847a7213863d88bff57fc">lwir_measurement::end_y</a></div><div class="ttdeci">unsigned end_y</div><div class="ttdef"><b>Definition</b> <a href="#l00082">lwir_frame.h:82</a></div></div>
+<div class="ttc" id="astructlwir__measurement_html_a428f45df674411b0f02c30b5e432bc56"><div class="ttname"><a href="structlwir__measurement.html#a428f45df674411b0f02c30b5e432bc56">lwir_measurement::end_x</a></div><div class="ttdeci">unsigned end_x</div><div class="ttdef"><b>Definition</b> <a href="#l00081">lwir_frame.h:81</a></div></div>
+<div class="ttc" id="astructlwir__measurement_html_a4f151555d68400ba25e4e91eca30e192"><div class="ttname"><a href="structlwir__measurement.html#a4f151555d68400ba25e4e91eca30e192">lwir_measurement::average_3x3</a></div><div class="ttdeci">bool average_3x3</div><div class="ttdef"><b>Definition</b> <a href="#l00085">lwir_frame.h:85</a></div></div>
+<div class="ttc" id="astructlwir__measurement_html_a70783fc1d09a5c760a15777087b733d4"><div class="ttname"><a href="structlwir__measurement.html#a70783fc1d09a5c760a15777087b733d4">lwir_measurement::roi</a></div><div class="ttdeci">struct lwir_roi roi</div><div class="ttdef"><b>Definition</b> <a href="#l00079">lwir_frame.h:79</a></div></div>
+<div class="ttc" id="astructlwir__measurement_html_ac9f43d94ddbb48178253af2b4284786c"><div class="ttname"><a href="structlwir__measurement.html#ac9f43d94ddbb48178253af2b4284786c">lwir_measurement::kind</a></div><div class="ttdeci">enum lwir_measurement_kind kind</div><div class="ttdef"><b>Definition</b> <a href="#l00077">lwir_frame.h:77</a></div></div>
+<div class="ttc" id="astructlwir__roi_html"><div class="ttname"><a href="structlwir__roi.html">lwir_roi</a></div><div class="ttdoc">Native rectangle; a zero width/height pair selects the full image.</div><div class="ttdef"><b>Definition</b> <a href="#l00061">lwir_frame.h:61</a></div></div>
+<div class="ttc" id="astructlwir__roi_html_a2300520459781488ec6ed381fbe8c2c1"><div class="ttname"><a href="structlwir__roi.html#a2300520459781488ec6ed381fbe8c2c1">lwir_roi::y</a></div><div class="ttdeci">unsigned y</div><div class="ttdef"><b>Definition</b> <a href="#l00063">lwir_frame.h:63</a></div></div>
+<div class="ttc" id="astructlwir__roi_html_a823883769899351fee0d1789af84f56b"><div class="ttname"><a href="structlwir__roi.html#a823883769899351fee0d1789af84f56b">lwir_roi::width</a></div><div class="ttdeci">unsigned width</div><div class="ttdef"><b>Definition</b> <a href="#l00064">lwir_frame.h:64</a></div></div>
+<div class="ttc" id="astructlwir__roi_html_ae1986da523eaf220aa4091a3052f3e3e"><div class="ttname"><a href="structlwir__roi.html#ae1986da523eaf220aa4091a3052f3e3e">lwir_roi::height</a></div><div class="ttdeci">unsigned height</div><div class="ttdef"><b>Definition</b> <a href="#l00065">lwir_frame.h:65</a></div></div>
+<div class="ttc" id="astructlwir__roi_html_af0867fb1b0140086c4b1ddfbc1209c9e"><div class="ttname"><a href="structlwir__roi.html#af0867fb1b0140086c4b1ddfbc1209c9e">lwir_roi::x</a></div><div class="ttdeci">unsigned x</div><div class="ttdef"><b>Definition</b> <a href="#l00062">lwir_frame.h:62</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html"><div class="ttname"><a href="structlwir__temperature__stats.html">lwir_temperature_stats</a></div><div class="ttdoc">Raw-unit measurement results; derive mean/variance from the sums and pixels.</div><div class="ttdef"><b>Definition</b> <a href="#l00098">lwir_frame.h:98</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a03dbfabbe2a0293b357ddf55f1330f3c"><div class="ttname"><a href="structlwir__temperature__stats.html#a03dbfabbe2a0293b357ddf55f1330f3c">lwir_temperature_stats::within</a></div><div class="ttdeci">size_t within</div><div class="ttdef"><b>Definition</b> <a href="#l00116">lwir_frame.h:116</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a230990c017e9918348148483f10c2687"><div class="ttname"><a href="structlwir__temperature__stats.html#a230990c017e9918348148483f10c2687">lwir_temperature_stats::max_raw</a></div><div class="ttdeci">uint16_t max_raw</div><div class="ttdef"><b>Definition</b> <a href="#l00101">lwir_frame.h:101</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a348947b7b528522f6ad7d5399c663640"><div class="ttname"><a href="structlwir__temperature__stats.html#a348947b7b528522f6ad7d5399c663640">lwir_temperature_stats::below</a></div><div class="ttdeci">size_t below</div><div class="ttdef"><b>Definition</b> <a href="#l00115">lwir_frame.h:115</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a400e7f21ff1bd6f9ea435f2e4a614683"><div class="ttname"><a href="structlwir__temperature__stats.html#a400e7f21ff1bd6f9ea435f2e4a614683">lwir_temperature_stats::max_y</a></div><div class="ttdeci">unsigned max_y</div><div class="ttdef"><b>Definition</b> <a href="#l00106">lwir_frame.h:106</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a4070cd3a979c3c53428ed9424c23bf17"><div class="ttname"><a href="structlwir__temperature__stats.html#a4070cd3a979c3c53428ed9424c23bf17">lwir_temperature_stats::sum_raw</a></div><div class="ttdeci">uint64_t sum_raw</div><div class="ttdef"><b>Definition</b> <a href="#l00108">lwir_frame.h:108</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a50fa1f25b804d2ac28cd8b9c18c2a718"><div class="ttname"><a href="structlwir__temperature__stats.html#a50fa1f25b804d2ac28cd8b9c18c2a718">lwir_temperature_stats::max_x</a></div><div class="ttdeci">unsigned max_x</div><div class="ttdef"><b>Definition</b> <a href="#l00105">lwir_frame.h:105</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a58d79497fb8dbfa15e7ce04a6f3dffc8"><div class="ttname"><a href="structlwir__temperature__stats.html#a58d79497fb8dbfa15e7ce04a6f3dffc8">lwir_temperature_stats::min_x</a></div><div class="ttdeci">unsigned min_x</div><div class="ttdef"><b>Definition</b> <a href="#l00103">lwir_frame.h:103</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a615c961e9ad7a77e674989a1cdd8949b"><div class="ttname"><a href="structlwir__temperature__stats.html#a615c961e9ad7a77e674989a1cdd8949b">lwir_temperature_stats::endpoint_codes</a></div><div class="ttdeci">size_t endpoint_codes</div><div class="ttdef"><b>Definition</b> <a href="#l00113">lwir_frame.h:113</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a6efa00c28e334370815bb81d53427b41"><div class="ttname"><a href="structlwir__temperature__stats.html#a6efa00c28e334370815bb81d53427b41">lwir_temperature_stats::sum_squared_raw</a></div><div class="ttdeci">uint64_t sum_squared_raw</div><div class="ttdef"><b>Definition</b> <a href="#l00109">lwir_frame.h:109</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a7a9e62be5d51c7a005d546eeb1dbfe56"><div class="ttname"><a href="structlwir__temperature__stats.html#a7a9e62be5d51c7a005d546eeb1dbfe56">lwir_temperature_stats::min_raw</a></div><div class="ttdeci">uint16_t min_raw</div><div class="ttdef"><b>Definition</b> <a href="#l00100">lwir_frame.h:100</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_a8e7fea7e8266662f579a53a0c625b8e6"><div class="ttname"><a href="structlwir__temperature__stats.html#a8e7fea7e8266662f579a53a0c625b8e6">lwir_temperature_stats::min_y</a></div><div class="ttdeci">unsigned min_y</div><div class="ttdef"><b>Definition</b> <a href="#l00104">lwir_frame.h:104</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_ac8c9f232d97121746b269ec25bfef44f"><div class="ttname"><a href="structlwir__temperature__stats.html#ac8c9f232d97121746b269ec25bfef44f">lwir_temperature_stats::pixels</a></div><div class="ttdeci">size_t pixels</div><div class="ttdef"><b>Definition</b> <a href="#l00111">lwir_frame.h:111</a></div></div>
+<div class="ttc" id="astructlwir__temperature__stats_html_ad13feb008f8075e013e84014255b0e50"><div class="ttname"><a href="structlwir__temperature__stats.html#ad13feb008f8075e013e84014255b0e50">lwir_temperature_stats::above</a></div><div class="ttdeci">size_t above</div><div class="ttdef"><b>Definition</b> <a href="#l00117">lwir_frame.h:117</a></div></div>
+<div class="ttc" id="astructlwir__thresholds_html"><div class="ttname"><a href="structlwir__thresholds.html">lwir_thresholds</a></div><div class="ttdoc">Optional coverage band counted alongside measurement statistics.</div><div class="ttdef"><b>Definition</b> <a href="#l00089">lwir_frame.h:89</a></div></div>
+<div class="ttc" id="astructlwir__thresholds_html_a038b3a52edb1b15b715c163f4b567b51"><div class="ttname"><a href="structlwir__thresholds.html#a038b3a52edb1b15b715c163f4b567b51">lwir_thresholds::enabled</a></div><div class="ttdeci">bool enabled</div><div class="ttdef"><b>Definition</b> <a href="#l00094">lwir_frame.h:94</a></div></div>
+<div class="ttc" id="astructlwir__thresholds_html_a531b7ae87b808dad16a293c74b93ee6e"><div class="ttname"><a href="structlwir__thresholds.html#a531b7ae87b808dad16a293c74b93ee6e">lwir_thresholds::low</a></div><div class="ttdeci">uint16_t low</div><div class="ttdef"><b>Definition</b> <a href="#l00091">lwir_frame.h:91</a></div></div>
+<div class="ttc" id="astructlwir__thresholds_html_ac05fe6d646c48b9da2b18c0dff6a4ded"><div class="ttname"><a href="structlwir__thresholds.html#ac05fe6d646c48b9da2b18c0dff6a4ded">lwir_thresholds::high</a></div><div class="ttdeci">uint16_t high</div><div class="ttdef"><b>Definition</b> <a href="#l00092">lwir_frame.h:92</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

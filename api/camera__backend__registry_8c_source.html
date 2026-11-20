@@ -1,0 +1,1869 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/camera_backend_registry.c Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('camera__backend__registry_8c_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">camera_backend_registry.c</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="camera__backend__registry_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @file camera_backend_registry.c</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @brief Shared backend catalogue; the service schedules capabilities, not devices.</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * @details Descriptor lookup is side-effect free. Specialized backends own their</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * hooks; simple adapters share this table. Profiles never allocate protocol IDs.</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include "<a class="code" href="camera__backend__registry_8h.html">camera_backend_registry.h</a>"</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include "<a class="code" href="ai__cam__pipe_8h.html">ai_cam_pipe.h</a>"</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include "<a class="code" href="chdk__camera__backend_8h.html">chdk_camera_backend.h</a>"</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include "<a class="code" href="local__pipe_8h.html">local_pipe.h</a>"</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include "<a class="code" href="loom__camera__backend_8h.html">loom_camera_backend.h</a>"</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include "<a class="code" href="lwir__cam__pipe_8h.html">lwir_cam_pipe.h</a>"</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include "<a class="code" href="lwir__features_8h.html">../modules/lwir_cam/lwir_features.h</a>"</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include "<a class="code" href="spotter__cam__pipe_8h.html">spotter_cam_pipe.h</a>"</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include "<a class="code" href="spotter__camera__backend_8h.html">spotter_camera_backend.h</a>"</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include "<a class="code" href="ear__camera__backend_8h.html">ear_camera_backend.h</a>"</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include "<a class="code" href="dipla__camera__backend_8h.html">dipla_camera_backend.h</a>"</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#ifndef USHER_SODA</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="camera__backend__registry_8c.html#a973c3c74be57d705ddbcd4d1f89a9f37">   37</a></span><span class="preprocessor">  #define USHER_SODA "./bin/soda"</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#ifndef USHER_AI_CAM_PHOTO_DIR</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="camera__backend__registry_8c.html#a347156874b5d235083f13f979f003d54">   40</a></span><span class="preprocessor">  #define USHER_AI_CAM_PHOTO_DIR "~/Pictures/sensoraia"</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#ifndef USHER_LWIR_CAM_PHOTO_DIR</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="camera__backend__registry_8c.html#acc97c4dc616c51d6a70d61145651faf8">   43</a></span><span class="preprocessor">  #define USHER_LWIR_CAM_PHOTO_DIR "~/Pictures/sensoraia"</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#ifndef USHER_SPOTTERCAM_PHOTO_DIR</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="camera__backend__registry_8c.html#aca13c70bad59aa35dac375d2f99bd1e1">   46</a></span><span class="preprocessor">  #define USHER_SPOTTERCAM_PHOTO_DIR "~/Pictures/sensoraia"</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00049">
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="camera__backend__registry_8c.html#adde53ed2a58467c6f37dc84c356112c5">   49</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcamera__backend.html">camera_backend</a> <a class="code hl_function" href="camera__backend__registry_8c.html#adde53ed2a58467c6f37dc84c356112c5">camera_backend_registry_get</a>(enum <a class="code hl_enumeration" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435">camera_backend_type</a> type, bool <a class="code hl_variable" href="structcamera__backend.html#a78bc8b4a252e75228f9f29b1bb155bfd">mock</a>)</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>{</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> <span class="keywordflow">if</span> (type == <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a0a4367a7bcff19f63d6378c8eb855b84">CAMERA_BACKEND_CHDK</a>) <span class="keywordflow">return</span> <a class="code hl_function" href="chdk__camera__backend_8c.html#a44129ce775e4a48edbb8e019cbb584eb">chdk_camera_backend_get</a>();</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> <span class="keywordflow">if</span> (type == <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a797722cbfbe1d025da9feeb77cde07e0">CAMERA_BACKEND_LOOM_CAM</a>) <span class="keywordflow">return</span> <a class="code hl_function" href="loom__camera__backend_8c.html#a87a349190f9a1e251c82f9e005d66c80">loom_camera_backend_get</a>(<a class="code hl_variable" href="structcamera__backend.html#a78bc8b4a252e75228f9f29b1bb155bfd">mock</a>);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> <span class="keywordflow">if</span> (type == <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435aa68863c0034a728242546fde9eb8f747">CAMERA_BACKEND_SPOTTER_CAM</a>) <span class="keywordflow">return</span> <a class="code hl_function" href="spotter__camera__backend_8c.html#a8f29f33e600d3d9f0477c079b603f738">spotter_camera_backend_get</a>();</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> <span class="keywordflow">if</span> (type == <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435aec7d218bfc7748a846a19e0c558986ec">CAMERA_BACKEND_EAR_CAM</a>) <span class="keywordflow">return</span> <a class="code hl_function" href="ear__camera__backend_8c.html#ae6724871083af5dc337d167b2666a2c1">ear_camera_backend_get</a>();</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> <span class="keywordflow">if</span> (type == <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a99b4d86862b5d38445aa72998cedd375">CAMERA_BACKEND_DIPLA_CAM</a>) <span class="keywordflow">return</span> <a class="code hl_function" href="dipla__camera__backend_8c.html#aefc5d9ca124150ee816fdb40da74b598">dipla_camera_backend_get</a>();</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcamera__backend.html">camera_backend</a> backends[<a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a1d28a3a703109d4a715937f428ac2889">CAMERA_BACKEND_COUNT</a>] = {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    [<a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a09a17ec4d806268c01c377c4c482d489">CAMERA_BACKEND_LOCAL</a>] = {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>      .name = <span class="stringliteral">"local"</span>, .init = <a class="code hl_function" href="local__pipe_8c.html#ad9c642557579c20426c799954b68f672">local_pipe_init</a>, .deinit = <a class="code hl_function" href="local__pipe_8c.html#a5fa11aa8bf9ddd7bbb729d1c8ecc9271">local_pipe_deinit</a>,</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>      .soda_application = <a class="code hl_define" href="camera__backend__registry_8c.html#a973c3c74be57d705ddbcd4d1f89a9f37">USHER_SODA</a>, .camera_id = <a class="code hl_define" href="usher__protocol_8h.html#a0d23ad236aeba36dc214941fa139f5cd">USHER_CAMERA_ALL</a>,</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      .capabilities = <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda4ba929cbb05ff4a3829eabf528075607">CAMERA_CAP_IMAGE</a> | <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda1d9221b9682c2dcbfc6569dfb901a7e3">CAMERA_CAP_MOCK</a></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    },</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    [<a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a5ee740e106288b5f8c94e5dfb890dbe4">CAMERA_BACKEND_AI_CAM</a>] = {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>      .name = <span class="stringliteral">"aicam"</span>, .init = <a class="code hl_function" href="ai__cam__pipe_8c.html#a07758eee81f96bfb66b71629c078a02e">ai_cam_pipe_init</a>, .shoot = <a class="code hl_function" href="ai__cam__pipe_8c.html#a33d4fed2f707102886f97354c2387d3e">ai_cam_pipe_shoot</a>,</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      .deinit = <a class="code hl_function" href="ai__cam__pipe_8c.html#a84eaefcc456ee9d4f2c8f595e16259b8">ai_cam_pipe_deinit</a>, .soda_application = <a class="code hl_define" href="camera__backend__registry_8c.html#a973c3c74be57d705ddbcd4d1f89a9f37">USHER_SODA</a>,</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>      .configure = <a class="code hl_function" href="ai__cam__pipe_8c.html#a4505442528a52a364a7debbee796a2d9">ai_cam_pipe_configure</a>,</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>      .camera_id = <a class="code hl_define" href="usher__protocol_8h.html#a26ee2250bb9c4f6ca3aa0209af39f198">USHER_CAMERA_AICAM</a>, .prefix = <span class="charliteral">'a'</span>, .capabilities = <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda4ba929cbb05ff4a3829eabf528075607">CAMERA_CAP_IMAGE</a> | <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda72fca75ca6e65113f765405616bb1107">CAMERA_CAP_PRIVATE_IMAGE</a>,</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>      .mock = {.width = 2028, .height = 1520, .filename_marker = <span class="stringliteral">"m"</span>},</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>      .soda_option = <span class="stringliteral">"--aicam"</span>, .photo_directory = <a class="code hl_define" href="ai__cam__pipe_8c.html#a347156874b5d235083f13f979f003d54">USHER_AI_CAM_PHOTO_DIR</a></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    },</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    [<a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435aa68863c0034a728242546fde9eb8f747">CAMERA_BACKEND_SPOTTER_CAM</a>] = {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      .name = <span class="stringliteral">"spottercam"</span>, .init = <a class="code hl_function" href="spotter__cam__pipe_8c.html#ad14b4c662ce46e86359aa4570b8ef471">spotter_cam_pipe_init</a>,</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>      .shoot = <a class="code hl_function" href="spotter__cam__pipe_8c.html#aa63d588b1ffa081f7c7fdbf8bc072dd7">spotter_cam_pipe_shoot</a>, .deinit = <a class="code hl_function" href="spotter__cam__pipe_8c.html#a19c798b7828113f9218ecf43fbebead3">spotter_cam_pipe_deinit</a>, .soda_application = <a class="code hl_define" href="camera__backend__registry_8c.html#a973c3c74be57d705ddbcd4d1f89a9f37">USHER_SODA</a>,</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>      .configure = <a class="code hl_function" href="spotter__cam__pipe_8c.html#a50892513ed0d8ae0e3a09acffd51908a">spotter_cam_pipe_configure</a>,</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>      .camera_id = <a class="code hl_define" href="usher__protocol_8h.html#a26ee2250bb9c4f6ca3aa0209af39f198">USHER_CAMERA_AICAM</a>, .prefix = <span class="charliteral">'a'</span>,</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>      .mock = {.width = 2028, .height = 1520, .filename_marker = <span class="stringliteral">"m"</span>},</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>      .capabilities = <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda4ba929cbb05ff4a3829eabf528075607">CAMERA_CAP_IMAGE</a> | <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda7ff56b245e3aec6f66693f377bc45263">CAMERA_CAP_DETECTION</a> | <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda3c9342819bd34e240bf8c7fb4cbf1085">CAMERA_CAP_FINISH_OWNED</a> | <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda72fca75ca6e65113f765405616bb1107">CAMERA_CAP_PRIVATE_IMAGE</a>, .soda_option = <span class="stringliteral">"--aicam"</span>,</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>      .bind_frame = <a class="code hl_function" href="spotter__cam__pipe_8c.html#ab92894ebfce735678f022fc4ec122ad3">spotter_cam_pipe_bind_frame</a>, .detection_summary = <a class="code hl_function" href="spotter__cam__pipe_8c.html#a2d6a6e9dc5464e4df3185b240290cf90">spotter_cam_pipe_last_detection_summary</a>,</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>      .save_detection_copy = <a class="code hl_function" href="spotter__cam__pipe_8c.html#a33c5cf1225ffd638325c73cc2ed79504">spotter_cam_pipe_save_detection_copy</a>, .photo_directory = <a class="code hl_define" href="camera__backend__registry_8c.html#aca13c70bad59aa35dac375d2f99bd1e1">USHER_SPOTTERCAM_PHOTO_DIR</a></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    },</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    [<a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a80c11f0acb086cb89fe93c10870524f4">CAMERA_BACKEND_LWIR_CAM</a>] = {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>      .name = <span class="stringliteral">"lwircam"</span>, .init = <a class="code hl_function" href="lwir__cam__pipe_8c.html#ab521dbc65ef4dcbd4d8b0e69466bd1fc">lwir_cam_pipe_init</a>, .shoot = <a class="code hl_function" href="lwir__cam__pipe_8c.html#a16f290df8b2ead4aaa26a5bd0eaf6a83">lwir_cam_pipe_shoot</a>,</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>      .configure = <a class="code hl_function" href="lwir__cam__pipe_8c.html#ab6a10510dedea87d4911bc66e4b7e8e2">lwir_cam_pipe_configure</a>,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>      .deinit = <a class="code hl_function" href="lwir__cam__pipe_8c.html#a9d0912e9d43a0fd25f2a0dea0a396998">lwir_cam_pipe_deinit</a>, .soda_application = <a class="code hl_define" href="camera__backend__registry_8c.html#a973c3c74be57d705ddbcd4d1f89a9f37">USHER_SODA</a>, .camera_id = <a class="code hl_define" href="usher__protocol_8h.html#aa88380691247abff773ae427ece4ae0b">USHER_CAMERA_LWIRCAM</a>,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>      .prefix = <span class="charliteral">'l'</span>, .capabilities = <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda4ba929cbb05ff4a3829eabf528075607">CAMERA_CAP_IMAGE</a> | <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda3c9342819bd34e240bf8c7fb4cbf1085">CAMERA_CAP_FINISH_OWNED</a> |</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        (<a class="code hl_define" href="lwir__features_8h.html#a81825a77a09a033a034f03029971fa39">LWIR_ENABLE_ANALYSIS</a> ? <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda32f77e1958468df9f5f01c7cc0437164">CAMERA_CAP_GEOLOCATION</a> : 0),</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    #<span class="keywordflow">if</span> <a class="code hl_define" href="lwir__features_8h.html#a4dc4722be1e8722f656ef18e7c8ee040">LWIR_ENABLE_MOCK</a></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>      .<a class="code hl_variable" href="structcamera__backend.html#a78bc8b4a252e75228f9f29b1bb155bfd">mock</a> = {.width = 256, .height = 192, .filename_marker = <span class="stringliteral">"m"</span>},</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="preprocessor">    #endif</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>      .soda_option = <span class="stringliteral">"--lwircam"</span>, .init_cancelable = <a class="code hl_function" href="lwir__cam__pipe_8c.html#a50f209297820faf9a351be5fd6580394">lwir_cam_pipe_init_cancelable</a>,</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>      .capture_delay = <a class="code hl_function" href="lwir__cam__pipe_8c.html#a67e3b9d518fb69b8697c75e6ffada341">lwir_cam_pipe_capture_delay</a>, .capture_timing = <a class="code hl_function" href="lwir__cam__pipe_8c.html#a90cdd7804a1b65490ea6f8d1413ee0f5">lwir_cam_pipe_capture_timing</a>,</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">    #if LWIR_ENABLE_ANALYSIS</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>      .geolocate = <a class="code hl_function" href="lwir__cam__pipe_8c.html#abfc432f2c8af588a8e2141eb2491ebf2">lwir_cam_pipe_geolocate</a>,</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">    #endif</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>      .photo_directory = <a class="code hl_define" href="camera__backend__registry_8c.html#acc97c4dc616c51d6a70d61145651faf8">USHER_LWIR_CAM_PHOTO_DIR</a></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    },</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  };</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> <span class="keywordflow">if</span> (type &lt;= CAMERA_BACKEND_UNSELECTED || type &gt;= <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a1d28a3a703109d4a715937f428ac2889">CAMERA_BACKEND_COUNT</a>) <span class="keywordflow">return</span> (<span class="keyword">struct</span> <a class="code hl_struct" href="structcamera__backend.html">camera_backend</a>) {0};</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcamera__backend.html">camera_backend</a> backend = backends[type];</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> <span class="keywordflow">if</span> (type == <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a5ee740e106288b5f8c94e5dfb890dbe4">CAMERA_BACKEND_AI_CAM</a> &amp;&amp; <a class="code hl_function" href="ai__cam__pipe_8c.html#a988bfd83e9b94dc8d6325fdbd6fe6602">ai_cam_pipe_native</a>()) backend.soda_application = NULL;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> <span class="keywordflow">return</span> backend;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>}</div>
+</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00103">
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="camera__backend__registry_8c.html#ae17b13483968efcd3cd989bd4bb7f307">  103</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435">camera_backend_type</a> <a class="code hl_function" href="camera__backend__registry_8c.html#ae17b13483968efcd3cd989bd4bb7f307">camera_backend_registry_route</a>(<span class="keywordtype">int</span> <a class="code hl_variable" href="structcamera__backend.html#a58bffcd5bf2588b7e8c370c4131b215e">camera_id</a>, <span class="keyword">enum</span> <a class="code hl_enumeration" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435">camera_backend_type</a> preferred,</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> <span class="keywordtype">bool</span> local_only)</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>{</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="structcamera__backend.html#a58bffcd5bf2588b7e8c370c4131b215e">camera_id &lt; USHER_CAMERA_ALL || camera_id &gt;</a> <a class="code hl_enumvalue" href="camera__backend_8h.html#a9391442525af1e3720cd48bf6d369791a7faa066fe4ed33b52a095f9f445fa7ba">CAMERA_BACKEND_MAX_ID</a>) <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a6b56c7f77edc57d1f691fbedc0daa50b">CAMERA_BACKEND_UNSELECTED</a>;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcamera__backend.html">camera_backend</a> selected = <a class="code hl_function" href="camera__backend__registry_8c.html#adde53ed2a58467c6f37dc84c356112c5">camera_backend_registry_get</a>(preferred, <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> <span class="keywordflow">if</span> (selected.<a class="code hl_variable" href="structcamera__backend.html#ae69d548bace930d317399f836970aaad">name</a> &amp;&amp; selected.<a class="code hl_variable" href="structcamera__backend.html#a58bffcd5bf2588b7e8c370c4131b215e">camera_id</a> == <a class="code hl_variable" href="structcamera__backend.html#a58bffcd5bf2588b7e8c370c4131b215e">camera_id</a>)</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> <span class="keywordflow">return</span> local_only &amp;&amp; (selected.<a class="code hl_variable" href="structcamera__backend.html#a27efba4f424a22f32ed19051fe25deb4">capabilities</a> &amp; <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda4ba929cbb05ff4a3829eabf528075607">CAMERA_CAP_IMAGE</a>) ? <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a09a17ec4d806268c01c377c4c482d489">CAMERA_BACKEND_LOCAL</a> : preferred;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> <span class="keywordflow">for</span> (<span class="keyword">enum</span> <a class="code hl_enumeration" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435">camera_backend_type</a> type = <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a0a4367a7bcff19f63d6378c8eb855b84">CAMERA_BACKEND_CHDK</a>; type &lt; <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a1d28a3a703109d4a715937f428ac2889">CAMERA_BACKEND_COUNT</a>; ++type) {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcamera__backend.html">camera_backend</a> backend = <a class="code hl_function" href="camera__backend__registry_8c.html#adde53ed2a58467c6f37dc84c356112c5">camera_backend_registry_get</a>(type, <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> <span class="keywordflow">if</span> (!backend.name || backend.camera_id != <a class="code hl_variable" href="structcamera__backend.html#a58bffcd5bf2588b7e8c370c4131b215e">camera_id</a>) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> <span class="keywordflow">return</span> local_only &amp;&amp; (backend.capabilities &amp; <a class="code hl_enumvalue" href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda4ba929cbb05ff4a3829eabf528075607">CAMERA_CAP_IMAGE</a>) ? <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a09a17ec4d806268c01c377c4c482d489">CAMERA_BACKEND_LOCAL</a> : type;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a6b56c7f77edc57d1f691fbedc0daa50b">CAMERA_BACKEND_UNSELECTED</a>;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}</div>
+</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00118">
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="camera__backend__registry_8c.html#ad8454ad6bf34181f34d3ed8789609f60">  118</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcamera__backend.html">camera_backend</a> <a class="code hl_function" href="camera__backend__registry_8c.html#ad8454ad6bf34181f34d3ed8789609f60">camera_backend_registry_identity</a>(int <a class="code hl_variable" href="structcamera__backend.html#a58bffcd5bf2588b7e8c370c4131b215e">camera_id</a>, enum <a class="code hl_enumeration" href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435">camera_backend_type</a> preferred,</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    bool <a class="code hl_variable" href="structcamera__backend.html#a78bc8b4a252e75228f9f29b1bb155bfd">mock</a>)</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>{</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> <span class="keywordflow">return</span> <a class="code hl_function" href="camera__backend__registry_8c.html#adde53ed2a58467c6f37dc84c356112c5">camera_backend_registry_get</a>(<a class="code hl_function" href="camera__backend__registry_8c.html#ae17b13483968efcd3cd989bd4bb7f307">camera_backend_registry_route</a>(<a class="code hl_variable" href="structcamera__backend.html#a58bffcd5bf2588b7e8c370c4131b215e">camera_id</a>, preferred, <span class="keyword">false</span>), <a class="code hl_variable" href="structcamera__backend.html#a78bc8b4a252e75228f9f29b1bb155bfd">mock</a>);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>}</div>
+</div>
+<div class="ttc" id="aai__cam__pipe_8c_html_a07758eee81f96bfb66b71629c078a02e"><div class="ttname"><a href="ai__cam__pipe_8c.html#a07758eee81f96bfb66b71629c078a02e">ai_cam_pipe_init</a></div><div class="ttdeci">int ai_cam_pipe_init(const char *unused)</div><div class="ttdoc">Validate storage and start the selected camera owner.</div><div class="ttdef"><b>Definition</b> <a href="ai__cam__pipe_8c_source.html#l00398">ai_cam_pipe.c:398</a></div></div>
+<div class="ttc" id="aai__cam__pipe_8c_html_a33d4fed2f707102886f97354c2387d3e"><div class="ttname"><a href="ai__cam__pipe_8c.html#a33d4fed2f707102886f97354c2387d3e">ai_cam_pipe_shoot</a></div><div class="ttdeci">int ai_cam_pipe_shoot(char *filename, size_t filename_size, int image_number)</div><div class="ttdoc">Capture one ordinary JPEG into private staging for metadata completion.</div><div class="ttdef"><b>Definition</b> <a href="ai__cam__pipe_8c_source.html#l00430">ai_cam_pipe.c:430</a></div></div>
+<div class="ttc" id="aai__cam__pipe_8c_html_a347156874b5d235083f13f979f003d54"><div class="ttname"><a href="ai__cam__pipe_8c.html#a347156874b5d235083f13f979f003d54">USHER_AI_CAM_PHOTO_DIR</a></div><div class="ttdeci">#define USHER_AI_CAM_PHOTO_DIR</div><div class="ttdef"><b>Definition</b> <a href="ai__cam__pipe_8c_source.html#l00054">ai_cam_pipe.c:54</a></div></div>
+<div class="ttc" id="aai__cam__pipe_8c_html_a4505442528a52a364a7debbee796a2d9"><div class="ttname"><a href="ai__cam__pipe_8c.html#a4505442528a52a364a7debbee796a2d9">ai_cam_pipe_configure</a></div><div class="ttdeci">void ai_cam_pipe_configure(const struct camera_backend_host *host)</div><div class="ttdoc">Pass the shutdown flag to native worker supervision.</div><div class="ttdef"><b>Definition</b> <a href="ai__cam__pipe_8c_source.html#l00393">ai_cam_pipe.c:393</a></div></div>
+<div class="ttc" id="aai__cam__pipe_8c_html_a84eaefcc456ee9d4f2c8f595e16259b8"><div class="ttname"><a href="ai__cam__pipe_8c.html#a84eaefcc456ee9d4f2c8f595e16259b8">ai_cam_pipe_deinit</a></div><div class="ttdeci">void ai_cam_pipe_deinit(void)</div><div class="ttdoc">Stop the native and system-camera subprocesses.</div><div class="ttdef"><b>Definition</b> <a href="ai__cam__pipe_8c_source.html#l00470">ai_cam_pipe.c:470</a></div></div>
+<div class="ttc" id="aai__cam__pipe_8c_html_a988bfd83e9b94dc8d6325fdbd6fe6602"><div class="ttname"><a href="ai__cam__pipe_8c.html#a988bfd83e9b94dc8d6325fdbd6fe6602">ai_cam_pipe_native</a></div><div class="ttdeci">bool ai_cam_pipe_native(void)</div><div class="ttdoc">Report whether the selected AIcam mode uses native photo-only capture.</div><div class="ttdef"><b>Definition</b> <a href="ai__cam__pipe_8c_source.html#l00388">ai_cam_pipe.c:388</a></div></div>
+<div class="ttc" id="aai__cam__pipe_8h_html"><div class="ttname"><a href="ai__cam__pipe_8h.html">ai_cam_pipe.h</a></div><div class="ttdoc">Parent-side contract for stock and native Raspberry Pi camera capture.</div></div>
+<div class="ttc" id="acamera__backend_8h_html_a1e6ff383adaa2ff92f2574b0e97cbfbda1d9221b9682c2dcbfc6569dfb901a7e3"><div class="ttname"><a href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda1d9221b9682c2dcbfc6569dfb901a7e3">CAMERA_CAP_MOCK</a></div><div class="ttdeci">@ CAMERA_CAP_MOCK</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00045">camera_backend.h:45</a></div></div>
+<div class="ttc" id="acamera__backend_8h_html_a1e6ff383adaa2ff92f2574b0e97cbfbda32f77e1958468df9f5f01c7cc0437164"><div class="ttname"><a href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda32f77e1958468df9f5f01c7cc0437164">CAMERA_CAP_GEOLOCATION</a></div><div class="ttdeci">@ CAMERA_CAP_GEOLOCATION</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00042">camera_backend.h:42</a></div></div>
+<div class="ttc" id="acamera__backend_8h_html_a1e6ff383adaa2ff92f2574b0e97cbfbda3c9342819bd34e240bf8c7fb4cbf1085"><div class="ttname"><a href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda3c9342819bd34e240bf8c7fb4cbf1085">CAMERA_CAP_FINISH_OWNED</a></div><div class="ttdeci">@ CAMERA_CAP_FINISH_OWNED</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00044">camera_backend.h:44</a></div></div>
+<div class="ttc" id="acamera__backend_8h_html_a1e6ff383adaa2ff92f2574b0e97cbfbda4ba929cbb05ff4a3829eabf528075607"><div class="ttname"><a href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda4ba929cbb05ff4a3829eabf528075607">CAMERA_CAP_IMAGE</a></div><div class="ttdeci">@ CAMERA_CAP_IMAGE</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00040">camera_backend.h:40</a></div></div>
+<div class="ttc" id="acamera__backend_8h_html_a1e6ff383adaa2ff92f2574b0e97cbfbda72fca75ca6e65113f765405616bb1107"><div class="ttname"><a href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda72fca75ca6e65113f765405616bb1107">CAMERA_CAP_PRIVATE_IMAGE</a></div><div class="ttdeci">@ CAMERA_CAP_PRIVATE_IMAGE</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00046">camera_backend.h:46</a></div></div>
+<div class="ttc" id="acamera__backend_8h_html_a1e6ff383adaa2ff92f2574b0e97cbfbda7ff56b245e3aec6f66693f377bc45263"><div class="ttname"><a href="camera__backend_8h.html#a1e6ff383adaa2ff92f2574b0e97cbfbda7ff56b245e3aec6f66693f377bc45263">CAMERA_CAP_DETECTION</a></div><div class="ttdeci">@ CAMERA_CAP_DETECTION</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00041">camera_backend.h:41</a></div></div>
+<div class="ttc" id="acamera__backend_8h_html_a9391442525af1e3720cd48bf6d369791a7faa066fe4ed33b52a095f9f445fa7ba"><div class="ttname"><a href="camera__backend_8h.html#a9391442525af1e3720cd48bf6d369791a7faa066fe4ed33b52a095f9f445fa7ba">CAMERA_BACKEND_MAX_ID</a></div><div class="ttdeci">@ CAMERA_BACKEND_MAX_ID</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00033">camera_backend.h:33</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8c_html_a973c3c74be57d705ddbcd4d1f89a9f37"><div class="ttname"><a href="camera__backend__registry_8c.html#a973c3c74be57d705ddbcd4d1f89a9f37">USHER_SODA</a></div><div class="ttdeci">#define USHER_SODA</div><div class="ttdef"><b>Definition</b> <a href="#l00037">camera_backend_registry.c:37</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8c_html_aca13c70bad59aa35dac375d2f99bd1e1"><div class="ttname"><a href="camera__backend__registry_8c.html#aca13c70bad59aa35dac375d2f99bd1e1">USHER_SPOTTERCAM_PHOTO_DIR</a></div><div class="ttdeci">#define USHER_SPOTTERCAM_PHOTO_DIR</div><div class="ttdef"><b>Definition</b> <a href="#l00046">camera_backend_registry.c:46</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8c_html_acc97c4dc616c51d6a70d61145651faf8"><div class="ttname"><a href="camera__backend__registry_8c.html#acc97c4dc616c51d6a70d61145651faf8">USHER_LWIR_CAM_PHOTO_DIR</a></div><div class="ttdeci">#define USHER_LWIR_CAM_PHOTO_DIR</div><div class="ttdef"><b>Definition</b> <a href="#l00043">camera_backend_registry.c:43</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8c_html_ad8454ad6bf34181f34d3ed8789609f60"><div class="ttname"><a href="camera__backend__registry_8c.html#ad8454ad6bf34181f34d3ed8789609f60">camera_backend_registry_identity</a></div><div class="ttdeci">struct camera_backend camera_backend_registry_identity(int camera_id, enum camera_backend_type preferred, bool mock)</div><div class="ttdoc">Resolve naming/metadata identity from the profile used for acquisition.</div><div class="ttdef"><b>Definition</b> <a href="#l00118">camera_backend_registry.c:118</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8c_html_adde53ed2a58467c6f37dc84c356112c5"><div class="ttname"><a href="camera__backend__registry_8c.html#adde53ed2a58467c6f37dc84c356112c5">camera_backend_registry_get</a></div><div class="ttdeci">struct camera_backend camera_backend_registry_get(enum camera_backend_type type, bool mock)</div><div class="ttdoc">Return a descriptor without selecting, configuring or opening hardware.</div><div class="ttdef"><b>Definition</b> <a href="#l00049">camera_backend_registry.c:49</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8c_html_ae17b13483968efcd3cd989bd4bb7f307"><div class="ttname"><a href="camera__backend__registry_8c.html#ae17b13483968efcd3cd989bd4bb7f307">camera_backend_registry_route</a></div><div class="ttdeci">enum camera_backend_type camera_backend_registry_route(int camera_id, enum camera_backend_type preferred, bool local_only)</div><div class="ttdoc">Resolve a physical ID, preferring its configured logical profile.</div><div class="ttdef"><b>Definition</b> <a href="#l00103">camera_backend_registry.c:103</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html"><div class="ttname"><a href="camera__backend__registry_8h.html">camera_backend_registry.h</a></div><div class="ttdoc">Backend definitions and physical-camera routing.</div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435">camera_backend_type</a></div><div class="ttdeci">camera_backend_type</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00027">camera_backend_registry.h:27</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435a09a17ec4d806268c01c377c4c482d489"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a09a17ec4d806268c01c377c4c482d489">CAMERA_BACKEND_LOCAL</a></div><div class="ttdeci">@ CAMERA_BACKEND_LOCAL</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00030">camera_backend_registry.h:30</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435a0a4367a7bcff19f63d6378c8eb855b84"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a0a4367a7bcff19f63d6378c8eb855b84">CAMERA_BACKEND_CHDK</a></div><div class="ttdeci">@ CAMERA_BACKEND_CHDK</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00029">camera_backend_registry.h:29</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435a1d28a3a703109d4a715937f428ac2889"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a1d28a3a703109d4a715937f428ac2889">CAMERA_BACKEND_COUNT</a></div><div class="ttdeci">@ CAMERA_BACKEND_COUNT</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00037">camera_backend_registry.h:37</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435a5ee740e106288b5f8c94e5dfb890dbe4"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a5ee740e106288b5f8c94e5dfb890dbe4">CAMERA_BACKEND_AI_CAM</a></div><div class="ttdeci">@ CAMERA_BACKEND_AI_CAM</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00031">camera_backend_registry.h:31</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435a6b56c7f77edc57d1f691fbedc0daa50b"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a6b56c7f77edc57d1f691fbedc0daa50b">CAMERA_BACKEND_UNSELECTED</a></div><div class="ttdeci">@ CAMERA_BACKEND_UNSELECTED</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00028">camera_backend_registry.h:28</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435a797722cbfbe1d025da9feeb77cde07e0"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a797722cbfbe1d025da9feeb77cde07e0">CAMERA_BACKEND_LOOM_CAM</a></div><div class="ttdeci">@ CAMERA_BACKEND_LOOM_CAM</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00035">camera_backend_registry.h:35</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435a80c11f0acb086cb89fe93c10870524f4"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a80c11f0acb086cb89fe93c10870524f4">CAMERA_BACKEND_LWIR_CAM</a></div><div class="ttdeci">@ CAMERA_BACKEND_LWIR_CAM</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00033">camera_backend_registry.h:33</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435a99b4d86862b5d38445aa72998cedd375"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435a99b4d86862b5d38445aa72998cedd375">CAMERA_BACKEND_DIPLA_CAM</a></div><div class="ttdeci">@ CAMERA_BACKEND_DIPLA_CAM</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00036">camera_backend_registry.h:36</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435aa68863c0034a728242546fde9eb8f747"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435aa68863c0034a728242546fde9eb8f747">CAMERA_BACKEND_SPOTTER_CAM</a></div><div class="ttdeci">@ CAMERA_BACKEND_SPOTTER_CAM</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00032">camera_backend_registry.h:32</a></div></div>
+<div class="ttc" id="acamera__backend__registry_8h_html_a046362c43458cf0d94d6eaeea736b435aec7d218bfc7748a846a19e0c558986ec"><div class="ttname"><a href="camera__backend__registry_8h.html#a046362c43458cf0d94d6eaeea736b435aec7d218bfc7748a846a19e0c558986ec">CAMERA_BACKEND_EAR_CAM</a></div><div class="ttdeci">@ CAMERA_BACKEND_EAR_CAM</div><div class="ttdef"><b>Definition</b> <a href="camera__backend__registry_8h_source.html#l00034">camera_backend_registry.h:34</a></div></div>
+<div class="ttc" id="achdk__camera__backend_8c_html_a44129ce775e4a48edbb8e019cbb584eb"><div class="ttname"><a href="chdk__camera__backend_8c.html#a44129ce775e4a48edbb8e019cbb584eb">chdk_camera_backend_get</a></div><div class="ttdeci">struct camera_backend chdk_camera_backend_get(void)</div><div class="ttdef"><b>Definition</b> <a href="chdk__camera__backend_8c_source.html#l00096">chdk_camera_backend.c:96</a></div></div>
+<div class="ttc" id="achdk__camera__backend_8h_html"><div class="ttname"><a href="chdk__camera__backend_8h.html">chdk_camera_backend.h</a></div><div class="ttdoc">CHDK-owned download and photo publication.</div></div>
+<div class="ttc" id="adipla__camera__backend_8c_html_aefc5d9ca124150ee816fdb40da74b598"><div class="ttname"><a href="dipla__camera__backend_8c.html#aefc5d9ca124150ee816fdb40da74b598">dipla_camera_backend_get</a></div><div class="ttdeci">struct camera_backend dipla_camera_backend_get(void)</div><div class="ttdoc">Describe camera slot five without starting work.</div><div class="ttdef"><b>Definition</b> <a href="dipla__camera__backend_8c_source.html#l00285">dipla_camera_backend.c:285</a></div></div>
+<div class="ttc" id="adipla__camera__backend_8h_html"><div class="ttname"><a href="dipla__camera__backend_8h.html">dipla_camera_backend.h</a></div><div class="ttdoc">Optional non-image camera adapter for the native Diplacam worker.</div></div>
+<div class="ttc" id="aear__camera__backend_8c_html_ae6724871083af5dc337d167b2666a2c1"><div class="ttname"><a href="ear__camera__backend_8c.html#ae6724871083af5dc337d167b2666a2c1">ear_camera_backend_get</a></div><div class="ttdeci">struct camera_backend ear_camera_backend_get(void)</div><div class="ttdoc">Return the EAR backend descriptor by value; its session hook table has static lifetime.</div><div class="ttdef"><b>Definition</b> <a href="ear__camera__backend_8c_source.html#l00344">ear_camera_backend.c:344</a></div></div>
+<div class="ttc" id="aear__camera__backend_8h_html"><div class="ttname"><a href="ear__camera__backend_8h.html">ear_camera_backend.h</a></div><div class="ttdoc">EAR-specific startup configuration behind USHER's generic backend interface.</div></div>
+<div class="ttc" id="alocal__pipe_8c_html_a5fa11aa8bf9ddd7bbb729d1c8ecc9271"><div class="ttname"><a href="local__pipe_8c.html#a5fa11aa8bf9ddd7bbb729d1c8ecc9271">local_pipe_deinit</a></div><div class="ttdeci">void local_pipe_deinit(void)</div><div class="ttdoc">Forget selected local fixture sources.</div><div class="ttdef"><b>Definition</b> <a href="local__pipe_8c_source.html#l00295">local_pipe.c:295</a></div></div>
+<div class="ttc" id="alocal__pipe_8c_html_ad9c642557579c20426c799954b68f672"><div class="ttname"><a href="local__pipe_8c.html#ad9c642557579c20426c799954b68f672">local_pipe_init</a></div><div class="ttdeci">int local_pipe_init(const char *mock_image)</div><div class="ttdoc">Initialize a deterministic mock image source for local camera simulation.</div><div class="ttdef"><b>Definition</b> <a href="local__pipe_8c_source.html#l00064">local_pipe.c:64</a></div></div>
+<div class="ttc" id="alocal__pipe_8h_html"><div class="ttname"><a href="local__pipe_8h.html">local_pipe.h</a></div><div class="ttdoc">Local mock-camera backend API for simulator and desk testing.</div></div>
+<div class="ttc" id="aloom__camera__backend_8c_html_a87a349190f9a1e251c82f9e005d66c80"><div class="ttname"><a href="loom__camera__backend_8c.html#a87a349190f9a1e251c82f9e005d66c80">loom_camera_backend_get</a></div><div class="ttdeci">struct camera_backend loom_camera_backend_get(bool mock)</div><div class="ttdoc">Return LOOM's descriptor without opening a sensor or starting a thread.</div><div class="ttdef"><b>Definition</b> <a href="loom__camera__backend_8c_source.html#l00111">loom_camera_backend.c:111</a></div></div>
+<div class="ttc" id="aloom__camera__backend_8h_html"><div class="ttname"><a href="loom__camera__backend_8h.html">loom_camera_backend.h</a></div><div class="ttdoc">LOOM-owned capture specialization and stream lifecycle.</div></div>
+<div class="ttc" id="alwir__cam__pipe_8c_html_a16f290df8b2ead4aaa26a5bd0eaf6a83"><div class="ttname"><a href="lwir__cam__pipe_8c.html#a16f290df8b2ead4aaa26a5bd0eaf6a83">lwir_cam_pipe_shoot</a></div><div class="ttdeci">int lwir_cam_pipe_shoot(char *filename, size_t filename_size, int image_number)</div><div class="ttdoc">Request one thermal JPEG from an initialized capture server.</div><div class="ttdef"><b>Definition</b> <a href="lwir__cam__pipe_8c_source.html#l00653">lwir_cam_pipe.c:653</a></div></div>
+<div class="ttc" id="alwir__cam__pipe_8c_html_a50f209297820faf9a351be5fd6580394"><div class="ttname"><a href="lwir__cam__pipe_8c.html#a50f209297820faf9a351be5fd6580394">lwir_cam_pipe_init_cancelable</a></div><div class="ttdeci">int lwir_cam_pipe_init_cancelable(const char *unused, const volatile sig_atomic_t *keep_running)</div><div class="ttdoc">Start the server but abort promptly when USHER begins shutdown.</div><div class="ttdef"><b>Definition</b> <a href="lwir__cam__pipe_8c_source.html#l00525">lwir_cam_pipe.c:525</a></div></div>
+<div class="ttc" id="alwir__cam__pipe_8c_html_a67e3b9d518fb69b8697c75e6ffada341"><div class="ttname"><a href="lwir__cam__pipe_8c.html#a67e3b9d518fb69b8697c75e6ffada341">lwir_cam_pipe_capture_delay</a></div><div class="ttdeci">double lwir_cam_pipe_capture_delay(void)</div><div class="ttdoc">Return the delay of the last successful capture request in seconds.</div><div class="ttdef"><b>Definition</b> <a href="lwir__cam__pipe_8c_source.html#l00242">lwir_cam_pipe.c:242</a></div></div>
+<div class="ttc" id="alwir__cam__pipe_8c_html_a90cdd7804a1b65490ea6f8d1413ee0f5"><div class="ttname"><a href="lwir__cam__pipe_8c.html#a90cdd7804a1b65490ea6f8d1413ee0f5">lwir_cam_pipe_capture_timing</a></div><div class="ttdeci">struct capture_timing lwir_cam_pipe_capture_timing(void)</div><div class="ttdoc">Return detailed callback or polling timing evidence for the last capture.</div><div class="ttdef"><b>Definition</b> <a href="lwir__cam__pipe_8c_source.html#l00202">lwir_cam_pipe.c:202</a></div></div>
+<div class="ttc" id="alwir__cam__pipe_8c_html_a9d0912e9d43a0fd25f2a0dea0a396998"><div class="ttname"><a href="lwir__cam__pipe_8c.html#a9d0912e9d43a0fd25f2a0dea0a396998">lwir_cam_pipe_deinit</a></div><div class="ttdeci">void lwir_cam_pipe_deinit(void)</div><div class="ttdoc">Stop, reap, and forget the persistent LWIR capture server.</div><div class="ttdef"><b>Definition</b> <a href="lwir__cam__pipe_8c_source.html#l00707">lwir_cam_pipe.c:707</a></div></div>
+<div class="ttc" id="alwir__cam__pipe_8c_html_ab521dbc65ef4dcbd4d8b0e69466bd1fc"><div class="ttname"><a href="lwir__cam__pipe_8c.html#ab521dbc65ef4dcbd4d8b0e69466bd1fc">lwir_cam_pipe_init</a></div><div class="ttdeci">int lwir_cam_pipe_init(const char *unused)</div><div class="ttdoc">Start and qualify the persistent LWIR capture server.</div><div class="ttdef"><b>Definition</b> <a href="lwir__cam__pipe_8c_source.html#l00520">lwir_cam_pipe.c:520</a></div></div>
+<div class="ttc" id="alwir__cam__pipe_8c_html_ab6a10510dedea87d4911bc66e4b7e8e2"><div class="ttname"><a href="lwir__cam__pipe_8c.html#ab6a10510dedea87d4911bc66e4b7e8e2">lwir_cam_pipe_configure</a></div><div class="ttdeci">void lwir_cam_pipe_configure(const struct camera_backend_host *host)</div><div class="ttdoc">Bind the owner's long-lived shutdown flag before starting workers.</div><div class="ttdef"><b>Definition</b> <a href="lwir__cam__pipe_8c_source.html#l00090">lwir_cam_pipe.c:90</a></div></div>
+<div class="ttc" id="alwir__cam__pipe_8c_html_abfc432f2c8af588a8e2141eb2491ebf2"><div class="ttname"><a href="lwir__cam__pipe_8c.html#abfc432f2c8af588a8e2141eb2491ebf2">lwir_cam_pipe_geolocate</a></div><div class="ttdeci">int lwir_cam_pipe_geolocate(char *filename)</div><div class="ttdoc">Add thermal hotspot/geolocation metadata through the running server.</div><div class="ttdef"><b>Definition</b> <a href="lwir__cam__pipe_8c_source.html#l00623">lwir_cam_pipe.c:623</a></div></div>
+<div class="ttc" id="alwir__cam__pipe_8h_html"><div class="ttname"><a href="lwir__cam__pipe_8h.html">lwir_cam_pipe.h</a></div><div class="ttdoc">Parent-side protocol for USHER's persistent Tiny1-C LWIR capture server.</div></div>
+<div class="ttc" id="alwir__features_8h_html"><div class="ttname"><a href="lwir__features_8h.html">lwir_features.h</a></div><div class="ttdoc">Positive opt-ins shared by the worker and its USHER adapter.</div></div>
+<div class="ttc" id="alwir__features_8h_html_a4dc4722be1e8722f656ef18e7c8ee040"><div class="ttname"><a href="lwir__features_8h.html#a4dc4722be1e8722f656ef18e7c8ee040">LWIR_ENABLE_MOCK</a></div><div class="ttdeci">#define LWIR_ENABLE_MOCK</div><div class="ttdoc">1 builds the development replay/synthetic-temperature adapter (lwir_mock).</div><div class="ttdef"><b>Definition</b> <a href="lwir__features_8h_source.html#l00032">lwir_features.h:32</a></div></div>
+<div class="ttc" id="alwir__features_8h_html_a81825a77a09a033a034f03029971fa39"><div class="ttname"><a href="lwir__features_8h.html#a81825a77a09a033a034f03029971fa39">LWIR_ENABLE_ANALYSIS</a></div><div class="ttdeci">#define LWIR_ENABLE_ANALYSIS</div><div class="ttdoc">1 builds the optional ONNX analysis of saved photos (lwir_inference).</div><div class="ttdef"><b>Definition</b> <a href="lwir__features_8h_source.html#l00028">lwir_features.h:28</a></div></div>
+<div class="ttc" id="aspotter__cam__pipe_8c_html_a19c798b7828113f9218ecf43fbebead3"><div class="ttname"><a href="spotter__cam__pipe_8c.html#a19c798b7828113f9218ecf43fbebead3">spotter_cam_pipe_deinit</a></div><div class="ttdeci">void spotter_cam_pipe_deinit(void)</div><div class="ttdoc">Stop the native camera process and clear detector-specific configuration.</div><div class="ttdef"><b>Definition</b> <a href="spotter__cam__pipe_8c_source.html#l00532">spotter_cam_pipe.c:532</a></div></div>
+<div class="ttc" id="aspotter__cam__pipe_8c_html_a2d6a6e9dc5464e4df3185b240290cf90"><div class="ttname"><a href="spotter__cam__pipe_8c.html#a2d6a6e9dc5464e4df3185b240290cf90">spotter_cam_pipe_last_detection_summary</a></div><div class="ttdeci">void spotter_cam_pipe_last_detection_summary(char *buffer, size_t buffer_size)</div><div class="ttdoc">Format the most recent shot's detection result for EXIF writing.</div><div class="ttdef"><b>Definition</b> <a href="spotter__cam__pipe_8c_source.html#l00374">spotter_cam_pipe.c:374</a></div></div>
+<div class="ttc" id="aspotter__cam__pipe_8c_html_a33c5cf1225ffd638325c73cc2ed79504"><div class="ttname"><a href="spotter__cam__pipe_8c.html#a33c5cf1225ffd638325c73cc2ed79504">spotter_cam_pipe_save_detection_copy</a></div><div class="ttdeci">void spotter_cam_pipe_save_detection_copy(const char *filename)</div><div class="ttdoc">Copy filename into a "detections" subdirectory of the photo directory if the last spotter_cam_pipe_sh...</div><div class="ttdef"><b>Definition</b> <a href="spotter__cam__pipe_8c_source.html#l00459">spotter_cam_pipe.c:459</a></div></div>
+<div class="ttc" id="aspotter__cam__pipe_8c_html_a50892513ed0d8ae0e3a09acffd51908a"><div class="ttname"><a href="spotter__cam__pipe_8c.html#a50892513ed0d8ae0e3a09acffd51908a">spotter_cam_pipe_configure</a></div><div class="ttdeci">void spotter_cam_pipe_configure(const struct camera_backend_host *host)</div><div class="ttdoc">Borrow USHER's shutdown flag for both serialized native worker owners.</div><div class="ttdef"><b>Definition</b> <a href="spotter__cam__pipe_8c_source.html#l00110">spotter_cam_pipe.c:110</a></div></div>
+<div class="ttc" id="aspotter__cam__pipe_8c_html_aa63d588b1ffa081f7c7fdbf8bc072dd7"><div class="ttname"><a href="spotter__cam__pipe_8c.html#aa63d588b1ffa081f7c7fdbf8bc072dd7">spotter_cam_pipe_shoot</a></div><div class="ttdeci">int spotter_cam_pipe_shoot(char *filename, size_t filename_size, int image_number)</div><div class="ttdoc">Request one JPEG and, when enabled, parse its matching detection sidecar.</div><div class="ttdef"><b>Definition</b> <a href="spotter__cam__pipe_8c_source.html#l00510">spotter_cam_pipe.c:510</a></div></div>
+<div class="ttc" id="aspotter__cam__pipe_8c_html_ab92894ebfce735678f022fc4ec122ad3"><div class="ttname"><a href="spotter__cam__pipe_8c.html#ab92894ebfce735678f022fc4ec122ad3">spotter_cam_pipe_bind_frame</a></div><div class="ttdeci">bool spotter_cam_pipe_bind_frame(uint64_t sequence, uint64_t sensor_timestamp_ns)</div><div class="ttdoc">Reject a detection result whose identity differs from the validated saved frame.</div><div class="ttdef"><b>Definition</b> <a href="spotter__cam__pipe_8c_source.html#l00351">spotter_cam_pipe.c:351</a></div></div>
+<div class="ttc" id="aspotter__cam__pipe_8c_html_ad14b4c662ce46e86359aa4570b8ef471"><div class="ttname"><a href="spotter__cam__pipe_8c.html#ad14b4c662ce46e86359aa4570b8ef471">spotter_cam_pipe_init</a></div><div class="ttdeci">int spotter_cam_pipe_init(const char *unused)</div><div class="ttdoc">Start and qualify native persistent capture with the selected analysis policy.</div><div class="ttdef"><b>Definition</b> <a href="spotter__cam__pipe_8c_source.html#l00496">spotter_cam_pipe.c:496</a></div></div>
+<div class="ttc" id="aspotter__cam__pipe_8h_html"><div class="ttname"><a href="spotter__cam__pipe_8h.html">spotter_cam_pipe.h</a></div><div class="ttdoc">Native USHER adapter for on-sensor detection or photo-only capture.</div></div>
+<div class="ttc" id="aspotter__camera__backend_8c_html_a8f29f33e600d3d9f0477c079b603f738"><div class="ttname"><a href="spotter__camera__backend_8c.html#a8f29f33e600d3d9f0477c079b603f738">spotter_camera_backend_get</a></div><div class="ttdeci">struct camera_backend spotter_camera_backend_get(void)</div><div class="ttdoc">Build the Spottercam backend descriptor for the registry.</div><div class="ttdef"><b>Definition</b> <a href="spotter__camera__backend_8c_source.html#l00289">spotter_camera_backend.c:289</a></div></div>
+<div class="ttc" id="aspotter__camera__backend_8h_html"><div class="ttname"><a href="spotter__camera__backend_8h.html">spotter_camera_backend.h</a></div><div class="ttdoc">Spottercam backend descriptor and optional native UART target projection.</div></div>
+<div class="ttc" id="astructcamera__backend_html"><div class="ttname"><a href="structcamera__backend.html">camera_backend</a></div><div class="ttdoc">Function table describing one backend's owned camera operations.</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00094">camera_backend.h:94</a></div></div>
+<div class="ttc" id="astructcamera__backend_html_a27efba4f424a22f32ed19051fe25deb4"><div class="ttname"><a href="structcamera__backend.html#a27efba4f424a22f32ed19051fe25deb4">camera_backend::capabilities</a></div><div class="ttdeci">unsigned capabilities</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00114">camera_backend.h:114</a></div></div>
+<div class="ttc" id="astructcamera__backend_html_a58bffcd5bf2588b7e8c370c4131b215e"><div class="ttname"><a href="structcamera__backend.html#a58bffcd5bf2588b7e8c370c4131b215e">camera_backend::camera_id</a></div><div class="ttdeci">uint8_t camera_id</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00107">camera_backend.h:107</a></div></div>
+<div class="ttc" id="astructcamera__backend_html_a78bc8b4a252e75228f9f29b1bb155bfd"><div class="ttname"><a href="structcamera__backend.html#a78bc8b4a252e75228f9f29b1bb155bfd">camera_backend::mock</a></div><div class="ttdeci">struct camera_backend::@243120217343377347337244154071360217343172026241 mock</div></div>
+<div class="ttc" id="astructcamera__backend_html_ae69d548bace930d317399f836970aaad"><div class="ttname"><a href="structcamera__backend.html#ae69d548bace930d317399f836970aaad">camera_backend::name</a></div><div class="ttdeci">const char * name</div><div class="ttdoc">Stable backend name used for logs and diagnostics.</div><div class="ttdef"><b>Definition</b> <a href="camera__backend_8h_source.html#l00096">camera_backend.h:96</a></div></div>
+<div class="ttc" id="ausher__protocol_8h_html_a0d23ad236aeba36dc214941fa139f5cd"><div class="ttname"><a href="usher__protocol_8h.html#a0d23ad236aeba36dc214941fa139f5cd">USHER_CAMERA_ALL</a></div><div class="ttdeci">#define USHER_CAMERA_ALL</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00095">usher_protocol.h:95</a></div></div>
+<div class="ttc" id="ausher__protocol_8h_html_a26ee2250bb9c4f6ca3aa0209af39f198"><div class="ttname"><a href="usher__protocol_8h.html#a26ee2250bb9c4f6ca3aa0209af39f198">USHER_CAMERA_AICAM</a></div><div class="ttdeci">#define USHER_CAMERA_AICAM</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00097">usher_protocol.h:97</a></div></div>
+<div class="ttc" id="ausher__protocol_8h_html_aa88380691247abff773ae427ece4ae0b"><div class="ttname"><a href="usher__protocol_8h.html#aa88380691247abff773ae427ece4ae0b">USHER_CAMERA_LWIRCAM</a></div><div class="ttdeci">#define USHER_CAMERA_LWIRCAM</div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00098">usher_protocol.h:98</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

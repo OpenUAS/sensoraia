@@ -1,0 +1,2030 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/coverage_scheduler.c Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('coverage__scheduler_8c_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">coverage_scheduler.c</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="coverage__scheduler_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @file coverage_scheduler.c</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @brief Bounded geometric decisions without pixel decoding or camera dependencies.</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * @details Two different margins are intentional: shrink footprints when granting</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * credit, but expand them before deciding a new photograph is redundant. Using</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * the same test for both would turn uncertainty into falsely claimed coverage.</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include "<a class="code" href="coverage__scheduler_8h.html">coverage_scheduler.h</a>"</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment"></span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">/** @brief Validated inclusive grid bounds and polygon winding for half-plane tests. */</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structcoverage__bounds.html#a284e7df1641b18fd07eaa3e4fbe6ad4c">   31</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__bounds.html">coverage_bounds</a> { <span class="keywordtype">int</span> <a class="code hl_variable" href="structcoverage__bounds.html#a2efd96d687eb8ef383b87bddd29f03df">left</a>, <a class="code hl_variable" href="structcoverage__bounds.html#a9128a74e4c33696fce91494f03f014dc">right</a>, <a class="code hl_variable" href="structcoverage__bounds.html#a284e7df1641b18fd07eaa3e4fbe6ad4c">bottom</a>, <a class="code hl_variable" href="structcoverage__bounds.html#a9ccc8da283850268841b8a7573fb9a3d">top</a>; <span class="keywordtype">double</span> <a class="code hl_variable" href="structcoverage__bounds.html#a097a47832f2001fb924209d51dd26980">winding</a>; };</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment"></span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment">/** @brief Apply Rz*Ry*Rx in place, matching the mount/body order used by PANGEA. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00034">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#a5f74f1f4e7726a30130cb91aa736dad3">   34</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a5f74f1f4e7726a30130cb91aa736dad3">rotate</a>(<span class="keywordtype">double</span> vector[3], <span class="keywordtype">double</span> roll_deg, <span class="keywordtype">double</span> pitch_deg, <span class="keywordtype">double</span> yaw_deg)</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>{</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> <span class="keyword">const</span> <span class="keywordtype">double</span> radians = 0.017453292519943295;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> <span class="keyword">const</span> <span class="keywordtype">double</span> roll = roll_deg * radians, pitch = pitch_deg * radians, yaw = yaw_deg * radians;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> <span class="keyword">const</span> <span class="keywordtype">double</span> east = cos(roll) * vector[1] - sin(roll) * vector[2];</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> <span class="keyword">const</span> <span class="keywordtype">double</span> down = sin(roll) * vector[1] + cos(roll) * vector[2];</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> <span class="keyword">const</span> <span class="keywordtype">double</span> north = cos(pitch) * vector[0] + sin(pitch) * down;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  vector[2] = -sin(pitch) * vector[0] + cos(pitch) * down;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  vector[0] = cos(yaw) * north - sin(yaw) * east;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  vector[1] = sin(yaw) * north + cos(yaw) * east;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
+</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00046">
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#a938840a412fb600c3308daefcc0a8b92">   46</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a938840a412fb600c3308daefcc0a8b92">coverage_project</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__camera.html">coverage_camera</a> *<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__pose.html">coverage_pose</a> *pose,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> <span class="keywordtype">double</span> origin_latitude_deg, <span class="keywordtype">double</span> origin_longitude_deg, <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__footprint.html">coverage_footprint</a> *footprint)</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>{</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a> || !pose || !footprint || <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;width &lt; 2 || <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;width &gt; 4096</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>      || <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;height &lt; 2 || <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;height &gt; 4096 || !isfinite(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;fx) || <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;fx &lt; 1</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>      || !isfinite(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;fy) || <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;fy &lt; 1 || !isfinite(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;cx) || <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;cx &lt; 0</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>      || <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;cx &gt;= <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;width || !isfinite(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;cy) || <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;cy &lt; 0 || <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;cy &gt;= <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;height</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>      || !isfinite(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_roll_deg) || !isfinite(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_pitch_deg) || !isfinite(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_yaw_deg)</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>      || fabs(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_roll_deg) &gt; 180 || fabs(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_pitch_deg) &gt; 180 || fabs(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_yaw_deg) &gt; 180</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>      || !isfinite(pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#a4fd2ace76b4ef277461421a9d36c7acc">latitude_deg</a>) || fabs(pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#a4fd2ace76b4ef277461421a9d36c7acc">latitude_deg</a>) &gt; 85</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>      || !isfinite(pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ad015b1e4a328e0ec1fe6dc955affc7da">longitude_deg</a>) || fabs(pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ad015b1e4a328e0ec1fe6dc955affc7da">longitude_deg</a>) &gt; 180</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>      || !isfinite(origin_latitude_deg) || fabs(origin_latitude_deg) &gt; 85</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>      || !isfinite(origin_longitude_deg) || fabs(origin_longitude_deg) &gt; 180</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>      || !isfinite(pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ae8a4363d02edb0da7395ebeb4c3d0fff">agl_m</a>) || pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ae8a4363d02edb0da7395ebeb4c3d0fff">agl_m</a> &lt; 0.1 || pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ae8a4363d02edb0da7395ebeb4c3d0fff">agl_m</a> &gt; 10000</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      || !isfinite(pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ace7bf2aaa2fe6769d295c9657d661999">roll_deg</a>) || !isfinite(pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#a1e1f034d0343efa4435495ba6f66ea27">pitch_deg</a>) || !isfinite(pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#afa0445cb88cc6597c71366809ca1be21">yaw_deg</a>)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>      || !isfinite(pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#a31b3c907bf275e69c88ea340ef7e9b3f">uncertainty_m</a>) || pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#a31b3c907bf275e69c88ea340ef7e9b3f">uncertainty_m</a> &lt; 0) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> <span class="keyword">const</span> <span class="keywordtype">double</span> radians = 0.017453292519943295, earth_radius = 6378137;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> <span class="comment">/* A local plane keeps decisions cheap. Reject distant poses instead of silently</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment">   * stretching the approximation; the caller can still take an uncredited photo. */</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> <span class="keyword">const</span> <span class="keywordtype">double</span> north = earth_radius * (pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#a4fd2ace76b4ef277461421a9d36c7acc">latitude_deg</a> - origin_latitude_deg) * radians;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> <span class="keyword">const</span> <span class="keywordtype">double</span> east = earth_radius * cos(origin_latitude_deg * radians)</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                      * remainder(pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ad015b1e4a328e0ec1fe6dc955affc7da">longitude_deg</a> - origin_longitude_deg, 360) * radians;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> <span class="keywordflow">if</span> (hypot(east, north) &gt; 5000) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__footprint.html">coverage_footprint</a> projected = {.uncertainty_m = pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#a31b3c907bf275e69c88ea340ef7e9b3f">uncertainty_m</a> + (east * east + north * north) / (2 * earth_radius)};</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> index = 0; index &lt; 4; ++index) {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> <span class="keyword">const</span> <span class="keywordtype">double</span> column = index == 1 || index == 2 ? <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;width - 1 : 0;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> = index &gt;= 2 ? <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;height - 1 : 0;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> <span class="comment">/* Image-up is body-forward, image-right is starboard, optical-axis is down.</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment">     * Mount first, then aircraft attitude: reversing these changes the footprint. */</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> <span class="keywordtype">double</span> ray[3] = {-(<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> - <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;cy) / <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;fy, (column - <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;cx) / <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;fx, 1};</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a5f74f1f4e7726a30130cb91aa736dad3">rotate</a>(ray, <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_roll_deg, <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_pitch_deg, <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_yaw_deg);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a5f74f1f4e7726a30130cb91aa736dad3">rotate</a>(ray, pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ace7bf2aaa2fe6769d295c9657d661999">roll_deg</a>, pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#a1e1f034d0343efa4435495ba6f66ea27">pitch_deg</a>, pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#afa0445cb88cc6597c71366809ca1be21">yaw_deg</a>);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> <span class="keywordflow">if</span> (!isfinite(ray[2]) || ray[2] &lt;= 0.1) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    projected.<a class="code hl_variable" href="structcoverage__footprint.html#a907a21b073e12f2557445e3c7e81a3ec">corner</a>[index] = (<span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__point.html">coverage_point</a>) {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> <a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a> + pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ae8a4363d02edb0da7395ebeb4c3d0fff">agl_m</a> * ray[1] / ray[2],</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> <a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a> + pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ae8a4363d02edb0da7395ebeb4c3d0fff">agl_m</a> * ray[0] / ray[2]</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    };</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  }</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  *footprint = projected;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>}</div>
+</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00088">
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#ac63055a1572a1431753435b19a2f5526">   88</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="coverage__scheduler_8c.html#ac63055a1572a1431753435b19a2f5526">coverage_project_pixel</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__camera.html">coverage_camera</a> *<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__pose.html">coverage_pose</a> *pose,</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> <span class="keywordtype">double</span> column, <span class="keywordtype">double</span> <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>, <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__point.html">coverage_point</a> *offset)</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>{</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__footprint.html">coverage_footprint</a> footprint;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a> || !pose || !offset || !isfinite(column) || !isfinite(<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>) ||</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>      column &lt; 0 || <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row &lt; 0 || column &gt;</a>= <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;width || <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> &gt;= <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;height ||</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>      !<a class="code hl_function" href="coverage__scheduler_8c.html#a938840a412fb600c3308daefcc0a8b92">coverage_project</a>(<a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>, pose, pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#a4fd2ace76b4ef277461421a9d36c7acc">latitude_deg</a>, pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ad015b1e4a328e0ec1fe6dc955affc7da">longitude_deg</a>, &amp;footprint)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> <span class="keywordtype">double</span> ray[3] = {-(<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> - <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;cy) / <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;fy, (column - <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;cx) / <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;fx, 1};</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a5f74f1f4e7726a30130cb91aa736dad3">rotate</a>(ray, <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_roll_deg, <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_pitch_deg, <a class="code hl_variable" href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a>-&gt;mount_yaw_deg);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a5f74f1f4e7726a30130cb91aa736dad3">rotate</a>(ray, pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ace7bf2aaa2fe6769d295c9657d661999">roll_deg</a>, pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#a1e1f034d0343efa4435495ba6f66ea27">pitch_deg</a>, pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#afa0445cb88cc6597c71366809ca1be21">yaw_deg</a>);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> <span class="keywordflow">if</span> (!isfinite(ray[2]) || ray[2] &lt;= 0.1) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__point.html">coverage_point</a> projected = {pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ae8a4363d02edb0da7395ebeb4c3d0fff">agl_m</a> * ray[1] / ray[2], pose-&gt;<a class="code hl_variable" href="structcoverage__pose.html#ae8a4363d02edb0da7395ebeb4c3d0fff">agl_m</a> * ray[0] / ray[2]};</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> <span class="keywordflow">if</span> (!isfinite(projected.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>) || !isfinite(projected.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  *offset = projected;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>}</div>
+</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00105">
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#a84626f9012d9e4494f29de25fb3e3ae0">  105</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a84626f9012d9e4494f29de25fb3e3ae0">coverage_init</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__state.html">coverage_state</a> *state, <span class="keywordtype">double</span> <a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>, <span class="keywordtype">double</span> <a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>, <span class="keywordtype">double</span> cell_m)</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>{</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> <span class="keywordflow">if</span> (!state || !isfinite(<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>) || !isfinite(<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>) || !isfinite(cell_m) || cell_m &lt; 0.25 || cell_m &gt; 100)</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  memset(state, 0, <span class="keyword">sizeof</span>(*state));</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a94ee636c8b14847105d2584dd04474e0">origin_east</a> = <a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a7827ba89de26c6a4678ff092bd0264bb">origin_north</a> = <a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a> = cell_m;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>}</div>
+</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="comment"></span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="comment">/** @brief Reject unusable polygons before converting coordinates or scanning cells.</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="comment"> * @details Convexity and work limits belong here so every scoring/credit path</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="comment"> * shares the same conservative definition of a computable footprint.</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00120">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#ac564f7632ada2ed53c529ff007295ebc">  120</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="coverage__scheduler_8c.html#ac564f7632ada2ed53c529ff007295ebc">bounds</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__state.html">coverage_state</a> *state, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__candidate.html">coverage_candidate</a> *candidate,</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__bounds.html">coverage_bounds</a> *box)</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>{</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> <span class="keywordflow">if</span> (!state || !candidate || state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a> &lt; 0.25 || !isfinite(state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a>)</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>      || !isfinite(state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a94ee636c8b14847105d2584dd04474e0">origin_east</a>) || !isfinite(state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a7827ba89de26c6a4678ff092bd0264bb">origin_north</a>)</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>      || candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a0ae6847a1ecee23357d33ab670c9f7f1">camera_id</a> &lt; 1 || candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a0ae6847a1ecee23357d33ab670c9f7f1">camera_id</a> &gt; <a class="code hl_define" href="coverage__scheduler_8h.html#a213ddf287ca49bff8043e26832760843">COVERAGE_CAMERAS</a> || !candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a851e00887ea56fc2fcd2e5922d0919d3">quality</a></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>      || !isfinite(candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a1541e1309655be6306ad385f0a87c752">footprint</a>.<a class="code hl_variable" href="structcoverage__footprint.html#af9f2e187bf9801acd2324112fa4f6d08">uncertainty_m</a>) || candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a1541e1309655be6306ad385f0a87c752">footprint</a>.<a class="code hl_variable" href="structcoverage__footprint.html#af9f2e187bf9801acd2324112fa4f6d08">uncertainty_m</a> &lt; 0)</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> <span class="keywordtype">double</span> left = INFINITY, right = -INFINITY, bottom = INFINITY, top = -INFINITY;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> <span class="keywordtype">double</span> winding = 0;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> index = 0; index &lt; 4; ++index) {</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__point.html">coverage_point</a> first = candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a1541e1309655be6306ad385f0a87c752">footprint</a>.<a class="code hl_variable" href="structcoverage__footprint.html#a907a21b073e12f2557445e3c7e81a3ec">corner</a>[index];</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__point.html">coverage_point</a> second = candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a1541e1309655be6306ad385f0a87c752">footprint</a>.<a class="code hl_variable" href="structcoverage__footprint.html#a907a21b073e12f2557445e3c7e81a3ec">corner</a>[(index + 1) % 4];</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__point.html">coverage_point</a> third = candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a1541e1309655be6306ad385f0a87c752">footprint</a>.<a class="code hl_variable" href="structcoverage__footprint.html#a907a21b073e12f2557445e3c7e81a3ec">corner</a>[(index + 2) % 4];</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> <span class="keywordflow">if</span> (!isfinite(first.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>) || !isfinite(first.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> <span class="keyword">const</span> <span class="keywordtype">double</span> turn = (second.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a> - first.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>) * (third.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a> - second.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>)</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                        - (second.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a> - first.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>) * (third.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a> - second.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>);</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> <span class="keywordflow">if</span> (!isfinite(turn) || fabs(turn) &lt; 1e-9 || (winding != 0 &amp;&amp; turn * winding &lt;= 0)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    winding = turn;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    left = fmin(left, first.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    right = fmax(right, first.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>);</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    bottom = fmin(bottom, first.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>);</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    top = fmax(top, first.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>);</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  }</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  left = floor((left - state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a94ee636c8b14847105d2584dd04474e0">origin_east</a>) / state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a>);</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  right = ceil((right - state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a94ee636c8b14847105d2584dd04474e0">origin_east</a>) / state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a>) - 1;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>  bottom = floor((bottom - state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a7827ba89de26c6a4678ff092bd0264bb">origin_north</a>) / state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a>);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  top = ceil((top - state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a7827ba89de26c6a4678ff092bd0264bb">origin_north</a>) / state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a>) - 1;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> <span class="keywordflow">if</span> (left &lt; 0 || bottom &lt; 0 || right &gt;= <a class="code hl_define" href="coverage__scheduler_8h.html#a6098de435c0fc2020ec81e11955b0c6e">COVERAGE_SIDE</a> || top &gt;= <a class="code hl_define" href="coverage__scheduler_8h.html#a6098de435c0fc2020ec81e11955b0c6e">COVERAGE_SIDE</a></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>      || right &lt; left || top &lt; bottom || (right - left + 1) * (top - bottom + 1) &gt; <a class="code hl_define" href="coverage__scheduler_8h.html#ab636928c702ca68408e6b64b67878cf1">COVERAGE_SCAN_LIMIT</a>)</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>  *box = (<span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__bounds.html">coverage_bounds</a>) {(int)<a class="code hl_variable" href="structcoverage__bounds.html#a2efd96d687eb8ef383b87bddd29f03df">left</a>, (int)<a class="code hl_variable" href="structcoverage__bounds.html#a9128a74e4c33696fce91494f03f014dc">right</a>, (int)<a class="code hl_variable" href="structcoverage__bounds.html#a284e7df1641b18fd07eaa3e4fbe6ad4c">bottom</a>, (int)<a class="code hl_variable" href="structcoverage__bounds.html#a9ccc8da283850268841b8a7573fb9a3d">top</a>, <a class="code hl_variable" href="structcoverage__bounds.html#a097a47832f2001fb924209d51dd26980">winding</a> &gt; 0 ? 1 : -1};</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>}</div>
+</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="comment"></span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="comment">/** @brief Require the whole cell, not merely its centre, inside every polygon edge. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00156">
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#acfcbb2a27c9b5c4095f9cab3bb96709c">  156</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="coverage__scheduler_8c.html#acfcbb2a27c9b5c4095f9cab3bb96709c">contains_cell</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__state.html">coverage_state</a> *state, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__candidate.html">coverage_candidate</a> *candidate,</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__bounds.html">coverage_bounds</a> *box, <span class="keywordtype">int</span> column, <span class="keywordtype">int</span> <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>)</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>{</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> <span class="keyword">const</span> <span class="keywordtype">double</span> east = state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a94ee636c8b14847105d2584dd04474e0">origin_east</a> + (column + 0.5) * state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a>;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> <span class="keyword">const</span> <span class="keywordtype">double</span> north = state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a7827ba89de26c6a4678ff092bd0264bb">origin_north</a> + (<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> + 0.5) * state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a>;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> index = 0; index &lt; 4; ++index) {</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__point.html">coverage_point</a> first = candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a1541e1309655be6306ad385f0a87c752">footprint</a>.<a class="code hl_variable" href="structcoverage__footprint.html#a907a21b073e12f2557445e3c7e81a3ec">corner</a>[index];</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__point.html">coverage_point</a> second = candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a1541e1309655be6306ad385f0a87c752">footprint</a>.<a class="code hl_variable" href="structcoverage__footprint.html#a907a21b073e12f2557445e3c7e81a3ec">corner</a>[(index + 1) % 4];</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> <span class="keyword">const</span> <span class="keywordtype">double</span> delta_east = second.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a> - first.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>, delta_north = second.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a> - first.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> <span class="keyword">const</span> <span class="keywordtype">double</span> distance = box-&gt;<a class="code hl_variable" href="structcoverage__bounds.html#a097a47832f2001fb924209d51dd26980">winding</a> * (delta_east * (<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a> - first.<a class="code hl_variable" href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">north</a>) - delta_north * (<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a> - first.<a class="code hl_variable" href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">east</a>));</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> <span class="comment">/* The square-cell support term plus the position margin erodes each edge.</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="comment">     * This avoids crediting a boundary cell whose unobserved corner hides a gap. */</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> <span class="keyword">const</span> <span class="keywordtype">double</span> margin = 0.5 * state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a> * (fabs(delta_east) + fabs(delta_north))</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                          + candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a1541e1309655be6306ad385f0a87c752">footprint</a>.<a class="code hl_variable" href="structcoverage__footprint.html#af9f2e187bf9801acd2324112fa4f6d08">uncertainty_m</a> * hypot(delta_east, delta_north);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> <span class="keywordflow">if</span> (distance + 1e-9 &lt; margin) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>  }</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>}</div>
+</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="comment"></span> </div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="comment">/** @brief Score a second view against a hypothetical first, without committing either.</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="comment"> * @details The overlay is local to this calculation. A predicted image must never</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="comment"> * leak into the saved ledger, even if it scores well or is next in the queue.</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00179">
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#a7219a82d595e61803ec9cf9782c3839e">  179</a></span><span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a7219a82d595e61803ec9cf9782c3839e">gain_after</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__state.html">coverage_state</a> *state, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__candidate.html">coverage_candidate</a> *candidate,</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__candidate.html">coverage_candidate</a> *previous)</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>{</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__bounds.html">coverage_bounds</a> box, previous_box;</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="coverage__scheduler_8c.html#ac564f7632ada2ed53c529ff007295ebc">bounds</a>(state, candidate, &amp;box)) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> same_camera = previous &amp;&amp; previous-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a0ae6847a1ecee23357d33ab670c9f7f1">camera_id</a> == candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a0ae6847a1ecee23357d33ab670c9f7f1">camera_id</a>;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> <span class="keywordflow">if</span> (same_camera &amp;&amp; !<a class="code hl_function" href="coverage__scheduler_8c.html#ac564f7632ada2ed53c529ff007295ebc">bounds</a>(state, previous, &amp;previous_box)) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>  uint64_t gain = 0;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> = box.<a class="code hl_variable" href="structcoverage__bounds.html#a284e7df1641b18fd07eaa3e4fbe6ad4c">bottom</a>; <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> &lt;= box.<a class="code hl_variable" href="structcoverage__bounds.html#a9ccc8da283850268841b8a7573fb9a3d">top</a>; ++<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>) {</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> <span class="keywordflow">for</span> (<span class="keywordtype">int</span> column = box.<a class="code hl_variable" href="structcoverage__bounds.html#a2efd96d687eb8ef383b87bddd29f03df">left</a>; column &lt;= box.<a class="code hl_variable" href="structcoverage__bounds.html#a9128a74e4c33696fce91494f03f014dc">right</a>; ++column) {</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="coverage__scheduler_8c.html#acfcbb2a27c9b5c4095f9cab3bb96709c">contains_cell</a>(state, candidate, &amp;box, column, <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>)) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>      uint8_t saved = state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a2aad7d7920814df0c8bf69729c1c2ecb">saved</a>[candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a0ae6847a1ecee23357d33ab670c9f7f1">camera_id</a> - 1][<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> * <a class="code hl_define" href="coverage__scheduler_8h.html#a6098de435c0fc2020ec81e11955b0c6e">COVERAGE_SIDE</a> + column];</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> <span class="keywordflow">if</span> (same_camera &amp;&amp; <a class="code hl_function" href="coverage__scheduler_8c.html#acfcbb2a27c9b5c4095f9cab3bb96709c">contains_cell</a>(state, previous, &amp;previous_box, column, <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>) &amp;&amp; previous-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a851e00887ea56fc2fcd2e5922d0919d3">quality</a> &gt; saved)</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        saved = previous-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a851e00887ea56fc2fcd2e5922d0919d3">quality</a>;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> <span class="keywordflow">if</span> (candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a851e00887ea56fc2fcd2e5922d0919d3">quality</a> &gt; saved) gain += candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a851e00887ea56fc2fcd2e5922d0919d3">quality</a> - saved;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    }</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>  }</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> <span class="keywordflow">return</span> gain * state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a> * state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a> / 255.0;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>}</div>
+</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00199">
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#a2f9d023211238e977fff97cd9fc13488">  199</a></span><span class="keywordtype">double</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a2f9d023211238e977fff97cd9fc13488">coverage_gain</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__state.html">coverage_state</a> *state, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__candidate.html">coverage_candidate</a> *candidate)</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>{</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> <span class="keywordflow">return</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a7219a82d595e61803ec9cf9782c3839e">gain_after</a>(state, candidate, NULL);</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>}</div>
+</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00204">
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#a81bad3e44c3adf970d753dfa6e14c722">  204</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="coverage__scheduler_8c.html#a81bad3e44c3adf970d753dfa6e14c722">coverage_commit</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__state.html">coverage_state</a> *state, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__candidate.html">coverage_candidate</a> *candidate)</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>{</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__bounds.html">coverage_bounds</a> box;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="coverage__scheduler_8c.html#ac564f7632ada2ed53c529ff007295ebc">bounds</a>(state, candidate, &amp;box)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> = box.<a class="code hl_variable" href="structcoverage__bounds.html#a284e7df1641b18fd07eaa3e4fbe6ad4c">bottom</a>; <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> &lt;= box.<a class="code hl_variable" href="structcoverage__bounds.html#a9ccc8da283850268841b8a7573fb9a3d">top</a>; ++<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>) {</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> <span class="keywordflow">for</span> (<span class="keywordtype">int</span> column = box.<a class="code hl_variable" href="structcoverage__bounds.html#a2efd96d687eb8ef383b87bddd29f03df">left</a>; column &lt;= box.<a class="code hl_variable" href="structcoverage__bounds.html#a9128a74e4c33696fce91494f03f014dc">right</a>; ++column) {</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="coverage__scheduler_8c.html#acfcbb2a27c9b5c4095f9cab3bb96709c">contains_cell</a>(state, candidate, &amp;box, column, <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>)) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>      uint8_t *saved = &amp;state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a2aad7d7920814df0c8bf69729c1c2ecb">saved</a>[candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a0ae6847a1ecee23357d33ab670c9f7f1">camera_id</a> - 1][<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> * <a class="code hl_define" href="coverage__scheduler_8h.html#a6098de435c0fc2020ec81e11955b0c6e">COVERAGE_SIDE</a> + column];</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> <span class="keywordflow">if</span> (candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a851e00887ea56fc2fcd2e5922d0919d3">quality</a> &gt; *saved) *saved = candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a851e00887ea56fc2fcd2e5922d0919d3">quality</a>;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    }</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>  }</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>}</div>
+</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00218">
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#aad9b426e176bc347582feffde3626af8">  218</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="coverage__scheduler_8c.html#aad9b426e176bc347582feffde3626af8">coverage_choose</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__state.html">coverage_state</a> *state, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__candidate.html">coverage_candidate</a> *candidates,</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>, uint64_t now_us, uint64_t <a class="code hl_variable" href="capture__arbiter_8c.html#a557665997b3a9a9be0a93dd61fa122ac">service_us</a>)</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>{</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> <span class="keywordflow">if</span> (!state || !candidates || !<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> || <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &gt; <a class="code hl_define" href="coverage__scheduler_8h.html#ab52ba68a7e428d72afe4ee25cce34174">COVERAGE_CANDIDATES</a> || !<a class="code hl_variable" href="capture__arbiter_8c.html#a557665997b3a9a9be0a93dd61fa122ac">service_us</a>) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> <span class="keywordtype">double</span> best = 0, best_first_gain = 0;</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> <span class="comment">/* Enumerating four candidates is cheap and deterministic. Looking one view</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="comment">   * ahead preserves a small last-chance area that a greedy largest-area choice</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="comment">   * could miss before taking a larger, still-visible area in the following shot. */</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>  uint64_t best_time = UINT64_MAX;</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> <span class="keywordtype">int</span> chosen = -1;</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> first = 0; first &lt; <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>; ++first) {</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> <span class="keyword">const</span> uint64_t <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a> = candidates[first].<a class="code hl_variable" href="structcoverage__candidate.html#ab2f5633dcb30e58dbd534c219f4e6903">ready_us</a> &gt; now_us ? candidates[first].<a class="code hl_variable" href="structcoverage__candidate.html#ab2f5633dcb30e58dbd534c219f4e6903">ready_us</a> : now_us;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a> &gt; candidates[first].deadline_us || <a class="code hl_variable" href="capture__arbiter_8c.html#a557665997b3a9a9be0a93dd61fa122ac">service_us</a> &gt; UINT64_MAX - <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> <span class="keyword">const</span> <span class="keywordtype">double</span> first_gain = <a class="code hl_function" href="coverage__scheduler_8c.html#a2f9d023211238e977fff97cd9fc13488">coverage_gain</a>(state, &amp;candidates[first]);</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> <span class="keywordflow">if</span> (first_gain &lt;= 0) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> <span class="keywordtype">double</span> total = first_gain;</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> second = 0; second &lt; <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>; ++second) {</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> <span class="keywordflow">if</span> (second == first) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> <span class="keyword">const</span> uint64_t next = candidates[second].<a class="code hl_variable" href="structcoverage__candidate.html#ab2f5633dcb30e58dbd534c219f4e6903">ready_us</a> &gt; <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a> + <a class="code hl_variable" href="capture__arbiter_8c.html#a557665997b3a9a9be0a93dd61fa122ac">service_us</a></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>                            ? candidates[second].<a class="code hl_variable" href="structcoverage__candidate.html#ab2f5633dcb30e58dbd534c219f4e6903">ready_us</a> : <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a> + <a class="code hl_variable" href="capture__arbiter_8c.html#a557665997b3a9a9be0a93dd61fa122ac">service_us</a>;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> <span class="keywordflow">if</span> (next &gt; candidates[second].deadline_us) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> <span class="keyword">const</span> <span class="keywordtype">double</span> additional = <a class="code hl_function" href="coverage__scheduler_8c.html#a7219a82d595e61803ec9cf9782c3839e">gain_after</a>(state, &amp;candidates[second], &amp;candidates[first]);</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> <span class="keywordflow">if</span> (additional &gt; 0) total = fmax(total, first_gain + additional);</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    }</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> <span class="keywordflow">if</span> (total &gt; best || (total == best &amp;&amp; (<a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a> &lt; best_time || (<a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a> == best_time &amp;&amp; first_gain &gt; best_first_gain)))) {</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>      best = total;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>      best_time = <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>      best_first_gain = first_gain;</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>      chosen = (int)first;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    }</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>  }</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> <span class="keywordflow">return</span> chosen;</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>}</div>
+</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00252">
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#abefb6a89be25e09bc7326c9070daad66">  252</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="coverage__scheduler_8c.html#abefb6a89be25e09bc7326c9070daad66">coverage_wholly_saved</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__state.html">coverage_state</a> *state, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__candidate.html">coverage_candidate</a> *candidate)</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>{</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__bounds.html">coverage_bounds</a> box;</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="coverage__scheduler_8c.html#ac564f7632ada2ed53c529ff007295ebc">bounds</a>(state, candidate, &amp;box)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> <span class="keyword">const</span> <span class="keywordtype">double</span> margin = ceil(candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a1541e1309655be6306ad385f0a87c752">footprint</a>.<a class="code hl_variable" href="structcoverage__footprint.html#af9f2e187bf9801acd2324112fa4f6d08">uncertainty_m</a> / state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">cell_m</a>) + 1;</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> <span class="comment">/* A bounding rectangle deliberately asks for more evidence than the polygon.</span></div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span><span class="comment">   * At the map boundary or work limit, prefer an extra photo over a false skip. */</span></div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> <span class="keywordflow">if</span> (margin &gt; <a class="code hl_define" href="coverage__scheduler_8h.html#a6098de435c0fc2020ec81e11955b0c6e">COVERAGE_SIDE</a> || box.<a class="code hl_variable" href="structcoverage__bounds.html#a2efd96d687eb8ef383b87bddd29f03df">left</a> &lt; margin || box.<a class="code hl_variable" href="structcoverage__bounds.html#a284e7df1641b18fd07eaa3e4fbe6ad4c">bottom</a> &lt; margin</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>      || box.<a class="code hl_variable" href="structcoverage__bounds.html#a9128a74e4c33696fce91494f03f014dc">right</a> + margin &gt;= <a class="code hl_define" href="coverage__scheduler_8h.html#a6098de435c0fc2020ec81e11955b0c6e">COVERAGE_SIDE</a> || box.<a class="code hl_variable" href="structcoverage__bounds.html#a9ccc8da283850268841b8a7573fb9a3d">top</a> + margin &gt;= <a class="code hl_define" href="coverage__scheduler_8h.html#a6098de435c0fc2020ec81e11955b0c6e">COVERAGE_SIDE</a></div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>      || (box.<a class="code hl_variable" href="structcoverage__bounds.html#a9128a74e4c33696fce91494f03f014dc">right</a> - box.<a class="code hl_variable" href="structcoverage__bounds.html#a2efd96d687eb8ef383b87bddd29f03df">left</a> + 1 + 2 * margin) * (box.<a class="code hl_variable" href="structcoverage__bounds.html#a9ccc8da283850268841b8a7573fb9a3d">top</a> - box.<a class="code hl_variable" href="structcoverage__bounds.html#a284e7df1641b18fd07eaa3e4fbe6ad4c">bottom</a> + 1 + 2 * margin) &gt; <a class="code hl_define" href="coverage__scheduler_8h.html#ab636928c702ca68408e6b64b67878cf1">COVERAGE_SCAN_LIMIT</a>) <span class="keywordflow">return</span></div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> = box.<a class="code hl_variable" href="structcoverage__bounds.html#a284e7df1641b18fd07eaa3e4fbe6ad4c">bottom</a> - (<span class="keywordtype">int</span>)margin; <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> &lt;= box.<a class="code hl_variable" href="structcoverage__bounds.html#a9ccc8da283850268841b8a7573fb9a3d">top</a> + (<span class="keywordtype">int</span>)margin; ++<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>)</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> <span class="keywordflow">for</span> (<span class="keywordtype">int</span> column = box.<a class="code hl_variable" href="structcoverage__bounds.html#a2efd96d687eb8ef383b87bddd29f03df">left</a> - (<span class="keywordtype">int</span>)margin; column &lt;= box.<a class="code hl_variable" href="structcoverage__bounds.html#a9128a74e4c33696fce91494f03f014dc">right</a> + (<span class="keywordtype">int</span>)margin; ++column)</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> <span class="keywordflow">if</span> (state-&gt;<a class="code hl_variable" href="structcoverage__state.html#a2aad7d7920814df0c8bf69729c1c2ecb">saved</a>[candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a0ae6847a1ecee23357d33ab670c9f7f1">camera_id</a> - 1][<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> * <a class="code hl_define" href="coverage__scheduler_8h.html#a6098de435c0fc2020ec81e11955b0c6e">COVERAGE_SIDE</a> + column] &lt; candidate-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a851e00887ea56fc2fcd2e5922d0919d3">quality</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>}</div>
+</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00269">
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno"><a class="line" href="coverage__scheduler_8c.html#acdeb188a896d6388ff76dd1aee63b450">  269</a></span><span class="keywordtype">double</span> <a class="code hl_function" href="coverage__scheduler_8c.html#acdeb188a896d6388ff76dd1aee63b450">coverage_overlap</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__state.html">coverage_state</a> *state, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__candidate.html">coverage_candidate</a> *first,</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcoverage__candidate.html">coverage_candidate</a> *second)</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>{</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> <span class="keyword">struct </span><a class="code hl_struct" href="structcoverage__bounds.html">coverage_bounds</a> first_box, second_box;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="coverage__scheduler_8c.html#ac564f7632ada2ed53c529ff007295ebc">bounds</a>(state, first, &amp;first_box) || !<a class="code hl_function" href="coverage__scheduler_8c.html#ac564f7632ada2ed53c529ff007295ebc">bounds</a>(state, second, &amp;second_box)</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>      || first-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a0ae6847a1ecee23357d33ab670c9f7f1">camera_id</a> != second-&gt;<a class="code hl_variable" href="structcoverage__candidate.html#a0ae6847a1ecee23357d33ab670c9f7f1">camera_id</a>) <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> <span class="keywordtype">unsigned</span> total = 0, intersection = 0;</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> <span class="comment">/* Count uncertain/bounding cells in the denominator too. This lower estimate</span></div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="comment">   * prevents an optimistic overlap fraction from justifying an unsafe delay. */</span></div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> = first_box.<a class="code hl_variable" href="structcoverage__bounds.html#a284e7df1641b18fd07eaa3e4fbe6ad4c">bottom</a>; <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> &lt;= first_box.<a class="code hl_variable" href="structcoverage__bounds.html#a9ccc8da283850268841b8a7573fb9a3d">top</a>; ++<a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>)</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> <span class="keywordflow">for</span> (<span class="keywordtype">int</span> column = first_box.<a class="code hl_variable" href="structcoverage__bounds.html#a2efd96d687eb8ef383b87bddd29f03df">left</a>; column &lt;= first_box.<a class="code hl_variable" href="structcoverage__bounds.html#a9128a74e4c33696fce91494f03f014dc">right</a>; ++column) {</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>      ++total;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="coverage__scheduler_8c.html#acfcbb2a27c9b5c4095f9cab3bb96709c">contains_cell</a>(state, first, &amp;first_box, column, <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>)) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="coverage__scheduler_8c.html#acfcbb2a27c9b5c4095f9cab3bb96709c">contains_cell</a>(state, second, &amp;second_box, column, <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>)) ++intersection;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    }</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> <span class="keywordflow">return</span> total ? (double)intersection / total : -1;</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>}</div>
+</div>
+<div class="ttc" id="acapture__arbiter_8c_html_a557665997b3a9a9be0a93dd61fa122ac"><div class="ttname"><a href="capture__arbiter_8c.html#a557665997b3a9a9be0a93dd61fa122ac">service_us</a></div><div class="ttdeci">static uint64_t service_us[COVERAGE_CAMERAS]</div><div class="ttdef"><b>Definition</b> <a href="capture__arbiter_8c_source.html#l00082">capture_arbiter.c:82</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_a2f9d023211238e977fff97cd9fc13488"><div class="ttname"><a href="coverage__scheduler_8c.html#a2f9d023211238e977fff97cd9fc13488">coverage_gain</a></div><div class="ttdeci">double coverage_gain(const struct coverage_state *state, const struct coverage_candidate *candidate)</div><div class="ttdoc">Score additional detail in conservatively contained cells without mutation.</div><div class="ttdef"><b>Definition</b> <a href="#l00199">coverage_scheduler.c:199</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_a5f74f1f4e7726a30130cb91aa736dad3"><div class="ttname"><a href="coverage__scheduler_8c.html#a5f74f1f4e7726a30130cb91aa736dad3">rotate</a></div><div class="ttdeci">static void rotate(double vector[3], double roll_deg, double pitch_deg, double yaw_deg)</div><div class="ttdoc">Apply Rz*Ry*Rx in place, matching the mount/body order used by PANGEA.</div><div class="ttdef"><b>Definition</b> <a href="#l00034">coverage_scheduler.c:34</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_a7219a82d595e61803ec9cf9782c3839e"><div class="ttname"><a href="coverage__scheduler_8c.html#a7219a82d595e61803ec9cf9782c3839e">gain_after</a></div><div class="ttdeci">static double gain_after(const struct coverage_state *state, const struct coverage_candidate *candidate, const struct coverage_candidate *previous)</div><div class="ttdoc">Score a second view against a hypothetical first, without committing either.</div><div class="ttdef"><b>Definition</b> <a href="#l00179">coverage_scheduler.c:179</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_a81bad3e44c3adf970d753dfa6e14c722"><div class="ttname"><a href="coverage__scheduler_8c.html#a81bad3e44c3adf970d753dfa6e14c722">coverage_commit</a></div><div class="ttdeci">bool coverage_commit(struct coverage_state *state, const struct coverage_candidate *candidate)</div><div class="ttdoc">Credit a successfully saved observation, retaining the best detail per cell.</div><div class="ttdef"><b>Definition</b> <a href="#l00204">coverage_scheduler.c:204</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_a84626f9012d9e4494f29de25fb3e3ae0"><div class="ttname"><a href="coverage__scheduler_8c.html#a84626f9012d9e4494f29de25fb3e3ae0">coverage_init</a></div><div class="ttdeci">bool coverage_init(struct coverage_state *state, double east, double north, double cell_m)</div><div class="ttdoc">Clear the ledger and set its fixed spatial domain.</div><div class="ttdef"><b>Definition</b> <a href="#l00105">coverage_scheduler.c:105</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_a938840a412fb600c3308daefcc0a8b92"><div class="ttname"><a href="coverage__scheduler_8c.html#a938840a412fb600c3308daefcc0a8b92">coverage_project</a></div><div class="ttdeci">bool coverage_project(const struct coverage_camera *camera, const struct coverage_pose *pose, double origin_latitude_deg, double origin_longitude_deg, struct coverage_footprint *footprint)</div><div class="ttdoc">Project delivered-image corners onto a local flat ground plane.</div><div class="ttdef"><b>Definition</b> <a href="#l00046">coverage_scheduler.c:46</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_aad9b426e176bc347582feffde3626af8"><div class="ttname"><a href="coverage__scheduler_8c.html#aad9b426e176bc347582feffde3626af8">coverage_choose</a></div><div class="ttdeci">int coverage_choose(const struct coverage_state *state, const struct coverage_candidate *candidates, size_t count, uint64_t now_us, uint64_t service_us)</div><div class="ttdoc">Choose the first observation of the best feasible one- or two-shot plan.</div><div class="ttdef"><b>Definition</b> <a href="#l00218">coverage_scheduler.c:218</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_abefb6a89be25e09bc7326c9070daad66"><div class="ttname"><a href="coverage__scheduler_8c.html#abefb6a89be25e09bc7326c9070daad66">coverage_wholly_saved</a></div><div class="ttdeci">bool coverage_wholly_saved(const struct coverage_state *state, const struct coverage_candidate *candidate)</div><div class="ttdoc">Check whether skipping this observation is geometrically conservative.</div><div class="ttdef"><b>Definition</b> <a href="#l00252">coverage_scheduler.c:252</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_ac564f7632ada2ed53c529ff007295ebc"><div class="ttname"><a href="coverage__scheduler_8c.html#ac564f7632ada2ed53c529ff007295ebc">bounds</a></div><div class="ttdeci">static bool bounds(const struct coverage_state *state, const struct coverage_candidate *candidate, struct coverage_bounds *box)</div><div class="ttdoc">Reject unusable polygons before converting coordinates or scanning cells.</div><div class="ttdef"><b>Definition</b> <a href="#l00120">coverage_scheduler.c:120</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_ac63055a1572a1431753435b19a2f5526"><div class="ttname"><a href="coverage__scheduler_8c.html#ac63055a1572a1431753435b19a2f5526">coverage_project_pixel</a></div><div class="ttdeci">bool coverage_project_pixel(const struct coverage_camera *camera, const struct coverage_pose *pose, double column, double row, struct coverage_point *offset)</div><div class="ttdoc">Project an image pixel onto the same ground plane as the coverage footprint.</div><div class="ttdef"><b>Definition</b> <a href="#l00088">coverage_scheduler.c:88</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_acdeb188a896d6388ff76dd1aee63b450"><div class="ttname"><a href="coverage__scheduler_8c.html#acdeb188a896d6388ff76dd1aee63b450">coverage_overlap</a></div><div class="ttdeci">double coverage_overlap(const struct coverage_state *state, const struct coverage_candidate *first, const struct coverage_candidate *second)</div><div class="ttdoc">Estimate conservative overlap for deciding whether a delay is acceptable.</div><div class="ttdef"><b>Definition</b> <a href="#l00269">coverage_scheduler.c:269</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8c_html_acfcbb2a27c9b5c4095f9cab3bb96709c"><div class="ttname"><a href="coverage__scheduler_8c.html#acfcbb2a27c9b5c4095f9cab3bb96709c">contains_cell</a></div><div class="ttdeci">static bool contains_cell(const struct coverage_state *state, const struct coverage_candidate *candidate, const struct coverage_bounds *box, int column, int row)</div><div class="ttdoc">Require the whole cell, not merely its centre, inside every polygon edge.</div><div class="ttdef"><b>Definition</b> <a href="#l00156">coverage_scheduler.c:156</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8h_html"><div class="ttname"><a href="coverage__scheduler_8h.html">coverage_scheduler.h</a></div><div class="ttdoc">Fixed-memory geometric coverage accounting, independent of camera I/O.</div></div>
+<div class="ttc" id="acoverage__scheduler_8h_html_a213ddf287ca49bff8043e26832760843"><div class="ttname"><a href="coverage__scheduler_8h.html#a213ddf287ca49bff8043e26832760843">COVERAGE_CAMERAS</a></div><div class="ttdeci">#define COVERAGE_CAMERAS</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00036">coverage_scheduler.h:36</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8h_html_a6098de435c0fc2020ec81e11955b0c6e"><div class="ttname"><a href="coverage__scheduler_8h.html#a6098de435c0fc2020ec81e11955b0c6e">COVERAGE_SIDE</a></div><div class="ttdeci">#define COVERAGE_SIDE</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00035">coverage_scheduler.h:35</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8h_html_ab52ba68a7e428d72afe4ee25cce34174"><div class="ttname"><a href="coverage__scheduler_8h.html#ab52ba68a7e428d72afe4ee25cce34174">COVERAGE_CANDIDATES</a></div><div class="ttdeci">#define COVERAGE_CANDIDATES</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00037">coverage_scheduler.h:37</a></div></div>
+<div class="ttc" id="acoverage__scheduler_8h_html_ab636928c702ca68408e6b64b67878cf1"><div class="ttname"><a href="coverage__scheduler_8h.html#ab636928c702ca68408e6b64b67878cf1">COVERAGE_SCAN_LIMIT</a></div><div class="ttdeci">#define COVERAGE_SCAN_LIMIT</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00038">coverage_scheduler.h:38</a></div></div>
+<div class="ttc" id="adipla__camera__backend_8c_html_a107573c5257745586d1172d7ee57389a"><div class="ttname"><a href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a></div><div class="ttdeci">static bool start(uint32_t session)</div><div class="ttdoc">Admit a nonzero session and discard correlation from the previous one.</div><div class="ttdef"><b>Definition</b> <a href="dipla__camera__backend_8c_source.html#l00170">dipla_camera_backend.c:170</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_a78fcdd2741e62c29ec72a8053a5bd79b"><div class="ttname"><a href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a></div><div class="ttdeci">uint8_t row[LWIR_MAX_WIDTH *3U]</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00063">lwir_image.c:63</a></div></div>
+<div class="ttc" id="apose__log_8c_html_a76d971a3c552bc58ba9f0d5fceae9806"><div class="ttname"><a href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a></div><div class="ttdeci">static size_t count</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00079">pose_log.c:79</a></div></div>
+<div class="ttc" id="astructcoverage__bounds_html"><div class="ttname"><a href="structcoverage__bounds.html">coverage_bounds</a></div><div class="ttdoc">Validated inclusive grid bounds and polygon winding for half-plane tests.</div><div class="ttdef"><b>Definition</b> <a href="#l00031">coverage_scheduler.c:31</a></div></div>
+<div class="ttc" id="astructcoverage__bounds_html_a097a47832f2001fb924209d51dd26980"><div class="ttname"><a href="structcoverage__bounds.html#a097a47832f2001fb924209d51dd26980">coverage_bounds::winding</a></div><div class="ttdeci">double winding</div><div class="ttdef"><b>Definition</b> <a href="#l00031">coverage_scheduler.c:31</a></div></div>
+<div class="ttc" id="astructcoverage__bounds_html_a284e7df1641b18fd07eaa3e4fbe6ad4c"><div class="ttname"><a href="structcoverage__bounds.html#a284e7df1641b18fd07eaa3e4fbe6ad4c">coverage_bounds::bottom</a></div><div class="ttdeci">int bottom</div><div class="ttdef"><b>Definition</b> <a href="#l00031">coverage_scheduler.c:31</a></div></div>
+<div class="ttc" id="astructcoverage__bounds_html_a2efd96d687eb8ef383b87bddd29f03df"><div class="ttname"><a href="structcoverage__bounds.html#a2efd96d687eb8ef383b87bddd29f03df">coverage_bounds::left</a></div><div class="ttdeci">int left</div><div class="ttdef"><b>Definition</b> <a href="#l00031">coverage_scheduler.c:31</a></div></div>
+<div class="ttc" id="astructcoverage__bounds_html_a9128a74e4c33696fce91494f03f014dc"><div class="ttname"><a href="structcoverage__bounds.html#a9128a74e4c33696fce91494f03f014dc">coverage_bounds::right</a></div><div class="ttdeci">int right</div><div class="ttdef"><b>Definition</b> <a href="#l00031">coverage_scheduler.c:31</a></div></div>
+<div class="ttc" id="astructcoverage__bounds_html_a9ccc8da283850268841b8a7573fb9a3d"><div class="ttname"><a href="structcoverage__bounds.html#a9ccc8da283850268841b8a7573fb9a3d">coverage_bounds::top</a></div><div class="ttdeci">int top</div><div class="ttdef"><b>Definition</b> <a href="#l00031">coverage_scheduler.c:31</a></div></div>
+<div class="ttc" id="astructcoverage__camera_html"><div class="ttname"><a href="structcoverage__camera.html">coverage_camera</a></div><div class="ttdoc">Measured pinhole calibration for the delivered image, including its mount.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00041">coverage_scheduler.h:41</a></div></div>
+<div class="ttc" id="astructcoverage__candidate_html"><div class="ttname"><a href="structcoverage__candidate.html">coverage_candidate</a></div><div class="ttdoc">One feasible observation; deadlines constrain acquisition start, not saving.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00084">coverage_scheduler.h:84</a></div></div>
+<div class="ttc" id="astructcoverage__candidate_html_a0ae6847a1ecee23357d33ab670c9f7f1"><div class="ttname"><a href="structcoverage__candidate.html#a0ae6847a1ecee23357d33ab670c9f7f1">coverage_candidate::camera_id</a></div><div class="ttdeci">unsigned camera_id</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00087">coverage_scheduler.h:87</a></div></div>
+<div class="ttc" id="astructcoverage__candidate_html_a1541e1309655be6306ad385f0a87c752"><div class="ttname"><a href="structcoverage__candidate.html#a1541e1309655be6306ad385f0a87c752">coverage_candidate::footprint</a></div><div class="ttdeci">struct coverage_footprint footprint</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00085">coverage_scheduler.h:85</a></div></div>
+<div class="ttc" id="astructcoverage__candidate_html_a851e00887ea56fc2fcd2e5922d0919d3"><div class="ttname"><a href="structcoverage__candidate.html#a851e00887ea56fc2fcd2e5922d0919d3">coverage_candidate::quality</a></div><div class="ttdeci">uint8_t quality</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00088">coverage_scheduler.h:88</a></div></div>
+<div class="ttc" id="astructcoverage__candidate_html_ab2f5633dcb30e58dbd534c219f4e6903"><div class="ttname"><a href="structcoverage__candidate.html#ab2f5633dcb30e58dbd534c219f4e6903">coverage_candidate::ready_us</a></div><div class="ttdeci">uint64_t ready_us</div><div class="ttdoc">Earliest acquisition start; all candidates must share a monotonic time domain.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00086">coverage_scheduler.h:86</a></div></div>
+<div class="ttc" id="astructcoverage__footprint_html"><div class="ttname"><a href="structcoverage__footprint.html">coverage_footprint</a></div><div class="ttdoc">Convex ground quadrilateral with a conservative boundary margin.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00079">coverage_scheduler.h:79</a></div></div>
+<div class="ttc" id="astructcoverage__footprint_html_a907a21b073e12f2557445e3c7e81a3ec"><div class="ttname"><a href="structcoverage__footprint.html#a907a21b073e12f2557445e3c7e81a3ec">coverage_footprint::corner</a></div><div class="ttdeci">struct coverage_point corner[4]</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00080">coverage_scheduler.h:80</a></div></div>
+<div class="ttc" id="astructcoverage__footprint_html_af9f2e187bf9801acd2324112fa4f6d08"><div class="ttname"><a href="structcoverage__footprint.html#af9f2e187bf9801acd2324112fa4f6d08">coverage_footprint::uncertainty_m</a></div><div class="ttdeci">double uncertainty_m</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00081">coverage_scheduler.h:81</a></div></div>
+<div class="ttc" id="astructcoverage__point_html"><div class="ttname"><a href="structcoverage__point.html">coverage_point</a></div><div class="ttdoc">Local ground coordinates in metres, east and north of the projection origin.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00073">coverage_scheduler.h:73</a></div></div>
+<div class="ttc" id="astructcoverage__point_html_a0efc91649bc7838e930c990e57574139"><div class="ttname"><a href="structcoverage__point.html#a0efc91649bc7838e930c990e57574139">coverage_point::north</a></div><div class="ttdeci">double north</div><div class="ttdoc">Metres north of the shared local geographic reference.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00073">coverage_scheduler.h:73</a></div></div>
+<div class="ttc" id="astructcoverage__point_html_a50ee6aad9601c74597d8330c403202a0"><div class="ttname"><a href="structcoverage__point.html#a50ee6aad9601c74597d8330c403202a0">coverage_point::east</a></div><div class="ttdeci">double east</div><div class="ttdoc">Metres east of the shared local geographic reference.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00073">coverage_scheduler.h:73</a></div></div>
+<div class="ttc" id="astructcoverage__pose_html"><div class="ttname"><a href="structcoverage__pose.html">coverage_pose</a></div><div class="ttdoc">Pose estimate and its positional margin for a single observation.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00059">coverage_scheduler.h:59</a></div></div>
+<div class="ttc" id="astructcoverage__pose_html_a1e1f034d0343efa4435495ba6f66ea27"><div class="ttname"><a href="structcoverage__pose.html#a1e1f034d0343efa4435495ba6f66ea27">coverage_pose::pitch_deg</a></div><div class="ttdeci">double pitch_deg</div><div class="ttdoc">Aircraft pitch in degrees.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00061">coverage_scheduler.h:61</a></div></div>
+<div class="ttc" id="astructcoverage__pose_html_a31b3c907bf275e69c88ea340ef7e9b3f"><div class="ttname"><a href="structcoverage__pose.html#a31b3c907bf275e69c88ea340ef7e9b3f">coverage_pose::uncertainty_m</a></div><div class="ttdeci">double uncertainty_m</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00062">coverage_scheduler.h:62</a></div></div>
+<div class="ttc" id="astructcoverage__pose_html_a4fd2ace76b4ef277461421a9d36c7acc"><div class="ttname"><a href="structcoverage__pose.html#a4fd2ace76b4ef277461421a9d36c7acc">coverage_pose::latitude_deg</a></div><div class="ttdeci">double latitude_deg</div><div class="ttdoc">Observation latitude in geographic degrees, not FC fixed-point units.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00060">coverage_scheduler.h:60</a></div></div>
+<div class="ttc" id="astructcoverage__pose_html_ace7bf2aaa2fe6769d295c9657d661999"><div class="ttname"><a href="structcoverage__pose.html#ace7bf2aaa2fe6769d295c9657d661999">coverage_pose::roll_deg</a></div><div class="ttdeci">double roll_deg</div><div class="ttdoc">Aircraft roll in degrees.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00061">coverage_scheduler.h:61</a></div></div>
+<div class="ttc" id="astructcoverage__pose_html_ad015b1e4a328e0ec1fe6dc955affc7da"><div class="ttname"><a href="structcoverage__pose.html#ad015b1e4a328e0ec1fe6dc955affc7da">coverage_pose::longitude_deg</a></div><div class="ttdeci">double longitude_deg</div><div class="ttdoc">Observation longitude in geographic degrees.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00060">coverage_scheduler.h:60</a></div></div>
+<div class="ttc" id="astructcoverage__pose_html_ae8a4363d02edb0da7395ebeb4c3d0fff"><div class="ttname"><a href="structcoverage__pose.html#ae8a4363d02edb0da7395ebeb4c3d0fff">coverage_pose::agl_m</a></div><div class="ttdeci">double agl_m</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00060">coverage_scheduler.h:60</a></div></div>
+<div class="ttc" id="astructcoverage__pose_html_afa0445cb88cc6597c71366809ca1be21"><div class="ttname"><a href="structcoverage__pose.html#afa0445cb88cc6597c71366809ca1be21">coverage_pose::yaw_deg</a></div><div class="ttdeci">double yaw_deg</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00061">coverage_scheduler.h:61</a></div></div>
+<div class="ttc" id="astructcoverage__state_html"><div class="ttname"><a href="structcoverage__state.html">coverage_state</a></div><div class="ttdoc">Fixed coverage ledger; zero cells are unknown, not necessarily unphotographed.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00093">coverage_scheduler.h:93</a></div></div>
+<div class="ttc" id="astructcoverage__state_html_a2aad7d7920814df0c8bf69729c1c2ecb"><div class="ttname"><a href="structcoverage__state.html#a2aad7d7920814df0c8bf69729c1c2ecb">coverage_state::saved</a></div><div class="ttdeci">uint8_t saved[COVERAGE_CAMERAS][COVERAGE_SIDE *COVERAGE_SIDE]</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00095">coverage_scheduler.h:95</a></div></div>
+<div class="ttc" id="astructcoverage__state_html_a6fa3840a6d2b4197678c7549e2b32471"><div class="ttname"><a href="structcoverage__state.html#a6fa3840a6d2b4197678c7549e2b32471">coverage_state::cell_m</a></div><div class="ttdeci">double cell_m</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00094">coverage_scheduler.h:94</a></div></div>
+<div class="ttc" id="astructcoverage__state_html_a7827ba89de26c6a4678ff092bd0264bb"><div class="ttname"><a href="structcoverage__state.html#a7827ba89de26c6a4678ff092bd0264bb">coverage_state::origin_north</a></div><div class="ttdeci">double origin_north</div><div class="ttdoc">Lower north grid edge in metres relative to the projection origin.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00094">coverage_scheduler.h:94</a></div></div>
+<div class="ttc" id="astructcoverage__state_html_a94ee636c8b14847105d2584dd04474e0"><div class="ttname"><a href="structcoverage__state.html#a94ee636c8b14847105d2584dd04474e0">coverage_state::origin_east</a></div><div class="ttdeci">double origin_east</div><div class="ttdoc">Lower east grid edge in metres relative to the projection origin.</div><div class="ttdef"><b>Definition</b> <a href="coverage__scheduler_8h_source.html#l00094">coverage_scheduler.h:94</a></div></div>
+<div class="ttc" id="ausher_8c_html_a0e46c81df9ad4ada96f0e90da13b9324"><div class="ttname"><a href="usher_8c.html#a0e46c81df9ad4ada96f0e90da13b9324">camera</a></div><div class="ttdeci">static struct camera_backend camera</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00521">usher.c:521</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

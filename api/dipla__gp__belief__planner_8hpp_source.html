@@ -1,0 +1,2120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/dipla_cam/dipla_gp_belief_planner.hpp Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('dipla__gp__belief__planner_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">dipla_gp_belief_planner.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="dipla__gp__belief__planner_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/* Additional author attribution: Copyright 2026 Akshat Jain */</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"></span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * @file dipla_gp_belief_planner.hpp</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * @brief Native finite-grid GP sensor model and trajectory-planning API.</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * @details Provides the reusable research/reference planner used by the</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * explicitly selected CMA-ES comparison mode. The implementation stores dense</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * covariance in build-selected row-major matrices, so the 2601-cell cap is a deliberate</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> * memory bound rather than an arbitrary input restriction.</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include "<a class="code" href="compat_8hpp.html">aigenlib/compat.hpp</a>"</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &lt;random&gt;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceaipp.html">aipp</a> {<span class="comment"></span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">/** Default route-pose sampling interval for look-ahead scoring. */</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="namespaceaipp.html#a55b034e824d8fbaf717c624a25c7f777">   38</a></span><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="namespaceaipp.html#a55b034e824d8fbaf717c624a25c7f777">lookahead_stride</a> = 4;<span class="comment"></span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment">/** Innovation-system row budget, independent of worker FIFO capacity. */</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="namespaceaipp.html#a10646476c71672274d6e8cb2ee1d5c13">   40</a></span><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="namespaceaipp.html#a10646476c71672274d6e8cb2ee1d5c13">lookahead_measurement_budget</a> = 64;<span class="comment"></span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="comment">/** Default emitted spline samples per control segment. */</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="namespaceaipp.html#a2cb095eaae108c9d002cf012093a600b">   42</a></span><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="namespaceaipp.html#a2cb095eaae108c9d002cf012093a600b">spline_samples_per_segment</a> = 5;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment"></span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment">/** Dense row-major covariance layout chosen for contiguous row updates. */</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">   45</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">Matrix</a> = <a class="code hl_typedef" href="namespaceaipp_1_1math.html#adc757a1dd5739f0bfc29b112e0abf9b2">math::Matrix</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment">/** Dynamic GP mean, measurement, or per-cell variance vector. */</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">   47</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">Vector</a> = <a class="code hl_typedef" href="namespaceaipp_1_1math.html#a6e68daaf90a710a09c41acb35c6facd9">math::Vector</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment">/** Three-dimensional local east/north/altitude point, in metres. */</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">   49</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">Point</a> = <a class="code hl_typedef" href="namespaceaipp_1_1math.html#aa0e201d21014714626b2e696a2759f76">math::Point</a>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment"></span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="comment"> * @brief Rectangular, evenly spaced local map grid.</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="comment"> * @details The upper bounds are snapped to the last grid coordinate that fits</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="comment"> * the requested spacing. Construction rejects grids larger than 2601 cells to</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="comment"> * bound dense covariance memory on the target board.</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00057">
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="structaipp_1_1Grid.html">   57</a></span><span class="keyword">struct </span><a class="code hl_function" href="structaipp_1_1Grid.html#ae75dcead60a750ff6ff7039ff0e34059">Grid</a> {<span class="comment"></span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="comment">    /** Inclusive lower east bound in metres. */</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="structaipp_1_1Grid.html#a680991508ac32c6c7eb9160d312d12c6">   59</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1Grid.html#a680991508ac32c6c7eb9160d312d12c6">xmin</a> = 0.0;<span class="comment"></span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="comment">    /** Inclusive, grid-aligned upper east bound in metres. */</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="structaipp_1_1Grid.html#a3ef5682fb61876efb3844a4ff35d81c3">   61</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1Grid.html#a3ef5682fb61876efb3844a4ff35d81c3">xmax</a> = 100.0;<span class="comment"></span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="comment">    /** Inclusive lower north bound in metres. */</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="structaipp_1_1Grid.html#ab01e67c9896a4149b4217e4c6a4b051a">   63</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1Grid.html#ab01e67c9896a4149b4217e4c6a4b051a">ymin</a> = 0.0;<span class="comment"></span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment">    /** Inclusive, grid-aligned upper north bound in metres. */</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="structaipp_1_1Grid.html#aaab83b7b868cea73a6092380e60d37bd">   65</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1Grid.html#aaab83b7b868cea73a6092380e60d37bd">ymax</a> = 100.0;<span class="comment"></span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="comment">    /** Uniform spacing in metres. */</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="structaipp_1_1Grid.html#a915f47caafaffab3c2408b1c8229d918">   67</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1Grid.html#a915f47caafaffab3c2408b1c8229d918">step</a> = 2.0;<span class="comment"></span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="comment">    /** Number of columns. */</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="structaipp_1_1Grid.html#abf8c68192c0c4b032224edbdac92c1e3">   69</a></span> <span class="keywordtype">int</span> <a class="code hl_variable" href="structaipp_1_1Grid.html#abf8c68192c0c4b032224edbdac92c1e3">width</a> = 0;<span class="comment"></span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="comment">    /** Number of rows. */</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="structaipp_1_1Grid.html#af828c63aeed0cc87477c9ed68abc015b">   71</a></span> <span class="keywordtype">int</span> <a class="code hl_variable" href="structaipp_1_1Grid.html#af828c63aeed0cc87477c9ed68abc015b">height</a> = 0;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="comment"></span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment">        /**</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment">        * @brief Create a grid and align its effective upper bounds.</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment">        * @details Dimensions include only complete spacing intervals; effective</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="comment">        * upper bounds become the final sampled grid coordinates.</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="comment">        * @param xminimum Inclusive lower east coordinate.</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="comment">        * @param xmaximum Requested upper east coordinate.</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="comment">        * @param yminimum Inclusive lower north coordinate.</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="comment">        * @param ymaximum Requested upper north coordinate.</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="comment">        * @param spacing Positive uniform sample interval.</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="comment">        * @throws std::invalid_argument If bounds/spacing are invalid or exceed the dense-grid cap.</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment">        */</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> <a class="code hl_function" href="structaipp_1_1Grid.html#ae75dcead60a750ff6ff7039ff0e34059">Grid</a>(<span class="keywordtype">double</span> xminimum = 0.0, <span class="keywordtype">double</span> xmaximum = 100.0,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> <span class="keywordtype">double</span> yminimum = 0.0, <span class="keywordtype">double</span> ymaximum = 100.0, <span class="keywordtype">double</span> spacing = 2.0);<span class="comment"></span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="comment">        /** @brief Return the number of grid cells.</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="comment">        * @details The grid is stored as a dense row-major domain.</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="comment">        * @return `width * height`.</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="comment">        */</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> <span class="keywordtype">int</span> <a class="code hl_function" href="structaipp_1_1Grid.html#ad042101a04740571998771bbc178ad33">size</a>() <span class="keyword">const</span>;<span class="comment"></span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="comment">        /** @brief Convert a column index to its east coordinate.</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="comment">            * @details Uses the affine grid mapping `xmin + column * step`.</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment">        * @param column Zero-based column.</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment">        * @return East coordinate in metres.</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="comment">        */</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> <span class="keywordtype">double</span> <a class="code hl_function" href="structaipp_1_1Grid.html#a7357047ae7560b66937c0fd4f2e23a2a">x</a>(<span class="keywordtype">int</span> column) <span class="keyword">const</span>;<span class="comment"></span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment">        /** @brief Convert a row index to its north coordinate.</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment">            * @details Uses the affine grid mapping `ymin + row * step`.</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="comment">        * @param row Zero-based row.</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="comment">        * @return North coordinate in metres.</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="comment">        */</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> <span class="keywordtype">double</span> <a class="code hl_function" href="structaipp_1_1Grid.html#ae023ac7cb666b0916871d5a5ec51cfe6">y</a>(<span class="keywordtype">int</span> <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>) <span class="keyword">const</span>;<span class="comment"></span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="comment">        /** @brief Find the nearest clamped column; half-cell ties round downward.</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="comment">            * @details The explicit tie rule avoids dependence on the process rounding mode.</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="comment">        * @param value East coordinate in metres.</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="comment">        * @return Valid zero-based column.</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="comment">        * @throws std::invalid_argument For a nonfinite coordinate.</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="comment">        */</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> <span class="keywordtype">int</span> <a class="code hl_function" href="structaipp_1_1Grid.html#a46440ad2a66ed0734ed21486ac5f0b6d">nearest_x</a>(<span class="keywordtype">double</span> value) <span class="keyword">const</span>;<span class="comment"></span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="comment">        /** @brief Find the nearest clamped row; half-cell ties round downward.</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="comment">            * @details The explicit tie rule avoids dependence on the process rounding mode.</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="comment">        * @param value North coordinate in metres.</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="comment">        * @return Valid zero-based row.</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="comment">        * @throws std::invalid_argument For a nonfinite coordinate.</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="comment">        */</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> <span class="keywordtype">int</span> <a class="code hl_function" href="structaipp_1_1Grid.html#a089ed83f3f651894128a5554847aea1d">nearest_y</a>(<span class="keywordtype">double</span> value) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>};</div>
+</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="comment"></span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="comment"> * @brief Sparse block-averaging observation operator.</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="comment"> * @details Each row lists grid-cell indices averaged into one measurement;</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="comment"> * `variances` stores the independent observation variance for each row.</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="namespaceaipp.html#a01802fb27843d8a1bc1ff075486ac325">  124</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespaceaipp.html#a01802fb27843d8a1bc1ff075486ac325">Sensor</a> = <a class="code hl_struct" href="structdipla_1_1aigenlib_1_1Sensor.html">dipla::aigenlib::Sensor</a>;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="comment"></span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="comment"> * @brief Search, utility, and optimizer controls for the reference planner.</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="comment"> * @details `keep_planning` is polled inside expensive search/refinement loops;</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="comment"> * it provides cooperative cancellation, not preemptive interruption.</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00131">
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html">  131</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structaipp_1_1PlannerOptions.html">PlannerOptions</a> {<span class="comment"></span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="comment">    /** Confidence multiplier applied to posterior standard deviation. */</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a36e8c00ad562a93adb084297d8c79a5e">  133</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a36e8c00ad562a93adb084297d8c79a5e">beta</a> = 1.0;<span class="comment"></span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="comment">    /** Field-value threshold used to define planning importance. */</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a040ba45fa359980ee384aeed936c66bd">  135</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a040ba45fa359980ee384aeed936c66bd">threshold</a> = 0.3;<span class="comment"></span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="comment">    /** Minimum permitted altitude in metres. */</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#aa9b0d1bd784fd67c8a5f51c12199d441">  137</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#aa9b0d1bd784fd67c8a5f51c12199d441">zmin</a> = 10.0;<span class="comment"></span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="comment">    /** Maximum permitted altitude in metres. */</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a30e21983f71da1e9ce12f39492c02e50">  139</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a30e21983f71da1e9ce12f39492c02e50">zmax</a> = 40.0;<span class="comment"></span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="comment">    /** Full sensor field-of-view angle in degrees. */</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#ab334ec75e377d298cc38d8bcd96eb618">  141</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#ab334ec75e377d298cc38d8bcd96eb618">angle_of_view</a> = 60.0;<span class="comment"></span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="comment">    /** Exponent used to penalize travel distance. */</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a2c411e47388ef4901bfff7c6a91491e3">  143</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a2c411e47388ef4901bfff7c6a91491e3">cost_exponent</a> = 1.0;<span class="comment"></span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="comment">    /** Initial CMA-ES standard deviation for horizontal coordinates. */</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#afd6377d69e7f3726fde88da8ca60588d">  145</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#afd6377d69e7f3726fde88da8ca60588d">step_xy</a> = 20.0;<span class="comment"></span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="comment">    /** Initial CMA-ES standard deviation for altitude. */</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a5a352b7caa7e8b66255751ba3cf38533">  147</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a5a352b7caa7e8b66255751ba3cf38533">step_z</a> = 8.0;<span class="comment"></span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="comment">    /** Greedy waypoint count. */</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#ab0a063078b4190672ca83769649e3660">  149</a></span> <span class="keywordtype">int</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#ab0a063078b4190672ca83769649e3660">horizon</a> = 8;<span class="comment"></span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="comment">    /** Maximum CMA-ES generations. */</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a2c79e9ee65f068ee26ad6c6dcefac6d1">  151</a></span> <span class="keywordtype">int</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a2c79e9ee65f068ee26ad6c6dcefac6d1">maxiter</a> = 25;<span class="comment"></span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment">    /** CMA-ES population size and evaluation batch size. */</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#ab528f46749743b5292fb3a48fdbe6be7">  153</a></span> <span class="keywordtype">int</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#ab528f46749743b5292fb3a48fdbe6be7">popsize</a> = 12;<span class="comment"></span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="comment">    /** Maximum objective evaluations; an incomplete population is not run. */</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a05412d58d16fba7dc98f1994765b77e0">  155</a></span> <span class="keywordtype">int</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a05412d58d16fba7dc98f1994765b77e0">maxfevals</a> = 1000;<span class="comment"></span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="comment">    /** Reproducible optimizer seed. */</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a503c10aa789a44c1bb246e5be6d2d878">  157</a></span> <span class="keywordtype">long</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a503c10aa789a44c1bb246e5be6d2d878">seed</a> = 55;<span class="comment"></span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="comment">    /** Choose lower-confidence-bound versus upper-confidence-bound utility. */</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a00223eab7af31c33ee80b41b379c8e77">  159</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a00223eab7af31c33ee80b41b379c8e77">lower_confidence_bound</a> = <span class="keyword">true</span>;<span class="comment"></span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="comment">    /** Run CMA-ES refinement after greedy lattice selection. */</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a4b5348304f80ea7c51648a42feae3e6a">  161</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a4b5348304f80ea7c51648a42feae3e6a">refine</a> = <span class="keyword">true</span>;<span class="comment"></span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="comment">    /** Fixed observation variance; negative selects the altitude noise model. */</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#ad6b8a77c390ccad9fdc52175559dc602">  163</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#ad6b8a77c390ccad9fdc52175559dc602">observation_variance</a> = -1.0;<span class="comment"></span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="comment">    /** Horizontal control inset in grid cells, independent of altitude. */</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#ada130bfb1405c52e90dcbe84ede1ae7c">  165</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#ada130bfb1405c52e90dcbe84ede1ae7c">margin_cells</a> = 2;<span class="comment"></span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="comment">    /** Optional cooperative continue predicate, checked during planning. */</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="structaipp_1_1PlannerOptions.html#a236bfb97ae029279ab2078b468d558f9">  167</a></span>    std::function&lt;bool()&gt; <a class="code hl_variable" href="structaipp_1_1PlannerOptions.html#a236bfb97ae029279ab2078b468d558f9">keep_planning</a>;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>};</div>
+</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="comment"></span> </div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="comment"> * @brief Compute the ground-plane footprint radius from altitude and full FOV angle.</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="comment"> * @details Uses the tangent of the half-angle because the input is the full FOV.</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="comment"> * @param altitude Sensor altitude above ground in metres.</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="comment"> * @param angle Full field-of-view angle in degrees.</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="comment"> * @return Ground-plane footprint radius in metres.</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="keywordtype">double</span> <a class="code hl_function" href="namespaceaipp.html#a038858a17a73e298e89df0483733a4c3">fov_radius</a>(<span class="keywordtype">double</span> altitude, <span class="keywordtype">double</span> angle = 60.0);<span class="comment"></span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="comment"> * @brief Select the research sensor's altitude-dependent aggregation block size.</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="comment"> * @details Piecewise aggregation preserves the reference sensor's coarser</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="comment"> * effective resolution at higher altitude.</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="comment"> * @param altitude Sensor altitude in metres.</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="comment"> * @return Aggregation block width in cells.</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="keywordtype">int</span> <a class="code hl_function" href="namespaceaipp.html#a1a1292344030f5b334098b090b143d9c">resolution_block_size</a>(<span class="keywordtype">double</span> altitude);<span class="comment"></span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="comment"> * @brief Compute modeled observation variance at an altitude.</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="comment"> * @details Exponentially approaches the reference high-altitude variance rather</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="comment"> * than increasing without bound.</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span><span class="comment"> * @param altitude Sensor altitude in metres.</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="comment"> * @param minimum_altitude Reference altitude for the minimum variance.</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="comment"> * @return Modeled measurement variance.</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="keywordtype">double</span> <a class="code hl_function" href="namespaceaipp.html#a1dbb694e7286c8aec29f10d1b2b762d8">noise_model</a>(<span class="keywordtype">double</span> altitude, <span class="keywordtype">double</span> minimum_altitude = 10.0);<span class="comment"></span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="comment"> * @brief Initialize a dense Matérn-3/2 GP covariance matrix.</span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="comment"> * @details Kernel values are cached by displacement on the uniform grid; the</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="comment"> * dense matrix then supports the block updates used by conditioning.</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="comment"> * @param grid Grid defining the covariance coordinates.</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="comment"> * @param sigma2 Kernel marginal variance.</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="comment"> * @param lengthscale Matérn spatial length scale in metres.</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="comment"> * @return Symmetric dense prior covariance.</span></div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="comment"> * @throws std::invalid_argument If kernel amplitude or length scale is invalid.</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><a class="code hl_typedef" href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">Matrix</a> <a class="code hl_function" href="namespaceaipp.html#a54f57a0eff11c07ea221822dfc99a499">initialize_covariance</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1Grid.html">Grid</a>&amp; grid, <span class="keywordtype">double</span> sigma2, <span class="keywordtype">double</span> lengthscale);<span class="comment"></span></div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="comment"> * @brief Build one block-averaged sensor footprint at a pose.</span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span><span class="comment"> * @details Grid cells inside the square bounding the circular FOV are grouped</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="comment"> * by altitude-dependent resolution blocks, matching the reference sensor's</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="comment"> * coarse measurement behavior.</span></div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span><span class="comment"> * @param grid Map grid.</span></div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="comment"> * @param pose Sensor east/north/altitude in metres.</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="comment"> * @param angle Full field-of-view angle in degrees.</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="comment"> * @param observation_variance Fixed variance, or negative to use the altitude model.</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="comment"> * @return Sparse sensor rows and their independent variances.</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span><a class="code hl_typedef" href="namespaceaipp.html#a01802fb27843d8a1bc1ff075486ac325">Sensor</a> <a class="code hl_function" href="namespaceaipp.html#a83490f7403eb1d2a7fd547842a1d5193">build_sensor</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1Grid.html">Grid</a>&amp; grid, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">Point</a>&amp; pose, <span class="keywordtype">double</span> angle = 60.0,</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> <span class="keywordtype">double</span> observation_variance = -1.0);<span class="comment"></span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="comment"> * @brief Approximate future measurements along a path under a bounded budget.</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="comment"> * @details Samples path poses by `stride`, always includes the final waypoint,</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span><span class="comment"> * and evenly subsamples sensor rows if their total exceeds `max_measurements`.</span></div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span><span class="comment"> * This trades a compact innovation matrix for some spatial detail.</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="comment"> * @param grid Map grid.</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="comment"> * @param path Ordered trajectory in metres.</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span><span class="comment"> * @param angle Full field-of-view angle in degrees.</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="comment"> * @param stride Path-pose interval used for sampling.</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="comment"> * @param max_measurements Maximum number of returned measurement rows.</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="comment"> * @param observation_variance Fixed variance, or negative to use the altitude model.</span></div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span><span class="comment"> * @return Combined sensor operator within the requested measurement budget.</span></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="comment"> * @throws std::invalid_argument If stride or the measurement budget is nonpositive.</span></div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><a class="code hl_typedef" href="namespaceaipp.html#a01802fb27843d8a1bc1ff075486ac325">Sensor</a> <a class="code hl_function" href="namespaceaipp.html#a824cc5eaadaab25562d6f50d99db3276">future_sensor</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1Grid.html">Grid</a>&amp; grid, <span class="keyword">const</span> std::vector&lt;Point&gt;&amp; path,</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> <span class="keywordtype">double</span> angle = 60.0, <span class="keywordtype">int</span> stride = <a class="code hl_variable" href="namespaceaipp.html#a55b034e824d8fbaf717c624a25c7f777">lookahead_stride</a>,</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> <span class="keywordtype">int</span> max_measurements = <a class="code hl_variable" href="namespaceaipp.html#a10646476c71672274d6e8cb2ee1d5c13">lookahead_measurement_budget</a>,</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> <span class="keywordtype">double</span> observation_variance = -1.0);<span class="comment"></span></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="comment"> * @brief Apply the sensor's block averages to a full-grid field.</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span><span class="comment"> * @details Each sparse row is treated as a uniform averaging operator.</span></div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span><span class="comment"> * @param sensor Sparse sensor operator.</span></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span><span class="comment"> * @param field One value per grid cell.</span></div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span><span class="comment"> * @return One averaged value per sensor row.</span></div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span><a class="code hl_typedef" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">Vector</a> <a class="code hl_function" href="namespaceaipp.html#ad9dea9f972d2f1db1f80ff7721a2f1cf">observe</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a01802fb27843d8a1bc1ff075486ac325">Sensor</a>&amp; sensor, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">Vector</a>&amp; field);<span class="comment"></span></div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span><span class="comment"> * @brief Draw independent zero-mean noise using each sensor row's variance.</span></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span><span class="comment"> * @details Uses one standard-normal draw per row and scales by that row's</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span><span class="comment"> * standard deviation; the caller owns the generator to control reproducibility.</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="comment"> * @param sensor Per-row variances define Gaussian scales.</span></div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span><span class="comment"> * @param generator Caller-owned random engine for reproducibility.</span></div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span><span class="comment"> * @return One independent noise value per sensor row.</span></div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span><a class="code hl_typedef" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">Vector</a> <a class="code hl_function" href="namespaceaipp.html#a6eadbfdc3710d01acf5c35b54fb031f8">sample_sensor_noise</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a01802fb27843d8a1bc1ff075486ac325">Sensor</a>&amp; sensor, std::mt19937_64&amp; generator);<span class="comment"></span></div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span><span class="comment"> * @brief Select cells whose confidence bounds satisfy the utility threshold.</span></div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span><span class="comment"> * @details If no cell meets the requested bound, all cells are selected so the</span></div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span><span class="comment"> * optimizer does not receive a degenerate zero-utility objective.</span></div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span><span class="comment"> * @param mean Posterior mean.</span></div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span><span class="comment"> * @param covariance Posterior covariance.</span></div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span><span class="comment"> * @param options Confidence-bound direction, beta, and threshold.</span></div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span><span class="comment"> * @return Boolean importance mask in grid order.</span></div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>std::vector&lt;bool&gt; <a class="code hl_function" href="namespaceaipp.html#a4d7d9735a8d63f2dc24d7f545fadde65">importance_mask</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">Vector</a>&amp; mean, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">Matrix</a>&amp; covariance,</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> <span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1PlannerOptions.html">PlannerOptions</a>&amp; <a class="code hl_struct" href="structoptions.html">options</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span><span class="comment"> * @brief Sum expected marginal-variance reduction over important cells.</span></div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span><span class="comment"> * @details Uses the sensor innovation covariance and clamps numerical roundoff</span></div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span><span class="comment"> * to each cell's prior marginal variance.</span></div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span><span class="comment"> * @param covariance Prior covariance.</span></div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span><span class="comment"> * @param mask Cells contributing to utility.</span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span><span class="comment"> * @param sensor Candidate observation operator.</span></div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="comment"> * @return Sum of marginal-variance reduction over selected cells.</span></div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span><span class="keywordtype">double</span> <a class="code hl_function" href="namespaceaipp.html#a7898d5a59248e042796e51e02df85df4">expected_reduction</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">Matrix</a>&amp; covariance, <span class="keyword">const</span> std::vector&lt;bool&gt;&amp; mask,</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a01802fb27843d8a1bc1ff075486ac325">Sensor</a>&amp; sensor);<span class="comment"></span></div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="comment"> * @brief Apply a Gaussian linear-observation update in place.</span></div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span><span class="comment"> * @details Solves the innovation system rather than forming an inverse, updates</span></div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span><span class="comment"> * the posterior mean only when both optional pointers are supplied, then updates</span></div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span><span class="comment"> * covariance in row blocks to limit temporary allocations and restores symmetry.</span></div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span><span class="comment"> * @param covariance Prior covariance, replaced by the posterior covariance.</span></div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span><span class="comment"> * @param mean Optional prior mean; used only when `measurement` is non-null.</span></div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span><span class="comment"> * @param sensor Observation operator.</span></div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span><span class="comment"> * @param measurement Optional observed vector paired with `mean`.</span></div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span><span class="keywordtype">void</span> <a class="code hl_function" href="namespaceaipp.html#acfbacf375a460aa4110432fe12371760">condition</a>(<a class="code hl_typedef" href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">Matrix</a>&amp; covariance, <a class="code hl_typedef" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">Vector</a>* mean, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a01802fb27843d8a1bc1ff075486ac325">Sensor</a>&amp; sensor, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">Vector</a>* <a class="code hl_variable" href="ear__cam__pipe_8c.html#a13643edff1e57fb073a3360d16152cdc">measurement</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span><span class="comment"> * @brief Clamp a candidate to the map safety inset and altitude interval.</span></div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="comment"> * @details Horizontal margins are two grid steps, independent of optimizer</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="comment"> * penalty settings, so downstream routes retain a geometric boundary buffer.</span></div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="comment"> * @param grid Map geometry and horizontal inset.</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="comment"> * @param point Candidate east/north/altitude point.</span></div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="comment"> * @param options Permitted altitude interval.</span></div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span><span class="comment"> * @return Bounded point.</span></div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span><a class="code hl_typedef" href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">Point</a> <a class="code hl_function" href="namespaceaipp.html#ae4b9fc567c76c9a881b022acd3b10754">clip_point</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1Grid.html">Grid</a>&amp; grid, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">Point</a>&amp; <a class="code hl_struct" href="structpoint.html">point</a>, <span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1PlannerOptions.html">PlannerOptions</a>&amp; <a class="code hl_struct" href="structoptions.html">options</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span><span class="comment"> * @brief Generate the deduplicated coarse-to-fine candidate lattice.</span></div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="comment"> * @details Nested layers trade uniform resolution for broad coverage and</span></div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="comment"> * progressively finer central choices.</span></div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span><span class="comment"> * @param grid Map geometry and spacing.</span></div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span><span class="comment"> * @param options Altitude range for lattice layers.</span></div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span><span class="comment"> * @return Unique candidate positions.</span></div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>std::vector&lt;Point&gt; <a class="code hl_function" href="namespaceaipp.html#ad661749a960b2437c422da29129caa84">lattice</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1Grid.html">Grid</a>&amp; grid, <span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1PlannerOptions.html">PlannerOptions</a>&amp; <a class="code hl_struct" href="structoptions.html">options</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span><span class="comment"> * @brief Interpolate controls with a natural cubic spline parameterized by distance.</span></div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span><span class="comment"> * @details Coincident consecutive knots are removed because their zero chord</span></div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span><span class="comment"> * lengths make the spline system singular; an all-coincident path is returned</span></div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span><span class="comment"> * as its single unique point.</span></div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span><span class="comment"> * @param start Initial path point.</span></div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span><span class="comment"> * @param waypoints Ordered spline controls.</span></div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span><span class="comment"> * @param samples_per_segment Number of emitted samples per chord.</span></div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span><span class="comment"> * @return Interpolated path including the final knot.</span></div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span><span class="comment"> * @throws std::invalid_argument If samples per segment is not positive.</span></div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>std::vector&lt;Point&gt; <a class="code hl_function" href="namespaceaipp.html#a416d4a7f611a168bfefd8c3685a1b00d">spline</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">Point</a>&amp; <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>, <span class="keyword">const</span> std::vector&lt;Point&gt;&amp; waypoints,</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span> <span class="keywordtype">int</span> samples_per_segment = <a class="code hl_variable" href="namespaceaipp.html#a2cb095eaae108c9d002cf012093a600b">spline_samples_per_segment</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span><span class="comment"> * @brief Score a trajectory by safety violation and distance-normalized information gain.</span></div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span><span class="comment"> * @details Controls are clipped for geometric evaluation, while raw-control and</span></div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span><span class="comment"> * spline overshoot is retained as a penalty so the optimizer cannot hide an</span></div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span><span class="comment"> * unsafe proposal by clipping it before scoring.</span></div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span><span class="comment"> * @param grid Map geometry and safety bounds.</span></div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span><span class="comment"> * @param covariance Current covariance.</span></div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="comment"> * @param mask Cells included in information gain.</span></div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span><span class="comment"> * @param start Current position.</span></div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span><span class="comment"> * @param raw_waypoints Candidate controls before clipping.</span></div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="comment"> * @param options Sensor geometry and distance-cost settings.</span></div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span><span class="comment"> * @return Scalar objective; lower values are preferred.</span></div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span><span class="keywordtype">double</span> <a class="code hl_function" href="namespaceaipp.html#a71c9afab79ba3fbc17b384a15dc46911">trajectory_objective</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1Grid.html">Grid</a>&amp; grid, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">Matrix</a>&amp; covariance,</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> <span class="keyword">const</span> std::vector&lt;bool&gt;&amp; mask, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">Point</a>&amp; <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>,</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> <span class="keyword">const</span> std::vector&lt;Point&gt;&amp; raw_waypoints, <span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1PlannerOptions.html">PlannerOptions</a>&amp; <a class="code hl_struct" href="structoptions.html">options</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span><span class="comment"> * @brief Greedily select a bounded route by information gain per travel cost.</span></div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span><span class="comment"> * @details Each chosen sensor conditions a private covariance copy before the</span></div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span><span class="comment"> * next selection, giving cheap sequential look-ahead without mutating observed</span></div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span><span class="comment"> * belief state. Cancellation returns an empty/incomplete route.</span></div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span><span class="comment"> * @param grid Candidate world grid.</span></div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span><span class="comment"> * @param mean Current posterior mean.</span></div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span><span class="comment"> * @param covariance Current posterior covariance.</span></div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span><span class="comment"> * @param start Initial position.</span></div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span><span class="comment"> * @param options Horizon, utility, sensor, and cancellation settings.</span></div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span><span class="comment"> * @return Ordered greedy controls, possibly empty when interrupted.</span></div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>std::vector&lt;Point&gt; <a class="code hl_function" href="namespaceaipp.html#ad615564083e6f64c2598f2f4b7d2efbe">grid_search</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1Grid.html">Grid</a>&amp; grid, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">Vector</a>&amp; mean, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">Matrix</a>&amp; covariance,</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span> <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">Point</a>&amp; <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>, <span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1PlannerOptions.html">PlannerOptions</a>&amp; <a class="code hl_struct" href="structoptions.html">options</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span><span class="comment"> * @brief Refine a greedy route with bounded CMA-ES while retaining its best candidate.</span></div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span><span class="comment"> * @details Fixed-altitude problems omit Z from the search dimension; boundary</span></div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span><span class="comment"> * transforms keep the optimizer's latent Gaussian unconstrained while all</span></div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span><span class="comment"> * evaluated waypoints remain inside flight bounds.</span></div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span><span class="comment"> * @param grid Map geometry and safety bounds.</span></div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span><span class="comment"> * @param mean Current posterior mean.</span></div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span><span class="comment"> * @param covariance Current posterior covariance.</span></div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span><span class="comment"> * @param start Initial position.</span></div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span><span class="comment"> * @param initial Greedy route used as the warm start and incumbent.</span></div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span><span class="comment"> * @param options Optimizer budget, seed, bounds, and cancellation predicate.</span></div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span><span class="comment"> * @return Best route found, or the unchanged initial route if refinement cannot start.</span></div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>std::vector&lt;Point&gt; <a class="code hl_function" href="namespaceaipp.html#a182ec4191c554f51bc02c1aff344e415">refine</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1Grid.html">Grid</a>&amp; grid, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">Vector</a>&amp; mean, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">Matrix</a>&amp; covariance,</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">Point</a>&amp; <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>, <span class="keyword">const</span> std::vector&lt;Point&gt;&amp; initial,</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span> <span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1PlannerOptions.html">PlannerOptions</a>&amp; <a class="code hl_struct" href="structoptions.html">options</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span><span class="comment"> * @brief Run greedy route selection followed by optional CMA-ES refinement.</span></div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span><span class="comment"> * @details Greedy search provides a feasible incumbent; refinement is skipped</span></div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span><span class="comment"> * when `options.refine` is false.</span></div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span><span class="comment"> * @param grid Map geometry.</span></div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span><span class="comment"> * @param mean Current posterior mean.</span></div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span><span class="comment"> * @param covariance Current posterior covariance.</span></div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span><span class="comment"> * @param start Initial position.</span></div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span><span class="comment"> * @param options Search and optimizer settings.</span></div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span><span class="comment"> * @return Ordered control points, or an empty route if cancelled during greedy search.</span></div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>std::vector&lt;Point&gt; <a class="code hl_function" href="namespaceaipp.html#a1837cfb66ae61b2faa0bbb84205ad157">plan</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1Grid.html">Grid</a>&amp; grid, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">Vector</a>&amp; mean, <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">Matrix</a>&amp; covariance,</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span> <span class="keyword">const</span> <a class="code hl_typedef" href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">Point</a>&amp; <a class="code hl_function" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>, <span class="keyword">const</span> <a class="code hl_struct" href="structaipp_1_1PlannerOptions.html">PlannerOptions</a>&amp; <a class="code hl_struct" href="structoptions.html">options</a>);</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span> </div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>}</div>
+<div class="ttc" id="acompat_8hpp_html"><div class="ttname"><a href="compat_8hpp.html">compat.hpp</a></div><div class="ttdoc">Eigen-style Aigen values and build-selected planner aliases.</div></div>
+<div class="ttc" id="adipla__camera__backend_8c_html_a107573c5257745586d1172d7ee57389a"><div class="ttname"><a href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a></div><div class="ttdeci">static bool start(uint32_t session)</div><div class="ttdoc">Admit a nonzero session and discard correlation from the previous one.</div><div class="ttdef"><b>Definition</b> <a href="dipla__camera__backend_8c_source.html#l00170">dipla_camera_backend.c:170</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a13643edff1e57fb073a3360d16152cdc"><div class="ttname"><a href="ear__cam__pipe_8c.html#a13643edff1e57fb073a3360d16152cdc">measurement</a></div><div class="ttdeci">struct latest_measurement measurement</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00210">ear_cam_pipe.c:210</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_a78fcdd2741e62c29ec72a8053a5bd79b"><div class="ttname"><a href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a></div><div class="ttdeci">uint8_t row[LWIR_MAX_WIDTH *3U]</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00063">lwir_image.c:63</a></div></div>
+<div class="ttc" id="anamespaceaipp_1_1math_html_a6e68daaf90a710a09c41acb35c6facd9"><div class="ttname"><a href="namespaceaipp_1_1math.html#a6e68daaf90a710a09c41acb35c6facd9">aipp::math::Vector</a></div><div class="ttdeci">VectorXd Vector</div><div class="ttdef"><b>Definition</b> <a href="compat_8hpp_source.html#l00278">compat.hpp:278</a></div></div>
+<div class="ttc" id="anamespaceaipp_1_1math_html_aa0e201d21014714626b2e696a2759f76"><div class="ttname"><a href="namespaceaipp_1_1math.html#aa0e201d21014714626b2e696a2759f76">aipp::math::Point</a></div><div class="ttdeci">Vector3d Point</div><div class="ttdef"><b>Definition</b> <a href="compat_8hpp_source.html#l00280">compat.hpp:280</a></div></div>
+<div class="ttc" id="anamespaceaipp_1_1math_html_adc757a1dd5739f0bfc29b112e0abf9b2"><div class="ttname"><a href="namespaceaipp_1_1math.html#adc757a1dd5739f0bfc29b112e0abf9b2">aipp::math::Matrix</a></div><div class="ttdeci">MatrixXd Matrix</div><div class="ttdef"><b>Definition</b> <a href="compat_8hpp_source.html#l00276">compat.hpp:276</a></div></div>
+<div class="ttc" id="anamespaceaipp_html"><div class="ttname"><a href="namespaceaipp.html">aipp</a></div><div class="ttdef"><b>Definition</b> <a href="compat_8hpp_source.html#l00242">compat.hpp:242</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a01802fb27843d8a1bc1ff075486ac325"><div class="ttname"><a href="namespaceaipp.html#a01802fb27843d8a1bc1ff075486ac325">aipp::Sensor</a></div><div class="ttdeci">dipla::aigenlib::Sensor Sensor</div><div class="ttdoc">Sparse block-averaging observation operator.</div><div class="ttdef"><b>Definition</b> <a href="#l00124">dipla_gp_belief_planner.hpp:124</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a038858a17a73e298e89df0483733a4c3"><div class="ttname"><a href="namespaceaipp.html#a038858a17a73e298e89df0483733a4c3">aipp::fov_radius</a></div><div class="ttdeci">double fov_radius(double altitude, double angle)</div><div class="ttdoc">Compute the ground-plane footprint radius from altitude and full FOV angle.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00230">dipla_gp_belief_planner.cpp:230</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a10646476c71672274d6e8cb2ee1d5c13"><div class="ttname"><a href="namespaceaipp.html#a10646476c71672274d6e8cb2ee1d5c13">aipp::lookahead_measurement_budget</a></div><div class="ttdeci">constexpr int lookahead_measurement_budget</div><div class="ttdef"><b>Definition</b> <a href="#l00040">dipla_gp_belief_planner.hpp:40</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a182ec4191c554f51bc02c1aff344e415"><div class="ttname"><a href="namespaceaipp.html#a182ec4191c554f51bc02c1aff344e415">aipp::refine</a></div><div class="ttdeci">std::vector&lt; Point &gt; refine(const Grid &amp;grid, const Vector &amp;mean, const Matrix &amp;covariance, const Point &amp;start, const std::vector&lt; Point &gt; &amp;initial, const PlannerOptions &amp;options)</div><div class="ttdoc">Refine a greedy route with bounded CMA-ES while retaining its best candidate.</div><div class="ttdef"><b>Definition</b> <a href="cmaes__optimizer_8cpp_source.html#l00055">cmaes_optimizer.cpp:55</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a1837cfb66ae61b2faa0bbb84205ad157"><div class="ttname"><a href="namespaceaipp.html#a1837cfb66ae61b2faa0bbb84205ad157">aipp::plan</a></div><div class="ttdeci">std::vector&lt; Point &gt; plan(const Grid &amp;grid, const Vector &amp;mean, const Matrix &amp;covariance, const Point &amp;start, const PlannerOptions &amp;options)</div><div class="ttdoc">Run greedy route selection followed by optional CMA-ES refinement.</div><div class="ttdef"><b>Definition</b> <a href="cmaes__optimizer_8cpp_source.html#l00114">cmaes_optimizer.cpp:114</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a1a1292344030f5b334098b090b143d9c"><div class="ttname"><a href="namespaceaipp.html#a1a1292344030f5b334098b090b143d9c">aipp::resolution_block_size</a></div><div class="ttdeci">int resolution_block_size(double altitude)</div><div class="ttdoc">Select the research sensor's altitude-dependent aggregation block size.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00238">dipla_gp_belief_planner.cpp:238</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a1dbb694e7286c8aec29f10d1b2b762d8"><div class="ttname"><a href="namespaceaipp.html#a1dbb694e7286c8aec29f10d1b2b762d8">aipp::noise_model</a></div><div class="ttdeci">double noise_model(double altitude, double minimum_altitude)</div><div class="ttdoc">Compute modeled observation variance at an altitude.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00248">dipla_gp_belief_planner.cpp:248</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a2cb095eaae108c9d002cf012093a600b"><div class="ttname"><a href="namespaceaipp.html#a2cb095eaae108c9d002cf012093a600b">aipp::spline_samples_per_segment</a></div><div class="ttdeci">constexpr int spline_samples_per_segment</div><div class="ttdef"><b>Definition</b> <a href="#l00042">dipla_gp_belief_planner.hpp:42</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a416d4a7f611a168bfefd8c3685a1b00d"><div class="ttname"><a href="namespaceaipp.html#a416d4a7f611a168bfefd8c3685a1b00d">aipp::spline</a></div><div class="ttdeci">std::vector&lt; Point &gt; spline(const Point &amp;start, const std::vector&lt; Point &gt; &amp;waypoints, int samples_per_segment)</div><div class="ttdoc">Interpolate controls with a natural cubic spline parameterized by distance.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00573">dipla_gp_belief_planner.cpp:573</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a4d7d9735a8d63f2dc24d7f545fadde65"><div class="ttname"><a href="namespaceaipp.html#a4d7d9735a8d63f2dc24d7f545fadde65">aipp::importance_mask</a></div><div class="ttdeci">std::vector&lt; bool &gt; importance_mask(const Vector &amp;mean, const Matrix &amp;covariance, const PlannerOptions &amp;options)</div><div class="ttdoc">Select cells whose confidence bounds satisfy the utility threshold.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00417">dipla_gp_belief_planner.cpp:417</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a54f57a0eff11c07ea221822dfc99a499"><div class="ttname"><a href="namespaceaipp.html#a54f57a0eff11c07ea221822dfc99a499">aipp::initialize_covariance</a></div><div class="ttdeci">Matrix initialize_covariance(const Grid &amp;grid, double sigma2, double lengthscale)</div><div class="ttdoc">Initialize a dense Matérn-3/2 GP covariance matrix.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00262">dipla_gp_belief_planner.cpp:262</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a55b034e824d8fbaf717c624a25c7f777"><div class="ttname"><a href="namespaceaipp.html#a55b034e824d8fbaf717c624a25c7f777">aipp::lookahead_stride</a></div><div class="ttdeci">constexpr int lookahead_stride</div><div class="ttdef"><b>Definition</b> <a href="#l00038">dipla_gp_belief_planner.hpp:38</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a6dc0af460c0701e4c6e7dee9b95dd964"><div class="ttname"><a href="namespaceaipp.html#a6dc0af460c0701e4c6e7dee9b95dd964">aipp::Point</a></div><div class="ttdeci">math::Point Point</div><div class="ttdef"><b>Definition</b> <a href="#l00049">dipla_gp_belief_planner.hpp:49</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a6eadbfdc3710d01acf5c35b54fb031f8"><div class="ttname"><a href="namespaceaipp.html#a6eadbfdc3710d01acf5c35b54fb031f8">aipp::sample_sensor_noise</a></div><div class="ttdeci">Vector sample_sensor_noise(const Sensor &amp;sensor, std::mt19937_64 &amp;generator)</div><div class="ttdoc">Draw independent zero-mean noise using each sensor row's variance.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00398">dipla_gp_belief_planner.cpp:398</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a71c9afab79ba3fbc17b384a15dc46911"><div class="ttname"><a href="namespaceaipp.html#a71c9afab79ba3fbc17b384a15dc46911">aipp::trajectory_objective</a></div><div class="ttdeci">double trajectory_objective(const Grid &amp;grid, const Matrix &amp;covariance, const std::vector&lt; bool &gt; &amp;mask, const Point &amp;start, const std::vector&lt; Point &gt; &amp;raw_waypoints, const PlannerOptions &amp;options)</div><div class="ttdoc">Score a trajectory by safety violation and distance-normalized information gain.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00635">dipla_gp_belief_planner.cpp:635</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a743ee3a0578c9bf0ba25bebaadc0b49b"><div class="ttname"><a href="namespaceaipp.html#a743ee3a0578c9bf0ba25bebaadc0b49b">aipp::Matrix</a></div><div class="ttdeci">math::Matrix Matrix</div><div class="ttdef"><b>Definition</b> <a href="#l00045">dipla_gp_belief_planner.hpp:45</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a7898d5a59248e042796e51e02df85df4"><div class="ttname"><a href="namespaceaipp.html#a7898d5a59248e042796e51e02df85df4">aipp::expected_reduction</a></div><div class="ttdeci">double expected_reduction(const Matrix &amp;covariance, const std::vector&lt; bool &gt; &amp;mask, const Sensor &amp;sensor)</div><div class="ttdoc">Sum expected marginal-variance reduction over important cells.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00441">dipla_gp_belief_planner.cpp:441</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a824cc5eaadaab25562d6f50d99db3276"><div class="ttname"><a href="namespaceaipp.html#a824cc5eaadaab25562d6f50d99db3276">aipp::future_sensor</a></div><div class="ttdeci">Sensor future_sensor(const Grid &amp;grid, const std::vector&lt; Point &gt; &amp;path, double angle, int stride, int max_measurements, double observation_variance)</div><div class="ttdoc">Approximate future measurements along a path under a bounded budget.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00335">dipla_gp_belief_planner.cpp:335</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_a83490f7403eb1d2a7fd547842a1d5193"><div class="ttname"><a href="namespaceaipp.html#a83490f7403eb1d2a7fd547842a1d5193">aipp::build_sensor</a></div><div class="ttdeci">Sensor build_sensor(const Grid &amp;grid, const Point &amp;pose, double angle, double observation_variance)</div><div class="ttdoc">Build one block-averaged sensor footprint at a pose.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00296">dipla_gp_belief_planner.cpp:296</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_aa608e778622e55fa9736aac648b1ee2b"><div class="ttname"><a href="namespaceaipp.html#aa608e778622e55fa9736aac648b1ee2b">aipp::Vector</a></div><div class="ttdeci">math::Vector Vector</div><div class="ttdef"><b>Definition</b> <a href="#l00047">dipla_gp_belief_planner.hpp:47</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_acfbacf375a460aa4110432fe12371760"><div class="ttname"><a href="namespaceaipp.html#acfbacf375a460aa4110432fe12371760">aipp::condition</a></div><div class="ttdeci">void condition(Matrix &amp;covariance, Vector *mean, const Sensor &amp;sensor, const Vector *measurement)</div><div class="ttdoc">Apply a Gaussian linear-observation update in place.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00473">dipla_gp_belief_planner.cpp:473</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_ad615564083e6f64c2598f2f4b7d2efbe"><div class="ttname"><a href="namespaceaipp.html#ad615564083e6f64c2598f2f4b7d2efbe">aipp::grid_search</a></div><div class="ttdeci">std::vector&lt; Point &gt; grid_search(const Grid &amp;grid, const Vector &amp;mean, const Matrix &amp;covariance, const Point &amp;start, const PlannerOptions &amp;options)</div><div class="ttdoc">Greedily select a bounded route by information gain per travel cost.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00678">dipla_gp_belief_planner.cpp:678</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_ad661749a960b2437c422da29129caa84"><div class="ttname"><a href="namespaceaipp.html#ad661749a960b2437c422da29129caa84">aipp::lattice</a></div><div class="ttdeci">std::vector&lt; Point &gt; lattice(const Grid &amp;grid, const PlannerOptions &amp;options)</div><div class="ttdoc">Generate the deduplicated coarse-to-fine candidate lattice.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00531">dipla_gp_belief_planner.cpp:531</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_ad9dea9f972d2f1db1f80ff7721a2f1cf"><div class="ttname"><a href="namespaceaipp.html#ad9dea9f972d2f1db1f80ff7721a2f1cf">aipp::observe</a></div><div class="ttdeci">Vector observe(const Sensor &amp;sensor, const Vector &amp;field)</div><div class="ttdoc">Apply the sensor's block averages to a full-grid field.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00379">dipla_gp_belief_planner.cpp:379</a></div></div>
+<div class="ttc" id="anamespaceaipp_html_ae4b9fc567c76c9a881b022acd3b10754"><div class="ttname"><a href="namespaceaipp.html#ae4b9fc567c76c9a881b022acd3b10754">aipp::clip_point</a></div><div class="ttdeci">Point clip_point(const Grid &amp;grid, const Point &amp;point, const PlannerOptions &amp;options)</div><div class="ttdoc">Clamp a candidate to the map safety inset and altitude interval.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00516">dipla_gp_belief_planner.cpp:516</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html"><div class="ttname"><a href="structaipp_1_1Grid.html">aipp::Grid</a></div><div class="ttdoc">Rectangular, evenly spaced local map grid.</div><div class="ttdef"><b>Definition</b> <a href="#l00057">dipla_gp_belief_planner.hpp:57</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_a089ed83f3f651894128a5554847aea1d"><div class="ttname"><a href="structaipp_1_1Grid.html#a089ed83f3f651894128a5554847aea1d">aipp::Grid::nearest_y</a></div><div class="ttdeci">int nearest_y(double value) const</div><div class="ttdoc">Find the nearest clamped row; half-cell ties round downward.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00215">dipla_gp_belief_planner.cpp:215</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_a3ef5682fb61876efb3844a4ff35d81c3"><div class="ttname"><a href="structaipp_1_1Grid.html#a3ef5682fb61876efb3844a4ff35d81c3">aipp::Grid::xmax</a></div><div class="ttdeci">double xmax</div><div class="ttdef"><b>Definition</b> <a href="#l00061">dipla_gp_belief_planner.hpp:61</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_a46440ad2a66ed0734ed21486ac5f0b6d"><div class="ttname"><a href="structaipp_1_1Grid.html#a46440ad2a66ed0734ed21486ac5f0b6d">aipp::Grid::nearest_x</a></div><div class="ttdeci">int nearest_x(double value) const</div><div class="ttdoc">Find the nearest clamped column; half-cell ties round downward.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00203">dipla_gp_belief_planner.cpp:203</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_a680991508ac32c6c7eb9160d312d12c6"><div class="ttname"><a href="structaipp_1_1Grid.html#a680991508ac32c6c7eb9160d312d12c6">aipp::Grid::xmin</a></div><div class="ttdeci">double xmin</div><div class="ttdef"><b>Definition</b> <a href="#l00059">dipla_gp_belief_planner.hpp:59</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_a7357047ae7560b66937c0fd4f2e23a2a"><div class="ttname"><a href="structaipp_1_1Grid.html#a7357047ae7560b66937c0fd4f2e23a2a">aipp::Grid::x</a></div><div class="ttdeci">double x(int column) const</div><div class="ttdoc">Convert a column index to its east coordinate.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00194">dipla_gp_belief_planner.cpp:194</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_a915f47caafaffab3c2408b1c8229d918"><div class="ttname"><a href="structaipp_1_1Grid.html#a915f47caafaffab3c2408b1c8229d918">aipp::Grid::step</a></div><div class="ttdeci">double step</div><div class="ttdef"><b>Definition</b> <a href="#l00067">dipla_gp_belief_planner.hpp:67</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_aaab83b7b868cea73a6092380e60d37bd"><div class="ttname"><a href="structaipp_1_1Grid.html#aaab83b7b868cea73a6092380e60d37bd">aipp::Grid::ymax</a></div><div class="ttdeci">double ymax</div><div class="ttdef"><b>Definition</b> <a href="#l00065">dipla_gp_belief_planner.hpp:65</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_ab01e67c9896a4149b4217e4c6a4b051a"><div class="ttname"><a href="structaipp_1_1Grid.html#ab01e67c9896a4149b4217e4c6a4b051a">aipp::Grid::ymin</a></div><div class="ttdeci">double ymin</div><div class="ttdef"><b>Definition</b> <a href="#l00063">dipla_gp_belief_planner.hpp:63</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_abf8c68192c0c4b032224edbdac92c1e3"><div class="ttname"><a href="structaipp_1_1Grid.html#abf8c68192c0c4b032224edbdac92c1e3">aipp::Grid::width</a></div><div class="ttdeci">int width</div><div class="ttdef"><b>Definition</b> <a href="#l00069">dipla_gp_belief_planner.hpp:69</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_ad042101a04740571998771bbc178ad33"><div class="ttname"><a href="structaipp_1_1Grid.html#ad042101a04740571998771bbc178ad33">aipp::Grid::size</a></div><div class="ttdeci">int size() const</div><div class="ttdoc">Return the number of grid cells.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00192">dipla_gp_belief_planner.cpp:192</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_ae023ac7cb666b0916871d5a5ec51cfe6"><div class="ttname"><a href="structaipp_1_1Grid.html#ae023ac7cb666b0916871d5a5ec51cfe6">aipp::Grid::y</a></div><div class="ttdeci">double y(int row) const</div><div class="ttdoc">Convert a row index to its north coordinate.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00196">dipla_gp_belief_planner.cpp:196</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_ae75dcead60a750ff6ff7039ff0e34059"><div class="ttname"><a href="structaipp_1_1Grid.html#ae75dcead60a750ff6ff7039ff0e34059">aipp::Grid::Grid</a></div><div class="ttdeci">Grid(double xminimum=0.0, double xmaximum=100.0, double yminimum=0.0, double ymaximum=100.0, double spacing=2.0)</div><div class="ttdoc">Create a grid and align its effective upper bounds.</div><div class="ttdef"><b>Definition</b> <a href="dipla__gp__belief__planner_8cpp_source.html#l00173">dipla_gp_belief_planner.cpp:173</a></div></div>
+<div class="ttc" id="astructaipp_1_1Grid_html_af828c63aeed0cc87477c9ed68abc015b"><div class="ttname"><a href="structaipp_1_1Grid.html#af828c63aeed0cc87477c9ed68abc015b">aipp::Grid::height</a></div><div class="ttdeci">int height</div><div class="ttdef"><b>Definition</b> <a href="#l00071">dipla_gp_belief_planner.hpp:71</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html">aipp::PlannerOptions</a></div><div class="ttdoc">Search, utility, and optimizer controls for the reference planner.</div><div class="ttdef"><b>Definition</b> <a href="#l00131">dipla_gp_belief_planner.hpp:131</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a00223eab7af31c33ee80b41b379c8e77"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a00223eab7af31c33ee80b41b379c8e77">aipp::PlannerOptions::lower_confidence_bound</a></div><div class="ttdeci">bool lower_confidence_bound</div><div class="ttdef"><b>Definition</b> <a href="#l00159">dipla_gp_belief_planner.hpp:159</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a040ba45fa359980ee384aeed936c66bd"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a040ba45fa359980ee384aeed936c66bd">aipp::PlannerOptions::threshold</a></div><div class="ttdeci">double threshold</div><div class="ttdef"><b>Definition</b> <a href="#l00135">dipla_gp_belief_planner.hpp:135</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a05412d58d16fba7dc98f1994765b77e0"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a05412d58d16fba7dc98f1994765b77e0">aipp::PlannerOptions::maxfevals</a></div><div class="ttdeci">int maxfevals</div><div class="ttdef"><b>Definition</b> <a href="#l00155">dipla_gp_belief_planner.hpp:155</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a236bfb97ae029279ab2078b468d558f9"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a236bfb97ae029279ab2078b468d558f9">aipp::PlannerOptions::keep_planning</a></div><div class="ttdeci">std::function&lt; bool()&gt; keep_planning</div><div class="ttdef"><b>Definition</b> <a href="#l00167">dipla_gp_belief_planner.hpp:167</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a2c411e47388ef4901bfff7c6a91491e3"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a2c411e47388ef4901bfff7c6a91491e3">aipp::PlannerOptions::cost_exponent</a></div><div class="ttdeci">double cost_exponent</div><div class="ttdef"><b>Definition</b> <a href="#l00143">dipla_gp_belief_planner.hpp:143</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a2c79e9ee65f068ee26ad6c6dcefac6d1"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a2c79e9ee65f068ee26ad6c6dcefac6d1">aipp::PlannerOptions::maxiter</a></div><div class="ttdeci">int maxiter</div><div class="ttdef"><b>Definition</b> <a href="#l00151">dipla_gp_belief_planner.hpp:151</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a30e21983f71da1e9ce12f39492c02e50"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a30e21983f71da1e9ce12f39492c02e50">aipp::PlannerOptions::zmax</a></div><div class="ttdeci">double zmax</div><div class="ttdef"><b>Definition</b> <a href="#l00139">dipla_gp_belief_planner.hpp:139</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a36e8c00ad562a93adb084297d8c79a5e"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a36e8c00ad562a93adb084297d8c79a5e">aipp::PlannerOptions::beta</a></div><div class="ttdeci">double beta</div><div class="ttdef"><b>Definition</b> <a href="#l00133">dipla_gp_belief_planner.hpp:133</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a4b5348304f80ea7c51648a42feae3e6a"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a4b5348304f80ea7c51648a42feae3e6a">aipp::PlannerOptions::refine</a></div><div class="ttdeci">bool refine</div><div class="ttdef"><b>Definition</b> <a href="#l00161">dipla_gp_belief_planner.hpp:161</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a503c10aa789a44c1bb246e5be6d2d878"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a503c10aa789a44c1bb246e5be6d2d878">aipp::PlannerOptions::seed</a></div><div class="ttdeci">long seed</div><div class="ttdef"><b>Definition</b> <a href="#l00157">dipla_gp_belief_planner.hpp:157</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_a5a352b7caa7e8b66255751ba3cf38533"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#a5a352b7caa7e8b66255751ba3cf38533">aipp::PlannerOptions::step_z</a></div><div class="ttdeci">double step_z</div><div class="ttdef"><b>Definition</b> <a href="#l00147">dipla_gp_belief_planner.hpp:147</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_aa9b0d1bd784fd67c8a5f51c12199d441"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#aa9b0d1bd784fd67c8a5f51c12199d441">aipp::PlannerOptions::zmin</a></div><div class="ttdeci">double zmin</div><div class="ttdef"><b>Definition</b> <a href="#l00137">dipla_gp_belief_planner.hpp:137</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_ab0a063078b4190672ca83769649e3660"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#ab0a063078b4190672ca83769649e3660">aipp::PlannerOptions::horizon</a></div><div class="ttdeci">int horizon</div><div class="ttdef"><b>Definition</b> <a href="#l00149">dipla_gp_belief_planner.hpp:149</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_ab334ec75e377d298cc38d8bcd96eb618"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#ab334ec75e377d298cc38d8bcd96eb618">aipp::PlannerOptions::angle_of_view</a></div><div class="ttdeci">double angle_of_view</div><div class="ttdef"><b>Definition</b> <a href="#l00141">dipla_gp_belief_planner.hpp:141</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_ab528f46749743b5292fb3a48fdbe6be7"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#ab528f46749743b5292fb3a48fdbe6be7">aipp::PlannerOptions::popsize</a></div><div class="ttdeci">int popsize</div><div class="ttdef"><b>Definition</b> <a href="#l00153">dipla_gp_belief_planner.hpp:153</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_ad6b8a77c390ccad9fdc52175559dc602"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#ad6b8a77c390ccad9fdc52175559dc602">aipp::PlannerOptions::observation_variance</a></div><div class="ttdeci">double observation_variance</div><div class="ttdef"><b>Definition</b> <a href="#l00163">dipla_gp_belief_planner.hpp:163</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_ada130bfb1405c52e90dcbe84ede1ae7c"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#ada130bfb1405c52e90dcbe84ede1ae7c">aipp::PlannerOptions::margin_cells</a></div><div class="ttdeci">unsigned margin_cells</div><div class="ttdef"><b>Definition</b> <a href="#l00165">dipla_gp_belief_planner.hpp:165</a></div></div>
+<div class="ttc" id="astructaipp_1_1PlannerOptions_html_afd6377d69e7f3726fde88da8ca60588d"><div class="ttname"><a href="structaipp_1_1PlannerOptions.html#afd6377d69e7f3726fde88da8ca60588d">aipp::PlannerOptions::step_xy</a></div><div class="ttdeci">double step_xy</div><div class="ttdef"><b>Definition</b> <a href="#l00145">dipla_gp_belief_planner.hpp:145</a></div></div>
+<div class="ttc" id="astructdipla_1_1aigenlib_1_1Sensor_html"><div class="ttname"><a href="structdipla_1_1aigenlib_1_1Sensor.html">dipla::aigenlib::Sensor</a></div><div class="ttdoc">Sparse uniform-averaging measurement operator.</div><div class="ttdef"><b>Definition</b> <a href="aigenlib_8hpp_source.html#l00161">aigenlib.hpp:161</a></div></div>
+<div class="ttc" id="astructoptions_html"><div class="ttname"><a href="structoptions.html">options</a></div><div class="ttdoc">Validated capture and reporting policy, fixed before the sample loop.</div><div class="ttdef"><b>Definition</b> <a href="earcam_8c_source.html#l00137">earcam.c:137</a></div></div>
+<div class="ttc" id="astructpoint_html"><div class="ttname"><a href="structpoint.html">point</a></div><div class="ttdoc">One timestamped geographic position for a replay annotation.</div><div class="ttdef"><b>Definition</b> <a href="ear__heatmap__overlay_8c_source.html#l00079">ear_heatmap_overlay.c:79</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

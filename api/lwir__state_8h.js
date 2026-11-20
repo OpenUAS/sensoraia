@@ -1,0 +1,56 @@
+var lwir__state_8h =
+[
+    [ "lwir_state_value", "structlwir__state__value.html", "structlwir__state__value" ],
+    [ "lwir_device_state", "structlwir__device__state.html", "structlwir__device__state" ],
+    [ "lwir_state_io", "structlwir__state__io.html", "structlwir__state__io" ],
+    [ "lwir_control_request", "structlwir__control__request.html", "structlwir__control__request" ],
+    [ "lwir_control_result", "structlwir__control__result.html", "structlwir__control__result" ],
+    [ "LWIR_STATE_BUDGET_MS", "lwir__state_8h.html#ab00c5a988634784c1aa6b933073ebd74", null ],
+    [ "lwir_control_kind", "lwir__state_8h.html#ac1ae77e93976b7177ae2c40bd6274038", [
+      [ "LWIR_CONTROL_GAIN", "lwir__state_8h.html#ac1ae77e93976b7177ae2c40bd6274038a07021414901240f5b98db2875962b75a", null ],
+      [ "LWIR_CONTROL_EMISSIVITY", "lwir__state_8h.html#ac1ae77e93976b7177ae2c40bd6274038aab8237be979a5af9750d471c038626da", null ],
+      [ "LWIR_CONTROL_AGC_MODE", "lwir__state_8h.html#ac1ae77e93976b7177ae2c40bd6274038a72297a9a57c8d2cbf8cacd4339e47a7a", null ],
+      [ "LWIR_CONTROL_AGC_ENABLE", "lwir__state_8h.html#ac1ae77e93976b7177ae2c40bd6274038ade21abdd19117ac43d630f3f63af2c0e", null ],
+      [ "LWIR_CONTROL_FFC", "lwir__state_8h.html#ac1ae77e93976b7177ae2c40bd6274038a08f22a805751b2f6809b66c21f64a970", null ]
+    ] ],
+    [ "lwir_state_field", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9af", [
+      [ "LWIR_STATE_GAIN", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa3f2c9c75b8d87c0db8ffa4bae136b06b", null ],
+      [ "LWIR_STATE_FW_BUILD", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa75643977543e94bef707c0a17c45bd8d", null ],
+      [ "LWIR_STATE_FW_DATE", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa8e3da8d9744340b5a7982faec16a0ea1", null ],
+      [ "LWIR_STATE_CHIP", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa7664d93a1338d792fef63e16d8e15e7d", null ],
+      [ "LWIR_STATE_SHUTTER", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa6b53f7ce9100aa8d1e29ed6a86cbed85", null ],
+      [ "LWIR_STATE_DISTANCE", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afaa08a0d053a769b91540ae38349786921", null ],
+      [ "LWIR_STATE_REFLECTED_K", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa360dfc792876adccde496e80f1ff6a3b", null ],
+      [ "LWIR_STATE_AMBIENT_K", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa5c2bbe627a4bb4a579e92b047cdb8fb5", null ],
+      [ "LWIR_STATE_EMISSIVITY", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa65684f8d2ebc669cbd9634d37c7fc2a3", null ],
+      [ "LWIR_STATE_TRANSMITTANCE", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa3b318ed3cc81f39d1207aaa5c765131c", null ],
+      [ "LWIR_STATE_TNR", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afad3b1a36d2fa94d6ae180c5b99813346c", null ],
+      [ "LWIR_STATE_SNR", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afab385c7bd42006074cdabad4b226f2351", null ],
+      [ "LWIR_STATE_DDE", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afac131a3c9b5803438a2745b5136ff641d", null ],
+      [ "LWIR_STATE_BRIGHTNESS", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afaed4e199685b0feb3f373cd7e5a7f92d6", null ],
+      [ "LWIR_STATE_CONTRAST", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afacc81e36fd77c6c0f523e6f747877088c", null ],
+      [ "LWIR_STATE_AGC_MODE", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa3dc92de74f7d21d8a26c7d92eb2fb853", null ],
+      [ "LWIR_STATE_AGC_MAX_GAIN", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afac8875af6d2e31998a95c09402a3946cc", null ],
+      [ "LWIR_STATE_AGC_BOS", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afafa905c641bd3eb3bc52cf701f69a3d7a", null ],
+      [ "LWIR_STATE_AGC_ENABLE", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa384b29388acf6be904a9f663ec345d42", null ],
+      [ "LWIR_STATE_MIRROR_FLIP", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa685051d4baed7c890f4ac91d11e3b7b0", null ],
+      [ "LWIR_STATE_FIELDS", "lwir__state_8h.html#a840cc770445860126ac0f33104cbd9afa93f10352382770c79e9c9042c90313ca", null ]
+    ] ],
+    [ "lwir_state_status", "lwir__state_8h.html#af9ae6e236c97b833ff36b3548255469d", [
+      [ "LWIR_STATE_NOT_REQUESTED", "lwir__state_8h.html#af9ae6e236c97b833ff36b3548255469da1743396d18717805091c3f8b2b962f1a", null ],
+      [ "LWIR_STATE_OK", "lwir__state_8h.html#af9ae6e236c97b833ff36b3548255469da206284e3e96413486eb984209ec85f36", null ],
+      [ "LWIR_STATE_UNSUPPORTED", "lwir__state_8h.html#af9ae6e236c97b833ff36b3548255469da2e0774851e68387cf1e6a255a6fbc84f", null ],
+      [ "LWIR_STATE_TIMEOUT", "lwir__state_8h.html#af9ae6e236c97b833ff36b3548255469da462eba0ac34e3ab5cdb3a8296ac23937", null ],
+      [ "LWIR_STATE_IO_ERROR", "lwir__state_8h.html#af9ae6e236c97b833ff36b3548255469dac5fcd1b2a0fb7d451608bc679257d6c5", null ],
+      [ "LWIR_STATE_INVALID", "lwir__state_8h.html#af9ae6e236c97b833ff36b3548255469da199aaafdbca513773c8a3480cfe1bae6", null ],
+      [ "LWIR_STATE_BUSY", "lwir__state_8h.html#af9ae6e236c97b833ff36b3548255469da473fd46df48348e70ad46ca224394cfb", null ],
+      [ "LWIR_STATE_SKIPPED", "lwir__state_8h.html#af9ae6e236c97b833ff36b3548255469da68ee96f9dd63766958f7a341f52b05bc", null ],
+      [ "LWIR_STATE_CANCELLED", "lwir__state_8h.html#af9ae6e236c97b833ff36b3548255469da710c429a9728192828f70349548415df", null ]
+    ] ],
+    [ "lwir_control_valid", "lwir__state_8h.html#acc7bfab7b2b060d4df96c39d69416506", null ],
+    [ "lwir_state_control", "lwir__state_8h.html#a6480d706f1fd927946cd4651c5b5e0a8", null ],
+    [ "lwir_state_control_read", "lwir__state_8h.html#a4cca38a06d61a0cf3a5ab57aa0cf4aa0", null ],
+    [ "lwir_state_format", "lwir__state_8h.html#acbc8691a882525fa73649f2d126435ac", null ],
+    [ "lwir_state_read", "lwir__state_8h.html#a36439708a5c353c6eff0d148d1eb2f94", null ],
+    [ "lwir_state_u16", "lwir__state_8h.html#a10c022099828a0236c6c1128966dbf04", null ]
+];

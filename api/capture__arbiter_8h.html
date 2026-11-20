@@ -1,0 +1,2354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/capture_arbiter.h File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('capture__arbiter_8h.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">capture_arbiter.h File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Session-scoped survey admission and saved-image evidence for USHER.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include "<a class="el" href="usher__protocol_8h_source.html">usher_protocol.h</a>"</code><br/>
+<code>#include "<a class="el" href="coverage__scheduler_8h_source.html">coverage_scheduler.h</a>"</code><br/>
+<code>#include "<a class="el" href="capture__timing_8h_source.html">capture_timing.h</a>"</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for capture_arbiter.h:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="capture__arbiter_8h__incl.png" usemap="#asrc_2capture__arbiter_8h"/></div>
+<map id="asrc_2capture__arbiter_8h" name="asrc_2capture__arbiter_8h">
+<area alt="" coords="307,24,302,18,288,13,266,9,239,6,208,5,178,6,150,9,129,13,115,18,110,24,115,30,129,35,150,39,178,42,208,43,239,42,266,39,288,35,302,30" shape="poly" title="Session-scoped survey admission and saved-image evidence for USHER."/>
+<area alt="" coords="171,196,167,190,155,185,137,180,114,178,88,177,63,178,40,180,21,185,9,190,5,196,9,201,21,207,40,211,63,214,88,214,114,214,137,211,155,207,167,201" href="usher__protocol_8h.html" shape="poly" title="Shared FC/MORA byte-stream UART framing, messages and payload layouts."/>
+<area alt="" coords="171,44,143,65,116,93,100,127,93,162,88,160,95,125,111,90,139,61,174,40" shape="poly" title=" "/>
+<area alt="" coords="523,110,518,104,503,99,480,95,451,92,419,91,387,92,358,95,335,99,320,104,315,110,320,116,335,121,358,125,387,128,419,129,451,128,480,125,503,121,518,116" href="coverage__scheduler_8h.html" shape="poly" title="Fixed-memory geometric coverage accounting, independent of camera I/O."/>
+<area alt="" coords="249,39,366,86,361,88,249,44" shape="poly" title=" "/>
+<area alt="" coords="291,110,287,104,275,99,257,95,234,92,208,91,183,92,160,95,141,99,129,104,125,110,129,116,141,121,160,125,183,128,208,129,234,128,257,125,275,121,287,116" href="capture__timing_8h.html" shape="poly" title="Sensor observation times, aligned poses, and optional frame-arrival evidence."/>
+<area alt="" coords="209,41,211,76,206,75,207,46" shape="poly" title=" "/>
+<area alt="" coords="138,281,136,275,128,270,116,266,100,263,83,262,66,263,50,266,38,270,30,275,28,281,30,287,38,292,50,297,66,299,83,300,100,299,116,297,128,292,136,287" shape="poly" title=" "/>
+<area alt="" coords="89,213,88,248,83,246,85,217" shape="poly" title=" "/>
+<area alt="" coords="268,281,265,275,257,270,246,266,231,263,215,262,199,263,184,266,172,270,165,275,162,281,165,287,172,292,184,297,199,299,215,300,231,299,246,297,257,292,265,287" shape="poly" title=" "/>
+<area alt="" coords="115,211,180,255,175,257,113,216" shape="poly" title=" "/>
+<area alt="" coords="439,126,457,146,472,169,478,193,476,205,470,216,458,227,440,237,391,254,280,275,279,270,390,248,437,232,455,223,466,213,471,203,473,193,467,171,453,149,438,131" shape="poly" title=" "/>
+<area alt="" coords="457,196,454,190,447,185,437,180,423,178,408,177,393,178,380,180,369,185,362,190,360,196,362,201,369,207,380,211,393,214,408,214,423,214,437,211,447,207,454,201" shape="poly" title=" "/>
+<area alt="" coords="418,127,415,163,410,160,415,131" shape="poly" title=" "/>
+<area alt="" coords="336,196,334,190,328,185,318,180,305,178,291,177,277,178,264,180,254,185,248,190,245,196,248,201,254,207,264,211,277,214,291,214,305,214,318,211,328,207,334,201" shape="poly" title=" "/>
+<area alt="" coords="395,127,329,173,326,168,390,130" shape="poly" title=" "/>
+<area alt="" coords="182,130,127,171,124,166,185,127" shape="poly" title=" "/>
+<area alt="" coords="211,128,216,248,211,246,207,131" shape="poly" title=" "/>
+<area alt="" coords="226,126,266,167,261,167,225,131" shape="poly" title=" "/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="capture__arbiter_8h__dep__incl.png" usemap="#asrc_2capture__arbiter_8hdep"/></div>
+<map id="asrc_2capture__arbiter_8hdep" name="asrc_2capture__arbiter_8hdep">
+<area alt="" coords="293,24,288,18,274,13,252,9,225,6,195,5,164,6,137,9,115,13,101,18,96,24,101,30,115,35,137,39,164,42,195,43,225,42,252,39,274,35,288,30" shape="poly" title="Session-scoped survey admission and saved-image evidence for USHER."/>
+<area alt="" coords="202,110,198,104,184,99,162,95,134,92,104,91,73,92,46,95,24,99,10,104,5,110,10,116,24,121,46,125,73,128,104,129,134,128,162,125,184,121,198,116" href="capture__arbiter_8c.html" shape="poly" title="Bounded camera-independent capture admission, coverage and timing evidence."/>
+<area alt="" coords="167,52,125,93,121,89,162,54" shape="poly" title=" "/>
+<area alt="" coords="347,110,344,104,335,99,322,95,305,92,287,91,268,92,251,95,238,99,229,104,226,110,229,116,238,121,251,125,268,128,287,129,305,128,322,125,335,121,344,116" href="usher_8c.html" shape="poly" title="Main USHER daemon coordinating flight-controller triggers and camera backends."/>
+<area alt="" coords="226,51,270,92,265,91,224,56" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="capture__arbiter_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ab88210b14f8b6ada7349dbb3e5884547" id="r_ab88210b14f8b6ada7349dbb3e5884547"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab88210b14f8b6ada7349dbb3e5884547">capture_arbiter_load_camera</a> (const char *filename)</td></tr>
+<tr class="memdesc:ab88210b14f8b6ada7349dbb3e5884547"><td class="mdescLeft"> </td><td class="mdescRight">Load one camera's measured profile without guessing geometry from its ID.  <br/></td></tr>
+<tr class="memitem:a49413eb1676d7a807f4cbc081b65203c" id="r_a49413eb1676d7a807f4cbc081b65203c"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a49413eb1676d7a807f4cbc081b65203c">capture_arbiter_set_enforce</a> (bool <a class="el" href="capture__arbiter_8c.html#ab2c4dc79e21a75f205d49d9f9e5133a7">enforce</a>)</td></tr>
+<tr class="memdesc:a49413eb1676d7a807f4cbc081b65203c"><td class="mdescLeft"> </td><td class="mdescRight">Enable coverage-based suppression and limited delay, or observe decisions only.  <br/></td></tr>
+<tr class="memitem:a0664b19a95f2902fd2b416cfaab900cc" id="r_a0664b19a95f2902fd2b416cfaab900cc"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a0664b19a95f2902fd2b416cfaab900cc">capture_arbiter_set_overlap</a> (double overlap)</td></tr>
+<tr class="memdesc:a0664b19a95f2902fd2b416cfaab900cc"><td class="mdescLeft"> </td><td class="mdescRight">Set the overlap floor for deliberate predictive delay, not FC shot spacing.  <br/></td></tr>
+<tr class="memitem:a3c88f9939ba0d83b900a85f895498bcd" id="r_a3c88f9939ba0d83b900a85f895498bcd"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c88f9939ba0d83b900a85f895498bcd">capture_arbiter_set_camera_capacity</a> (unsigned camera_id, unsigned <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</td></tr>
+<tr class="memdesc:a3c88f9939ba0d83b900a85f895498bcd"><td class="mdescLeft"> </td><td class="mdescRight">Set admission from a backend's actual capacity, independent of camera ID.  <br/></td></tr>
+<tr class="memitem:a7540dd97dc642885a37a1714e790d6ba" id="r_a7540dd97dc642885a37a1714e790d6ba"><td align="right" class="memItemLeft" valign="top">uint32_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7540dd97dc642885a37a1714e790d6ba">capture_arbiter_session_id</a> (void)</td></tr>
+<tr class="memdesc:a7540dd97dc642885a37a1714e790d6ba"><td class="mdescLeft"> </td><td class="mdescRight">Return the peer-session token, or zero when survey mode is not configured.  <br/></td></tr>
+<tr class="memitem:a7a849a9ed52eea958da0cbf67bbf23fd" id="r_a7a849a9ed52eea958da0cbf67bbf23fd"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a849a9ed52eea958da0cbf67bbf23fd">capture_arbiter_set_scope</a> (const union <a class="el" href="unionusher__capture__arbiter__state__union.html">usher_capture_arbiter_state_union</a> *scope, uint64_t now_us)</td></tr>
+<tr class="memdesc:a7a849a9ed52eea958da0cbf67bbf23fd"><td class="mdescLeft"> </td><td class="mdescRight">Refresh survey authorization or cancel waiting work when scope is withdrawn.  <br/></td></tr>
+<tr class="memitem:af85b8c18afd409d72bbcc9b29ba4044c" id="r_af85b8c18afd409d72bbcc9b29ba4044c"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#af85b8c18afd409d72bbcc9b29ba4044c">capture_arbiter_offer</a> (const union <a class="el" href="unionusher__capture__arbiter__shoot__union.html">usher_capture_arbiter_shoot_union</a> *<a class="el" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>, uint64_t now_us)</td></tr>
+<tr class="memdesc:af85b8c18afd409d72bbcc9b29ba4044c"><td class="mdescLeft"> </td><td class="mdescRight">Split a survey request into bounded per-camera intentions.  <br/></td></tr>
+<tr class="memitem:a4403bff0edad7da3e4ca18629ccd1506" id="r_a4403bff0edad7da3e4ca18629ccd1506"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4403bff0edad7da3e4ca18629ccd1506">capture_arbiter_take</a> (uint32_t ready_mask, uint64_t now_us, union <a class="el" href="uniondc__shot__union.html">dc_shot_union</a> *<a class="el" href="usher_8c.html#aef044fd8eddff4c8d68e44be08afa175">shot</a>, uint8_t *mask)</td></tr>
+<tr class="memdesc:a4403bff0edad7da3e4ca18629ccd1506"><td class="mdescLeft"> </td><td class="mdescRight">Admit the oldest ready camera intention after optional coverage evaluation.  <br/></td></tr>
+<tr class="memitem:aa1dd04394d55ea5885e1d166c2e1738d" id="r_aa1dd04394d55ea5885e1d166c2e1738d"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1dd04394d55ea5885e1d166c2e1738d">capture_arbiter_complete</a> (const union <a class="el" href="uniondc__shot__union.html">dc_shot_union</a> *<a class="el" href="usher_8c.html#aef044fd8eddff4c8d68e44be08afa175">shot</a>, unsigned camera_id, bool saved, bool exposure_pose_valid, double uncertainty_m, uint64_t now_us)</td></tr>
+<tr class="memdesc:aa1dd04394d55ea5885e1d166c2e1738d"><td class="mdescLeft"> </td><td class="mdescRight">Release admission and optionally credit verified saved coverage.  <br/></td></tr>
+<tr class="memitem:a950eed77f3f9469607b8ec5455be11ae" id="r_a950eed77f3f9469607b8ec5455be11ae"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a950eed77f3f9469607b8ec5455be11ae">capture_arbiter_result</a> (union <a class="el" href="unionusher__capture__arbiter__result__union.html">usher_capture_arbiter_result_union</a> *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>, uint32_t ready_mask)</td></tr>
+<tr class="memdesc:a950eed77f3f9469607b8ec5455be11ae"><td class="mdescLeft"> </td><td class="mdescRight">Pop a bounded best-effort result for UART transmission.  <br/></td></tr>
+<tr class="memitem:ad6df06e0c419681f40f438275612a97f" id="r_ad6df06e0c419681f40f438275612a97f"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6df06e0c419681f40f438275612a97f">capture_arbiter_stop</a> (void)</td></tr>
+<tr class="memdesc:ad6df06e0c419681f40f438275612a97f"><td class="mdescLeft"> </td><td class="mdescRight">Cancel waiting intentions, retaining active-image ownership and saved coverage.  <br/></td></tr>
+<tr class="memitem:a2397eac2fd78523023d916f407130658" id="r_a2397eac2fd78523023d916f407130658"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2397eac2fd78523023d916f407130658">capture_arbiter_pending</a> (void)</td></tr>
+<tr class="memdesc:a2397eac2fd78523023d916f407130658"><td class="mdescLeft"> </td><td class="mdescRight">Check whether waiting or active survey work remains.  <br/></td></tr>
+<tr class="memitem:a4aabc7c2be088e9e06108fe29bc55ea9" id="r_a4aabc7c2be088e9e06108fe29bc55ea9"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4aabc7c2be088e9e06108fe29bc55ea9">capture_arbiter_owns</a> (int32_t number)</td></tr>
+<tr class="memdesc:a4aabc7c2be088e9e06108fe29bc55ea9"><td class="mdescLeft"> </td><td class="mdescRight">Identify a shot whose active survey ownership must not be superseded.  <br/></td></tr>
+<tr class="memitem:a98feea394322ec3cd85d5203a062c97a" id="r_a98feea394322ec3cd85d5203a062c97a"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a98feea394322ec3cd85d5203a062c97a">capture_arbiter_acquired</a> (int32_t number, unsigned camera_id, uint64_t now_us)</td></tr>
+<tr class="memdesc:a98feea394322ec3cd85d5203a062c97a"><td class="mdescLeft"> </td><td class="mdescRight">Learn acquisition latency separately from slower JPEG publication.  <br/></td></tr>
+<tr class="memitem:a32ee823fb46469c51ad44bbdafc6ba6d" id="r_a32ee823fb46469c51ad44bbdafc6ba6d"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a32ee823fb46469c51ad44bbdafc6ba6d">capture_arbiter_pose_sample</a> (const union <a class="el" href="unionusher__pose__sample__union.html">usher_pose_sample_union</a> *sample, uint64_t earliest_us, uint64_t latest_us)</td></tr>
+<tr class="memdesc:a32ee823fb46469c51ad44bbdafc6ba6d"><td class="mdescLeft"> </td><td class="mdescRight">Add a pose only after the caller has established bounded clock alignment.  <br/></td></tr>
+<tr class="memitem:a14c87f51777bc03dfa0be26db7c692b8" id="r_a14c87f51777bc03dfa0be26db7c692b8"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a14c87f51777bc03dfa0be26db7c692b8">capture_arbiter_pose_invalidate</a> (void)</td></tr>
+<tr class="memdesc:a14c87f51777bc03dfa0be26db7c692b8"><td class="mdescLeft"> </td><td class="mdescRight">Forget pose history when synchronization is lost; keep saved coverage.  <br/></td></tr>
+<tr class="memitem:af57e789b0bb584bfa0ba02e00850f479" id="r_af57e789b0bb584bfa0ba02e00850f479"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#af57e789b0bb584bfa0ba02e00850f479">capture_arbiter_pose_at</a> (uint64_t time_us, uint64_t time_error_us, union <a class="el" href="uniondc__shot__union.html">dc_shot_union</a> *<a class="el" href="usher_8c.html#aef044fd8eddff4c8d68e44be08afa175">shot</a>, double *uncertainty_m)</td></tr>
+<tr class="memdesc:af57e789b0bb584bfa0ba02e00850f479"><td class="mdescLeft"> </td><td class="mdescRight">Interpolate within trusted nearby pose samples, never across a long gap.  <br/></td></tr>
+<tr class="memitem:ab599b0a85f67aec4c7efbe56f2e8b212" id="r_ab599b0a85f67aec4c7efbe56f2e8b212"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab599b0a85f67aec4c7efbe56f2e8b212">capture_arbiter_observation_pose</a> (struct <a class="el" href="structcapture__observation.html">capture_observation</a> *observation, uint64_t wait_us)</td></tr>
+<tr class="memdesc:ab599b0a85f67aec4c7efbe56f2e8b212"><td class="mdescLeft"> </td><td class="mdescRight">Resolve one bounded observation; wait_us is 0 on the serial thread, at most 200000 in workers.  <br/></td></tr>
+<tr class="memitem:a41fd991b9759a9da4a541786b7fe4003" id="r_a41fd991b9759a9da4a541786b7fe4003"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a41fd991b9759a9da4a541786b7fe4003">capture_arbiter_frame_timing</a> (const char *filename, unsigned camera_id, struct <a class="el" href="structcapture__observation.html">capture_observation</a> *observation)</td></tr>
+<tr class="memdesc:a41fd991b9759a9da4a541786b7fe4003"><td class="mdescLeft"> </td><td class="mdescRight">Read embedded capture identity from a stable JPEG; true need not qualify timing.  <br/></td></tr>
+<tr class="memitem:a5f7754b4401cc6170b4c12309c365010" id="r_a5f7754b4401cc6170b4c12309c365010"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f7754b4401cc6170b4c12309c365010">capture_arbiter_frame_pose</a> (const char *filename, unsigned camera_id, const union <a class="el" href="uniondc__shot__union.html">dc_shot_union</a> *<a class="el" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>, union <a class="el" href="uniondc__shot__union.html">dc_shot_union</a> *exposure, double *uncertainty_m)</td></tr>
+<tr class="memdesc:a5f7754b4401cc6170b4c12309c365010"><td class="mdescLeft"> </td><td class="mdescRight">Associate embedded exposure evidence with this JPEG before geotagging.  <br/></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>Session-scoped survey admission and saved-image evidence for USHER. </p>
+<p>The serial owner offers intentions and takes ready work; camera workers return acquisition and publication results. Public state access is mutex-protected. The implementation is C11 with pthread locking and explicit resource cleanup; the C linkage guards also permit existing C++ callers and regression fixtures. Configure profiles before starting workers. No function here operates a camera, changes FC distance rules, or assumes that a request contains recoverable pixels. </p><dl class="section note"><dt>Note</dt><dd>Times are MORA CLOCK_MONOTONIC microseconds unless explicitly stated. Queues and coverage are session memory, not a restart-persistent mission database. </dd></dl>
+<p class="definition">Definition in file <a class="el" href="capture__arbiter_8h_source.html">capture_arbiter.h</a>.</p>
+</div><a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="a98feea394322ec3cd85d5203a062c97a" name="a98feea394322ec3cd85d5203a062c97a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98feea394322ec3cd85d5203a062c97a">◆ </a></span>capture_arbiter_acquired()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void capture_arbiter_acquired </td>
+<td>(</td>
+<td class="paramtype">int32_t</td> <td class="paramname"><span class="paramname"><em>number</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>camera_id</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>now_us</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Learn acquisition latency separately from slower JPEG publication. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">number</td><td>Original FC shot number. </td></tr>
+<tr><td class="paramname">camera_id</td><td>Backend that now owns the selected pixels. </td></tr>
+<tr><td class="paramname">now_us</td><td>Acquisition-complete time in MORA's monotonic domain.</td></tr>
+</table>
+</dd>
+</dl>
+<p>The first plausible receipt updates service time; publication still owes <a class="el" href="#aa1dd04394d55ea5885e1d166c2e1738d" title="Release admission and optionally credit verified saved coverage.">capture_arbiter_complete()</a> and no coverage is credited at this point. </p>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00536">536</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="aa1dd04394d55ea5885e1d166c2e1738d" name="aa1dd04394d55ea5885e1d166c2e1738d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1dd04394d55ea5885e1d166c2e1738d">◆ </a></span>capture_arbiter_complete()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void capture_arbiter_complete </td>
+<td>(</td>
+<td class="paramtype">const union <a class="el" href="uniondc__shot__union.html">dc_shot_union</a> *</td> <td class="paramname"><span class="paramname"><em>shot</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>camera_id</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>saved</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>exposure_pose_valid</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>uncertainty_m</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>now_us</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Release admission and optionally credit verified saved coverage. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">shot</td><td>Matching request number, with exposure pose when valid. </td></tr>
+<tr><td class="paramname">camera_id</td><td>Camera completing this observation. </td></tr>
+<tr><td class="paramname">saved</td><td>Original and required metadata were successfully published. </td></tr>
+<tr><td class="paramname">exposure_pose_valid</td><td>Pose is backed by frame timing, not just trigger time. </td></tr>
+<tr><td class="paramname">uncertainty_m</td><td>Nonnegative position margin associated with that pose. </td></tr>
+<tr><td class="paramname">now_us</td><td>Completion time; used for fallback service-time estimation.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Call on startup and metadata failures too, or that camera remains busy. Unknown pose still permits a SAVED result but never trusted coverage credit. </p>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00459">459</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a5f7754b4401cc6170b4c12309c365010" name="a5f7754b4401cc6170b4c12309c365010"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f7754b4401cc6170b4c12309c365010">◆ </a></span>capture_arbiter_frame_pose()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_frame_pose </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>camera_id</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const union <a class="el" href="uniondc__shot__union.html">dc_shot_union</a> *</td> <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">union <a class="el" href="uniondc__shot__union.html">dc_shot_union</a> *</td> <td class="paramname"><span class="paramname"><em>exposure</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>uncertainty_m</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Associate embedded exposure evidence with this JPEG before geotagging. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">filename</td><td>Published JPEG path, exclusively owned during inspection. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">camera_id</td><td>Sensor identity; configured profile dimensions must match the JPEG and record. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">request</td><td>Original request; its number is retained in the returned exposure record. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">exposure</td><td>Pose estimate at the frame's bounded observation time. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">uncertainty_m</td><td>Ground-position margin carried into coverage accounting. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>False when evidence is missing, stale, inconsistent or outside supported bounds. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Identity checks prevent accidental mismatches, not hostile file replacement. Do not recycle or edit capture paths concurrently. Failure must not discard the JPEG. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00795">795</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a41fd991b9759a9da4a541786b7fe4003" name="a41fd991b9759a9da4a541786b7fe4003"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41fd991b9759a9da4a541786b7fe4003">◆ </a></span>capture_arbiter_frame_timing()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_frame_timing </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>camera_id</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structcapture__observation.html">capture_observation</a> *</td> <td class="paramname"><span class="paramname"><em>observation</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read embedded capture identity from a stable JPEG; true need not qualify timing. </p>
+<p>frame_bound may be true while kind remains UNKNOWN. Profiles are optional; when configured their dimensions must match. Call before the EXIF inode replacement. </p>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00739">739</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="ab88210b14f8b6ada7349dbb3e5884547" name="ab88210b14f8b6ada7349dbb3e5884547"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab88210b14f8b6ada7349dbb3e5884547">◆ </a></span>capture_arbiter_load_camera()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_load_camera </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Load one camera's measured profile without guessing geometry from its ID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">filename</td><td>Bounded PANGEA_CAMERA_V1 flat key=value file; prefix c/a/l identifies the sensor. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on acceptance; false with a diagnostic on invalid input or allocation failure.</dd></dl>
+<p>The first valid profile allocates the fixed ledger and random peer session. Replacing calibration is a startup operation, not a way to reinterpret existing coverage. Input is a nonempty regular file of at most 1 KiB containing one key=value per line. Blank lines and # comments are allowed; duplicate/unknown keys and invalid decimal fields are rejected without allocation. Invalid input leaves existing calibration and session state intact. </p>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00238">238</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="ab599b0a85f67aec4c7efbe56f2e8b212" name="ab599b0a85f67aec4c7efbe56f2e8b212"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab599b0a85f67aec4c7efbe56f2e8b212">◆ </a></span>capture_arbiter_observation_pose()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_observation_pose </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structcapture__observation.html">capture_observation</a> *</td> <td class="paramname"><span class="paramname"><em>observation</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>wait_us</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Resolve one bounded observation; wait_us is 0 on the serial thread, at most 200000 in workers. </p>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00712">712</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="af85b8c18afd409d72bbcc9b29ba4044c" name="af85b8c18afd409d72bbcc9b29ba4044c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af85b8c18afd409d72bbcc9b29ba4044c">◆ </a></span>capture_arbiter_offer()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_offer </td>
+<td>(</td>
+<td class="paramtype">const union <a class="el" href="unionusher__capture__arbiter__shoot__union.html">usher_capture_arbiter_shoot_union</a> *</td> <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>now_us</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Split a survey request into bounded per-camera intentions. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">request</td><td>Session-tagged shot and camera mask from the FC. </td></tr>
+<tr><td class="paramname">now_us</td><td>Receipt time used for intent age and scope freshness. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when handled, including expiry or no image-camera bits; not a saved-photo ACK. False indicates an invalid request/session. Overflow replaces only the same camera's oldest waiting record, so another sensor's backlog cannot be evicted by this one. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00334">334</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a4aabc7c2be088e9e06108fe29bc55ea9" name="a4aabc7c2be088e9e06108fe29bc55ea9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4aabc7c2be088e9e06108fe29bc55ea9">◆ </a></span>capture_arbiter_owns()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_owns </td>
+<td>(</td>
+<td class="paramtype">int32_t</td> <td class="paramname"><span class="paramname"><em>number</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Identify a shot whose active survey ownership must not be superseded. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">number</td><td>FC shot number to look up across image cameras. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if any active camera owns this number; not evidence of publication. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00526">526</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a2397eac2fd78523023d916f407130658" name="a2397eac2fd78523023d916f407130658"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2397eac2fd78523023d916f407130658">◆ </a></span>capture_arbiter_pending()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_pending </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Check whether waiting or active survey work remains. </p>
+<dl class="section return"><dt>Returns</dt><dd>A synchronized snapshot, not a wait primitive or a readiness guarantee. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00516">516</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="af57e789b0bb584bfa0ba02e00850f479" name="af57e789b0bb584bfa0ba02e00850f479"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af57e789b0bb584bfa0ba02e00850f479">◆ </a></span>capture_arbiter_pose_at()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_pose_at </td>
+<td>(</td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>time_us</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>time_error_us</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">union <a class="el" href="uniondc__shot__union.html">dc_shot_union</a> *</td> <td class="paramname"><span class="paramname"><em>shot</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>uncertainty_m</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Interpolate within trusted nearby pose samples, never across a long gap. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">time_us</td><td>Desired observation time in MORA's monotonic domain. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">time_error_us</td><td>Observation-time uncertainty in microseconds. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">shot</td><td>Interpolated raw FC pose; caller must restore the observation's shot number. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">uncertainty_m</td><td>Conservative ground-position margin in metres. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when all timing, motion and uncertainty checks pass. Ignore outputs on false. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00707">707</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a14c87f51777bc03dfa0be26db7c692b8" name="a14c87f51777bc03dfa0be26db7c692b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14c87f51777bc03dfa0be26db7c692b8">◆ </a></span>capture_arbiter_pose_invalidate()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void capture_arbiter_pose_invalidate </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Forget pose history when synchronization is lost; keep saved coverage. </p>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00562">562</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a32ee823fb46469c51ad44bbdafc6ba6d" name="a32ee823fb46469c51ad44bbdafc6ba6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32ee823fb46469c51ad44bbdafc6ba6d">◆ </a></span>capture_arbiter_pose_sample()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void capture_arbiter_pose_sample </td>
+<td>(</td>
+<td class="paramtype">const union <a class="el" href="unionusher__pose__sample__union.html">usher_pose_sample_union</a> *</td> <td class="paramname"><span class="paramname"><em>sample</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>earliest_us</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>latest_us</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Add a pose only after the caller has established bounded clock alignment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">sample</td><td>FC pose/GPS evidence, including raw fixed-point shot fields. </td></tr>
+<tr><td class="paramname">earliest_us</td><td>Earliest possible local sample time. </td></tr>
+<tr><td class="paramname">latest_us</td><td>Latest possible local sample time.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Invalid evidence clears interpolation history rather than bridging a clock discontinuity with seemingly precise coordinates. </p>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00571">571</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a950eed77f3f9469607b8ec5455be11ae" name="a950eed77f3f9469607b8ec5455be11ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a950eed77f3f9469607b8ec5455be11ae">◆ </a></span>capture_arbiter_result()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_result </td>
+<td>(</td>
+<td class="paramtype">union <a class="el" href="unionusher__capture__arbiter__result__union.html">usher_capture_arbiter_result_union</a> *</td> <td class="paramname"><span class="paramname"><em>result</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>ready_mask</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Pop a bounded best-effort result for UART transmission. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[out]</td><td class="paramname">result</td><td>Result whose storage is independent of the internal queue. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">ready_mask</td><td>Current readiness snapshot to attach. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if a record was popped; false when empty or result is NULL. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Retain the popped record locally if UART transmission must be retried. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00501">501</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a7540dd97dc642885a37a1714e790d6ba" name="a7540dd97dc642885a37a1714e790d6ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7540dd97dc642885a37a1714e790d6ba">◆ </a></span>capture_arbiter_session_id()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">uint32_t capture_arbiter_session_id </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Return the peer-session token, or zero when survey mode is not configured. </p>
+<dl class="section return"><dt>Returns</dt><dd>Random nonzero token after successful profile initialization; not an authentication key. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00304">304</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a3c88f9939ba0d83b900a85f895498bcd" name="a3c88f9939ba0d83b900a85f895498bcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c88f9939ba0d83b900a85f895498bcd">◆ </a></span>capture_arbiter_set_camera_capacity()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_set_camera_capacity </td>
+<td>(</td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>camera_id</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>capacity</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Set admission from a backend's actual capacity, independent of camera ID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">camera_id</td><td>One-based image-camera identity. </td></tr>
+<tr><td class="paramname">capacity</td><td>Maximum active captures, 1..2. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>False for invalid input. Lowering capacity does not cancel active captures. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00295">295</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a49413eb1676d7a807f4cbc081b65203c" name="a49413eb1676d7a807f4cbc081b65203c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49413eb1676d7a807f4cbc081b65203c">◆ </a></span>capture_arbiter_set_enforce()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void capture_arbiter_set_enforce </td>
+<td>(</td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>enforce</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Enable coverage-based suppression and limited delay, or observe decisions only. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">enforce</td><td>True permits conservative enforcement; false is the default. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Observation still uses bounded admission and expiry, not the legacy queue policy. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00279">279</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a0664b19a95f2902fd2b416cfaab900cc" name="a0664b19a95f2902fd2b416cfaab900cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0664b19a95f2902fd2b416cfaab900cc">◆ </a></span>capture_arbiter_set_overlap()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_set_overlap </td>
+<td>(</td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>overlap</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Set the overlap floor for deliberate predictive delay, not FC shot spacing. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">overlap</td><td>Fraction within 0..0.9. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>False for invalid input, leaving the previous setting intact. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00286">286</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a7a849a9ed52eea958da0cbf67bbf23fd" name="a7a849a9ed52eea958da0cbf67bbf23fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a849a9ed52eea958da0cbf67bbf23fd">◆ </a></span>capture_arbiter_set_scope()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void capture_arbiter_set_scope </td>
+<td>(</td>
+<td class="paramtype">const union <a class="el" href="unionusher__capture__arbiter__state__union.html">usher_capture_arbiter_state_union</a> *</td> <td class="paramname"><span class="paramname"><em>scope</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>now_us</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Refresh survey authorization or cancel waiting work when scope is withdrawn. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">scope</td><td>Validated wire structure; wrong sessions and malformed values are ignored. </td></tr>
+<tr><td class="paramname">now_us</td><td>Local receipt time, not a remote FC timestamp.</td></tr>
+</table>
+</dd>
+</dl>
+<p>A stop or removed mask bit affects waiting intentions only. An acquired original still deserves to be saved even when the survey has just ended. </p>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00312">312</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="ad6df06e0c419681f40f438275612a97f" name="ad6df06e0c419681f40f438275612a97f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6df06e0c419681f40f438275612a97f">◆ </a></span>capture_arbiter_stop()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void capture_arbiter_stop </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Cancel waiting intentions, retaining active-image ownership and saved coverage. </p>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00553">553</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+<a id="a4403bff0edad7da3e4ca18629ccd1506" name="a4403bff0edad7da3e4ca18629ccd1506"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4403bff0edad7da3e4ca18629ccd1506">◆ </a></span>capture_arbiter_take()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_arbiter_take </td>
+<td>(</td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>ready_mask</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>now_us</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">union <a class="el" href="uniondc__shot__union.html">dc_shot_union</a> *</td> <td class="paramname"><span class="paramname"><em>shot</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint8_t *</td> <td class="paramname"><span class="paramname"><em>mask</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Admit the oldest ready camera intention after optional coverage evaluation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">ready_mask</td><td>Backend readiness snapshot; active-capacity limits are also enforced here. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">now_us</td><td>Current local time for expiry and short-horizon prediction. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">shot</td><td>Original FC request, not the predicted future exposure pose. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">mask</td><td>Image camera admitted for this shot. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the caller must dispatch work and eventually call <a class="el" href="#aa1dd04394d55ea5885e1d166c2e1738d" title="Release admission and optionally credit verified saved coverage.">capture_arbiter_complete()</a>. False means no admission; expiry or redundancy results may still have been queued. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="capture__arbiter_8c_source.html#l00450">450</a> of file <a class="el" href="capture__arbiter_8c_source.html">capture_arbiter.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

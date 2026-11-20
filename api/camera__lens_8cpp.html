@@ -1,0 +1,2082 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/camera_lens.cpp File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('camera__lens_8cpp.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">camera_lens.cpp File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Bounded native lens and exposure correction for USHER JPEGs.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;jpeglib.h&gt;</code><br/>
+<code>#include "<a class="el" href="jpeg__marker__guard_8h_source.html">jpeg_marker_guard.h</a>"</code><br/>
+<code>#include "<a class="el" href="exifite_8h_source.html">exifite.h</a>"</code><br/>
+<code>#include "<a class="el" href="image__exif_8h_source.html">image_exif.h</a>"</code><br/>
+<code>#include "<a class="el" href="sha256fst_8h_source.html">sha256fst.h</a>"</code><br/>
+<code>#include &lt;opencv2/core/persistence.hpp&gt;</code><br/>
+<code>#include &lt;opencv2/calib3d.hpp&gt;</code><br/>
+<code>#include &lt;opencv2/imgproc.hpp&gt;</code><br/>
+<code>#include &lt;fcntl.h&gt;</code><br/>
+<code>#include &lt;sys/file.h&gt;</code><br/>
+<code>#include &lt;sys/stat.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+<code>#include &lt;algorithm&gt;</code><br/>
+<code>#include &lt;array&gt;</code><br/>
+<code>#include &lt;atomic&gt;</code><br/>
+<code>#include &lt;chrono&gt;</code><br/>
+<code>#include &lt;cmath&gt;</code><br/>
+<code>#include &lt;csetjmp&gt;</code><br/>
+<code>#include &lt;cstdio&gt;</code><br/>
+<code>#include &lt;cstdlib&gt;</code><br/>
+<code>#include &lt;fstream&gt;</code><br/>
+<code>#include &lt;iostream&gt;</code><br/>
+<code>#include &lt;list&gt;</code><br/>
+<code>#include &lt;map&gt;</code><br/>
+<code>#include &lt;memory&gt;</code><br/>
+<code>#include &lt;sstream&gt;</code><br/>
+<code>#include &lt;stdexcept&gt;</code><br/>
+<code>#include &lt;string&gt;</code><br/>
+<code>#include &lt;vector&gt;</code><br/>
+<code>#include "<a class="el" href="src_2version_8h_source.html">version.h</a>"</code><br/>
+<code>#include "<a class="el" href="opencv__json_8hpp_source.html">opencv_json.hpp</a>"</code><br/>
+<code>#include "<a class="el" href="opencv__parallel_8hpp_source.html">opencv_parallel.hpp</a>"</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for camera_lens.cpp:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="camera__lens_8cpp__incl.png" usemap="#asrc_2camera__lens_8cpp"/></div>
+<map id="asrc_2camera__lens_8cpp" name="asrc_2camera__lens_8cpp">
+<area alt="" coords="2624,24,2619,18,2605,13,2583,9,2555,6,2523,5,2492,6,2464,9,2442,13,2428,18,2423,24,2428,30,2442,35,2464,39,2492,42,2523,43,2555,42,2583,39,2605,35,2619,30" shape="poly" title="Bounded native lens and exposure correction for USHER JPEGs."/>
+<area alt="" coords="782,304,780,298,773,293,763,289,749,286,734,285,719,286,706,289,695,293,688,298,686,304,688,310,695,315,706,319,719,322,734,323,749,322,763,319,773,315,780,310" shape="poly" title=" "/>
+<area alt="" coords="2420,26,2073,33,1613,43,1386,51,1187,62,1034,76,980,85,944,94,909,110,885,128,836,179,758,276,754,271,832,175,882,124,907,105,943,89,979,79,1033,71,1187,57,1386,46,1612,38,2073,27,2425,26" shape="poly" title=" "/>
+<area alt="" coords="1073,304,1071,298,1065,293,1055,289,1043,286,1030,285,1017,286,1005,289,996,293,990,298,987,304,990,310,996,315,1005,319,1017,322,1030,323,1043,322,1055,319,1065,315,1071,310" shape="poly" title=" "/>
+<area alt="" coords="2421,27,2211,35,1948,46,1694,65,1590,78,1511,94,1459,109,1420,125,1383,146,1340,179,1325,194,1316,209,1306,225,1289,239,1239,265,1186,282,1134,294,1088,301,1087,296,1133,289,1184,277,1237,260,1286,235,1302,221,1311,207,1321,191,1336,175,1380,142,1417,120,1457,104,1510,88,1589,73,1693,60,1948,41,2211,30,2426,27" shape="poly" title=" "/>
+<area alt="" coords="1275,207,1273,201,1266,196,1255,192,1241,189,1226,188,1211,189,1197,192,1186,196,1180,201,1177,207,1180,213,1186,218,1197,222,1211,225,1226,226,1241,225,1255,222,1266,218,1273,213" shape="poly" title=" "/>
+<area alt="" coords="2420,26,2143,31,1790,40,1620,48,1472,59,1359,74,1320,83,1296,93,1276,110,1260,130,1237,176,1234,172,1255,128,1272,106,1293,89,1319,78,1358,69,1472,54,1620,42,1790,34,2143,25,2425,25" shape="poly" title=" "/>
+<area alt="" coords="1211,110,1206,104,1192,99,1169,95,1141,92,1110,91,1079,92,1051,95,1029,99,1014,104,1009,110,1014,116,1029,121,1051,125,1079,128,1110,129,1141,128,1169,125,1192,121,1206,116" href="jpeg__marker__guard_8h.html" shape="poly" title="Reject invalid Huffman selectors before the bundled codec indexes its tables."/>
+<area alt="" coords="2421,28,1915,48,1578,67,1237,94,1202,98,1201,92,1237,88,1578,62,1915,43,2427,27" shape="poly" title=" "/>
+<area alt="" coords="942,207,939,201,933,196,922,192,909,189,894,188,879,189,866,192,856,196,849,201,847,207,849,213,856,218,866,222,879,225,894,226,909,225,922,222,933,218,939,213" href="exifite_8h.html" shape="poly" title="Bounded C11 EXIF metadata and JPEG streaming interfaces."/>
+<area alt="" coords="2420,26,2083,30,1639,38,1421,47,1230,58,1083,74,1032,83,999,93,973,110,949,131,913,177,910,173,945,128,969,106,997,89,1031,78,1083,68,1230,53,1421,41,1638,33,2083,25,2425,25" shape="poly" title=" "/>
+<area alt="" coords="479,110,476,104,466,99,451,95,432,92,411,91,391,92,372,95,357,99,347,104,344,110,347,116,357,121,372,125,391,128,411,129,432,128,451,125,466,121,476,116" href="image__exif_8h.html" shape="poly" title="Flight, timing, and thermal-analysis metadata writing for captured JPEGs."/>
+<area alt="" coords="2422,29,1713,54,716,94,492,106,491,101,715,88,1713,49,2428,28" shape="poly" title=" "/>
+<area alt="" coords="772,207,769,201,760,196,746,192,728,189,709,188,689,189,672,192,658,196,649,201,646,207,649,213,658,218,672,222,689,225,709,226,728,225,746,222,760,218,769,213" href="sha256fst_8h.html" shape="poly" title="Allocation-free, portable SHA-256 checksums for memory and streams."/>
+<area alt="" coords="2421,27,2027,36,1499,49,1025,68,867,80,817,87,791,93,769,110,751,130,723,176,720,172,746,127,766,106,789,89,816,81,866,75,1025,63,1499,44,2027,31,2426,27" shape="poly" title=" "/>
+<area alt="" coords="2515,207,2508,201,2489,196,2458,192,2419,189,2377,188,2334,189,2296,192,2265,196,2245,201,2239,207,2245,213,2265,218,2296,222,2334,225,2377,226,2419,225,2458,222,2489,218,2508,213" shape="poly" title=" "/>
+<area alt="" coords="2430,33,2369,43,2306,55,2253,72,2233,82,2220,93,2213,106,2213,119,2218,132,2230,143,2264,165,2307,185,2302,184,2261,169,2226,147,2214,135,2207,120,2208,105,2216,89,2230,77,2251,67,2305,50,2368,38,2435,32" shape="poly" title=" "/>
+<area alt="" coords="2885,110,2881,104,2866,99,2844,95,2817,92,2786,91,2755,92,2728,95,2706,99,2692,104,2687,110,2692,116,2706,121,2728,125,2755,128,2786,129,2817,128,2844,125,2866,121,2881,116" shape="poly" title=" "/>
+<area alt="" coords="2573,38,2725,89,2720,88,2573,44" shape="poly" title=" "/>
+<area alt="" coords="3114,110,3109,104,3095,99,3072,95,3043,92,3011,91,2980,92,2951,95,2928,99,2914,104,2909,110,2914,116,2928,121,2951,125,2980,128,3011,129,3043,128,3072,125,3095,121,3109,116" shape="poly" title=" "/>
+<area alt="" coords="2596,35,2926,94,2921,94,2595,40" shape="poly" title=" "/>
+<area alt="" coords="3219,110,3217,104,3211,99,3202,95,3191,92,3178,91,3166,92,3154,95,3145,99,3140,104,3138,110,3140,116,3145,121,3154,125,3166,128,3178,129,3191,128,3202,125,3211,121,3217,116" shape="poly" title=" "/>
+<area alt="" coords="2621,27,2853,46,2990,63,3127,88,3136,93,3131,93,3126,94,2989,69,2852,51,2621,32" shape="poly" title=" "/>
+<area alt="" coords="3348,110,3345,104,3338,99,3326,95,3312,92,3295,91,3279,92,3265,95,3253,99,3245,104,3243,110,3245,116,3253,121,3265,125,3279,128,3295,129,3312,128,3326,125,3338,121,3345,116" shape="poly" title=" "/>
+<area alt="" coords="2621,27,2896,45,3064,63,3231,88,3244,93,3239,93,3230,94,3063,69,2896,51,2621,32" shape="poly" title=" "/>
+<area alt="" coords="3484,110,3481,104,3473,99,3460,95,3445,92,3427,91,3410,92,3395,95,3382,99,3374,104,3371,110,3374,116,3382,121,3395,125,3410,128,3427,129,3445,128,3460,125,3473,121,3481,116" shape="poly" title=" "/>
+<area alt="" coords="2622,25,2767,31,2951,42,3155,61,3360,88,3374,93,3368,93,3359,94,3155,66,2951,47,2767,36,2623,30" shape="poly" title=" "/>
+<area alt="" coords="3603,110,3601,104,3594,99,3583,95,3570,92,3555,91,3541,92,3527,95,3517,99,3510,104,3508,110,3510,116,3517,121,3527,125,3541,128,3555,129,3570,128,3583,125,3594,121,3601,116" shape="poly" title=" "/>
+<area alt="" coords="2624,22,2791,25,3009,35,3252,55,3375,70,3496,88,3508,93,3503,93,3495,94,3375,75,3251,60,3008,40,2791,31,2625,28" shape="poly" title=" "/>
+<area alt="" coords="1564,207,1561,201,1554,196,1542,192,1528,189,1511,188,1495,189,1481,192,1469,196,1461,201,1459,207,1461,213,1469,218,1481,222,1495,225,1511,226,1528,225,1542,222,1554,218,1561,213" shape="poly" title=" "/>
+<area alt="" coords="2420,27,2242,33,2024,44,1817,63,1733,77,1670,94,1632,111,1597,134,1540,181,1538,176,1594,129,1630,106,1668,89,1732,71,1816,58,2024,38,2242,28,2426,26" shape="poly" title=" "/>
+<area alt="" coords="2610,207,2608,201,2603,196,2595,192,2585,189,2574,188,2563,189,2553,192,2545,196,2540,201,2539,207,2540,213,2545,218,2553,222,2563,225,2574,226,2585,225,2595,222,2603,218,2608,213" shape="poly" title=" "/>
+<area alt="" coords="2424,30,2345,41,2272,59,2245,72,2230,87,2227,105,2239,127,2270,155,2301,169,2334,173,2368,170,2442,161,2484,163,2528,174,2544,184,2539,183,2527,179,2483,168,2442,167,2368,176,2334,178,2300,174,2267,160,2235,130,2221,106,2225,84,2242,67,2270,54,2344,36,2429,29" shape="poly" title=" "/>
+<area alt="" coords="1435,207,1433,201,1427,196,1418,192,1406,189,1393,188,1380,189,1368,192,1358,196,1352,201,1350,207,1352,213,1358,218,1368,222,1380,225,1393,226,1406,225,1418,222,1427,218,1433,213" shape="poly" title=" "/>
+<area alt="" coords="2421,27,2229,35,1991,46,1763,65,1669,78,1599,94,1550,112,1503,136,1427,184,1425,179,1501,131,1548,107,1597,88,1668,73,1762,60,1990,41,2229,30,2426,27" shape="poly" title=" "/>
+<area alt="" coords="3713,110,3711,104,3705,99,3695,95,3683,92,3670,91,3657,92,3645,95,3636,99,3630,104,3627,110,3630,116,3636,121,3645,125,3657,128,3670,129,3683,128,3695,125,3705,121,3711,116" shape="poly" title=" "/>
+<area alt="" coords="2622,26,3135,46,3413,65,3528,76,3616,88,3626,93,3621,93,3615,94,3528,81,3413,70,3135,52,2622,31" shape="poly" title=" "/>
+<area alt="" coords="2715,207,2713,201,2707,196,2698,192,2687,189,2674,188,2662,189,2650,192,2641,196,2636,201,2634,207,2636,213,2641,218,2650,222,2662,225,2674,226,2687,225,2698,222,2707,218,2713,213" shape="poly" title=" "/>
+<area alt="" coords="2438,33,2368,48,2307,67,2286,79,2274,92,2272,108,2283,127,2308,144,2346,155,2392,160,2443,163,2545,164,2589,167,2623,174,2641,184,2636,183,2621,179,2588,173,2545,170,2443,168,2392,166,2345,160,2306,149,2279,131,2267,109,2269,90,2283,75,2305,62,2366,43,2433,34" shape="poly" title=" "/>
+<area alt="" coords="3832,110,3830,104,3823,99,3813,95,3800,92,3785,91,3770,92,3757,95,3746,99,3740,104,3737,110,3740,116,3746,121,3757,125,3770,128,3785,129,3800,128,3813,125,3823,121,3830,116" shape="poly" title=" "/>
+<area alt="" coords="2622,25,3188,46,3499,64,3627,76,3725,88,3738,93,3732,93,3724,94,3627,81,3498,70,3187,51,2622,31" shape="poly" title=" "/>
+<area alt="" coords="3937,110,3935,104,3929,99,3920,95,3909,92,3897,91,3885,92,3873,95,3865,99,3859,104,3857,110,3859,116,3865,121,3873,125,3885,128,3897,129,3909,128,3920,125,3929,121,3935,116" shape="poly" title=" "/>
+<area alt="" coords="2623,24,2894,30,3246,41,3593,60,3736,73,3845,88,3855,93,3850,93,3844,94,3736,78,3593,66,3246,47,2894,35,2624,30" shape="poly" title=" "/>
+<area alt="" coords="3467,207,3465,201,3459,196,3449,192,3438,189,3425,188,3412,189,3400,192,3391,196,3385,201,3383,207,3385,213,3391,218,3400,222,3412,225,3425,226,3438,225,3449,222,3459,218,3465,213" shape="poly" title=" "/>
+<area alt="" coords="2520,41,2517,86,2521,108,2532,127,2551,137,2582,146,2677,158,2802,164,2942,165,3211,165,3312,167,3372,174,3392,184,3386,183,3371,179,3312,173,3211,170,2942,171,2802,169,2677,163,2581,151,2549,142,2528,131,2516,110,2511,87,2516,45" shape="poly" title=" "/>
+<area alt="" coords="4054,110,4051,104,4045,99,4035,95,4022,92,4007,91,3993,92,3980,95,3970,99,3964,104,3961,110,3964,116,3970,121,3980,125,3993,128,4007,129,4022,128,4035,125,4045,121,4051,116" shape="poly" title=" "/>
+<area alt="" coords="2624,24,2913,30,3296,42,3674,61,3830,73,3949,88,3961,93,3956,93,3948,94,3830,79,3673,66,3296,47,2913,35,2624,30" shape="poly" title=" "/>
+<area alt="" coords="4178,110,4175,104,4168,99,4157,95,4143,92,4127,91,4112,92,4098,95,4087,99,4080,104,4077,110,4080,116,4087,121,4098,125,4112,128,4127,129,4143,128,4157,125,4168,121,4175,116" shape="poly" title=" "/>
+<area alt="" coords="2624,24,2935,29,3351,41,3765,60,3936,73,4067,88,4079,93,4073,93,4066,94,3936,78,3764,65,3351,46,2935,35,2624,29" shape="poly" title=" "/>
+<area alt="" coords="4256,110,4255,104,4251,99,4245,95,4237,92,4229,91,4220,92,4213,95,4207,99,4203,104,4202,110,4203,116,4207,121,4213,125,4220,128,4229,129,4237,128,4245,125,4251,121,4255,116" shape="poly" title=" "/>
+<area alt="" coords="2623,25,2989,32,3476,45,3929,64,4093,76,4191,88,4197,92,4191,92,4190,94,4093,81,3928,69,3476,51,2989,37,2624,30" shape="poly" title=" "/>
+<area alt="" coords="3556,207,3555,201,3550,196,3543,192,3534,189,3523,188,3513,189,3504,192,3497,196,3492,201,3491,207,3492,213,3497,218,3504,222,3513,225,3523,226,3534,225,3543,222,3550,218,3555,213" shape="poly" title=" "/>
+<area alt="" coords="2529,41,2548,87,2562,109,2582,127,2618,144,2661,156,2711,165,2766,170,2889,172,3022,167,3281,156,3392,159,3439,165,3479,174,3495,183,3490,182,3477,179,3438,170,3392,164,3282,161,3022,172,2889,177,2766,175,2710,170,2660,161,2616,149,2579,131,2558,112,2543,89,2526,46" shape="poly" title=" "/>
+<area alt="" coords="1685,207,1683,201,1676,196,1665,192,1652,189,1637,188,1622,189,1608,192,1598,196,1591,201,1588,207,1591,213,1598,218,1608,222,1622,225,1637,226,1652,225,1665,222,1676,218,1683,213" shape="poly" title=" "/>
+<area alt="" coords="2422,29,2236,39,2014,52,1819,70,1750,81,1711,93,1691,110,1674,131,1649,176,1646,172,1669,128,1687,106,1709,89,1749,76,1818,64,2014,46,2236,34,2428,28" shape="poly" title=" "/>
+<area alt="" coords="4377,110,4375,104,4368,99,4357,95,4344,92,4329,91,4314,92,4300,95,4290,99,4283,104,4280,110,4283,116,4290,121,4300,125,4314,128,4329,129,4344,128,4357,125,4368,121,4375,116" shape="poly" title=" "/>
+<area alt="" coords="2624,23,2972,27,3447,38,3921,57,4119,71,4268,88,4281,93,4276,93,4267,94,4118,76,3921,62,3447,43,2972,33,2624,29" shape="poly" title=" "/>
+<area alt="" coords="3691,207,3688,201,3680,196,3668,192,3653,189,3635,188,3618,189,3603,192,3591,196,3583,201,3580,207,3583,213,3591,218,3603,222,3618,225,3635,226,3653,225,3668,222,3680,218,3688,213" shape="poly" title=" "/>
+<area alt="" coords="2540,41,2588,91,2613,113,2633,126,2672,140,2719,150,2830,162,2959,165,3096,163,3364,158,3478,162,3569,174,3595,185,3590,184,3568,179,3478,167,3364,164,3096,169,2959,170,2830,167,2718,155,2671,145,2630,131,2610,117,2584,94,2538,46" shape="poly" title=" "/>
+<area alt="" coords="3791,207,3789,201,3783,196,3775,192,3764,189,3753,188,3741,189,3731,192,3722,196,3717,201,3715,207,3717,213,3722,218,3731,222,3741,225,3753,226,3764,225,3775,222,3783,218,3789,213" shape="poly" title=" "/>
+<area alt="" coords="2553,40,2629,89,2652,110,2662,119,2676,126,2721,139,2773,148,2896,158,3037,159,3188,156,3338,151,3481,150,3605,157,3659,164,3704,174,3722,183,3716,183,3703,179,3658,169,3605,162,3480,156,3338,157,3188,161,3037,165,2896,163,2772,154,2719,144,2674,131,2659,123,2648,114,2626,93,2552,45" shape="poly" title=" "/>
+<area alt="" coords="1905,207,1903,201,1898,196,1889,192,1877,189,1865,188,1852,189,1841,192,1832,196,1826,201,1824,207,1826,213,1832,218,1841,222,1852,225,1865,226,1877,225,1889,222,1898,218,1903,213" shape="poly" title=" "/>
+<area alt="" coords="2449,36,2341,59,2207,88,2061,128,1918,179,1902,187,1900,182,1916,174,2059,123,2205,83,2340,53,2444,37" shape="poly" title=" "/>
+<area alt="" coords="4507,110,4504,104,4497,99,4485,95,4470,92,4454,91,4438,92,4423,95,4412,99,4404,104,4402,110,4404,116,4412,121,4423,125,4438,128,4454,129,4470,128,4485,125,4497,121,4504,116" href="src_2version_8h.html" shape="poly" title="Compile-time build identity strings for USHER executables."/>
+<area alt="" coords="2624,23,2993,27,3503,37,4015,57,4228,71,4389,88,4404,93,4398,93,4388,94,4228,76,4015,62,3503,43,2993,33,2624,29" shape="poly" title=" "/>
+<area alt="" coords="2461,110,2457,104,2445,99,2426,95,2403,92,2377,91,2351,92,2327,95,2309,99,2297,104,2292,110,2297,116,2309,121,2327,125,2351,128,2377,129,2403,128,2426,125,2445,121,2457,116" href="opencv__json_8hpp.html" shape="poly" title="Header-only C++17 value adapter around OpenCV's JSON persistence layer."/>
+<area alt="" coords="2496,42,2421,87,2419,82,2491,44" shape="poly" title=" "/>
+<area alt="" coords="1915,110,1910,104,1896,99,1875,95,1848,92,1818,91,1788,92,1761,95,1740,99,1726,104,1722,110,1726,116,1740,121,1761,125,1788,128,1818,129,1848,128,1875,125,1896,121,1910,116" href="opencv__parallel_8hpp.html" shape="poly" title="Header-only C++17 cv::parallel::ParallelForAPI backend for Sensoraia."/>
+<area alt="" coords="2438,36,1914,100,1913,95,2443,35" shape="poly" title=" "/>
+<area alt="" coords="1092,128,956,239,914,258,872,273,793,294,792,289,870,268,912,253,953,235,1087,130" shape="poly" title=" "/>
+<area alt="" coords="1093,128,1074,152,1058,178,1042,225,1034,271,1030,268,1037,224,1053,176,1070,149,1089,130" shape="poly" title=" "/>
+<area alt="" coords="1132,126,1197,180,1192,179,1131,131" shape="poly" title=" "/>
+<area alt="" coords="1153,207,1151,201,1145,196,1135,192,1123,189,1110,188,1097,189,1085,192,1076,196,1070,201,1067,207,1070,213,1076,218,1085,222,1097,225,1110,226,1123,225,1135,222,1145,218,1151,213" shape="poly" title=" "/>
+<area alt="" coords="1112,127,1112,175,1108,171,1108,131" shape="poly" title=" "/>
+<area alt="" coords="871,223,774,282,772,277,866,224" shape="poly" title=" "/>
+<area alt="" coords="917,221,998,279,993,278,916,226" shape="poly" title=" "/>
+<area alt="" coords="423,390,420,384,413,379,401,374,386,372,370,371,354,372,339,374,328,379,320,384,318,390,320,395,328,401,339,405,354,408,370,409,386,408,401,405,413,401,420,395" shape="poly" title=" "/>
+<area alt="" coords="887,224,851,277,826,304,795,325,767,337,728,348,632,365,437,386,437,381,631,360,727,343,765,332,793,320,822,299,847,274,882,227" shape="poly" title=" "/>
+<area alt="" coords="564,304,561,298,555,293,545,289,532,286,518,285,504,286,491,289,481,293,475,298,473,304,475,310,481,315,491,319,504,322,518,323,532,322,545,319,555,315,561,310" shape="poly" title=" "/>
+<area alt="" coords="858,218,784,240,572,292,571,287,783,235,853,219" shape="poly" title=" "/>
+<area alt="" coords="469,117,613,141,784,174,844,191,839,191,783,179,612,146,469,123" shape="poly" title=" "/>
+<area alt="" coords="194,304,190,298,179,293,160,289,137,286,111,285,86,286,63,289,44,293,33,298,29,304,33,310,44,315,63,319,86,322,111,323,137,322,160,319,179,315,190,310" href="usher__protocol_8h.html" shape="poly" title="Shared FC/MORA byte-stream UART framing, messages and payload layouts."/>
+<area alt="" coords="342,114,256,120,158,130,72,149,40,162,19,179,10,192,8,205,19,236,37,259,62,278,57,280,34,263,14,238,3,206,5,191,15,175,37,158,70,144,157,125,256,114,346,111" shape="poly" title=" "/>
+<area alt="" coords="194,207,190,201,179,196,160,192,137,189,111,188,86,189,63,192,44,196,33,201,29,207,33,213,44,218,63,222,86,225,111,226,137,225,160,222,179,218,190,213" href="capture__timing_8h.html" shape="poly" title="Sensor observation times, aligned poses, and optional frame-arrival evidence."/>
+<area alt="" coords="367,127,174,189,172,184,370,122" shape="poly" title=" "/>
+<area alt="" coords="391,207,386,201,374,196,355,192,331,189,305,188,278,189,254,192,235,196,223,201,219,207,223,213,235,218,254,222,278,225,305,226,331,225,355,222,374,218,386,213" href="sensor__capture_8h.html" shape="poly" title="Exact bounded SENSOR02 capture evidence, independent of TIFF byte order."/>
+<area alt="" coords="394,127,337,180,334,176,390,130" shape="poly" title=" "/>
+<area alt="" coords="622,207,617,198,602,189,579,183,550,178,518,177,486,178,457,183,434,189,420,198,415,207,420,216,434,225,457,231,486,236,518,237,550,236,579,231,602,225,617,216" href="loom__features_8h.html" shape="poly" title="LOOM-owned bounded feature validation and evidence serialization."/>
+<area alt="" coords="432,126,478,168,473,168,431,131" shape="poly" title=" "/>
+<area alt="" coords="158,318,320,370,316,373,157,323" shape="poly" title=" "/>
+<area alt="" coords="137,223,337,362,332,365,135,228" shape="poly" title=" "/>
+<area alt="" coords="157,220,208,235,345,266,465,292,460,293,344,271,207,240,158,226" shape="poly" title=" "/>
+<area alt="" coords="113,224,114,271,109,269,110,228" shape="poly" title=" "/>
+<area alt="" coords="352,221,403,235,550,267,678,293,673,293,549,272,402,240,352,226" shape="poly" title=" "/>
+<area alt="" coords="313,224,361,357,356,356,310,228" shape="poly" title=" "/>
+<area alt="" coords="342,222,477,283,472,284,341,227" shape="poly" title=" "/>
+<area alt="" coords="575,230,692,283,686,283,574,235" shape="poly" title=" "/>
+<area alt="" coords="497,236,395,362,392,357,492,238" shape="poly" title=" "/>
+<area alt="" coords="520,236,520,271,516,268,516,240" shape="poly" title=" "/>
+<area alt="" coords="715,224,728,272,723,269,712,228" shape="poly" title=" "/>
+<area alt="" coords="696,224,645,275,612,302,577,325,502,358,431,379,429,373,501,353,574,320,609,298,642,271,691,227" shape="poly" title=" "/>
+<area alt="" coords="680,223,561,285,559,280,675,225" shape="poly" title=" "/>
+<area alt="" coords="2379,127,2379,175,2375,171,2375,131" shape="poly" title=" "/>
+<area alt="" coords="2292,115,1920,138,1721,156,1639,167,1577,179,1554,187,1553,182,1576,174,1639,162,1721,151,1920,133,2297,114" shape="poly" title=" "/>
+<area alt="" coords="2418,124,2529,174,2543,184,2537,183,2526,179,2417,130" shape="poly" title=" "/>
+<area alt="" coords="2438,121,2527,142,2623,174,2640,184,2635,184,2621,179,2526,147,2438,126" shape="poly" title=" "/>
+<area alt="" coords="2439,120,2480,126,2567,132,2675,135,2928,138,3179,147,3287,158,3372,174,3392,184,3386,183,3371,179,3286,163,3179,152,2928,144,2675,141,2566,138,2479,131,2439,126" shape="poly" title=" "/>
+<area alt="" coords="2448,118,2530,126,2623,130,2739,132,3008,133,3145,135,3275,142,3389,154,3479,174,3495,183,3490,182,3477,179,3388,160,3275,147,3145,141,3008,138,2739,137,2623,136,2530,131,2448,123" shape="poly" title=" "/>
+<area alt="" coords="2289,110,2173,115,2024,124,1860,144,1777,160,1698,179,1677,187,1676,181,1696,174,1776,155,1859,139,2023,119,2173,110,2295,110" shape="poly" title=" "/>
+<area alt="" coords="2453,116,2581,126,2798,133,3077,137,3355,148,3474,158,3569,174,3596,185,3590,184,3568,179,3474,164,3355,153,3077,142,2798,138,2581,131,2453,121" shape="poly" title=" "/>
+<area alt="" coords="2455,114,2632,126,2867,130,3171,130,3327,133,3473,140,3602,153,3704,174,3722,183,3716,183,3703,179,3601,159,3473,145,3326,138,3171,135,2867,135,2631,131,2455,120" shape="poly" title=" "/>
+<area alt="" coords="2291,114,2213,123,2118,134,2017,152,1918,179,1901,186,1900,181,1916,174,2016,147,2117,129,2213,117,2296,114" shape="poly" title=" "/>
+<area alt="" coords="2214,207,2210,201,2197,196,2178,192,2153,189,2126,188,2099,189,2074,192,2055,196,2043,201,2038,207,2043,213,2055,218,2074,222,2099,225,2126,226,2153,225,2178,222,2197,218,2210,213" shape="poly" title=" "/>
+<area alt="" coords="2338,126,2182,187,2181,182,2333,127" shape="poly" title=" "/>
+<area alt="" coords="3359,207,3357,201,3351,196,3342,192,3330,189,3317,188,3304,189,3292,192,3282,196,3276,201,3274,207,3276,213,3282,218,3292,222,3304,225,3317,226,3330,225,3342,222,3351,218,3357,213" shape="poly" title=" "/>
+<area alt="" coords="2439,120,2480,126,2599,136,2701,137,2875,130,2958,128,3047,133,3147,147,3263,174,3283,184,3278,183,3261,179,3146,152,3047,138,2958,133,2875,135,2701,143,2599,141,2479,131,2439,126" shape="poly" title=" "/>
+<area alt="" coords="2844,207,2841,201,2834,196,2822,192,2808,189,2791,188,2775,189,2761,192,2749,196,2741,201,2739,207,2741,213,2749,218,2761,222,2775,225,2791,226,2808,225,2822,222,2834,218,2841,213" shape="poly" title=" "/>
+<area alt="" coords="2442,120,2609,150,2727,174,2751,185,2746,185,2725,179,2608,155,2441,125" shape="poly" title=" "/>
+<area alt="" coords="1800,207,1797,201,1791,196,1781,192,1768,189,1754,188,1740,189,1727,192,1717,196,1711,201,1709,207,1711,213,1717,218,1727,222,1740,225,1754,226,1768,225,1781,222,1791,218,1797,213" shape="poly" title=" "/>
+<area alt="" coords="2290,112,2194,119,2073,130,1942,149,1814,179,1794,187,1792,182,1812,174,1941,144,2072,125,2193,114,2295,112" shape="poly" title=" "/>
+<area alt="" coords="2014,207,2012,201,2006,196,1997,192,1985,189,1971,188,1958,189,1946,192,1937,196,1931,201,1929,207,1931,213,1937,218,1946,222,1958,225,1971,226,1985,225,1997,222,2006,218,2012,213" shape="poly" title=" "/>
+<area alt="" coords="2304,118,2172,142,2098,158,2027,179,2009,187,2008,181,2025,174,2097,153,2171,136,2299,119" shape="poly" title=" "/>
+<area alt="" coords="3005,207,3002,201,2992,196,2977,192,2958,189,2937,188,2916,189,2897,192,2882,196,2872,201,2869,207,2872,213,2882,218,2897,222,2916,225,2937,226,2958,225,2977,222,2992,218,3002,213" shape="poly" title=" "/>
+<area alt="" coords="2441,120,2480,126,2586,139,2669,145,2751,154,2856,174,2888,186,2883,185,2855,179,2751,159,2668,150,2585,144,2479,131,2441,125" shape="poly" title=" "/>
+<area alt="" coords="3103,207,3101,201,3096,196,3088,192,3078,189,3066,188,3055,189,3044,192,3036,196,3031,201,3029,207,3031,213,3036,218,3044,222,3055,225,3066,226,3078,225,3088,222,3096,218,3101,213" shape="poly" title=" "/>
+<area alt="" coords="2440,120,2480,126,2562,134,2632,136,2752,134,2809,135,2870,140,2938,152,3018,174,3035,184,3030,183,3016,179,2937,158,2870,145,2809,140,2752,140,2632,142,2561,139,2479,131,2440,126" shape="poly" title=" "/>
+<area alt="" coords="3251,207,3248,201,3239,196,3225,192,3208,189,3189,188,3170,189,3153,192,3139,196,3130,201,3127,207,3130,213,3139,218,3153,222,3170,225,3189,226,3208,225,3225,222,3239,218,3248,213" shape="poly" title=" "/>
+<area alt="" coords="2440,120,2480,126,2576,135,2659,139,2799,139,2867,140,2939,145,3021,155,3116,174,3145,185,3139,185,3115,179,3020,161,2939,150,2867,146,2799,145,2659,145,2576,141,2479,131,2440,126" shape="poly" title=" "/>
+<area alt="" coords="1760,125,1672,150,1578,179,1556,188,1555,182,1576,174,1671,145,1755,126" shape="poly" title=" "/>
+<area alt="" coords="1729,119,1597,141,1522,158,1448,179,1431,187,1429,181,1447,174,1520,153,1596,136,1735,118" shape="poly" title=" "/>
+<area alt="" coords="1788,127,1679,186,1678,181,1783,129" shape="poly" title=" "/>
+<area alt="" coords="1828,127,1852,176,1847,173,1826,131" shape="poly" title=" "/>
+<area alt="" coords="1869,124,2066,186,2060,186,1868,129" shape="poly" title=" "/>
+<area alt="" coords="1808,128,1776,178,1773,174,1804,130" shape="poly" title=" "/>
+<area alt="" coords="1847,126,1937,183,1932,182,1846,131" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="camera__lens_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-nested-classes"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3AFileCloser" id="r_camera_5Flens_5Fdetail_3A_3AFileCloser"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1FileCloser.html">camera_lens_detail::FileCloser</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3AJpegError" id="r_camera_5Flens_5Fdetail_3A_3AJpegError"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1JpegError.html">camera_lens_detail::JpegError</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ADecoder" id="r_camera_5Flens_5Fdetail_3A_3ADecoder"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1Decoder.html">camera_lens_detail::Decoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Own decoder state across libjpeg's nonlocal error return.  <a href="structcamera__lens__detail_1_1Decoder.html#details">More...</a><br/></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3AJpegHeader" id="r_camera_5Flens_5Fdetail_3A_3AJpegHeader"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1JpegHeader.html">camera_lens_detail::JpegHeader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight"><a class="el" href="structcamera__lens__detail_1_1Encoder.html" title="Own encoder state independently of the output stream.">Encoder</a> facts of a decoded JPEG, used to calibrate profiles.  <a href="structcamera__lens__detail_1_1JpegHeader.html#details">More...</a><br/></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3AEncoder" id="r_camera_5Flens_5Fdetail_3A_3AEncoder"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1Encoder.html">camera_lens_detail::Encoder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Own encoder state independently of the output stream.  <a href="structcamera__lens__detail_1_1Encoder.html#details">More...</a><br/></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ATemporaryOutput" id="r_camera_5Flens_5Fdetail_3A_3ATemporaryOutput"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1TemporaryOutput.html">camera_lens_detail::TemporaryOutput</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Own an unpublished derivative and its temporary sibling path.  <a href="structcamera__lens__detail_1_1TemporaryOutput.html#details">More...</a><br/></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3AResources" id="r_camera_5Flens_5Fdetail_3A_3AResources"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1Resources.html">camera_lens_detail::Resources</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ABounds" id="r_camera_5Flens_5Fdetail_3A_3ABounds"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1Bounds.html">camera_lens_detail::Bounds</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ATileCache" id="r_camera_5Flens_5Fdetail_3A_3ATileCache"><td align="right" class="memItemLeft" valign="top">class  </td><td class="memItemRight" valign="bottom"><a class="el" href="classcamera__lens__detail_1_1TileCache.html">camera_lens_detail::TileCache</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ATileCache_3A_3AEntry" id="r_camera_5Flens_5Fdetail_3A_3ATileCache_3A_3AEntry"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1TileCache_1_1Entry.html">camera_lens_detail::TileCache::Entry</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ALens" id="r_camera_5Flens_5Fdetail_3A_3ALens"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1Lens.html">camera_lens_detail::Lens</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ARayField" id="r_camera_5Flens_5Fdetail_3A_3ARayField"><td align="right" class="memItemLeft" valign="top">class  </td><td class="memItemRight" valign="bottom"><a class="el" href="classcamera__lens__detail_1_1RayField.html">camera_lens_detail::RayField</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3APose" id="r_camera_5Flens_5Fdetail_3A_3APose"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1Pose.html">camera_lens_detail::Pose</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ARendered" id="r_camera_5Flens_5Fdetail_3A_3ARendered"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1Rendered.html">camera_lens_detail::Rendered</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ATemporalSampling" id="r_camera_5Flens_5Fdetail_3A_3ATemporalSampling"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1TemporalSampling.html">camera_lens_detail::TemporalSampling</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ADevelopment" id="r_camera_5Flens_5Fdetail_3A_3ADevelopment"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1Development.html">camera_lens_detail::Development</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ARowSamplePose" id="r_camera_5Flens_5Fdetail_3A_3ARowSamplePose"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1RowSamplePose.html">camera_lens_detail::RowSamplePose</a></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail_3A_3ASourcePinhole" id="r_camera_5Flens_5Fdetail_3A_3ASourcePinhole"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structcamera__lens__detail_1_1SourcePinhole.html">camera_lens_detail::SourcePinhole</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-namespaces"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:camera_5Flens_5Fdetail" id="r_camera_5Flens_5Fdetail"><td align="right" class="memItemLeft" valign="top">namespace  </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html">camera_lens_detail</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-define-members"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a1aa867078b3dcaad3750f76aee3ee475" id="r_a1aa867078b3dcaad3750f76aee3ee475"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1aa867078b3dcaad3750f76aee3ee475">CAMERA_LENS_SIMD</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-typedef-members"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a95a3bb385080297f29a65d6fae87f3b4" id="r_a95a3bb385080297f29a65d6fae87f3b4"><td align="right" class="memItemLeft" valign="top">using </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">camera_lens_detail::Json</a> = <a class="el" href="classusher__cv__json_1_1Value.html">usher_cv_json::Value</a></td></tr>
+<tr class="memitem:a8ede55131157f2552981b9c82d4e4f48" id="r_a8ede55131157f2552981b9c82d4e4f48"><td align="right" class="memItemLeft" valign="top">using </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a8ede55131157f2552981b9c82d4e4f48">camera_lens_detail::File</a> = std::unique_ptr&lt;FILE, <a class="el" href="structcamera__lens__detail_1_1FileCloser.html">FileCloser</a>&gt;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ab15544afd56ad4a09b496d1291ef476a" id="r_ab15544afd56ad4a09b496d1291ef476a"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#ab15544afd56ad4a09b496d1291ef476a">camera_lens_detail::require</a> (bool <a class="el" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a>, const char *message)</td></tr>
+<tr class="memdesc:ab15544afd56ad4a09b496d1291ef476a"><td class="mdescLeft"> </td><td class="mdescRight">Route a failed precondition to the CLI's diagnostic handler.  <br/></td></tr>
+<tr class="memitem:a87b33eba497c2306c3d1dd308a4b9aa9" id="r_a87b33eba497c2306c3d1dd308a4b9aa9"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a87b33eba497c2306c3d1dd308a4b9aa9">camera_lens_detail::require</a> (bool <a class="el" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a>, const std::string &amp;message)</td></tr>
+<tr class="memdesc:a87b33eba497c2306c3d1dd308a4b9aa9"><td class="mdescLeft"> </td><td class="mdescRight">Route a failed precondition to the CLI's diagnostic handler.     <br/></td></tr>
+<tr class="memitem:a4193ec08bebc8775805b27c1f3feb496" id="r_a4193ec08bebc8775805b27c1f3feb496"><td align="right" class="memItemLeft" valign="top">double </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a4193ec08bebc8775805b27c1f3feb496">camera_lens_detail::number</a> (const <a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> &amp;value, const std::string &amp;name, double minimum, double maximum)</td></tr>
+<tr class="memitem:a10da018ff1de35177fb2713c982d7fa2" id="r_a10da018ff1de35177fb2713c982d7fa2"><td align="right" class="memItemLeft" valign="top"><a class="el" href="namespacecamera__lens__detail.html#a8ede55131157f2552981b9c82d4e4f48">File</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a10da018ff1de35177fb2713c982d7fa2">camera_lens_detail::open_regular</a> (const std::string &amp;path, size_t maximum)</td></tr>
+<tr class="memitem:a13b86ca7f842f0080011260e22cb6dd4" id="r_a13b86ca7f842f0080011260e22cb6dd4"><td align="right" class="memItemLeft" valign="top"><a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a13b86ca7f842f0080011260e22cb6dd4">camera_lens_detail::read_profile</a> (const char *path)</td></tr>
+<tr class="memitem:acc1e9bfdec77450ecd3206d275e1a086" id="r_acc1e9bfdec77450ecd3206d275e1a086"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#acc1e9bfdec77450ecd3206d275e1a086">camera_lens_detail::jpeg_failure</a> (j_common_ptr state)</td></tr>
+<tr class="memdesc:acc1e9bfdec77450ecd3206d275e1a086"><td class="mdescLeft"> </td><td class="mdescRight">Return a fatal libjpeg error to the active codec recovery point.  <br/></td></tr>
+<tr class="memitem:a3d16a072501204d5976df27cd26eb77d" id="r_a3d16a072501204d5976df27cd26eb77d"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a3d16a072501204d5976df27cd26eb77d">camera_lens_detail::jpeg_message</a> (j_common_ptr state, int level)</td></tr>
+<tr class="memdesc:a3d16a072501204d5976df27cd26eb77d"><td class="mdescLeft"> </td><td class="mdescRight">Enforce JPEG marker bounds before normal message handling.  <br/></td></tr>
+<tr class="memitem:af0cf409f8ecd3be2ccac055462fced9a" id="r_af0cf409f8ecd3be2ccac055462fced9a"><td align="right" class="memItemLeft" valign="top">cv::Mat </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#af0cf409f8ecd3be2ccac055462fced9a">camera_lens_detail::read_jpeg</a> (const std::string &amp;path, bool tile, size_t budget, <a class="el" href="structcamera__lens__detail_1_1JpegHeader.html">JpegHeader</a> *<a class="el" href="pose__log_8c.html#a2d5bf705d4e4df438762a5c261d6e530">header</a>=nullptr, bool decode_pixels=true)</td></tr>
+<tr class="memitem:a47def0766cea7d0c6d742eb2517793b3" id="r_a47def0766cea7d0c6d742eb2517793b3"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a47def0766cea7d0c6d742eb2517793b3">camera_lens_detail::write_jpeg</a> (const std::string &amp;<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, const cv::Mat &amp;<a class="el" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a>, int quality, const <a class="el" href="structexif__document.html">exif_document</a> *metadata)</td></tr>
+<tr class="memitem:a877e5036b82c13b3fd821856071c7606" id="r_a877e5036b82c13b3fd821856071c7606"><td align="right" class="memItemLeft" valign="top">std::string </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a877e5036b82c13b3fd821856071c7606">camera_lens_detail::tag_text</a> (const <a class="el" href="structexif__document.html">exif_document</a> *metadata, <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> ifd, uint16_t tag)</td></tr>
+<tr class="memitem:adf9d05bcf9937360bf9ae970cc12772f" id="r_adf9d05bcf9937360bf9ae970cc12772f"><td align="right" class="memItemLeft" valign="top">unsigned char * </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#adf9d05bcf9937360bf9ae970cc12772f">camera_lens_detail::replace_tag</a> (<a class="el" href="structexif__document.html">exif_document</a> *metadata, <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> ifd, uint16_t tag, <a class="el" href="group__exifite.html#ga3361e18a3bdc07f5cb5a0c9a1045462f">exif_format</a> format, size_t components)</td></tr>
+<tr class="memitem:a496a0213bbf531586e6b211b76c8bc3c" id="r_a496a0213bbf531586e6b211b76c8bc3c"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a496a0213bbf531586e6b211b76c8bc3c">camera_lens_detail::set_text</a> (<a class="el" href="structexif__document.html">exif_document</a> *metadata, <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> ifd, uint16_t tag, const std::string &amp;text, bool undefined=false)</td></tr>
+<tr class="memitem:a453de89a3eb02517e9d832b546301bb1" id="r_a453de89a3eb02517e9d832b546301bb1"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a453de89a3eb02517e9d832b546301bb1">camera_lens_detail::set_rational</a> (<a class="el" href="structexif__document.html">exif_document</a> *metadata, uint16_t tag, double value, unsigned denominator, bool signed_value=false)</td></tr>
+<tr class="memitem:a013901c8590b9465e1404884ecb72697" id="r_a013901c8590b9465e1404884ecb72697"><td align="right" class="memItemLeft" valign="top"><a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a013901c8590b9465e1404884ecb72697">camera_lens_detail::read_shot</a> (const <a class="el" href="structexif__document.html">exif_document</a> *metadata, <a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> &amp;geometry)</td></tr>
+<tr class="memitem:ac4294ccc2d3ebd61ce08ce513ee0f799" id="r_ac4294ccc2d3ebd61ce08ce513ee0f799"><td align="right" class="memItemLeft" valign="top">const std::array&lt; float, 256 &gt; &amp; </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#ac4294ccc2d3ebd61ce08ce513ee0f799">camera_lens_detail::srgb_decoding</a> ()</td></tr>
+<tr class="memdesc:ac4294ccc2d3ebd61ce08ce513ee0f799"><td class="mdescLeft"> </td><td class="mdescRight">8-bit sRGB to linear-light lookup, built once.  <br/></td></tr>
+<tr class="memitem:a2444e050a57b2445ae5179a254f9e70f" id="r_a2444e050a57b2445ae5179a254f9e70f"><td align="right" class="memItemLeft" valign="top"><a class="el" href="structcamera__lens__detail_1_1TemporalSampling.html">TemporalSampling</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a2444e050a57b2445ae5179a254f9e70f">camera_lens_detail::temporal_sampling</a> (const <a class="el" href="classcamera__lens__detail_1_1RayField.html">RayField</a> &amp;field, const <a class="el" href="structcamera__lens__detail_1_1Pose.html">Pose</a> &amp;pose, int width, int height, int maximum)</td></tr>
+<tr class="memdesc:a2444e050a57b2445ae5179a254f9e70f"><td class="mdescLeft"> </td><td class="mdescRight">Choose the fewest odd exposure samples that resolve motion blur.  <br/></td></tr>
+<tr class="memitem:a012753c09c2bfc45f110f3cf2d832473" id="r_a012753c09c2bfc45f110f3cf2d832473"><td align="right" class="memItemLeft" valign="top">const std::array&lt; unsigned char, 65536 &gt; &amp; </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a012753c09c2bfc45f110f3cf2d832473">camera_lens_detail::srgb_encoding</a> ()</td></tr>
+<tr class="memdesc:a012753c09c2bfc45f110f3cf2d832473"><td class="mdescLeft"> </td><td class="mdescRight">Linear-light to 8-bit sRGB lookup, built once.  <br/></td></tr>
+<tr class="memitem:a944b6dd35ddab957b38f0ced6902aa42" id="r_a944b6dd35ddab957b38f0ced6902aa42"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a944b6dd35ddab957b38f0ced6902aa42">camera_lens_detail::reflect_101</a> (int index, int <a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:a944b6dd35ddab957b38f0ced6902aa42"><td class="mdescLeft"> </td><td class="mdescRight">Reflect-101 index clamp matching OpenCV's BORDER_REFLECT_101.  <br/></td></tr>
+<tr class="memitem:a900a3ab63e1cd825fb659de2dae02af2" id="r_a900a3ab63e1cd825fb659de2dae02af2"><td align="right" class="memItemLeft" valign="top"><a class="el" href="#a1aa867078b3dcaad3750f76aee3ee475">CAMERA_LENS_SIMD</a> void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a900a3ab63e1cd825fb659de2dae02af2">camera_lens_detail::blur_linear_rgb</a> (cv::Mat &amp;<a class="el" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, double sigma)</td></tr>
+<tr class="memdesc:a900a3ab63e1cd825fb659de2dae02af2"><td class="mdescLeft"> </td><td class="mdescRight">Parallel separable Gaussian blur on a contiguous CV_32FC3 frame.  <br/></td></tr>
+<tr class="memitem:ace86753218e1fc250d19c7d11d38bcc1" id="r_ace86753218e1fc250d19c7d11d38bcc1"><td align="right" class="memItemLeft" valign="top">float </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#ace86753218e1fc250d19c7d11d38bcc1">camera_lens_detail::stateless_normal</a> (uint64_t row_seed, int index)</td></tr>
+<tr class="memdesc:ace86753218e1fc250d19c7d11d38bcc1"><td class="mdescLeft"> </td><td class="mdescRight">Stateless zero-mean, unit-variance Irwin-Hall normal sample.  <br/></td></tr>
+<tr class="memitem:ac9b9908edb829f9f28bc9b70ae689caf" id="r_ac9b9908edb829f9f28bc9b70ae689caf"><td align="right" class="memItemLeft" valign="top"><a class="el" href="#a1aa867078b3dcaad3750f76aee3ee475">CAMERA_LENS_SIMD</a> void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#ac9b9908edb829f9f28bc9b70ae689caf">camera_lens_detail::encode_sensor_rows</a> (const cv::Mat &amp;linear, cv::Mat &amp;<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, int start_row, int end_row, float well, float read_variance, uint64_t seed, const unsigned char *encode)</td></tr>
+<tr class="memdesc:ac9b9908edb829f9f28bc9b70ae689caf"><td class="mdescLeft"> </td><td class="mdescRight">Parallel shot/read noise + sRGB encoding for a row range.  <br/></td></tr>
+<tr class="memitem:a1a0338e8be47ea5b8228a3beea5455d8" id="r_a1a0338e8be47ea5b8228a3beea5455d8"><td align="right" class="memItemLeft" valign="top"><a class="el" href="#a1aa867078b3dcaad3750f76aee3ee475">CAMERA_LENS_SIMD</a> void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a1a0338e8be47ea5b8228a3beea5455d8">camera_lens_detail::sharpen_luma_rgb</a> (cv::Mat &amp;<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, double sharpen)</td></tr>
+<tr class="memdesc:a1a0338e8be47ea5b8228a3beea5455d8"><td class="mdescLeft"> </td><td class="mdescRight">Parallel luma-only unsharp mask (sigma = 1 px) preserving chroma.  <br/></td></tr>
+<tr class="memitem:a894addc683cf242da6e084dd778a26d7" id="r_a894addc683cf242da6e084dd778a26d7"><td align="right" class="memItemLeft" valign="top">float </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a894addc683cf242da6e084dd778a26d7">camera_lens_detail::sample_tile_channel</a> (const float *const *tile_ptrs, int grid_width, int max_x, int max_y, float map_x, float map_y, int channel)</td></tr>
+<tr class="memdesc:a894addc683cf242da6e084dd778a26d7"><td class="mdescLeft"> </td><td class="mdescRight">Bilinearly sample one channel from a 2D pointer grid of 256x256 linear float32 RGB tiles without assembling a strip mosaic.  <br/></td></tr>
+<tr class="memitem:a330876d26e958f69cb98eb6d10b0d65b" id="r_a330876d26e958f69cb98eb6d10b0d65b"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a330876d26e958f69cb98eb6d10b0d65b">camera_lens_detail::sample_tile_rgb</a> (const float *const *tile_ptrs, int grid_width, int max_x, int max_y, float map_x, float map_y, float &amp;red, float &amp;green, float &amp;blue)</td></tr>
+<tr class="memdesc:a330876d26e958f69cb98eb6d10b0d65b"><td class="mdescLeft"> </td><td class="mdescRight">Bilinearly sample all 3 RGB channels at identical coordinates from a 2D pointer grid of 256x256 linear float32 tiles.  <br/></td></tr>
+<tr class="memitem:a11e123bbe1d3c8cf1edefd29304ccd9a" id="r_a11e123bbe1d3c8cf1edefd29304ccd9a"><td align="right" class="memItemLeft" valign="top">float </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a11e123bbe1d3c8cf1edefd29304ccd9a">camera_lens_detail::sample_pinhole_channel</a> (const cv::Mat &amp;source, float map_x, float map_y, int channel)</td></tr>
+<tr class="memdesc:a11e123bbe1d3c8cf1edefd29304ccd9a"><td class="mdescLeft"> </td><td class="mdescRight">Bilinearly sample a linear CV_32FC3 pinhole source image matching OpenCV INTER_LINEAR + BORDER_CONSTANT(0).  <br/></td></tr>
+<tr class="memitem:a7e1fadf0e7ec64d3c4e96c0fb5969a5d" id="r_a7e1fadf0e7ec64d3c4e96c0fb5969a5d"><td align="right" class="memItemLeft" valign="top"><a class="el" href="#a1aa867078b3dcaad3750f76aee3ee475">CAMERA_LENS_SIMD</a> void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a7e1fadf0e7ec64d3c4e96c0fb5969a5d">camera_lens_detail::compute_strip_bounds_rows</a> (const std::vector&lt; std::unique_ptr&lt; <a class="el" href="classcamera__lens__detail_1_1RayField.html">RayField</a> &gt; &gt; &amp;fields, int channels, const <a class="el" href="structcamera__lens__detail_1_1RowSamplePose.html">RowSamplePose</a> *<a class="el" href="capture__arbiter_8c.html#a9f4df2b1d92b3c83ca65b12ef95e4b96">poses</a>, int <a class="el" href="ear__heatmap__replay_8c.html#ae0abbe47bb81d82a4e2215c9f6ffad26">samples</a>, int first, int start_row, int end_row, double *min_e, double *max_e, double *min_n, double *max_n, std::atomic&lt; bool &gt; &amp;horizon, std::atomic&lt; bool &gt; &amp;non_finite)</td></tr>
+<tr class="memdesc:a7e1fadf0e7ec64d3c4e96c0fb5969a5d"><td class="mdescLeft"> </td><td class="mdescRight">SIMD-friendly strip ground-bounds and horizon check.  <br/></td></tr>
+<tr class="memitem:ae1f11071750314a673360b0b7fff92f1" id="r_ae1f11071750314a673360b0b7fff92f1"><td align="right" class="memItemLeft" valign="top"><a class="el" href="#a1aa867078b3dcaad3750f76aee3ee475">CAMERA_LENS_SIMD</a> void </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#ae1f11071750314a673360b0b7fff92f1">camera_lens_detail::sample_cache_rows</a> (const std::vector&lt; std::unique_ptr&lt; <a class="el" href="classcamera__lens__detail_1_1RayField.html">RayField</a> &gt; &gt; &amp;fields, int channels, const <a class="el" href="structcamera__lens__detail_1_1RowSamplePose.html">RowSamplePose</a> *<a class="el" href="capture__arbiter_8c.html#a9f4df2b1d92b3c83ca65b12ef95e4b96">poses</a>, int <a class="el" href="ear__heatmap__replay_8c.html#ae0abbe47bb81d82a4e2215c9f6ffad26">samples</a>, int first, int start_row, int end_row, int width, float inv_map_scale, float base_offset_x, float base_offset_y, const float *const *tile_ptrs, int grid_width, int grid_height, float gain, float vignette_scale, cv::Mat &amp;linear)</td></tr>
+<tr class="memdesc:ae1f11071750314a673360b0b7fff92f1"><td class="mdescLeft"> </td><td class="mdescRight">Fused parallel strip kernel for map-cache rendering.  <br/></td></tr>
+<tr class="memitem:ac786220ae2fbd83449d0601262f1e259" id="r_ac786220ae2fbd83449d0601262f1e259"><td align="right" class="memItemLeft" valign="top"><a class="el" href="structcamera__lens__detail_1_1Rendered.html">Rendered</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#ac786220ae2fbd83449d0601262f1e259">camera_lens_detail::render</a> (const cv::Mat &amp;input, const <a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> &amp;<a class="el" href="usher_8c.html#aef044fd8eddff4c8d68e44be08afa175">shot</a>, const <a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> &amp;geometry, const <a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> &amp;<a class="el" href="lwir__spotter_8c.html#a7eacaa28ccbc865eda4e0a28db29fb02">profile</a>, const std::string &amp;cache_path, const <a class="el" href="structcamera__lens__detail_1_1Resources.html">Resources</a> &amp;<a class="el" href="survey_8cpp.html#a38447104c9f52f871e3e4e0d92e4cd1e">resources</a>, cv::Size source_size={})</td></tr>
+<tr class="memitem:a04ea074113752a73be5d0c516adfb0fd" id="r_a04ea074113752a73be5d0c516adfb0fd"><td align="right" class="memItemLeft" valign="top"><a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a04ea074113752a73be5d0c516adfb0fd">camera_lens_detail::emulate</a> (const std::string &amp;input, const std::string &amp;<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, const <a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> &amp;<a class="el" href="lwir__spotter_8c.html#a7eacaa28ccbc865eda4e0a28db29fb02">profile</a>, const std::string &amp;cache)</td></tr>
+<tr class="memitem:abf019128057f7ac0d4d35be8afc7e062" id="r_abf019128057f7ac0d4d35be8afc7e062"><td align="right" class="memItemLeft" valign="top">std::pair&lt; int, double &gt; </td><td class="memItemRight" valign="bottom"><a class="el" href="#abf019128057f7ac0d4d35be8afc7e062">ijg_quality</a> (const std::array&lt; unsigned, 64 &gt; &amp;quant)</td></tr>
+<tr class="memdesc:abf019128057f7ac0d4d35be8afc7e062"><td class="mdescLeft"> </td><td class="mdescRight">Estimate the IJG quality whose scaled luma table best matches.  <br/></td></tr>
+<tr class="memitem:a4a5c9e672a0fa6975aed70624647e313" id="r_a4a5c9e672a0fa6975aed70624647e313"><td align="right" class="memItemLeft" valign="top"><a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a5c9e672a0fa6975aed70624647e313">measure</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a4a5c9e672a0fa6975aed70624647e313"><td class="mdescLeft"> </td><td class="mdescRight">Measure image statistics that a lens profile should reproduce.  <br/></td></tr>
+<tr class="memitem:a216eb68cb058fb7933e0cb7f7605250c" id="r_a216eb68cb058fb7933e0cb7f7605250c"><td align="right" class="memItemLeft" valign="top"><a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#a216eb68cb058fb7933e0cb7f7605250c">measure_all</a> (const std::vector&lt; std::string &gt; &amp;paths)</td></tr>
+<tr class="memdesc:a216eb68cb058fb7933e0cb7f7605250c"><td class="mdescLeft"> </td><td class="mdescRight">Measure files and append per-key medians of numeric results.  <br/></td></tr>
+<tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627" id="r_a3c04138a5bfe5d72780bb7e82a18e627"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
+<tr class="memdesc:a3c04138a5bfe5d72780bb7e82a18e627"><td class="mdescLeft"> </td><td class="mdescRight">Validate a lens profile or generate a simulated camera derivative.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-var-members"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:afc9b71bb199df21868ad4fc4c61b5684" id="r_afc9b71bb199df21868ad4fc4c61b5684"><td align="right" class="memItemLeft" valign="top">constexpr double </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#afc9b71bb199df21868ad4fc4c61b5684">camera_lens_detail::pi</a> = 3.14159265358979323846</td></tr>
+<tr class="memitem:a00140c6cd3077ef5e9786b9bab57444e" id="r_a00140c6cd3077ef5e9786b9bab57444e"><td align="right" class="memItemLeft" valign="top">constexpr size_t </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a00140c6cd3077ef5e9786b9bab57444e">camera_lens_detail::mib</a> = 1024 * 1024</td></tr>
+<tr class="memitem:ab6cbe287fb2701eca5707a0864caeda2" id="r_ab6cbe287fb2701eca5707a0864caeda2"><td align="right" class="memItemLeft" valign="top">constexpr size_t </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#ab6cbe287fb2701eca5707a0864caeda2">camera_lens_detail::maximum_exif_payload_bytes</a> = 65533</td></tr>
+<tr class="memitem:a52b1680ced00ffc06e66f6f7ed1580bd" id="r_a52b1680ced00ffc06e66f6f7ed1580bd"><td align="right" class="memItemLeft" valign="top">constexpr unsigned int </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a52b1680ced00ffc06e66f6f7ed1580bd">camera_lens_detail::maximum_image_dimension</a> = 4096</td></tr>
+<tr class="memitem:a0ffe9ce3becefaacbfeae5008455f25d" id="r_a0ffe9ce3becefaacbfeae5008455f25d"><td align="right" class="memItemLeft" valign="top">constexpr uint64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a0ffe9ce3becefaacbfeae5008455f25d">camera_lens_detail::maximum_mock_pixels</a> = 8388608</td></tr>
+<tr class="memitem:aaf3576e8525388932447e88e83ad4163" id="r_aaf3576e8525388932447e88e83ad4163"><td align="right" class="memItemLeft" valign="top">constexpr size_t </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#aaf3576e8525388932447e88e83ad4163">camera_lens_detail::tile_cache_entries</a> = 48</td></tr>
+<tr class="memitem:a6d4ef9d80bfd74df43d05e03a4cd93fd" id="r_a6d4ef9d80bfd74df43d05e03a4cd93fd"><td align="right" class="memItemLeft" valign="top">constexpr double </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a6d4ef9d80bfd74df43d05e03a4cd93fd">camera_lens_detail::maximum_reprojection_error_pixels</a> = 0.1</td></tr>
+<tr class="memitem:a72a7faf2d7249fccfa406d5c25307e12" id="r_a72a7faf2d7249fccfa406d5c25307e12"><td align="right" class="memItemLeft" valign="top">constexpr int </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a72a7faf2d7249fccfa406d5c25307e12">camera_lens_detail::lens_inverse_iterations</a> = 30</td></tr>
+<tr class="memitem:a618a615694f9be255afd8f02350c5f33" id="r_a618a615694f9be255afd8f02350c5f33"><td align="right" class="memItemLeft" valign="top">constexpr int </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#a618a615694f9be255afd8f02350c5f33">camera_lens_detail::lens_polish_passes</a> = 8</td></tr>
+<tr class="memitem:ade1c38eba5cdb2e32cda7e4d8d415d29" id="r_ade1c38eba5cdb2e32cda7e4d8d415d29"><td align="right" class="memItemLeft" valign="top">constexpr double </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#ade1c38eba5cdb2e32cda7e4d8d415d29">camera_lens_detail::lens_polish_tolerance_px</a> = 0.001</td></tr>
+<tr class="memitem:ac61e5e2122344dd7090a1f163c9842c1" id="r_ac61e5e2122344dd7090a1f163c9842c1"><td align="right" class="memItemLeft" valign="top">constexpr int </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#ac61e5e2122344dd7090a1f163c9842c1">camera_lens_detail::ray_grid_initial_step</a> = 16</td></tr>
+<tr class="memitem:ab0a800488b7d657d74fb4045b430d1d0" id="r_ab0a800488b7d657d74fb4045b430d1d0"><td align="right" class="memItemLeft" valign="top">constexpr double </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#ab0a800488b7d657d74fb4045b430d1d0">camera_lens_detail::ray_interpolation_tolerance_px</a> = 0.02</td></tr>
+<tr class="memitem:aaf338367bb9c0cec237ad81c32f0871e" id="r_aaf338367bb9c0cec237ad81c32f0871e"><td align="right" class="memItemLeft" valign="top">constexpr double </td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecamera__lens__detail.html#aaf338367bb9c0cec237ad81c32f0871e">camera_lens_detail::temporal_sample_spacing_px</a> = 0.5</td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>Bounded native lens and exposure correction for USHER JPEGs. </p>
+<p>Validates a versioned profile, reads the clean source JPEG and flight EXIF, renders in memory-bounded strips, and atomically publishes a derivative with provenance. Default profiles are illustrative, not measured calibration. </p>
+<p class="definition">Definition in file <a class="el" href="camera__lens_8cpp_source.html">camera_lens.cpp</a>.</p>
+</div><a id="doc-define-members" name="doc-define-members"></a><h2 class="groupheader" id="header-doc-define-members">Macro Definition Documentation</h2>
+<a id="a1aa867078b3dcaad3750f76aee3ee475" name="a1aa867078b3dcaad3750f76aee3ee475"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1aa867078b3dcaad3750f76aee3ee475">◆ </a></span>CAMERA_LENS_SIMD</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAMERA_LENS_SIMD</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="camera__lens_8cpp_source.html#l00073">73</a> of file <a class="el" href="camera__lens_8cpp_source.html">camera_lens.cpp</a>.</p>
+</div>
+</div>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="abf019128057f7ac0d4d35be8afc7e062" name="abf019128057f7ac0d4d35be8afc7e062"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf019128057f7ac0d4d35be8afc7e062">◆ </a></span>ijg_quality()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">std::pair&lt; int, double &gt; ijg_quality </td>
+<td>(</td>
+<td class="paramtype">const std::array&lt; unsigned, 64 &gt; &amp;</td> <td class="paramname"><span class="paramname"><em>quant</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Estimate the IJG quality whose scaled luma table best matches. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">quant</td><td>Natural-order luma quantization table. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>{quality, mean absolute table error}; error 0 is an exact IJG table, larger values mean a vendor table and an approximate quality. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="camera__lens_8cpp_source.html#l02345">2345</a> of file <a class="el" href="camera__lens_8cpp_source.html">camera_lens.cpp</a>.</p>
+</div>
+</div>
+<a id="a3c04138a5bfe5d72780bb7e82a18e627" name="a3c04138a5bfe5d72780bb7e82a18e627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c04138a5bfe5d72780bb7e82a18e627">◆ </a></span>main()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int main </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>argc</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char **</td> <td class="paramname"><span class="paramname"><em>argv</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Validate a lens profile or generate a simulated camera derivative. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">argc</td><td>Argument count including the program name. </td></tr>
+<tr><td class="paramname">argv</td><td>Command-line argument vector. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero for success, or one after reporting an exception.</dd></dl>
+<p>Version and validation requests bypass rendering. Render jobs take a nonblocking executable lock so separate jobs cannot multiply the working set managed by the per-job memory budget. </p>
+<p class="definition">Definition at line <a class="el" href="camera__lens_8cpp_source.html#l02480">2480</a> of file <a class="el" href="camera__lens_8cpp_source.html">camera_lens.cpp</a>.</p>
+</div>
+</div>
+<a id="a4a5c9e672a0fa6975aed70624647e313" name="a4a5c9e672a0fa6975aed70624647e313"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a5c9e672a0fa6975aed70624647e313">◆ </a></span>measure()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname"><a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> measure </td>
+<td>(</td>
+<td class="paramtype">const std::string &amp;</td> <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Measure image statistics that a lens profile should reproduce. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">path</td><td>JPEG saved by a real or simulated camera. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structcamera__lens__detail_1_1Encoder.html" title="Own encoder state independently of the output stream.">Encoder</a>, exposure, noise, sharpness, shading and colour facts.</dd></dl>
+<p>Compare medians of real flight photos with medians of simulated photos of similar terrain; single-image values are scene dependent. </p>
+<p class="definition">Definition at line <a class="el" href="camera__lens_8cpp_source.html#l02369">2369</a> of file <a class="el" href="camera__lens_8cpp_source.html">camera_lens.cpp</a>.</p>
+</div>
+</div>
+<a id="a216eb68cb058fb7933e0cb7f7605250c" name="a216eb68cb058fb7933e0cb7f7605250c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a216eb68cb058fb7933e0cb7f7605250c">◆ </a></span>measure_all()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname"><a class="el" href="namespacecamera__lens__detail.html#a95a3bb385080297f29a65d6fae87f3b4">Json</a> measure_all </td>
+<td>(</td>
+<td class="paramtype">const std::vector&lt; std::string &gt; &amp;</td> <td class="paramname"><span class="paramname"><em>paths</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Measure files and append per-key medians of numeric results. </p>
+<p class="definition">Definition at line <a class="el" href="camera__lens_8cpp_source.html#l02449">2449</a> of file <a class="el" href="camera__lens_8cpp_source.html">camera_lens.cpp</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

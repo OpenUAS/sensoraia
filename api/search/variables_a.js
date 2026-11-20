@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['k_0',['k',['../classpangea__survey_1_1MapProjection.html#a757ad0834f82e04863c53b3f4c6cb0bc',1,'pangea_survey::MapProjection']]],
+  ['k1_1',['k1',['../structlwir__camera__geometry.html#a3c8feaf329d337937b782feb0e4637b5',1,'lwir_camera_geometry::k1'],['../structpangea__survey_1_1LensEffects.html#a6b517cc484ac9c864b6acf5d480543df',1,'pangea_survey::LensEffects::k1'],['../structpangea__survey_1_1PiAiOptics.html#a2c21d294293a8242d79149fb412c20f9',1,'pangea_survey::PiAiOptics::k1']]],
+  ['k2_2',['k2',['../structlwir__camera__geometry.html#a1d8f244e4c488089853e23fe6e02c1da',1,'lwir_camera_geometry::k2'],['../structpangea__survey_1_1LensEffects.html#ab33bad7fbe0d207cdb21b48e344ac11b',1,'pangea_survey::LensEffects::k2'],['../structpangea__survey_1_1PiAiOptics.html#a2b69f230edfc8573ac6015c76022fb46',1,'pangea_survey::PiAiOptics::k2']]],
+  ['k3_3',['k3',['../structlwir__camera__geometry.html#a5da20d5b7df391ebd8d74b5b37f61ada',1,'lwir_camera_geometry']]],
+  ['kasciicommentprefixsize_4',['kAsciiCommentPrefixSize',['../namespacesoda__object__postprocess__detail.html#a7385ab46c535c0d3224e9e68ec125ccc',1,'soda_object_postprocess_detail']]],
+  ['kboxoutlinethickness_5',['kBoxOutlineThickness',['../namespacesoda__object__postprocess__detail.html#a9cdbbedddc801d42f3bc4c69e25e08c5',1,'soda_object_postprocess_detail']]],
+  ['kcopychunkbytes_6',['kCopyChunkBytes',['../namespacesoda__object__postprocess__detail.html#a4c1a3b0001762425ab4254fa0e5bad2c',1,'soda_object_postprocess_detail']]],
+  ['kcropjpegquality_7',['kCropJpegQuality',['../namespacesoda__object__postprocess__detail.html#aed944c759d990ae1629407151b2a5154',1,'soda_object_postprocess_detail']]],
+  ['kcropmargin_8',['kCropMargin',['../namespacesoda__object__postprocess__detail.html#aaf30dddd1a2d925148563daabfc1731e',1,'soda_object_postprocess_detail']]],
+  ['kcsvrowcapacity_9',['kCsvRowCapacity',['../namespacesoda__object__postprocess__detail.html#a9376018ff1103171d66f27d1b9592daf',1,'soda_object_postprocess_detail']]],
+  ['keep_5fawake_10',['keep_awake',['../structcapture__settings.html#a180781bb2c2bda83bb1520a6e2167377',1,'capture_settings']]],
+  ['keep_5fawake_5fpresent_11',['keep_awake_present',['../structcapture__settings.html#a57765e8e50f612ecaafaa9b9cd4ce72a',1,'capture_settings']]],
+  ['keep_5fplanning_12',['keep_planning',['../structaipp_1_1PlannerOptions.html#a236bfb97ae029279ab2078b468d558f9',1,'aipp::PlannerOptions']]],
+  ['keep_5frunning_13',['keep_running',['../structcamera__speedtest__config.html#a57dbca0b9d00d13b810f308e884e6288',1,'camera_speedtest_config::keep_running'],['../earcam_8c.html#a69ed6cac8443e6accb95cd749c873604',1,'keep_running:&#160;earcam.c'],['../usher_8c.html#a69ed6cac8443e6accb95cd749c873604',1,'keep_running:&#160;usher.c']]],
+  ['kernel_5fmonotonic_5fus_14',['kernel_monotonic_us',['../structlwir__device__observation.html#ad23556f2915d37e1fc05ee96d73b1f43',1,'lwir_device_observation::kernel_monotonic_us'],['../structlwir__evidence.html#a10533f6cdb3d13cf73ac48a8ebfda338',1,'lwir_evidence::kernel_monotonic_us']]],
+  ['kernel_5ftimestamp_5fflags_15',['kernel_timestamp_flags',['../structlwir__device__observation.html#a20b646f04ddd88559bfdf5ee66eb5b89',1,'lwir_device_observation::kernel_timestamp_flags'],['../structlwir__evidence.html#ad312c33bf03b6284455f2ac5c570ef21',1,'lwir_evidence::kernel_timestamp_flags']]],
+  ['key_16',['key',['../structjsonbourne__obj__entry.html#a33d0e08cbade33dc3ee858824fa27d92',1,'jsonbourne_obj_entry']]],
+  ['keypoints_17',['keypoints',['../structpangea__detail_1_1ImageFeatures.html#acfcb9924458ad93a589303c5b36eaac6',1,'pangea_detail::ImageFeatures']]],
+  ['kind_18',['kind',['../structlwir__measurement.html#ac9f43d94ddbb48178253af2b4284786c',1,'lwir_measurement::kind'],['../structlwir__control__request.html#a6e9f62566b7787e19dbd03ebbf5ffcb1',1,'lwir_control_request::kind'],['../structprogress__record.html#a739633bae6213d905c171c0706d8168b',1,'progress_record::kind'],['../structcapture__observation.html#a99bc93bb7a9f51b9452263a4c93a5886',1,'capture_observation::kind'],['../structusher__cv__json_1_1Node.html#a485cc02820bf69ce9af4d554ec5bbbe7',1,'usher_cv_json::Node::kind']]],
+  ['kmaxthreads_19',['kMaxThreads',['../classusher__cv__parallel_1_1ThreadPoolBackend.html#a84a80a6543b183da180a1da0719077f9',1,'usher_cv_parallel::ThreadPoolBackend']]],
+  ['kobjectdetectionmarker_20',['kObjectDetectionMarker',['../namespacesoda__object__postprocess__detail.html#a43a4105ade22b3c83b3e239c44606046',1,'soda_object_postprocess_detail']]],
+  ['kobjectlabelcapacity_21',['kObjectLabelCapacity',['../namespacesoda__object__postprocess__detail.html#a199f450e2745b4d6b08296103440a881',1,'soda_object_postprocess_detail']]]
+];

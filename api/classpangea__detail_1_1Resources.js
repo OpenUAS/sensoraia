@@ -1,0 +1,25 @@
+var classpangea__detail_1_1Resources =
+[
+    [ "Resources", "classpangea__detail_1_1Resources.html#acdada8d8671fb39f8b63d3a58d5dfb67", null ],
+    [ "available", "classpangea__detail_1_1Resources.html#ad437d8eb325c9c1113a4012f9477ac14", null ],
+    [ "checkpoint", "classpangea__detail_1_1Resources.html#ab46d5df0ec9a458eed86d7547bf73d26", null ],
+    [ "desktop", "classpangea__detail_1_1Resources.html#a467aec73fa492da1d64f91271c5e7622", null ],
+    [ "parallel_tiles", "classpangea__detail_1_1Resources.html#ab37d78c14fe3eddef1517af52b6efb31", null ],
+    [ "photo_batch_capacity", "classpangea__detail_1_1Resources.html#a4244ee0b9a7f16200c7f59dc5f5e5d42", null ],
+    [ "report", "classpangea__detail_1_1Resources.html#aa17f9ac34263abb9b606d9cc6ba01d41", null ],
+    [ "tile_checkpoint", "classpangea__detail_1_1Resources.html#a99fa26c7aa3341cc09b1e29964710d26", null ],
+    [ "address_limit", "classpangea__detail_1_1Resources.html#a210c6099ad2c45497c9f9e77c58f9380", null ],
+    [ "desktop_mode", "classpangea__detail_1_1Resources.html#afeeb263b48af0d860a0319c777e752f9", null ],
+    [ "duty", "classpangea__detail_1_1Resources.html#adb8afee6263da67a20eaaa7b21e0b162", null ],
+    [ "idle_fraction", "classpangea__detail_1_1Resources.html#aaa18904ee9eca145b7a301f0411e9357", null ],
+    [ "last_cpu", "classpangea__detail_1_1Resources.html#a51dd60b1b7d90bd64cbd0b0874ee9666", null ],
+    [ "last_wall", "classpangea__detail_1_1Resources.html#a0e3062473549289b00ef3d0280fb0efe", null ],
+    [ "pause_file", "classpangea__detail_1_1Resources.html#a01805513e94fd724b420255b75a46376", null ],
+    [ "pool", "classpangea__detail_1_1Resources.html#a6515e533bcf9eaa62e892c60430acd22", null ],
+    [ "previous_idle", "classpangea__detail_1_1Resources.html#ad3e91f483df0dc8cb75408d28c421f56", null ],
+    [ "previous_total", "classpangea__detail_1_1Resources.html#ac087a2391e9ac2cba8112bec3a9e2e07", null ],
+    [ "reserve", "classpangea__detail_1_1Resources.html#aa3086fb62b83e54fd2f5d1d1a555ff39", null ],
+    [ "sampled_at", "classpangea__detail_1_1Resources.html#abf8da8801f59b40aed6c874adc4f4006", null ],
+    [ "started_cpu", "classpangea__detail_1_1Resources.html#a14a3300d54e13a3d1454ed617ef4fb1b", null ],
+    [ "started_wall", "classpangea__detail_1_1Resources.html#af020e1b5747ab2c6e4b4442fa7126923", null ]
+];

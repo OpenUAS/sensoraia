@@ -1,0 +1,1994 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/loom_cam/loom_capture.cpp Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('loom__capture_8cpp_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">loom_capture.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="loom__capture_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/** @file loom_capture.cpp</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @brief LOOM executable entry point and neural-feature capture policy.</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @details Shared IMX500 mechanics know nothing about feature interpretation or</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * waypoint selection. This application never calls the object-box decoder. */</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include "<a class="code" href="src_2version_8h.html">../../src/version.h</a>"</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include "<a class="code" href="inference__worker_8h.html">../../src/inference_worker.h</a>"</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include "<a class="code" href="image__exif_8h.html">../../src/image_exif.h</a>"</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include "<a class="code" href="loom__features_8h.html">loom_features.h</a>"</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include "<a class="code" href="loom__return_8h.html">loom_return.h</a>"</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &lt;cstdio&gt;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &lt;cstring&gt;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include &lt;cerrno&gt;</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#ifndef SENSORAIA_INFERENCE_ONLY</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include "<a class="code" href="imx500__camera_8hpp.html">../../src/imx500_camera.hpp</a>"</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include "<a class="code" href="inference__capture_8hpp.html">../../src/inference_capture.hpp</a>"</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment"></span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment">/** @brief Dispatch the saved-photo CLI through its C linkage boundary.</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="comment"> * @param argc Argument count including the command name.</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="comment"> * @param argv Arguments for the saved-photo path.</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment"> * @return CLI exit status; successful processing may report no match.</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment"> * @details This entry does not acquire a sensor. Keep the saved-photo CLI</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment"> * separate from the native capture worker. */</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="loom__capture_8cpp.html#a63653884f1260c0050af4e1337eaff7e">   46</a></span><span class="keyword">extern</span> <span class="stringliteral">"C"</span> <span class="keywordtype">int</span> <a class="code hl_function" href="loom__capture_8cpp.html#a63653884f1260c0050af4e1337eaff7e">loomcam_photo_main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keyword">namespace </span>{</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="comment"></span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment">/** @brief Establish finite-storage feature transport limits without claiming a trained visual match. */</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keywordtype">bool</span> validate_onnx_features(<span class="keywordtype">void</span> *configuration, <span class="keyword">const</span> <a class="code hl_struct" href="structinference__context.html">inference_context</a> *context, <span class="keywordtype">char</span> *<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>{</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> <span class="keyword">const</span> <span class="keyword">auto</span> &amp;<a class="code hl_struct" href="structoptions.html">options</a> = *<span class="keyword">static_cast&lt;</span><span class="keyword">const </span><a class="code hl_struct" href="structloom__return__options.html">loom_return_options</a> *<span class="keyword">&gt;</span>(configuration);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="loom__return_8c.html#a62c8aa01f24df71e633c99f8e904401b">loom_return_options_valid</a>(&amp;<a class="code hl_struct" href="structoptions.html">options</a>)) {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    std::snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Inconsistent LOOM return limits"</span>);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  }</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> <span class="keywordflow">if</span> (context-&gt;<a class="code hl_variable" href="structinference__context.html#a7e061d91ff54e0067d4e30569a78bbb2">model</a>.<a class="code hl_variable" href="structinference__model.html#ad10debd2238a8651d32f09360a02901e">input_count</a> != 1 || !context-&gt;<a class="code hl_variable" href="structinference__context.html#a7e061d91ff54e0067d4e30569a78bbb2">model</a>.<a class="code hl_variable" href="structinference__model.html#a18a170a76692b3a7636bc837e876d5c5">image</a>.<a class="code hl_variable" href="structinference__image__spec.html#aed64c3347fbc243e28ec8bdca91c8a7c">channels</a>) {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    std::snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"LOOM requires one declared image input"</span>);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  }</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> <span class="keywordtype">size_t</span> values = 0;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; context-&gt;<a class="code hl_variable" href="structinference__context.html#a7e061d91ff54e0067d4e30569a78bbb2">model</a>.<a class="code hl_variable" href="structinference__model.html#a52c73324e1837d20301e083aa3fab961">output_count</a>; ++index) {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> <span class="keyword">const</span> <span class="keyword">auto</span> &amp;tensor = context-&gt;<a class="code hl_variable" href="structinference__context.html#a7e061d91ff54e0067d4e30569a78bbb2">model</a>.<a class="code hl_variable" href="structinference__model.html#aaceb54ccbdf3ecdb6078cf1dd744f0c2">outputs</a>[index];</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> <span class="keywordflow">if</span> (tensor.type != <a class="code hl_enumvalue" href="onnx__session_8h.html#a91bb5b95378b6f1b76a6ef3ae2855237a5c766ccf86a630917335148297156b4d">ONNX_FLOAT32</a> || tensor.bytes / <span class="keyword">sizeof</span>(<span class="keywordtype">float</span>) &gt; 4096 - values) {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>      std::snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"LOOM requires bounded float32 feature outputs"</span>);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    values += tensor.<a class="code hl_variable" href="structonnx__tensor.html#aa75aed8e5c5357d2cd9425eca6db8aa7">bytes</a> / <span class="keyword">sizeof</span>(float);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  }</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> <span class="keywordflow">if</span> (<a class="code hl_struct" href="structoptions.html">options</a>.frame != <a class="code hl_enumvalue" href="loom__return_8h.html#a12d4e18bc743edb7dd0c9970b25d048ea8515da2673c5d608f0b5dfbfe37614ae">LOOM_RETURN_NONE</a> &amp;&amp; <a class="code hl_struct" href="structoptions.html">options</a>.frame != <a class="code hl_enumvalue" href="loom__return_8h.html#a12d4e18bc743edb7dd0c9970b25d048eafcf8476485ecee48fd169506d3b9254c">LOOM_RETURN_SIMULATED</a> &amp;&amp;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>      (context-&gt;<a class="code hl_variable" href="structinference__context.html#a7e061d91ff54e0067d4e30569a78bbb2">model</a>.<a class="code hl_variable" href="structinference__model.html#a52c73324e1837d20301e083aa3fab961">output_count</a> != 1 || (values != 2 &amp;&amp; values != 3))) {</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    std::snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Declared LOOM return vectors require one float32 output with two or three values"</span>);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>}</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="comment"></span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="comment">/** @brief Embed only in an exclusively owned private JPEG so published or hard-linked references stay immutable. */</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="keywordtype">bool</span> embed_onnx_features(<span class="keyword">const</span> <a class="code hl_struct" href="structinference__context.html">inference_context</a> *context, <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a>, uint32_t sequence)</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>{</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> <span class="comment">/* The worker serializes callbacks; reusable bounded EXIF storage avoids a large per-request stack frame. */</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> <span class="keyword">static</span> <a class="code hl_struct" href="structexif__document.html">exif_document</a> document;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> <span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> payload[<a class="code hl_define" href="group__exifite.html#ga775940776e633adca2e41c2ae084cdad">EXIF_MAX_PAYLOAD</a>], <a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>[<a class="code hl_define" href="loom__features_8h.html#a506c25c6a6fe808e8d1b26c6c40e7007">LOOM_ONNX_FEATURE_CAPACITY</a>];</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> record_size = <a class="code hl_function" href="loom__features_8h.html#aa0fa716ebdabf867d2a9298e595d0784">loom_onnx_features_pack</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>, <span class="keyword">sizeof</span>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>), &amp;context-&gt;<a class="code hl_variable" href="structinference__context.html#a7e061d91ff54e0067d4e30569a78bbb2">model</a>,</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    context-&gt;<a class="code hl_variable" href="structinference__context.html#a00b5c7be88c49d40a072713fa9491ba1">capture_identity</a> ? context-&gt;<a class="code hl_variable" href="structinference__context.html#a2ea44360be8d543f244efaac939fd87a">frame_sequence</a> : sequence, context-&gt;<a class="code hl_variable" href="structinference__context.html#a02c401fc6131b946125524fbab7b6d9c">sensor_timestamp_ns</a>);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> <span class="keywordflow">if</span> (!record_size) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> <a class="code hl_function" href="group__exifite.html#ga182eedc3101f4d24540e8be983ac8f47">exif_document_init</a>(&amp;document);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> <span class="keywordtype">size_t</span> payload_size = 0;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="group__exifite.html#ga4684583ba9a66243fb5aec629d8b6461">exif_read_jpeg</a>(<a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a>, payload, <span class="keyword">sizeof</span>(payload), &amp;payload_size) == 0) {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> <a class="code hl_struct" href="structexif__view.html">exif_view</a> view;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="group__exifite.html#ga2bf3c13d67fd162e6b7f6ec711167b15">exif_parse</a>(&amp;view, payload, payload_size) || <a class="code hl_function" href="image__exif_8h.html#a8dfd58c4f299df1d28a997d68354da28">image_exif_import</a>(&amp;document, &amp;view)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (errno != ENODATA) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *destination = <a class="code hl_function" href="group__exifite.html#ga203a2588543f516ee2e5ab3c3f843ad5">exif_document_reserve</a>(&amp;document, <a class="code hl_enumvalue" href="group__exifite.html#gga3a69cea67d7cab0a11ada42980440036a13218ae59093869bd7422bb233489a08">EXIF_CAMERA</a>, <a class="code hl_define" href="loom__features_8h.html#ac01088cccbebeebc04dae3db9bd09b94">LOOM_ONNX_FEATURES_TAG</a>,</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> <a class="code hl_enumvalue" href="group__exifite.html#gga3361e18a3bdc07f5cb5a0c9a1045462fa71b854114da0b48c2bdd52d9dc1fff39">EXIF_UNDEFINED</a>, <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(record_size));</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> <span class="keywordflow">if</span> (!destination) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; record_size; ++index) destination[index] = <a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>[index];</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="group__exifite.html#ga16bedc86c30bae9cd3ef503a59f55bd8">exif_serialize</a>(&amp;document, payload, <span class="keyword">sizeof</span>(payload), &amp;payload_size)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  FILE *<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a> = std::fopen(<a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a>, <span class="stringliteral">"r+b"</span>);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> <span class="keyword">struct </span>stat info{};</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> = !fstat(fileno(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>), &amp;info) &amp;&amp; S_ISREG(info.st_mode) &amp;&amp; info.st_nlink == 1 &amp;&amp;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> <a class="code hl_function" href="group__exifite.html#gaf5d75131c5b759ad38db5f61105d81a0">exif_update_jpeg</a>(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, payload, payload_size) == 0 &amp;&amp; !std::fflush(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) &amp;&amp; !fsync(fileno(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>));</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> <span class="keywordflow">if</span> (std::fclose(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)) <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> <span class="keywordflow">return</span> <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>}</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="comment"></span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="comment">/** @brief Retain exact model/preprocessing identity with features; ordinary offline analysis never mutates its input. */</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keywordtype">bool</span> write_onnx_features(<span class="keywordtype">void</span> *configuration, <span class="keyword">const</span> <a class="code hl_struct" href="structinference__context.html">inference_context</a> *context,</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a>, uint32_t sequence, <span class="keywordtype">char</span> *<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>{</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> <span class="keyword">const</span> <span class="keyword">auto</span> &amp;<a class="code hl_struct" href="structoptions.html">options</a> = *<span class="keyword">static_cast&lt;</span><span class="keyword">const </span><a class="code hl_struct" href="structloom__return__options.html">loom_return_options</a> *<span class="keyword">&gt;</span>(configuration);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> <span class="keyword">const</span> <span class="keyword">auto</span> &amp;model = context-&gt;<a class="code hl_variable" href="structinference__context.html#a7e061d91ff54e0067d4e30569a78bbb2">model</a>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> <span class="keywordtype">size_t</span> total = 0;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> slot = 0; slot &lt; model.output_count; ++slot) {</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> <span class="keywordflow">if</span> (model.outputs[slot].type != <a class="code hl_enumvalue" href="onnx__session_8h.html#a91bb5b95378b6f1b76a6ef3ae2855237a5c766ccf86a630917335148297156b4d">ONNX_FLOAT32</a> || model.outputs[slot].bytes / <span class="keyword">sizeof</span>(<span class="keywordtype">float</span>) &gt; 4096 - total) {</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>      std::snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"LOOM features require at most 4096 float32 output values"</span>);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    }</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    total += model.outputs[slot].bytes / <span class="keyword">sizeof</span>(float);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> <span class="keyword">const</span> <span class="keyword">auto</span> *values = <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">float</span> *<span class="keyword">&gt;</span>(model.outputs[slot].data);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; model.outputs[slot].bytes / <span class="keyword">sizeof</span>(float); ++index)</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> <span class="keywordflow">if</span> (!std::isfinite(values[index])) { std::snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Nonfinite LOOM feature"</span>); <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> <span class="keywordflow">if</span> (context-&gt;<a class="code hl_variable" href="structinference__context.html#a64a7405def3c61f9329e1db70c4045fc">private_image</a> &amp;&amp; !embed_onnx_features(context, <a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a>, sequence)) {</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    std::snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Cannot embed model-identified LOOM feature evidence"</span>);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  }</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> <span class="keywordtype">char</span> filename[<a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>], <a class="code hl_function" href="namespacepangea__detail.html#a7e854bdfed7fe9e511d9979ad49ea36c">digest</a>[65];</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> length = std::strlen(<a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a>);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> <span class="keywordflow">if</span> (length &lt; 4 || std::strcmp(<a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a> + length - 4, <span class="stringliteral">".jpg"</span>) || !<a class="code hl_function" href="inference__model_8c.html#ab4960d21aeb783a12fb356a39031cb46">inference_file_sha256</a>(<a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a>, digest)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = std::snprintf(filename, <span class="keyword">sizeof</span>(filename), <span class="stringliteral">"%.*s.loom.ini"</span>, <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(length - 4), <a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a>);</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &lt; 0 || <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>) &gt;= <span class="keyword">sizeof</span>(filename)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>  FILE *<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a> = std::fopen(filename, <span class="stringliteral">"wx"</span>);</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) { std::snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Cannot exclusively create LOOM features: %s"</span>, filename); <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>  std::fprintf(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <span class="stringliteral">"schema=LOOM_ONNX_FEATURES_V1\nsequence=%u\nimage_sha256=%s\n"</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> <span class="stringliteral">"model_sha256=%s\nmodel_descriptor_sha256=%s\noutput_count=%zu\n"</span>,</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>               sequence, digest, model.graph_sha256, model.descriptor_sha256, model.output_count);</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> <span class="keywordflow">if</span> (<a class="code hl_struct" href="structoptions.html">options</a>.frame == <a class="code hl_enumvalue" href="loom__return_8h.html#a12d4e18bc743edb7dd0c9970b25d048ead6e54e7c1fcbf57485a2c86b2c2f723f">LOOM_RETURN_NORTH_EAST</a> || <a class="code hl_struct" href="structoptions.html">options</a>.frame == <a class="code hl_enumvalue" href="loom__return_8h.html#a12d4e18bc743edb7dd0c9970b25d048eabcfdf53e2ea835c2f91da7e4e36331e8">LOOM_RETURN_BODY_FORWARD_RIGHT</a>) {</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> <span class="keyword">const</span> <span class="keyword">auto</span> *values = <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">float</span> *<span class="keyword">&gt;</span>(model.outputs[0].data);</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    std::fprintf(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <span class="stringliteral">"return_vector_frame=%s\nreturn_first=%.9g\nreturn_second=%.9g\nreturn_confidence=%.9g\n"</span>,</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> <a class="code hl_struct" href="structoptions.html">options</a>.frame == <a class="code hl_enumvalue" href="loom__return_8h.html#a12d4e18bc743edb7dd0c9970b25d048ead6e54e7c1fcbf57485a2c86b2c2f723f">LOOM_RETURN_NORTH_EAST</a> ? <span class="stringliteral">"north_east"</span> : <span class="stringliteral">"body_forward_right"</span>,</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(values[0]), <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(values[1]),</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>      model.outputs[0].bytes == 3 * <span class="keyword">sizeof</span>(<span class="keywordtype">float</span>) ? <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(values[2]) : 1.0);</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_struct" href="structoptions.html">options</a>.frame == <a class="code hl_enumvalue" href="loom__return_8h.html#a12d4e18bc743edb7dd0c9970b25d048eafcf8476485ecee48fd169506d3b9254c">LOOM_RETURN_SIMULATED</a>) {</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    std::fprintf(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <span class="stringliteral">"return_vector_frame=simulated\n"</span>);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  }</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> slot = 0; slot &lt; model.output_count; ++slot) {</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> <span class="keyword">const</span> <span class="keyword">auto</span> &amp;tensor = model.outputs[slot];</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    std::fprintf(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <span class="stringliteral">"output.%zu.name=%s\noutput.%zu.shape="</span>, slot, tensor.name, slot);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> axis = 0; axis &lt; tensor.rank; ++axis)</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>      std::fprintf(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <span class="stringliteral">"%s%lld"</span>, axis ? <span class="stringliteral">","</span> : <span class="stringliteral">""</span>, <span class="keyword">static_cast&lt;</span><span class="keywordtype">long</span> <span class="keywordtype">long</span><span class="keyword">&gt;</span>(tensor.dimensions[axis]));</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    std::fprintf(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <span class="stringliteral">"\noutput.%zu.values="</span>, slot);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> <span class="keyword">const</span> <span class="keyword">auto</span> *values = <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">float</span> *<span class="keyword">&gt;</span>(tensor.data);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; tensor.bytes / <span class="keyword">sizeof</span>(float); ++index)</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>      std::fprintf(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <span class="stringliteral">"%s%.9g"</span>, index ? <span class="stringliteral">","</span> : <span class="stringliteral">""</span>, <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(values[index]));</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    std::fputc(<span class="charliteral">'\n'</span>, <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>);</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>  }</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> <span class="keywordtype">bool</span> written = !std::ferror(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) &amp;&amp; std::fflush(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) == 0 &amp;&amp; fsync(fileno(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)) == 0;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> <span class="keywordflow">if</span> (std::fclose(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)) written = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> <span class="keywordflow">if</span> (!written) { unlink(filename); std::snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Cannot publish LOOM features"</span>); }</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> <span class="keywordflow">return</span> written;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>}</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="preprocessor">#ifndef SENSORAIA_INFERENCE_ONLY</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="comment"></span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="comment">/** @brief Qualify feature transport without interpreting it as a return direction.</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="comment"> * @param frame Borrowed same-exposure neural values and shape metadata.</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="comment"> * @return True for a bounded finite tensor contract, not a navigable match. */</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="keywordtype">bool</span> features_ready(<span class="keyword">const</span> <a class="code hl_struct" href="structimx500_1_1FrameView.html">imx500::FrameView</a> &amp;<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>)</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>{</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> <span class="keywordflow">return</span> <a class="code hl_function" href="loom__features_8c.html#a661178dea479f32a5e9b242d619f7b58">loom_features_valid</a>(<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.tensor.data(), <a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.tensor.size(),</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> <a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.tensor_info.data(), <a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.tensor_info.size());</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>}</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="comment"></span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="comment">/** @brief Serialize only this retained exposure's feature evidence.</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="comment"> * @param frame Immutable view whose lease remains alive during serialization.</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="comment"> * @param filename Exclusive-create analysis path supplied by the publication owner.</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="comment"> * @return True when the core publishes complete feature evidence.</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="comment"> * @details Keep camera request identity separate from the FC photo number;</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="comment"> * downstream code must establish their association rather than guessing it. */</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="keywordtype">bool</span> write_features(<span class="keyword">const</span> <a class="code hl_struct" href="structimx500_1_1FrameView.html">imx500::FrameView</a> &amp;<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, <a class="code hl_struct" href="structexif__document.html">exif_document</a> *document)</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>{</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> <span class="keywordflow">if</span> (!features_ready(<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>)) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a> = <a class="code hl_function" href="loom__features_8c.html#a26f6c9799f050f4c81a570df58b77377">loom_features_size</a>(<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.tensor.size());</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> <span class="keyword">auto</span> *<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> = <a class="code hl_function" href="group__exifite.html#ga203a2588543f516ee2e5ab3c3f843ad5">exif_document_reserve</a>(document, <a class="code hl_enumvalue" href="group__exifite.html#gga3a69cea67d7cab0a11ada42980440036a13218ae59093869bd7422bb233489a08">EXIF_CAMERA</a>, <a class="code hl_define" href="loom__features_8h.html#a853aea8883d1a3c1449e403b91381ce5">LOOM_FEATURES_TAG</a>, <a class="code hl_enumvalue" href="group__exifite.html#gga3361e18a3bdc07f5cb5a0c9a1045462fa71b854114da0b48c2bdd52d9dc1fff39">EXIF_UNDEFINED</a>,</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(<a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>));</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> <span class="keywordflow">return</span> <a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> &amp;&amp; <a class="code hl_function" href="loom__features_8c.html#a11fe6816fc3d92e0c58b0f5a0ca9ad49">loom_features_pack</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>, <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>, <a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.tensor.data(), <a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.tensor.size(),</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> <a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.tensor_info.data(), <a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.tensor_info.size(),</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> <a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.sequence, <a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>.sensor_timestamp_ns);</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>}</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>} <span class="comment">// namespace</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="comment"></span> </div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="comment">/** @brief Dispatch saved-photo processing without opening a second camera owner.</span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="comment"> * @param argc Command-line token count.</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="comment"> * @param argv Saved-photo or neutral capture-worker mode arguments.</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="comment"> * @return Zero for success, two for syntax errors, one for capture runtime failure.</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="comment"> * @details Capture retains features; saved-photo mode validates declared return</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="comment"> * vectors and observation identity. Generic tensors are not navigation evidence. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00202">
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="loom__capture_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">  202</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="loom__capture_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>{</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> <span class="keywordflow">if</span> (argc == 2 &amp;&amp; !std::strcmp(argv[1], <span class="stringliteral">"--help"</span>)) {</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    std::puts(<a class="code hl_define" href="src_2version_8h.html#a29ce5a14f8f3d4a97bbafc1b36b95069">LOOMCAM_BUILD_VERSION</a>);</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    std::puts(<span class="stringliteral">"Usage: loomcam --analyze FILE.jpg | --analyze-server | --check-model [--settings FILE]\n"</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> <span class="stringliteral">"       loomcam --capture --settings FILE /absolute/photo.jpg\n"</span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> <span class="stringliteral">"       loomcam --serve --settings FILE WIDTH HEIGHT\n"</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> <span class="stringliteral">"       loomcam --image FILE --sequence N [--reference-dir DIR]\n"</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> <span class="stringliteral">"       loomcam --return-server [--settings FILE] [--simulation] [--seed N]\n"</span></div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> <span class="stringliteral">"       loomcam --simulation-mode [--settings FILE] [--strict]\n"</span></div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> <span class="stringliteral">"       loomcam --self-test | --version\n"</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> <span class="stringliteral">"Feature-only is the default; declared return vectors use guarded T1 policy.\n"</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> <span class="stringliteral">"Strict model selection rejects unavailable/feature-only assignments.\n"</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> <span class="stringliteral">"Return-server skips rejected vectors unless --simulation is explicit; ACK budget is 4 seconds."</span>);</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>  }</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> <a class="code hl_struct" href="structloom__return__options.html">loom_return_options</a> <a class="code hl_struct" href="structoptions.html">options</a>;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> <a class="code hl_function" href="loom__return_8c.html#a1909b8c2b590cc2c0c4021cd85c28cad">loom_return_options_init</a>(&amp;<a class="code hl_struct" href="structoptions.html">options</a>);</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> <span class="keyword">const</span> <a class="code hl_struct" href="structinference__image__processor.html">inference_image_processor</a> onnx_processor{<span class="stringliteral">"loomcam"</span>, <span class="stringliteral">"loom_cam"</span>, <span class="stringliteral">"loom_features_v1"</span>,</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> <a class="code hl_function" href="loom__return_8c.html#ad444d828e452d2b5ea295c2aec41b5c4">loom_return_setting</a>, &amp;<a class="code hl_struct" href="structoptions.html">options</a>, write_onnx_features, validate_onnx_features, <span class="stringliteral">".loom.ini"</span>};</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> <span class="keyword">const</span> <span class="keywordtype">int</span> analyzed = <a class="code hl_function" href="inference__worker_8c.html#a9125ecce31e45a1808234b68f17efd24">inference_worker_cli</a>(argc, argv, &amp;onnx_processor);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> <span class="keywordflow">if</span> (analyzed &gt;= 0) <span class="keywordflow">return</span> analyzed;</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> <span class="keywordflow">if</span> (argc &gt; 1 &amp;&amp; (std::strcmp(argv[1], <span class="stringliteral">"--image"</span>) == 0</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                  || std::strcmp(argv[1], <span class="stringliteral">"--return-server"</span>) == 0</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                  || std::strcmp(argv[1], <span class="stringliteral">"--simulation-mode"</span>) == 0</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                  || std::strcmp(argv[1], <span class="stringliteral">"--self-test"</span>) == 0</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                  || std::strcmp(argv[1], <span class="stringliteral">"--help"</span>) == 0)) {</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> <span class="keywordflow">return</span> <a class="code hl_function" href="loom__capture_8cpp.html#a63653884f1260c0050af4e1337eaff7e">loomcam_photo_main</a>(argc, argv);</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>  }</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> <span class="keywordflow">if</span> (argc == 2 &amp;&amp; std::strcmp(argv[1], <span class="stringliteral">"--version"</span>) == 0) {</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    std::puts(<a class="code hl_define" href="src_2version_8h.html#a29ce5a14f8f3d4a97bbafc1b36b95069">LOOMCAM_BUILD_VERSION</a>);</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>  }</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="preprocessor">#ifdef SENSORAIA_INFERENCE_ONLY</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>  std::fprintf(stderr, <span class="stringliteral">"Usage: loomcam --analyze FILE.jpg | --analyze-server | --check-model [--settings FILE]\n"</span>);</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> <span class="keywordflow">return</span> 2;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> <span class="keyword">const</span> <a class="code hl_struct" href="structimx500_1_1FrameProcessor.html">imx500::FrameProcessor</a> processor{<span class="keyword">nullptr</span>, features_ready, <span class="keyword">nullptr</span>, write_features};</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> <span class="keyword">const</span> <span class="keywordtype">int</span> configured = <a class="code hl_function" href="inference__capture_8cpp.html#a059ce2b79a67bd574f8bae5e1451d85e">inference_capture_cli</a>(argc, argv, onnx_processor, processor);</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> <span class="keywordflow">if</span> (configured &gt;= 0) <span class="keywordflow">return</span> configured;</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> <span class="keywordflow">if</span> (argc &lt; 3 || (std::strcmp(argv[1], <span class="stringliteral">"--probe"</span>) != 0</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>                  &amp;&amp; std::strcmp(argv[1], <span class="stringliteral">"--serve"</span>) != 0</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                  &amp;&amp; std::strcmp(argv[1], <span class="stringliteral">"--capture"</span>) != 0)) {</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    std::fprintf(stderr,</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> <span class="stringliteral">"Usage: loomcam --probe nn_loom.rpk\n"</span></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> <span class="stringliteral">"       loomcam --serve nn_loom.rpk WIDTH HEIGHT\n"</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> <span class="stringliteral">"       loomcam --capture nn_loom.rpk /absolute/photo.jpg\n"</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> <span class="stringliteral">"       loomcam --image FILE --sequence N [--reference-dir DIR] [--model FILE]\n"</span></div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> <span class="stringliteral">"       loomcam --self-test | --version\n"</span>);</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> <span class="keywordflow">return</span> 2;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>  }</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceimx500.html#a22b7839b3fc6d7d631ed2958173a48c8">imx500::run_worker</a>(argc, argv, processor, <span class="stringliteral">"loomcam"</span>);</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>}</div>
+</div>
+<div class="ttc" id="acapture__arbiter_8c_html_a6d68504c09ee186ab8deb6b756b4bd66"><div class="ttname"><a href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a></div><div class="ttdeci">static unsigned capacity[COVERAGE_CAMERAS]</div><div class="ttdef"><b>Definition</b> <a href="capture__arbiter_8c_source.html#l00075">capture_arbiter.c:75</a></div></div>
+<div class="ttc" id="achdk__pipe_8c_html_a854352f53b148adc24983a58a1866d66"><div class="ttname"><a href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition</b> <a href="chdk__pipe_8c_source.html#l00143">chdk_pipe.c:143</a></div></div>
+<div class="ttc" id="adipla__camera__backend_8c_html_ac395aa5127c49db063effce9818917f3"><div class="ttname"><a href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a></div><div class="ttdeci">static int record(const union dc_shot_union *shot)</div><div class="ttdoc">Retrieve a point and admit a new observation only when its credit is free.</div><div class="ttdef"><b>Definition</b> <a href="dipla__camera__backend_8c_source.html#l00206">dipla_camera_backend.c:206</a></div></div>
+<div class="ttc" id="agroup__exifite_html_ga16bedc86c30bae9cd3ef503a59f55bd8"><div class="ttname"><a href="group__exifite.html#ga16bedc86c30bae9cd3ef503a59f55bd8">exif_serialize</a></div><div class="ttdeci">int exif_serialize(const struct exif_document *document, unsigned char *payload, size_t capacity, size_t *size)</div><div class="ttdoc">Serialize a document into one complete EXIF APP1 payload.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8c_source.html#l00736">exifite.c:736</a></div></div>
+<div class="ttc" id="agroup__exifite_html_ga182eedc3101f4d24540e8be983ac8f47"><div class="ttname"><a href="group__exifite.html#ga182eedc3101f4d24540e8be983ac8f47">exif_document_init</a></div><div class="ttdeci">void exif_document_init(struct exif_document *document)</div><div class="ttdoc">Start a fresh upright sRGB/Y-Cb-Cr document with EXIF 2.32 defaults.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8c_source.html#l00412">exifite.c:412</a></div></div>
+<div class="ttc" id="agroup__exifite_html_ga203a2588543f516ee2e5ab3c3f843ad5"><div class="ttname"><a href="group__exifite.html#ga203a2588543f516ee2e5ab3c3f843ad5">exif_document_reserve</a></div><div class="ttdeci">unsigned char * exif_document_reserve(struct exif_document *document, enum exif_directory directory, uint16_t tag, enum exif_format format, uint32_t count)</div><div class="ttdoc">Create or replace a field with zeroed, bounded value storage.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8c_source.html#l00508">exifite.c:508</a></div></div>
+<div class="ttc" id="agroup__exifite_html_ga2bf3c13d67fd162e6b7f6ec711167b15"><div class="ttname"><a href="group__exifite.html#ga2bf3c13d67fd162e6b7f6ec711167b15">exif_parse</a></div><div class="ttdeci">int exif_parse(struct exif_view *view, const unsigned char *payload, size_t size)</div><div class="ttdoc">Validate an EXIF APP1 payload and create a borrowed view.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8c_source.html#l00257">exifite.c:257</a></div></div>
+<div class="ttc" id="agroup__exifite_html_ga4684583ba9a66243fb5aec629d8b6461"><div class="ttname"><a href="group__exifite.html#ga4684583ba9a66243fb5aec629d8b6461">exif_read_jpeg</a></div><div class="ttdeci">int exif_read_jpeg(const char *filename, unsigned char *payload, size_t capacity, size_t *size)</div><div class="ttdoc">Read the single EXIF APP1 segment before the first JPEG scan.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8c_source.html#l01022">exifite.c:1022</a></div></div>
+<div class="ttc" id="agroup__exifite_html_ga775940776e633adca2e41c2ae084cdad"><div class="ttname"><a href="group__exifite.html#ga775940776e633adca2e41c2ae084cdad">EXIF_MAX_PAYLOAD</a></div><div class="ttdeci">#define EXIF_MAX_PAYLOAD</div><div class="ttdoc">APP1 payload ceiling: the JPEG length includes its own two bytes.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8h_source.html#l00051">exifite.h:51</a></div></div>
+<div class="ttc" id="agroup__exifite_html_gaf5d75131c5b759ad38db5f61105d81a0"><div class="ttname"><a href="group__exifite.html#gaf5d75131c5b759ad38db5f61105d81a0">exif_update_jpeg</a></div><div class="ttdeci">int exif_update_jpeg(FILE *file, const unsigned char *payload, size_t size)</div><div class="ttdoc">Replace EXIF in a regular JPEG file without a temporary file.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8c_source.html#l01649">exifite.c:1649</a></div></div>
+<div class="ttc" id="agroup__exifite_html_gga3361e18a3bdc07f5cb5a0c9a1045462fa71b854114da0b48c2bdd52d9dc1fff39"><div class="ttname"><a href="group__exifite.html#gga3361e18a3bdc07f5cb5a0c9a1045462fa71b854114da0b48c2bdd52d9dc1fff39">EXIF_UNDEFINED</a></div><div class="ttdeci">@ EXIF_UNDEFINED</div><div class="ttdef"><b>Definition</b> <a href="exifite_8h_source.html#l00070">exifite.h:70</a></div></div>
+<div class="ttc" id="agroup__exifite_html_gga3a69cea67d7cab0a11ada42980440036a13218ae59093869bd7422bb233489a08"><div class="ttname"><a href="group__exifite.html#gga3a69cea67d7cab0a11ada42980440036a13218ae59093869bd7422bb233489a08">EXIF_CAMERA</a></div><div class="ttdeci">@ EXIF_CAMERA</div><div class="ttdef"><b>Definition</b> <a href="exifite_8h_source.html#l00059">exifite.h:59</a></div></div>
+<div class="ttc" id="aimage__exif_8h_html"><div class="ttname"><a href="image__exif_8h.html">image_exif.h</a></div><div class="ttdoc">Flight, timing, and thermal-analysis metadata writing for captured JPEGs.</div></div>
+<div class="ttc" id="aimage__exif_8h_html_a8dfd58c4f299df1d28a997d68354da28"><div class="ttname"><a href="image__exif_8h.html#a8dfd58c4f299df1d28a997d68354da28">image_exif_import</a></div><div class="ttdeci">static int image_exif_import(struct exif_document *document, const struct exif_view *view)</div><div class="ttdoc">Import standard metadata plus the application's approved capture evidence.</div><div class="ttdef"><b>Definition</b> <a href="image__exif_8h_source.html#l00058">image_exif.h:58</a></div></div>
+<div class="ttc" id="aimx500__camera_8hpp_html"><div class="ttname"><a href="imx500__camera_8hpp.html">imx500_camera.hpp</a></div><div class="ttdoc">Neutral IMX500 frame ownership, JPEG publication and worker protocol.</div></div>
+<div class="ttc" id="ainference__capture_8cpp_html_a059ce2b79a67bd574f8bae5e1451d85e"><div class="ttname"><a href="inference__capture_8cpp.html#a059ce2b79a67bd574f8bae5e1451d85e">inference_capture_cli</a></div><div class="ttdeci">int inference_capture_cli(int argc, char **argv, const inference_image_processor &amp;processor, const imx500::FrameProcessor &amp;sensor_processor)</div><div class="ttdoc">Dispatch configured RPK/ONNX capture while preserving one physical camera owner.</div><div class="ttdef"><b>Definition</b> <a href="inference__capture_8cpp_source.html#l00110">inference_capture.cpp:110</a></div></div>
+<div class="ttc" id="ainference__capture_8hpp_html"><div class="ttname"><a href="inference__capture_8hpp.html">inference_capture.hpp</a></div><div class="ttdoc">Settings-driven capture bridge; neutral camera mechanics never interpret neural outputs.</div></div>
+<div class="ttc" id="ainference__model_8c_html_ab4960d21aeb783a12fb356a39031cb46"><div class="ttname"><a href="inference__model_8c.html#ab4960d21aeb783a12fb356a39031cb46">inference_file_sha256</a></div><div class="ttdeci">bool inference_file_sha256(const char *filename, char digest[65])</div><div class="ttdoc">Hash a stable nonempty regular file using bounded streaming scratch.</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8c_source.html#l00041">inference_model.c:41</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_aa4d8d5cefef1dcae62c784bf4698f487"><div class="ttname"><a href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a></div><div class="ttdeci">#define INFERENCE_PATH_CAPACITY</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00031">inference_settings.h:31</a></div></div>
+<div class="ttc" id="ainference__worker_8c_html_a9125ecce31e45a1808234b68f17efd24"><div class="ttname"><a href="inference__worker_8c.html#a9125ecce31e45a1808234b68f17efd24">inference_worker_cli</a></div><div class="ttdeci">int inference_worker_cli(int argc, char **argv, const struct inference_image_processor *processor)</div><div class="ttdoc">Dispatch one-shot analysis, model checks or the persistent ANALYZE protocol.</div><div class="ttdef"><b>Definition</b> <a href="inference__worker_8c_source.html#l00075">inference_worker.c:75</a></div></div>
+<div class="ttc" id="ainference__worker_8h_html"><div class="ttname"><a href="inference__worker_8h.html">inference_worker.h</a></div><div class="ttdoc">Warm saved-picture processing without acquiring a camera or interpreting CAM results.</div></div>
+<div class="ttc" id="aloom__capture_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="loom__capture_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdoc">Dispatch saved-photo processing without opening a second camera owner.</div><div class="ttdef"><b>Definition</b> <a href="#l00202">loom_capture.cpp:202</a></div></div>
+<div class="ttc" id="aloom__capture_8cpp_html_a63653884f1260c0050af4e1337eaff7e"><div class="ttname"><a href="loom__capture_8cpp.html#a63653884f1260c0050af4e1337eaff7e">loomcam_photo_main</a></div><div class="ttdeci">int loomcam_photo_main(int argc, char **argv)</div><div class="ttdoc">Dispatch the saved-photo CLI through its C linkage boundary.</div></div>
+<div class="ttc" id="aloom__features_8c_html_a11fe6816fc3d92e0c58b0f5a0ca9ad49"><div class="ttname"><a href="loom__features_8c.html#a11fe6816fc3d92e0c58b0f5a0ca9ad49">loom_features_pack</a></div><div class="ttdeci">bool loom_features_pack(unsigned char *record, size_t capacity, const float *values, size_t count, const uint8_t *information, size_t information_size, uint64_t sequence, uint64_t sensor_timestamp_ns)</div><div class="ttdoc">Pack validated same-exposure shapes, exact uint64 identities and float bits.</div><div class="ttdef"><b>Definition</b> <a href="loom__features_8c_source.html#l00116">loom_features.c:116</a></div></div>
+<div class="ttc" id="aloom__features_8c_html_a26f6c9799f050f4c81a570df58b77377"><div class="ttname"><a href="loom__features_8c.html#a26f6c9799f050f4c81a570df58b77377">loom_features_size</a></div><div class="ttdeci">size_t loom_features_size(size_t count)</div><div class="ttdoc">Required bytes for 1..4096 floats, or zero for unsupported counts.</div><div class="ttdef"><b>Definition</b> <a href="loom__features_8c_source.html#l00100">loom_features.c:100</a></div></div>
+<div class="ttc" id="aloom__features_8c_html_a661178dea479f32a5e9b242d619f7b58"><div class="ttname"><a href="loom__features_8c.html#a661178dea479f32a5e9b242d619f7b58">loom_features_valid</a></div><div class="ttdeci">bool loom_features_valid(const float *values, size_t count, const uint8_t *information, size_t information_size)</div><div class="ttdoc">Validate finite features against the shared IMX500 shape metadata.</div><div class="ttdef"><b>Definition</b> <a href="loom__features_8c_source.html#l00047">loom_features.c:47</a></div></div>
+<div class="ttc" id="aloom__features_8h_html"><div class="ttname"><a href="loom__features_8h.html">loom_features.h</a></div><div class="ttdoc">LOOM-owned bounded feature validation and evidence serialization.</div></div>
+<div class="ttc" id="aloom__features_8h_html_a506c25c6a6fe808e8d1b26c6c40e7007"><div class="ttname"><a href="loom__features_8h.html#a506c25c6a6fe808e8d1b26c6c40e7007">LOOM_ONNX_FEATURE_CAPACITY</a></div><div class="ttdeci">#define LOOM_ONNX_FEATURE_CAPACITY</div><div class="ttdef"><b>Definition</b> <a href="loom__features_8h_source.html#l00032">loom_features.h:32</a></div></div>
+<div class="ttc" id="aloom__features_8h_html_a853aea8883d1a3c1449e403b91381ce5"><div class="ttname"><a href="loom__features_8h.html#a853aea8883d1a3c1449e403b91381ce5">LOOM_FEATURES_TAG</a></div><div class="ttdeci">#define LOOM_FEATURES_TAG</div><div class="ttdoc">LOOM-owned camera-directory tag; its value is a LOOMNN02 opaque record.</div><div class="ttdef"><b>Definition</b> <a href="loom__features_8h_source.html#l00030">loom_features.h:30</a></div></div>
+<div class="ttc" id="aloom__features_8h_html_aa0fa716ebdabf867d2a9298e595d0784"><div class="ttname"><a href="loom__features_8h.html#aa0fa716ebdabf867d2a9298e595d0784">loom_onnx_features_pack</a></div><div class="ttdeci">size_t loom_onnx_features_pack(unsigned char *record, size_t capacity, const struct inference_model *model, uint64_t sequence, uint64_t sensor_timestamp_ns)</div><div class="ttdoc">Encode a complete LOOMOX01 record without fabricating an IMX500 metadata header.</div><div class="ttdef"><b>Definition</b> <a href="loom__onnx__features_8c_source.html#l00039">loom_onnx_features.c:39</a></div></div>
+<div class="ttc" id="aloom__features_8h_html_ac01088cccbebeebc04dae3db9bd09b94"><div class="ttname"><a href="loom__features_8h.html#ac01088cccbebeebc04dae3db9bd09b94">LOOM_ONNX_FEATURES_TAG</a></div><div class="ttdeci">#define LOOM_ONNX_FEATURES_TAG</div><div class="ttdef"><b>Definition</b> <a href="loom__features_8h_source.html#l00031">loom_features.h:31</a></div></div>
+<div class="ttc" id="aloom__return_8c_html_a1909b8c2b590cc2c0c4021cd85c28cad"><div class="ttname"><a href="loom__return_8c.html#a1909b8c2b590cc2c0c4021cd85c28cad">loom_return_options_init</a></div><div class="ttdeci">void loom_return_options_init(struct loom_return_options *options)</div><div class="ttdoc">Initialize return limits with feature-only semantics by default.</div><div class="ttdef"><b>Definition</b> <a href="loom__return_8c_source.html#l00040">loom_return.c:40</a></div></div>
+<div class="ttc" id="aloom__return_8c_html_a62c8aa01f24df71e633c99f8e904401b"><div class="ttname"><a href="loom__return_8c.html#a62c8aa01f24df71e633c99f8e904401b">loom_return_options_valid</a></div><div class="ttdeci">bool loom_return_options_valid(const struct loom_return_options *options)</div><div class="ttdoc">Check that optional destination coordinates are either both present or both omitted.</div><div class="ttdef"><b>Definition</b> <a href="loom__return_8c_source.html#l00047">loom_return.c:47</a></div></div>
+<div class="ttc" id="aloom__return_8c_html_ad444d828e452d2b5ea295c2aec41b5c4"><div class="ttname"><a href="loom__return_8c.html#ad444d828e452d2b5ea295c2aec41b5c4">loom_return_setting</a></div><div class="ttdeci">bool loom_return_setting(void *context, const char *key, const char *value)</div><div class="ttdoc">Parse one LOOM-owned settings field, rejecting duplicates and unknown keys.</div><div class="ttdef"><b>Definition</b> <a href="loom__return_8c_source.html#l00055">loom_return.c:55</a></div></div>
+<div class="ttc" id="aloom__return_8h_html"><div class="ttname"><a href="loom__return_8h.html">loom_return.h</a></div><div class="ttdoc">Bounded direction-to-target policy, independent of inference and FC transport.</div></div>
+<div class="ttc" id="aloom__return_8h_html_a12d4e18bc743edb7dd0c9970b25d048ea8515da2673c5d608f0b5dfbfe37614ae"><div class="ttname"><a href="loom__return_8h.html#a12d4e18bc743edb7dd0c9970b25d048ea8515da2673c5d608f0b5dfbfe37614ae">LOOM_RETURN_NONE</a></div><div class="ttdeci">@ LOOM_RETURN_NONE</div><div class="ttdef"><b>Definition</b> <a href="loom__return_8h_source.html#l00058">loom_return.h:58</a></div></div>
+<div class="ttc" id="aloom__return_8h_html_a12d4e18bc743edb7dd0c9970b25d048eabcfdf53e2ea835c2f91da7e4e36331e8"><div class="ttname"><a href="loom__return_8h.html#a12d4e18bc743edb7dd0c9970b25d048eabcfdf53e2ea835c2f91da7e4e36331e8">LOOM_RETURN_BODY_FORWARD_RIGHT</a></div><div class="ttdeci">@ LOOM_RETURN_BODY_FORWARD_RIGHT</div><div class="ttdef"><b>Definition</b> <a href="loom__return_8h_source.html#l00060">loom_return.h:60</a></div></div>
+<div class="ttc" id="aloom__return_8h_html_a12d4e18bc743edb7dd0c9970b25d048ead6e54e7c1fcbf57485a2c86b2c2f723f"><div class="ttname"><a href="loom__return_8h.html#a12d4e18bc743edb7dd0c9970b25d048ead6e54e7c1fcbf57485a2c86b2c2f723f">LOOM_RETURN_NORTH_EAST</a></div><div class="ttdeci">@ LOOM_RETURN_NORTH_EAST</div><div class="ttdef"><b>Definition</b> <a href="loom__return_8h_source.html#l00059">loom_return.h:59</a></div></div>
+<div class="ttc" id="aloom__return_8h_html_a12d4e18bc743edb7dd0c9970b25d048eafcf8476485ecee48fd169506d3b9254c"><div class="ttname"><a href="loom__return_8h.html#a12d4e18bc743edb7dd0c9970b25d048eafcf8476485ecee48fd169506d3b9254c">LOOM_RETURN_SIMULATED</a></div><div class="ttdeci">@ LOOM_RETURN_SIMULATED</div><div class="ttdef"><b>Definition</b> <a href="loom__return_8h_source.html#l00061">loom_return.h:61</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_aded4335c2df32c709945a69dfe77220d"><div class="ttname"><a href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a></div><div class="ttdeci">struct jpeg_error_mgr error</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00060">lwir_image.c:60</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_ace5fb39a154fc61f43993d0b435a27e5"><div class="ttname"><a href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a></div><div class="ttdeci">uint8_t frame[LWIR_MAX_FRAME_BYTES]</div><div class="ttdef"><b>Definition</b> <a href="lwir__mock_8c_source.html#l00058">lwir_mock.c:58</a></div></div>
+<div class="ttc" id="anamespaceimx500_html_a22b7839b3fc6d7d631ed2958173a48c8"><div class="ttname"><a href="namespaceimx500.html#a22b7839b3fc6d7d631ed2958173a48c8">imx500::run_worker</a></div><div class="ttdeci">int run_worker(int argc, char **argv, const FrameProcessor &amp;processor, const char *application)</div><div class="ttdoc">Run the shared probe/capture/READY-SHOT-OK worker with supplied model policy.</div><div class="ttdef"><b>Definition</b> <a href="imx500__camera_8cpp_source.html#l00817">imx500_camera.cpp:817</a></div></div>
+<div class="ttc" id="anamespacepangea__detail_html_a7e854bdfed7fe9e511d9979ad49ea36c"><div class="ttname"><a href="namespacepangea__detail.html#a7e854bdfed7fe9e511d9979ad49ea36c">pangea_detail::digest</a></div><div class="ttdeci">std::string digest(const void *data, size_t size)</div><div class="ttdef"><b>Definition</b> <a href="pangea_8cpp_source.html#l00615">pangea.cpp:615</a></div></div>
+<div class="ttc" id="aonnx__session_8h_html_a91bb5b95378b6f1b76a6ef3ae2855237a5c766ccf86a630917335148297156b4d"><div class="ttname"><a href="onnx__session_8h.html#a91bb5b95378b6f1b76a6ef3ae2855237a5c766ccf86a630917335148297156b4d">ONNX_FLOAT32</a></div><div class="ttdeci">@ ONNX_FLOAT32</div><div class="ttdef"><b>Definition</b> <a href="onnx__session_8h_source.html#l00039">onnx_session.h:39</a></div></div>
+<div class="ttc" id="apose__log_8c_html_a76d971a3c552bc58ba9f0d5fceae9806"><div class="ttname"><a href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a></div><div class="ttdeci">static size_t count</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00079">pose_log.c:79</a></div></div>
+<div class="ttc" id="apose__log_8c_html_ab41bf19330e50c3c7bf3544c53f30971"><div class="ttname"><a href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a></div><div class="ttdeci">static FILE * output</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00077">pose_log.c:77</a></div></div>
+<div class="ttc" id="asrc_2version_8h_html"><div class="ttname"><a href="src_2version_8h.html">version.h</a></div><div class="ttdoc">Compile-time build identity strings for USHER executables.</div></div>
+<div class="ttc" id="asrc_2version_8h_html_a29ce5a14f8f3d4a97bbafc1b36b95069"><div class="ttname"><a href="src_2version_8h.html#a29ce5a14f8f3d4a97bbafc1b36b95069">LOOMCAM_BUILD_VERSION</a></div><div class="ttdeci">#define LOOMCAM_BUILD_VERSION</div><div class="ttdef"><b>Definition</b> <a href="src_2version_8h_source.html#l00080">version.h:80</a></div></div>
+<div class="ttc" id="astructexif__document_html"><div class="ttname"><a href="structexif__document.html">exif_document</a></div><div class="ttdoc">Caller-owned bounded writer with no heap allocation.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8h_source.html#l00156">exifite.h:156</a></div></div>
+<div class="ttc" id="astructexif__view_html"><div class="ttname"><a href="structexif__view.html">exif_view</a></div><div class="ttdoc">Borrowed view of a validated APP1 payload.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8h_source.html#l00131">exifite.h:131</a></div></div>
+<div class="ttc" id="astructimx500_1_1FrameProcessor_html"><div class="ttname"><a href="structimx500_1_1FrameProcessor.html">imx500::FrameProcessor</a></div><div class="ttdoc">Stack-owned model-specific operations; no dynamic plugin allocation.</div><div class="ttdef"><b>Definition</b> <a href="imx500__camera_8hpp_source.html#l00109">imx500_camera.hpp:109</a></div></div>
+<div class="ttc" id="astructimx500_1_1FrameView_html"><div class="ttname"><a href="structimx500_1_1FrameView.html">imx500::FrameView</a></div><div class="ttdoc">Borrowed same-exposure evidence, without object or navigation semantics.</div><div class="ttdef"><b>Definition</b> <a href="imx500__camera_8hpp_source.html#l00077">imx500_camera.hpp:77</a></div></div>
+<div class="ttc" id="astructinference__context_html"><div class="ttname"><a href="structinference__context.html">inference_context</a></div><div class="ttdoc">Independent, noncopyable model owner; mapped tensor buffers and session are reused between jobs.</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00043">inference_model.h:43</a></div></div>
+<div class="ttc" id="astructinference__context_html_a00b5c7be88c49d40a072713fa9491ba1"><div class="ttname"><a href="structinference__context.html#a00b5c7be88c49d40a072713fa9491ba1">inference_context::capture_identity</a></div><div class="ttdeci">bool capture_identity</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00051">inference_model.h:51</a></div></div>
+<div class="ttc" id="astructinference__context_html_a02c401fc6131b946125524fbab7b6d9c"><div class="ttname"><a href="structinference__context.html#a02c401fc6131b946125524fbab7b6d9c">inference_context::sensor_timestamp_ns</a></div><div class="ttdeci">uint64_t sensor_timestamp_ns</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00050">inference_model.h:50</a></div></div>
+<div class="ttc" id="astructinference__context_html_a2ea44360be8d543f244efaac939fd87a"><div class="ttname"><a href="structinference__context.html#a2ea44360be8d543f244efaac939fd87a">inference_context::frame_sequence</a></div><div class="ttdeci">uint64_t frame_sequence</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00050">inference_model.h:50</a></div></div>
+<div class="ttc" id="astructinference__context_html_a64a7405def3c61f9329e1db70c4045fc"><div class="ttname"><a href="structinference__context.html#a64a7405def3c61f9329e1db70c4045fc">inference_context::private_image</a></div><div class="ttdeci">bool private_image</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00052">inference_model.h:52</a></div></div>
+<div class="ttc" id="astructinference__context_html_a7e061d91ff54e0067d4e30569a78bbb2"><div class="ttname"><a href="structinference__context.html#a7e061d91ff54e0067d4e30569a78bbb2">inference_context::model</a></div><div class="ttdeci">struct inference_model model</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00044">inference_model.h:44</a></div></div>
+<div class="ttc" id="astructinference__image__processor_html"><div class="ttname"><a href="structinference__image__processor.html">inference_image_processor</a></div><div class="ttdoc">Borrowed module callbacks; the worker serializes calls and retains no per-request pixel pointers.</div><div class="ttdef"><b>Definition</b> <a href="inference__worker_8h_source.html#l00032">inference_worker.h:32</a></div></div>
+<div class="ttc" id="astructinference__image__spec_html_aed64c3347fbc243e28ec8bdca91c8a7c"><div class="ttname"><a href="structinference__image__spec.html#aed64c3347fbc243e28ec8bdca91c8a7c">inference_image_spec::channels</a></div><div class="ttdeci">unsigned channels</div><div class="ttdef"><b>Definition</b> <a href="inference__image_8h_source.html#l00046">inference_image.h:46</a></div></div>
+<div class="ttc" id="astructinference__model_html_a18a170a76692b3a7636bc837e876d5c5"><div class="ttname"><a href="structinference__model.html#a18a170a76692b3a7636bc837e876d5c5">inference_model::image</a></div><div class="ttdeci">struct inference_image_spec image</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00038">inference_model.h:38</a></div></div>
+<div class="ttc" id="astructinference__model_html_a52c73324e1837d20301e083aa3fab961"><div class="ttname"><a href="structinference__model.html#a52c73324e1837d20301e083aa3fab961">inference_model::output_count</a></div><div class="ttdeci">size_t output_count</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00037">inference_model.h:37</a></div></div>
+<div class="ttc" id="astructinference__model_html_aaceb54ccbdf3ecdb6078cf1dd744f0c2"><div class="ttname"><a href="structinference__model.html#aaceb54ccbdf3ecdb6078cf1dd744f0c2">inference_model::outputs</a></div><div class="ttdeci">struct onnx_tensor outputs[ONNX_TENSOR_LIMIT]</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00036">inference_model.h:36</a></div></div>
+<div class="ttc" id="astructinference__model_html_ad10debd2238a8651d32f09360a02901e"><div class="ttname"><a href="structinference__model.html#ad10debd2238a8651d32f09360a02901e">inference_model::input_count</a></div><div class="ttdeci">size_t input_count</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00037">inference_model.h:37</a></div></div>
+<div class="ttc" id="astructloom__return__options_html"><div class="ttname"><a href="structloom__return__options.html">loom_return_options</a></div><div class="ttdoc">Module-owned inference settings, separate from universal runtime settings.</div><div class="ttdef"><b>Definition</b> <a href="loom__return_8h_source.html#l00065">loom_return.h:65</a></div></div>
+<div class="ttc" id="astructonnx__tensor_html_aa75aed8e5c5357d2cd9425eca6db8aa7"><div class="ttname"><a href="structonnx__tensor.html#aa75aed8e5c5357d2cd9425eca6db8aa7">onnx_tensor::bytes</a></div><div class="ttdeci">size_t bytes</div><div class="ttdef"><b>Definition</b> <a href="onnx__session_8h_source.html#l00050">onnx_session.h:50</a></div></div>
+<div class="ttc" id="astructoptions_html"><div class="ttname"><a href="structoptions.html">options</a></div><div class="ttdoc">Validated capture and reporting policy, fixed before the sample loop.</div><div class="ttdef"><b>Definition</b> <a href="earcam_8c_source.html#l00137">earcam.c:137</a></div></div>
+<div class="ttc" id="ausher_8c_html_a28e3c179a86f337095088b3ca02a2b2a"><div class="ttname"><a href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a></div><div class="ttdeci">bool valid</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00537">usher.c:537</a></div></div>
+<div class="ttc" id="ausher_8c_html_aeb3b7430902b8a68714e52892fa4528e"><div class="ttname"><a href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a></div><div class="ttdeci">struct captured_image image</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00371">usher.c:371</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

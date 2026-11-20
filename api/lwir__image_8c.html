@@ -1,0 +1,2644 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/lwir_cam/lwir_image.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('lwir__image_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">lwir_image.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>LWIR JPEG encoder and durable no-overwrite file publisher.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include "<a class="el" href="lwir__image_8h_source.html">lwir_image.h</a>"</code><br/>
+<code>#include "<a class="el" href="lwir__container_8h_source.html">lwir_container.h</a>"</code><br/>
+<code>#include "<a class="el" href="exifite_8h_source.html">exifite.h</a>"</code><br/>
+<code>#include "<a class="el" href="lwir__render_8h_source.html">lwir_render.h</a>"</code><br/>
+<code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &lt;fcntl.h&gt;</code><br/>
+<code>#include &lt;limits.h&gt;</code><br/>
+<code>#include &lt;setjmp.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+<code>#include &lt;jpeglib.h&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for lwir_image.c:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="lwir__image_8c__incl.png" usemap="#amodules_2lwir__cam_2lwir__image_8c"/></div>
+<map id="amodules_2lwir__cam_2lwir__image_8c" name="amodules_2lwir__cam_2lwir__image_8c">
+<area alt="" coords="1108,36,1102,26,1087,18,1064,11,1034,7,1001,5,968,7,939,11,915,18,900,26,895,36,900,45,915,53,939,60,968,64,1001,66,1034,64,1064,60,1087,53,1102,45" shape="poly" title="LWIR JPEG encoder and durable no-overwrite file publisher."/>
+<area alt="" coords="461,133,458,127,449,121,434,117,415,115,395,114,374,115,355,117,341,121,331,127,328,133,331,138,341,144,355,148,374,150,395,151,415,150,434,148,449,144,458,138" href="lwir__image_8h.html" shape="poly" title="JPEG encoding and durable no-overwrite publication of LWIR frames."/>
+<area alt="" coords="908,53,467,123,466,117,912,49" shape="poly" title=" "/>
+<area alt="" coords="717,304,715,298,709,293,699,289,686,286,672,285,658,286,645,289,635,293,629,298,626,304,629,310,635,315,645,319,658,322,672,323,686,322,699,319,709,315,715,310" shape="poly" title=" "/>
+<area alt="" coords="975,64,795,239,756,264,716,285,715,280,753,260,792,235,970,66" shape="poly" title=" "/>
+<area alt="" coords="844,304,842,298,836,293,826,289,814,286,801,285,788,286,776,289,767,293,761,298,759,304,761,310,767,315,776,319,788,322,801,323,814,322,826,319,836,315,842,310" shape="poly" title=" "/>
+<area alt="" coords="981,64,948,115,931,149,922,178,911,206,890,239,866,263,840,283,838,278,863,259,886,235,906,204,917,176,926,147,943,112,976,67" shape="poly" title=" "/>
+<area alt="" coords="661,218,657,212,646,207,629,203,607,200,583,199,558,200,536,203,519,207,508,212,504,218,508,224,519,229,536,233,558,236,583,237,607,236,629,233,646,229,657,224" href="lwir__container_8h.html" shape="poly" title="Exact thermal evidence in JPEG containers, independent of analysis."/>
+<area alt="" coords="938,59,798,116,629,196,627,191,796,111,933,61" shape="poly" title=" "/>
+<area alt="" coords="781,218,779,212,772,207,761,203,748,200,733,199,719,200,705,203,695,207,688,212,686,218,688,224,695,229,705,233,719,236,733,237,748,236,761,233,772,229,779,224" href="exifite_8h.html" shape="poly" title="Bounded C11 EXIF metadata and JPEG streaming interfaces."/>
+<area alt="" coords="947,61,899,88,852,116,803,154,762,192,759,187,800,150,849,111,897,83,942,63" shape="poly" title=" "/>
+<area alt="" coords="221,133,218,127,209,121,194,117,175,115,155,114,134,115,115,117,101,121,91,127,88,133,91,138,101,144,115,148,134,150,155,151,175,150,194,148,209,144,218,138" href="lwir__render_8h.html" shape="poly" title="Display rendering of Tiny1-C frames into JPEG-ready Y/Cb/Cr scanlines."/>
+<area alt="" coords="903,50,231,125,230,120,904,45" shape="poly" title=" "/>
+<area alt="" coords="1045,133,1043,127,1036,121,1027,117,1015,115,1001,114,988,115,976,117,966,121,960,127,958,133,960,138,966,144,976,148,988,150,1001,151,1015,150,1027,148,1036,144,1043,138" shape="poly" title=" "/>
+<area alt="" coords="1003,64,1003,100,999,96,1000,68" shape="poly" title=" "/>
+<area alt="" coords="1150,133,1148,127,1142,121,1133,117,1122,115,1109,114,1097,115,1085,117,1076,121,1071,127,1069,133,1071,138,1076,144,1085,148,1097,150,1109,151,1122,150,1133,148,1142,144,1148,138" shape="poly" title=" "/>
+<area alt="" coords="1034,62,1082,106,1077,105,1032,67" shape="poly" title=" "/>
+<area alt="" coords="1263,133,1261,127,1255,121,1245,117,1232,115,1219,114,1205,115,1192,117,1182,121,1176,127,1174,133,1176,138,1182,144,1192,148,1205,150,1219,151,1232,150,1245,148,1255,144,1261,138" shape="poly" title=" "/>
+<area alt="" coords="1058,59,1177,112,1172,112,1057,64" shape="poly" title=" "/>
+<area alt="" coords="1388,133,1385,127,1378,121,1367,117,1353,115,1337,114,1322,115,1308,117,1296,121,1289,127,1287,133,1289,138,1296,144,1308,148,1322,150,1337,151,1353,150,1367,148,1378,144,1385,138" shape="poly" title=" "/>
+<area alt="" coords="1076,55,1277,111,1287,116,1281,116,1275,116,1075,60" shape="poly" title=" "/>
+<area alt="" coords="1501,133,1499,127,1492,121,1482,117,1470,115,1456,114,1442,115,1430,117,1420,121,1413,127,1411,133,1413,138,1420,144,1430,148,1442,150,1456,151,1470,150,1482,148,1492,144,1499,138" shape="poly" title=" "/>
+<area alt="" coords="1093,49,1238,75,1401,111,1410,116,1404,115,1399,116,1237,80,1093,54" shape="poly" title=" "/>
+<area alt="" coords="1620,133,1617,127,1610,121,1600,117,1587,115,1572,114,1557,115,1544,117,1533,121,1527,127,1524,133,1527,138,1533,144,1544,148,1557,150,1572,151,1587,150,1600,148,1610,144,1617,138" shape="poly" title=" "/>
+<area alt="" coords="1100,45,1292,71,1404,89,1514,111,1524,116,1519,116,1513,116,1403,94,1292,76,1100,50" shape="poly" title=" "/>
+<area alt="" coords="1741,133,1739,127,1732,121,1721,117,1707,115,1692,114,1677,115,1663,117,1652,121,1645,127,1643,133,1645,138,1652,144,1663,148,1677,150,1692,151,1707,150,1721,148,1732,144,1739,138" shape="poly" title=" "/>
+<area alt="" coords="1104,41,1346,66,1490,86,1632,111,1643,116,1638,116,1631,116,1489,91,1345,71,1104,47" shape="poly" title=" "/>
+<area alt="" coords="136,218,133,212,123,207,109,203,91,200,71,199,50,200,32,203,18,207,9,212,5,218,9,224,18,229,32,233,50,236,71,237,91,236,109,233,123,229,133,224" href="lwir__frame_8h.html" shape="poly" title="Native frame arithmetic and camera measurements; no codec or flight dependencies."/>
+<area alt="" coords="346,149,134,203,132,198,347,144" shape="poly" title=" "/>
+<area alt="" coords="480,218,476,212,464,207,445,203,421,200,395,199,368,200,344,203,325,207,313,212,309,218,313,224,325,229,344,233,368,236,395,237,421,236,445,233,464,229,476,224" href="sensor__capture_8h.html" shape="poly" title="Exact bounded SENSOR02 capture evidence, independent of TIFF byte order."/>
+<area alt="" coords="396,150,397,185,392,183,393,154" shape="poly" title=" "/>
+<area alt="" coords="285,218,282,212,273,207,259,203,242,200,223,199,203,200,186,203,172,207,163,212,160,218,163,224,172,229,186,233,203,236,223,237,242,236,259,233,273,229,282,224" href="lwir__state_8h.html" shape="poly" title="Tiny1-C vendor mailbox: bounded device-state snapshots and verified setting controls."/>
+<area alt="" coords="360,151,269,197,267,193,365,148" shape="poly" title=" "/>
+<area alt="" coords="461,133,550,137,649,148,738,167,772,181,795,198,806,214,811,233,810,271,806,268,806,233,801,216,791,201,769,185,736,172,649,153,550,143,461,138" shape="poly" title=" "/>
+<area alt="" coords="447,304,445,298,437,293,426,289,411,286,395,285,378,286,364,289,352,293,345,298,342,304,345,310,352,315,364,319,378,322,395,323,411,322,426,319,437,315,445,310" shape="poly" title=" "/>
+<area alt="" coords="119,229,330,283,342,288,337,288,329,288,118,234" shape="poly" title=" "/>
+<area alt="" coords="568,304,566,298,559,293,548,289,535,286,520,285,505,286,492,289,481,293,474,298,472,304,474,310,481,315,492,319,505,322,520,323,535,322,548,319,559,315,566,310" shape="poly" title=" "/>
+<area alt="" coords="119,229,148,234,236,249,304,257,372,266,459,282,471,288,466,287,458,288,371,271,303,262,235,254,147,240,120,234" shape="poly" title=" "/>
+<area alt="" coords="317,304,315,298,309,293,299,289,286,286,272,285,258,286,245,289,235,293,229,298,226,304,229,310,235,315,245,319,258,322,272,323,286,322,299,319,309,315,315,310" shape="poly" title=" "/>
+<area alt="" coords="107,232,229,282,225,286,106,237" shape="poly" title=" "/>
+<area alt="" coords="396,236,397,271,392,268,393,240" shape="poly" title=" "/>
+<area alt="" coords="421,234,487,279,481,278,420,239" shape="poly" title=" "/>
+<area alt="" coords="372,236,308,281,306,276,367,238" shape="poly" title=" "/>
+<area alt="" coords="444,232,624,287,619,288,443,237" shape="poly" title=" "/>
+<area alt="" coords="255,232,354,281,348,282,254,238" shape="poly" title=" "/>
+<area alt="" coords="268,229,459,283,470,288,465,287,458,288,267,235" shape="poly" title=" "/>
+<area alt="" coords="234,235,256,273,251,271,232,240" shape="poly" title=" "/>
+<area alt="" coords="549,235,441,285,439,280,544,236" shape="poly" title=" "/>
+<area alt="" coords="572,236,543,276,540,271,567,238" shape="poly" title=" "/>
+<area alt="" coords="533,233,331,288,322,290,321,285,330,283,527,233" shape="poly" title=" "/>
+<area alt="" coords="624,232,758,285,753,285,623,238" shape="poly" title=" "/>
+<area alt="" coords="699,230,674,240,567,264,461,288,450,290,450,285,459,283,566,259,673,235,694,231" shape="poly" title=" "/>
+<area alt="" coords="703,232,568,287,567,282,698,233" shape="poly" title=" "/>
+<area alt="" coords="700,231,674,240,578,256,502,264,427,271,331,288,322,290,321,285,330,282,426,266,502,258,577,251,673,234,695,231" shape="poly" title=" "/>
+<area alt="" coords="749,234,781,275,776,273,746,239" shape="poly" title=" "/>
+<area alt="" coords="136,153,101,191,97,187,139,149" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="lwir__image_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a72a9de3ad5303b9fcc04a7cf25dbe401" id="r_a72a9de3ad5303b9fcc04a7cf25dbe401"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a72a9de3ad5303b9fcc04a7cf25dbe401">write_u32</a> (uint8_t *destination, uint32_t value)</td></tr>
+<tr class="memdesc:a72a9de3ad5303b9fcc04a7cf25dbe401"><td class="mdescLeft"> </td><td class="mdescRight">Store <code class="param">value</code> as four little-endian bytes.  <br/></td></tr>
+<tr class="memitem:acd2b80250a3b6fd31434d1aaec987047" id="r_acd2b80250a3b6fd31434d1aaec987047"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#acd2b80250a3b6fd31434d1aaec987047">jpeg_failure</a> (j_common_ptr <a class="el" href="#a511b3d6692769215611f120b918a5ae1">encoder</a>)</td></tr>
+<tr class="memdesc:acd2b80250a3b6fd31434d1aaec987047"><td class="mdescLeft"> </td><td class="mdescRight">libjpeg error_exit replacement: abandon the photo instead of exiting.  <br/></td></tr>
+<tr class="memitem:a9f1c1cc0ba13c19c5aa984fc1aa09d08" id="r_a9f1c1cc0ba13c19c5aa984fc1aa09d08"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f1c1cc0ba13c19c5aa984fc1aa09d08">write_provenance_markers</a> (j_compress_ptr <a class="el" href="#a511b3d6692769215611f120b918a5ae1">encoder</a>, unsigned width, unsigned height, unsigned display_width, unsigned display_height, bool synthetic, const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *<a class="el" href="#a0c30bfa6eec5398eb62f8a5bf21a32f9">evidence</a>, const struct <a class="el" href="structlwir__render__options.html">lwir_render_options</a> *render, const struct <a class="el" href="structlwir__render__range.html">lwir_render_range</a> *<a class="el" href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a>)</td></tr>
+<tr class="memdesc:a9f1c1cc0ba13c19c5aa984fc1aa09d08"><td class="mdescLeft"> </td><td class="mdescRight">Write application provenance without taking ownership of the encoder.  <br/></td></tr>
+<tr class="memitem:a2aa0ddbd3c3e89837c72e3fd9cab3a8a" id="r_a2aa0ddbd3c3e89837c72e3fd9cab3a8a"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2aa0ddbd3c3e89837c72e3fd9cab3a8a">write_thermal_markers</a> (j_compress_ptr <a class="el" href="#a511b3d6692769215611f120b918a5ae1">encoder</a>, const uint8_t *<a class="el" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, unsigned width, unsigned height, bool synthetic)</td></tr>
+<tr class="memdesc:a2aa0ddbd3c3e89837c72e3fd9cab3a8a"><td class="mdescLeft"> </td><td class="mdescRight">Preserve exact native temperatures independently of display rendering.  <br/></td></tr>
+<tr class="memitem:aa08fa1e863dfc28e738bfe91c6b4995c" id="r_aa08fa1e863dfc28e738bfe91c6b4995c"><td align="right" class="memItemLeft" valign="top">static uint8_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa08fa1e863dfc28e738bfe91c6b4995c">expand_video_component</a> (uint8_t value, unsigned low, unsigned span)</td></tr>
+<tr class="memdesc:aa08fa1e863dfc28e738bfe91c6b4995c"><td class="mdescLeft"> </td><td class="mdescRight">Expand one limited-range video component to full range.  <br/></td></tr>
+<tr class="memitem:aa3a06c146a24e20fc6689b56ef4632a8" id="r_aa3a06c146a24e20fc6689b56ef4632a8"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3a06c146a24e20fc6689b56ef4632a8">encode_jpeg</a> (FILE *<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, const uint8_t *<a class="el" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, size_t <a class="el" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, unsigned width, unsigned height, bool synthetic, const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *<a class="el" href="#a0c30bfa6eec5398eb62f8a5bf21a32f9">evidence</a>, const struct <a class="el" href="structlwir__render__options.html">lwir_render_options</a> *render)</td></tr>
+<tr class="memdesc:aa3a06c146a24e20fc6689b56ef4632a8"><td class="mdescLeft"> </td><td class="mdescRight">Own the serial codec lifecycle and the ordered marker/scanline stages.  <br/></td></tr>
+<tr class="memitem:a473d2c49e9ed6e4245bdee204022d894" id="r_a473d2c49e9ed6e4245bdee204022d894"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a473d2c49e9ed6e4245bdee204022d894">open_parent</a> (const char *path)</td></tr>
+<tr class="memdesc:a473d2c49e9ed6e4245bdee204022d894"><td class="mdescLeft"> </td><td class="mdescRight">Open the directory that will contain <code class="param">path</code>, for fsync after linking.  <br/></td></tr>
+<tr class="memitem:ad2376cb12ecb977a4082972a6708f9c6" id="r_ad2376cb12ecb977a4082972a6708f9c6"><td align="right" class="memItemLeft" valign="top">const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2376cb12ecb977a4082972a6708f9c6">lwir_jpeg_provider</a> (void)</td></tr>
+<tr class="memdesc:ad2376cb12ecb977a4082972a6708f9c6"><td class="mdescLeft"> </td><td class="mdescRight">Report the bundled codec; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>.  <br/></td></tr>
+<tr class="memitem:ad8dacc01b59598692eba1b8d46380579" id="r_ad8dacc01b59598692eba1b8d46380579"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8dacc01b59598692eba1b8d46380579">lwir_encode_jpeg</a> (FILE *<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, const uint8_t *<a class="el" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, size_t <a class="el" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, unsigned width, unsigned height, bool synthetic, const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *<a class="el" href="#a0c30bfa6eec5398eb62f8a5bf21a32f9">evidence</a>, const struct <a class="el" href="structlwir__render__options.html">lwir_render_options</a> *render)</td></tr>
+<tr class="memdesc:ad8dacc01b59598692eba1b8d46380579"><td class="mdescLeft"> </td><td class="mdescRight">Validate the frame size for its layout, then encode; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>.  <br/></td></tr>
+<tr class="memitem:a36587809c46c6ce97570b325ffd54c0b" id="r_a36587809c46c6ce97570b325ffd54c0b"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a36587809c46c6ce97570b325ffd54c0b">publish</a> (const char *path, const uint8_t *<a class="el" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, size_t <a class="el" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, unsigned width, unsigned height, bool synthetic, bool raw, const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *<a class="el" href="#a0c30bfa6eec5398eb62f8a5bf21a32f9">evidence</a>, const struct <a class="el" href="structlwir__render__options.html">lwir_render_options</a> *render)</td></tr>
+<tr class="memdesc:a36587809c46c6ce97570b325ffd54c0b"><td class="mdescLeft"> </td><td class="mdescRight">Durably publish a JPEG or raw companion under a new name.  <br/></td></tr>
+<tr class="memitem:aadb1ed08c8f103fe2d2770ebe7c159aa" id="r_aadb1ed08c8f103fe2d2770ebe7c159aa"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#aadb1ed08c8f103fe2d2770ebe7c159aa">lwir_remove_published</a> (const char *path)</td></tr>
+<tr class="memdesc:aadb1ed08c8f103fe2d2770ebe7c159aa"><td class="mdescLeft"> </td><td class="mdescRight">Remove a file this process published and persist the removal; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>.  <br/></td></tr>
+<tr class="memitem:a3a2b2bb57b3f8e3c2510e79e0f28765a" id="r_a3a2b2bb57b3f8e3c2510e79e0f28765a"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3a2b2bb57b3f8e3c2510e79e0f28765a">lwir_write_jpeg</a> (const char *path, const uint8_t *<a class="el" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, size_t <a class="el" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, unsigned width, unsigned height, bool synthetic)</td></tr>
+<tr class="memdesc:a3a2b2bb57b3f8e3c2510e79e0f28765a"><td class="mdescLeft"> </td><td class="mdescRight">Publish the sensor view without evidence; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>.  <br/></td></tr>
+<tr class="memitem:ab35a5278bb98e080ae8ffad31f1d2e05" id="r_ab35a5278bb98e080ae8ffad31f1d2e05"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab35a5278bb98e080ae8ffad31f1d2e05">lwir_write_jpeg_evidence</a> (const char *path, const uint8_t *<a class="el" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, size_t <a class="el" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, unsigned width, unsigned height, bool synthetic, const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *<a class="el" href="#a0c30bfa6eec5398eb62f8a5bf21a32f9">evidence</a>)</td></tr>
+<tr class="memdesc:ab35a5278bb98e080ae8ffad31f1d2e05"><td class="mdescLeft"> </td><td class="mdescRight">Publish the sensor view with provenance; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>.  <br/></td></tr>
+<tr class="memitem:a2c6bf765928be8870f6a7bde64c16e01" id="r_a2c6bf765928be8870f6a7bde64c16e01"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c6bf765928be8870f6a7bde64c16e01">lwir_write_raw</a> (const char *path, const uint8_t *<a class="el" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, size_t <a class="el" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, unsigned width, unsigned height)</td></tr>
+<tr class="memdesc:a2c6bf765928be8870f6a7bde64c16e01"><td class="mdescLeft"> </td><td class="mdescRight">Publish the combined frame verbatim; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>.  <br/></td></tr>
+<tr class="memitem:a54563ac8e467bcea429427aabd7395ad" id="r_a54563ac8e467bcea429427aabd7395ad"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a54563ac8e467bcea429427aabd7395ad">lwir_write_jpeg_rendered</a> (const char *path, const uint8_t *<a class="el" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, size_t <a class="el" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, unsigned width, unsigned height, bool synthetic, const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *<a class="el" href="#a0c30bfa6eec5398eb62f8a5bf21a32f9">evidence</a>, const struct <a class="el" href="structlwir__render__options.html">lwir_render_options</a> *render)</td></tr>
+<tr class="memdesc:a54563ac8e467bcea429427aabd7395ad"><td class="mdescLeft"> </td><td class="mdescRight">Publish a rendered view with provenance; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-var-members"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft anon">struct { </td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a8263d27662ad1b35d8d8f21d0012af5a" id="r_a8263d27662ad1b35d8d8f21d0012af5a"><td class="memItemLeft anon">   struct jpeg_compress_struct   <a class="el" href="#a511b3d6692769215611f120b918a5ae1">encoder</a> </td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a601bde67e02f15925e84fa1cffef0a30" id="r_a601bde67e02f15925e84fa1cffef0a30"><td class="memItemLeft anon">   struct jpeg_error_mgr   <a class="el" href="#aded4335c2df32c709945a69dfe77220d">error</a> </td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:aa3a1499e102708f82fb4959e62d8ead3" id="r_aa3a1499e102708f82fb4959e62d8ead3"><td class="memItemLeft anon">   jmp_buf   <a class="el" href="#acb24f3e1b52f2bd70650a1ffb1aa502d">recovery</a> </td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:ab6b064462d7c195caa804b894c9c7046" id="r_ab6b064462d7c195caa804b894c9c7046"><td class="memItemLeft anon">   uint8_t   <a class="el" href="#a56de4403f4512c206057eb65760605c4">marker</a> [<a class="el" href="lwir__container_8h.html#ae1576fce4a7f247dc2e84c67f2e5a4d7a14b2a2227377087d8e50f25ba1c839be">LWIR_THERMAL_HEADER_BYTES</a>+<a class="el" href="lwir__container_8h.html#ae1576fce4a7f247dc2e84c67f2e5a4d7a91b8c1beaf8cdab8fa24cb2b356766e0">LWIR_THERMAL_CHUNK_CAPACITY</a>] </td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:abaa4de3fa381984ec5025c2e420c9b3a" id="r_abaa4de3fa381984ec5025c2e420c9b3a"><td class="memItemLeft anon">   uint8_t   <a class="el" href="#a78fcdd2741e62c29ec72a8053a5bd79b">row</a> [<a class="el" href="lwir__frame_8h.html#a0b6e411350bc5b9500943d73cefdcb8c">LWIR_MAX_WIDTH</a> *3U] </td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:aa95d706e20a81d2e52999943201c0b4a" id="r_aa95d706e20a81d2e52999943201c0b4a"><td class="memItemLeft anon">   struct <a class="el" href="structexif__document.html">exif_document</a>   <a class="el" href="#a3dd1a064fd19d2f47866f699d7b3ff5d">exif</a> </td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:ac1ea6ee7600b4530b090cb0480101059" id="r_ac1ea6ee7600b4530b090cb0480101059"><td class="memItemLeft anon">   uint8_t   <a class="el" href="#ad2c0bd0be03dbc7819bd9ac5a37c7b5f">exif_payload</a> [<a class="el" href="group__exifite.html#ga775940776e633adca2e41c2ae084cdad">EXIF_MAX_PAYLOAD</a>] </td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:aecf9c3eb7d7971c44697b61beed31552" id="r_aecf9c3eb7d7971c44697b61beed31552"><td class="memItemLeft anon">   char   <a class="el" href="#a0c30bfa6eec5398eb62f8a5bf21a32f9">evidence</a> [8192] </td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a57677e170b4d619e98421dd7a6e56753" id="r_a57677e170b4d619e98421dd7a6e56753"><td class="memItemLeft anonEnd" valign="top">} </td><td class="memItemRight" valign="bottom"><a class="el" href="#a57677e170b4d619e98421dd7a6e56753">jpeg_workspace</a></td></tr>
+<tr class="memdesc:a57677e170b4d619e98421dd7a6e56753"><td class="mdescLeft"> </td><td class="mdescRight">Static encoder state shared by every photo.  <br/></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>LWIR JPEG encoder and durable no-overwrite file publisher. </p>
+<p>Implements <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>. Every photo goes through one static libjpeg workspace so no heap allocation is made per photo by this module (libjpeg still allocates internally). Consequently the encoder is single-threaded and not re-entrant.</p>
+<p>Marker order inside each JPEG, all before the first scanline:</p><ol type="1">
+<li>APP14 "LWIREV02" provenance text (only with evidence).</li>
+<li>APP1 EXIF with the sensor-capture tag (only with evidence, live frames).</li>
+<li>APP15 thermal chunks (combined frames only). libjpeg may emit its own JFIF APP0 before these, so readers must scan markers rather than expect APP1 directly after SOI.</li>
+</ol>
+<p>Codec errors longjmp from <a class="el" href="#acd2b80250a3b6fd31434d1aaec987047" title="libjpeg error_exit replacement: abandon the photo instead of exiting.">jpeg_failure()</a> back to <a class="el" href="#aa3a06c146a24e20fc6689b56ef4632a8" title="Own the serial codec lifecycle and the ordered marker/scanline stages.">encode_jpeg()</a> with errno = EIO. Publication writes a temporary, fsyncs, link()s and fsyncs the directory; see <a class="el" href="#a36587809c46c6ce97570b325ffd54c0b" title="Durably publish a JPEG or raw companion under a new name.">publish()</a>. </p>
+<p class="definition">Definition in file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div><a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="aa3a06c146a24e20fc6689b56ef4632a8" name="aa3a06c146a24e20fc6689b56ef4632a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3a06c146a24e20fc6689b56ef4632a8">◆ </a></span>encode_jpeg()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool encode_jpeg </td>
+<td>(</td>
+<td class="paramtype">FILE *</td> <td class="paramname"><span class="paramname"><em>output</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>frame</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>bytes</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>synthetic</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *</td> <td class="paramname"><span class="paramname"><em>evidence</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__render__options.html">lwir_render_options</a> *</td> <td class="paramname"><span class="paramname"><em>render</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Own the serial codec lifecycle and the ordered marker/scanline stages. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">output</td><td>Caller-owned stream; flush/sync/close remain with the caller. </td></tr>
+<tr><td class="paramname">frame</td><td>Frame already size-checked by <a class="el" href="#ad8dacc01b59598692eba1b8d46380579" title="Validate the frame size for its layout, then encode; see lwir_image.h.">lwir_encode_jpeg()</a>. </td></tr>
+<tr><td class="paramname">bytes</td><td>Exact frame size. </td></tr>
+<tr><td class="paramname">width</td><td>Native width. </td></tr>
+<tr><td class="paramname">height</td><td>Native height. </td></tr>
+<tr><td class="paramname">synthetic</td><td>True for replayed/simulated frames. </td></tr>
+<tr><td class="paramname">evidence</td><td>Optional provenance; required for any display orientation. </td></tr>
+<tr><td class="paramname">render</td><td>Display policy (never NULL here). </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the full JPEG was handed to the stream. On false, errno is EINVAL, ENOTSUP, ENOSPC, EIO, or the renderer's errno; discard the output.</dd></dl>
+<p>Validates the image-only and orientation rules before touching the codec, writes markers, then renders and compresses one row at a time so the only image buffer is the single-row workspace. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00276">276</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="aa08fa1e863dfc28e738bfe91c6b4995c" name="aa08fa1e863dfc28e738bfe91c6b4995c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa08fa1e863dfc28e738bfe91c6b4995c">◆ </a></span>expand_video_component()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint8_t expand_video_component </td>
+<td>(</td>
+<td class="paramtype">uint8_t</td> <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>low</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>span</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Expand one limited-range video component to full range. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">value</td><td>Component sample from the limited-range source. </td></tr>
+<tr><td class="paramname">low</td><td>Lowest legal code (16 for luma). </td></tr>
+<tr><td class="paramname">span</td><td>Legal code span: 219 for luma (16..235), 224 for chroma (16..240). </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Full-range 0..255 component.</dd></dl>
+<p>JPEG/JFIF assumes full-range YCbCr, so passing TDK video through unchanged would look washed out. Out-of-range inputs clamp. Chroma scales symmetrically around the neutral 128 and truncates toward zero; luma rounds. </p><dl class="section note"><dt>Note</dt><dd>The chroma branch is selected by span == 224 and ignores <code class="param">low</code>, implicitly assuming low == 16. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00253">253</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="acd2b80250a3b6fd31434d1aaec987047" name="acd2b80250a3b6fd31434d1aaec987047"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd2b80250a3b6fd31434d1aaec987047">◆ </a></span>jpeg_failure()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void jpeg_failure </td>
+<td>(</td>
+<td class="paramtype">j_common_ptr</td> <td class="paramname"><span class="paramname"><em>encoder</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>libjpeg error_exit replacement: abandon the photo instead of exiting. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">encoder</td><td>Unused; the single static workspace already identifies the photo. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Does not return; jumps to the recovery point armed by the encoder.</dd></dl>
+<p>The default handler calls exit(), which would kill the capture worker. errno is set to EIO before jumping so the caller sees an I/O-class failure regardless of the libjpeg message code. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00086">86</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="ad8dacc01b59598692eba1b8d46380579" name="ad8dacc01b59598692eba1b8d46380579"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8dacc01b59598692eba1b8d46380579">◆ </a></span>lwir_encode_jpeg()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_encode_jpeg </td>
+<td>(</td>
+<td class="paramtype">FILE *</td> <td class="paramname"><span class="paramname"><em>output</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>frame</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>bytes</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>synthetic</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *</td> <td class="paramname"><span class="paramname"><em>evidence</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__render__options.html">lwir_render_options</a> *</td> <td class="paramname"><span class="paramname"><em>render</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Validate the frame size for its layout, then encode; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>. </p>
+<p>Encode into an existing stream without owning its publication policy.</p>
+<p>Image-only frames are half the combined size. Layout values beyond the known enum are rejected rather than guessed. A NULL render becomes the plain sensor view with quality 0, i.e. legacy 100. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00390">390</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="ad2376cb12ecb977a4082972a6708f9c6" name="ad2376cb12ecb977a4082972a6708f9c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2376cb12ecb977a4082972a6708f9c6">◆ </a></span>lwir_jpeg_provider()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">const char * lwir_jpeg_provider </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Report the bundled codec; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>. </p>
+<p>Identify the compiled codec provider for diagnostics and benchmark logs. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00380">380</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="aadb1ed08c8f103fe2d2770ebe7c159aa" name="aadb1ed08c8f103fe2d2770ebe7c159aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadb1ed08c8f103fe2d2770ebe7c159aa">◆ </a></span>lwir_remove_published()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_remove_published </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Remove a file this process published and persist the removal; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>. </p>
+<p>Remove a file previously published by this process and sync its directory. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00488">488</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a3a2b2bb57b3f8e3c2510e79e0f28765a" name="a3a2b2bb57b3f8e3c2510e79e0f28765a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a2b2bb57b3f8e3c2510e79e0f28765a">◆ </a></span>lwir_write_jpeg()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_write_jpeg </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>frame</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>bytes</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>synthetic</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Publish the sensor view without evidence; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>. </p>
+<p>Publish a sensor-view JPEG with exact native thermal markers. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00501">501</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="ab35a5278bb98e080ae8ffad31f1d2e05" name="ab35a5278bb98e080ae8ffad31f1d2e05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab35a5278bb98e080ae8ffad31f1d2e05">◆ </a></span>lwir_write_jpeg_evidence()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_write_jpeg_evidence </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>frame</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>bytes</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>synthetic</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *</td> <td class="paramname"><span class="paramname"><em>evidence</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Publish the sensor view with provenance; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>. </p>
+<p>Publish the sensor view plus borrowed capture provenance. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00508">508</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a54563ac8e467bcea429427aabd7395ad" name="a54563ac8e467bcea429427aabd7395ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54563ac8e467bcea429427aabd7395ad">◆ </a></span>lwir_write_jpeg_rendered()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_write_jpeg_rendered </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>frame</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>bytes</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>synthetic</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *</td> <td class="paramname"><span class="paramname"><em>evidence</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__render__options.html">lwir_render_options</a> *</td> <td class="paramname"><span class="paramname"><em>render</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Publish a rendered view with provenance; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>. </p>
+<p>Publish a rendered view without altering original temperature samples. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00522">522</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a2c6bf765928be8870f6a7bde64c16e01" name="a2c6bf765928be8870f6a7bde64c16e01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c6bf765928be8870f6a7bde64c16e01">◆ </a></span>lwir_write_raw()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool lwir_write_raw </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>frame</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>bytes</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>height</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Publish the combined frame verbatim; see <a class="el" href="lwir__image_8h.html" title="JPEG encoding and durable no-overwrite publication of LWIR frames.">lwir_image.h</a>. </p>
+<p>Publish an exact combined frame with the same no-overwrite contract. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00516">516</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a473d2c49e9ed6e4245bdee204022d894" name="a473d2c49e9ed6e4245bdee204022d894"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a473d2c49e9ed6e4245bdee204022d894">◆ </a></span>open_parent()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int open_parent </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>path</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Open the directory that will contain <code class="param">path</code>, for fsync after linking. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">path</td><td>Destination path; a name without '/' resolves to ".", "/name" to "/". </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Read-only directory descriptor (close-on-exec), or -1 with errno set; ENAMETOOLONG when the directory part exceeds PATH_MAX.</dd></dl>
+<p>Copies the directory part with a bounded loop instead of memcpy. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00367">367</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a36587809c46c6ce97570b325ffd54c0b" name="a36587809c46c6ce97570b325ffd54c0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36587809c46c6ce97570b325ffd54c0b">◆ </a></span>publish()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool publish </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>frame</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>bytes</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>synthetic</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>raw</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *</td> <td class="paramname"><span class="paramname"><em>evidence</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__render__options.html">lwir_render_options</a> *</td> <td class="paramname"><span class="paramname"><em>render</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Durably publish a JPEG or raw companion under a new name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">path</td><td>Final destination; must not exist. </td></tr>
+<tr><td class="paramname">frame</td><td>Frame to encode or copy. </td></tr>
+<tr><td class="paramname">bytes</td><td>Exact frame size (half size for image-only JPEG output). </td></tr>
+<tr><td class="paramname">width</td><td>Native width. </td></tr>
+<tr><td class="paramname">height</td><td>Native height. </td></tr>
+<tr><td class="paramname">synthetic</td><td>True for replayed/simulated frames (JPEG only). </td></tr>
+<tr><td class="paramname">raw</td><td>True writes <code class="param">frame</code> verbatim instead of encoding a JPEG. </td></tr>
+<tr><td class="paramname">evidence</td><td>Optional provenance (JPEG only). </td></tr>
+<tr><td class="paramname">render</td><td>Optional display policy (JPEG only). </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the file is complete, named and the directory synced. On false, errno holds the first failure (later cleanup does not overwrite it) and <code class="param">path</code> does not exist: a name this call already linked is removed again.</dd></dl>
+<p>Sequence: mkstemp "PATH.part.XXXXXX" -&gt; write -&gt; fflush + fsync -&gt; link() to <code class="param">path</code> -&gt; fsync directory -&gt; unlink temporary -&gt; fsync directory. link() fails with EEXIST instead of replacing an existing file (unlike rename()), so publication is atomic and never overwrites. The temporary is removed on every path. Because link() refuses existing names, a name removed on rollback is always one this call created, never someone else's file. </p><dl class="section note"><dt>Note</dt><dd>mkstemp creates the file owner-only (0600); the linked name keeps that mode. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00422">422</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a9f1c1cc0ba13c19c5aa984fc1aa09d08" name="a9f1c1cc0ba13c19c5aa984fc1aa09d08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f1c1cc0ba13c19c5aa984fc1aa09d08">◆ </a></span>write_provenance_markers()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int write_provenance_markers </td>
+<td>(</td>
+<td class="paramtype">j_compress_ptr</td> <td class="paramname"><span class="paramname"><em>encoder</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>display_width</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>display_height</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>synthetic</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__evidence.html">lwir_evidence</a> *</td> <td class="paramname"><span class="paramname"><em>evidence</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__render__options.html">lwir_render_options</a> *</td> <td class="paramname"><span class="paramname"><em>render</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structlwir__render__range.html">lwir_render_range</a> *</td> <td class="paramname"><span class="paramname"><em>range</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Write application provenance without taking ownership of the encoder. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">encoder</td><td>Started compressor; markers must precede the first scanline. </td></tr>
+<tr><td class="paramname">width</td><td>Native frame width. </td></tr>
+<tr><td class="paramname">height</td><td>Native frame height. </td></tr>
+<tr><td class="paramname">display_width</td><td>Encoded width after orientation. </td></tr>
+<tr><td class="paramname">display_height</td><td>Encoded height after orientation. </td></tr>
+<tr><td class="paramname">synthetic</td><td>True for replayed/simulated frames. </td></tr>
+<tr><td class="paramname">evidence</td><td>Optional provenance; NULL writes no APP14 or EXIF at all. </td></tr>
+<tr><td class="paramname">render</td><td>Resolved display policy (never NULL here). </td></tr>
+<tr><td class="paramname">range</td><td>Window and clipping counts from <a class="el" href="lwir__render_8c.html#a4d972d29fa360674e263e0a76c405e28" title="Validate a render request and resolve its display window and counts.">lwir_render_prepare()</a>. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero on success, otherwise the errno value the encoder owner must publish: ENOSPC when the text exceeds the fixed evidence buffer, EINVAL when the sensor-capture record cannot be encoded or serialized.</dd></dl>
+<p>Teardown stays with the owner so marker failures retain cleanup/error ordering. Builds the APP14 text in several bounded snprintf steps; each step checks truncation so a partial key=value record is never emitted. </p><dl class="section warning"><dt>Warning</dt><dd>jpeg_write_marker() can still longjmp on codec failure; that unwinds straight to <a class="el" href="#aa3a06c146a24e20fc6689b56ef4632a8" title="Own the serial codec lifecycle and the ordered marker/scanline stages.">encode_jpeg()</a> and bypasses this function's return value. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00112">112</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a2aa0ddbd3c3e89837c72e3fd9cab3a8a" name="a2aa0ddbd3c3e89837c72e3fd9cab3a8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2aa0ddbd3c3e89837c72e3fd9cab3a8a">◆ </a></span>write_thermal_markers()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void write_thermal_markers </td>
+<td>(</td>
+<td class="paramtype">j_compress_ptr</td> <td class="paramname"><span class="paramname"><em>encoder</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const uint8_t *</td> <td class="paramname"><span class="paramname"><em>frame</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>height</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>synthetic</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Preserve exact native temperatures independently of display rendering. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">encoder</td><td>Started compressor; called before the first scanline. </td></tr>
+<tr><td class="paramname">frame</td><td>Combined frame; the temperature plane starts after the YUYV plane. </td></tr>
+<tr><td class="paramname">width</td><td>Native width. </td></tr>
+<tr><td class="paramname">height</td><td>Native height. </td></tr>
+<tr><td class="paramname">synthetic</td><td>Selects the LWIRSIM1 instead of the LWIRRAW1 signature.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Splits the width*height*2-byte plane into APP15 chunks of at most LWIR_THERMAL_CHUNK_CAPACITY bytes, each with the full header. Offsets are relative to the plane start and strictly sequential, which the reader enforces. Bytes are copied verbatim, so JPEG quality never touches them. Codec failures longjmp to <a class="el" href="#aa3a06c146a24e20fc6689b56ef4632a8" title="Own the serial codec lifecycle and the ordered marker/scanline stages.">encode_jpeg()</a>. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00220">220</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a72a9de3ad5303b9fcc04a7cf25dbe401" name="a72a9de3ad5303b9fcc04a7cf25dbe401"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72a9de3ad5303b9fcc04a7cf25dbe401">◆ </a></span>write_u32()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void write_u32 </td>
+<td>(</td>
+<td class="paramtype">uint8_t *</td> <td class="paramname"><span class="paramname"><em>destination</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>value</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Store <code class="param">value</code> as four little-endian bytes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">destination</td><td>At least four writable bytes. </td></tr>
+<tr><td class="paramname">value</td><td>Value to encode.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Explicit byte order keeps the APP15 header independent of host endianness. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00074">74</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="doc-var-members" name="doc-var-members"></a><h2 class="groupheader" id="header-doc-var-members">Variable Documentation</h2>
+<a id="a511b3d6692769215611f120b918a5ae1" name="a511b3d6692769215611f120b918a5ae1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a511b3d6692769215611f120b918a5ae1">◆ </a></span>encoder</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">struct jpeg_compress_struct encoder</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>libjpeg compressor, zeroed and recreated per photo. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00059">59</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="aded4335c2df32c709945a69dfe77220d" name="aded4335c2df32c709945a69dfe77220d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aded4335c2df32c709945a69dfe77220d">◆ </a></span>error</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">struct jpeg_error_mgr error</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Standard error manager with error_exit redirected to <a class="el" href="#acd2b80250a3b6fd31434d1aaec987047" title="libjpeg error_exit replacement: abandon the photo instead of exiting.">jpeg_failure()</a>. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00060">60</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a0c30bfa6eec5398eb62f8a5bf21a32f9" name="a0c30bfa6eec5398eb62f8a5bf21a32f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c30bfa6eec5398eb62f8a5bf21a32f9">◆ </a></span>evidence</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">char evidence[8192]</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>APP14 text; well below the 65533-byte APPn limit, so one marker suffices. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00066">66</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a3dd1a064fd19d2f47866f699d7b3ff5d" name="a3dd1a064fd19d2f47866f699d7b3ff5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3dd1a064fd19d2f47866f699d7b3ff5d">◆ </a></span>exif</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">struct <a class="el" href="structexif__document.html">exif_document</a> exif</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>EXIF builder for the sensor-capture tag. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00064">64</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="ad2c0bd0be03dbc7819bd9ac5a37c7b5f" name="ad2c0bd0be03dbc7819bd9ac5a37c7b5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2c0bd0be03dbc7819bd9ac5a37c7b5f">◆ </a></span>exif_payload</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">uint8_t exif_payload[<a class="el" href="group__exifite.html#ga775940776e633adca2e41c2ae084cdad">EXIF_MAX_PAYLOAD</a>]</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Serialized EXIF APP1 payload. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00065">65</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a57677e170b4d619e98421dd7a6e56753" name="a57677e170b4d619e98421dd7a6e56753"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57677e170b4d619e98421dd7a6e56753">◆ </a></span>[struct]</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">struct  { ... }  jpeg_workspace</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Static encoder state shared by every photo. </p>
+<p>Static storage avoids per-photo heap use and keeps worst-case memory fixed. Shared state is why the encoder is not re-entrant. </p>
+</div>
+</div>
+<a id="a56de4403f4512c206057eb65760605c4" name="a56de4403f4512c206057eb65760605c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56de4403f4512c206057eb65760605c4">◆ </a></span>marker</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">uint8_t marker[<a class="el" href="lwir__container_8h.html#ae1576fce4a7f247dc2e84c67f2e5a4d7a14b2a2227377087d8e50f25ba1c839be">LWIR_THERMAL_HEADER_BYTES</a>+<a class="el" href="lwir__container_8h.html#ae1576fce4a7f247dc2e84c67f2e5a4d7a91b8c1beaf8cdab8fa24cb2b356766e0">LWIR_THERMAL_CHUNK_CAPACITY</a>]</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>One APP15 chunk being assembled. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00062">62</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="acb24f3e1b52f2bd70650a1ffb1aa502d" name="acb24f3e1b52f2bd70650a1ffb1aa502d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb24f3e1b52f2bd70650a1ffb1aa502d">◆ </a></span>recovery</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">jmp_buf recovery</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Target of <a class="el" href="#acd2b80250a3b6fd31434d1aaec987047" title="libjpeg error_exit replacement: abandon the photo instead of exiting.">jpeg_failure()</a>; armed in <a class="el" href="#aa3a06c146a24e20fc6689b56ef4632a8" title="Own the serial codec lifecycle and the ordered marker/scanline stages.">encode_jpeg()</a>. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00061">61</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+<a id="a78fcdd2741e62c29ec72a8053a5bd79b" name="a78fcdd2741e62c29ec72a8053a5bd79b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78fcdd2741e62c29ec72a8053a5bd79b">◆ </a></span>row</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">uint8_t row[<a class="el" href="lwir__frame_8h.html#a0b6e411350bc5b9500943d73cefdcb8c">LWIR_MAX_WIDTH</a> *3U]</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>One interleaved YCbCr display row; the renderer is given its capacity. </p>
+<p class="definition">Definition at line <a class="el" href="lwir__image_8c_source.html#l00063">63</a> of file <a class="el" href="lwir__image_8c_source.html">lwir_image.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

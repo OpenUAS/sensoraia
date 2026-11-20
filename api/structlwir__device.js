@@ -1,0 +1,25 @@
+var structlwir__device =
+[
+    [ "cancelled", "structlwir__device.html#a70dc4dadab79a73967b5f17321bb6b86", null ],
+    [ "layout", "structlwir__device.html#a6d6007662c65f6009fe39d2a062c9120", null ],
+    [ "serial", "structlwir__device.html#a1b3cd0fd80eab5f7b04984805a40f09d", null ],
+    [ "video_buffers", "structlwir__device.html#a8550a52b6b6c0f11ba8e34f001074377", null ],
+    [ "video_bytes", "structlwir__device.html#aa5bd65a40e9f63c559ca18a533fc60be", null ],
+    [ "video_count", "structlwir__device.html#a8b16fec4c85bd278c10c122997a1f40b", null ],
+    [ "video_failed", "structlwir__device.html#a99fb23b049edfdc292820d4ec48cb2b0", null ],
+    [ "video_fd", "structlwir__device.html#a7c84c2a2f808d7f738d0dea19d790ed2", null ],
+    [ "video_good_arrival_us", "structlwir__device.html#a526356a9e4c0103c02059dfa0e67b7a9", null ],
+    [ "video_good_frames", "structlwir__device.html#aabf56de226c5300a77a3934f2e7c52d3", null ],
+    [ "video_have_sequence", "structlwir__device.html#a54b61ca8de8f5ca0e21c10b2f13489c1", null ],
+    [ "video_height", "structlwir__device.html#a6553069202752fe64ae7c1bb034133c6", null ],
+    [ "video_last_sequence", "structlwir__device.html#a4ab30a48f6ab46354e4feadb27828f36", null ],
+    [ "video_open", "structlwir__device.html#addc72fdfcf850ee918e11d8a561656cc", null ],
+    [ "video_power_key", "structlwir__device.html#af5fcd4dd2bff3200a6eb8465d7968468", null ],
+    [ "video_power_port", "structlwir__device.html#a378291b69dc5d78e48c2a8d4dbb3225b", null ],
+    [ "video_power_ready", "structlwir__device.html#ad671010e94bb796ea6a918bb9104930d", null ],
+    [ "video_sequence", "structlwir__device.html#ad6c47397270f41f709cf8fc5637af8e5", null ],
+    [ "video_streaming", "structlwir__device.html#ab2c7bc4e3271a0adab6a5e6287707128", null ],
+    [ "video_usb_address", "structlwir__device.html#aeb219ac2ba35b1022a994aea61317960", null ],
+    [ "video_usb_bus", "structlwir__device.html#a7e07734640a6306f3a800d5d0d41c720", null ],
+    [ "video_width", "structlwir__device.html#a19faa1a79a226a8445924f80aa58a049", null ]
+];

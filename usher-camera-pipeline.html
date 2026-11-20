@@ -1,0 +1,4023 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'">
+<meta name="referrer" content="no-referrer">
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Camera, thermal and acoustic sensing with the USHER service on MORA.">
+      
+      
+      
+      
+        <link rel="prev" href="setup-os-rpi-zero-2w.html">
+      
+      
+        <link rel="next" href="raspberry-pi-ai-camera.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/material/brand-mark.png">
+<title>Capture & Results - Sensoraia</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="assets/material/sensoraia.css">
+    
+      <link rel="stylesheet" href="assets/material/terminal.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#capture-with-usher" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Sensoraia" class="md-header__button md-logo" aria-label="Sensoraia" data-md-component="logo">
+      <img class="ou-brand__logo" src="assets/source/docs/images/sensoraia-logo-on-dark.png" alt="Sensoraia" width="400" height="264">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Sensoraia
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Capture & Results
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="index.html" class="md-tabs__link">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="getting-started.html" class="md-tabs__link">
+          
+  
+  
+  Get Going
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="raspberry-pi-ai-camera.html" class="md-tabs__link">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="autopilot-integration.html" class="md-tabs__link">
+          
+  
+  
+  Simulation & Mapping
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="camera-control.html" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="api/index.html" class="md-tabs__link">
+          
+  
+  
+  API
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Sensoraia" class="md-nav__button md-logo" aria-label="Sensoraia" data-md-component="logo">
+      <img class="ou-brand__logo" src="assets/source/docs/images/sensoraia-logo-on-dark.png" alt="Sensoraia" width="400" height="264">
+    </a>
+    Sensoraia
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting-started.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install & Get Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="setup-os-rpi-zero-2w.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capture & Results
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="usher-camera-pipeline.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capture & Results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#compute-board-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compute-Board Baseline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose-a-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choose A Camera
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-and-deploying-usher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building And Deploying USHER
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-here-local-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start Here: Local Simulation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-to-mora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy To MORA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-sudo-requires-your-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Sudo Requires Your Password
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-here-physical-desk-test-with-mora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start Here: Physical Desk Test With MORA
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-your-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find Your Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#position-and-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Position And Timing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Position And Timing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hotspot-gps-coordinates-and-center-temperatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hotspot GPS Coordinates And Center Temperatures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lwir-integration-and-effective-lag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LWIR Integration And Effective Lag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spottercam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spottercam
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#earcam-acoustic-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EARcam Acoustic Backend
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-something-stops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tailor-or-add-a-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tailor Or Add A Module
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="raspberry-pi-ai-camera.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lwircam.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lwir-calibration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="spottercam.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="earcam-loudest-spot-explained.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chemical-vapors-and-emissions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vapors & Emissions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="loom-cam.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simulation & Mapping
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation & Mapping
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autopilot-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="desk-test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mimic.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="camera-lens.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pangea.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diplacam.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="camera-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="camera-speedtest.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exif.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Image Metadata & Timing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="onnxruntime.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/topics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/pages.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/files.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/annotated.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/classes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/hierarchy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/inherits.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/functions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/functions_func.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/functions_vars.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/functions_type.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/functions_enum.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/functions_rela.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/globals.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/globals_func.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/globals_vars.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/globals_type.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/globals_enum.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/globals_eval.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/globals_defs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/namespaces.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/namespacemembers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/namespacemembers_func.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/namespacemembers_vars.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/namespacemembers_type.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/namespacemembers_enum.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/todo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/pages.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/files.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/annotated.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/classes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/hierarchy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/functions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/functions_func.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/functions_vars.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/functions_type.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/globals.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/globals_func.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/globals_vars.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/globals_defs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/namespaces.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/namespacemembers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/namespacemembers_func.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/namespacemembers_vars.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/namespacemembers_type.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/namespacemembers_enum.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/diplacam/todo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/files.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/annotated.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/classes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/functions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/functions_vars.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/globals.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/globals_func.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/globals_vars.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/globals_enum.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/globals_eval.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chdkbridge/api/html/globals_defs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#compute-board-baseline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compute-Board Baseline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose-a-camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choose A Camera
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-and-deploying-usher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building And Deploying USHER
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-here-local-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start Here: Local Simulation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-to-mora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deploy To MORA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-sudo-requires-your-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Sudo Requires Your Password
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-here-physical-desk-test-with-mora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start Here: Physical Desk Test With MORA
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-your-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find Your Results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#position-and-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Position And Timing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Position And Timing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hotspot-gps-coordinates-and-center-temperatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hotspot GPS Coordinates And Center Temperatures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lwir-integration-and-effective-lag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LWIR Integration And Effective Lag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spottercam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spottercam
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#earcam-acoustic-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EARcam Acoustic Backend
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-something-stops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tailor-or-add-a-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tailor Or Add A Module
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+<div class="ou-page-kicker">
+	<span class="ou-kicker-copy">SENSORAIA <span>/</span> DOCUMENTATION</span>
+</div>
+
+                  
+
+
+
+<h1 id="capture-with-usher">Capture With USHER<a class="headerlink" href="#capture-with-usher" title="Permanent link">&para;</a></h1>
+<p>USHER connects an aircraft's capture requests to the selected sensors on
+MORA. It saves the observation, keeps the available flight information with
+it, and reports the outcome. You can try the same flow on a Linux PC before
+connecting hardware.</p>
+<p><a href="getting-started.html">Install and get started</a> | <a href="glossary.html">Glossary</a> |
+<a href="assets/source/examples/paparazzi/README.md.txt">Simulated flights</a></p>
+<p><img alt="A camera photograph beside the request, capture, metadata and analysis stages." src="assets/source/docs/images/capture-evidence-illustration.png" /></p>
+<h2 id="compute-board-baseline"><span aria-hidden="true" class="ou-section-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"></path></svg></span>Compute-Board Baseline<a class="headerlink" href="#compute-board-baseline" title="Permanent link">&para;</a></h2>
+<p>MORA is the onboard-computer role, not a Raspberry Pi model. Sensoraia starts
+from the Raspberry Pi Zero 2 W as a deliberately constrained 512 MB ARM64
+reference. The current ready-made cross-build and deployment workflow targets
+64-bit Raspberry Pi OS Trixie and Cortex-A53. A different compute board can
+host Sensoraia when its OS/ABI, drivers, peripherals and resource budget are
+compatible; it may need a board-specific build profile, package and service
+configuration. The Pi baseline is not proof that every module fits or runs
+unchanged on every board.</p>
+<h2 id="choose-a-camera"><span aria-hidden="true" class="ou-section-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M20 4h-3.17L15 2H9L7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m0 14H4V6h4.05l1.83-2h4.24l1.83 2H20zM12 7a5 5 0 0 0-5 5 5 5 0 0 0 5 5 5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"></path></svg></span>Choose A Camera<a class="headerlink" href="#choose-a-camera" title="Permanent link">&para;</a></h2>
+<p>You never need to edit systemd unit templates by hand to switch sensors. Pick
+your camera in whichever way matches how you are running Sensoraia:</p>
+<ol>
+<li><strong>For MORA deployment &amp; local standalone runs:</strong> Set <code>CAMERA = &lt;name&gt;</code> in
+   <code>camera.conf</code> at the repository root, <strong>or</strong> pass <code>CAMERA=&lt;name&gt;</code> on the
+   command line (<code>make mora-deploy CAMERA=lwircam</code>, or
+   <code>bash examples/paparazzi/run_local_demo.sh --camera lwircam</code>).</li>
+<li><strong>For Paparazzi Center simulation:</strong> Select the matching aircraft and
+   session in the GUI after running <code>./kickstart.sh</code>.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><code>CAMERA</code> value</th>
+<th>USHER CLI Flag</th>
+<th>Paparazzi Center Aircraft &amp; Session</th>
+<th>Use It For</th>
+<th>Start Here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spottercam</code> <em>(default)</em></td>
+<td><code>--spottercam</code></td>
+<td><code>Easystar_3_SPOTTERCAM</code> / <strong>Sensoraia Spottercam NPS</strong></td>
+<td>Visible IMX500 photos + vehicle detection (<code>T1..T5</code>)</td>
+<td><a href="spottercam.html">Spottercam</a></td>
+</tr>
+<tr>
+<td><code>aicam</code></td>
+<td><code>--aicam --native-photo</code> <em>(or <code>--aicam</code>)</em></td>
+<td><code>Easystar_3_AICAM</code> / <strong>Sensoraia AIcam NPS</strong></td>
+<td>Plain Raspberry Pi AI Camera photographs</td>
+<td><a href="raspberry-pi-ai-camera.html">AI Camera</a></td>
+</tr>
+<tr>
+<td><code>lwircam</code></td>
+<td><code>--lwircam</code></td>
+<td><code>Easystar_3_LWIRCAM</code> / <strong>Sensoraia LWIRcam NPS</strong></td>
+<td>Tiny1-C / TDK USB thermal capture</td>
+<td><a href="lwircam.html">LWIRcam</a></td>
+</tr>
+<tr>
+<td><code>chdk</code></td>
+<td><code>--chdk</code></td>
+<td><code>Easystar_3_CHDKCAM</code> / <strong>Sensoraia CHDKcam NPS</strong></td>
+<td>Canon compact camera running CHDK over USB PTP</td>
+<td><a href="chdkbridge.html">CHDKbridge</a></td>
+</tr>
+<tr>
+<td><code>earcam</code></td>
+<td><code>--earcam</code></td>
+<td><code>Easystar_3_EARCAM</code> / <strong>Sensoraia EARcam NPS</strong></td>
+<td>Microphone observations and acoustic search</td>
+<td><a href="earcam-loudest-spot-explained.html">EARcam</a></td>
+</tr>
+<tr>
+<td><code>loomcam</code></td>
+<td><code>--loomcam</code></td>
+<td><code>Easystar_3_LOOMCAM</code> / <strong>Sensoraia LOOMcam NPS</strong></td>
+<td>Experimental visual-return observations</td>
+<td><a href="loom-cam.html">LOOMcam</a></td>
+</tr>
+<tr>
+<td><code>diplacam</code></td>
+<td><code>--diplacam-config FILE</code></td>
+<td><code>Bebop_DIPLACAM</code> / <strong>Sensoraia Diplacam NPS</strong></td>
+<td>Experimental 8-waypoint rotorcraft planner</td>
+<td><a href="diplacam.html">Diplacam</a></td>
+</tr>
+</tbody>
+</table>
+<p>AIcam, Spottercam and LOOMcam are alternative owners of the same physical
+IMX500 camera; do not start them together. A USB microphone and a supported
+thermal camera are separate devices, but their combined resource use still
+needs checking on MORA. <code>MORA_PROFILE=lwircam</code> and <code>MORA_PROFILE=diplacam</code>
+remain available when you want a smaller single-sensor MORA package instead of
+the full-suite package. Selecting a backend does not install board OS camera
+packages or physical calibration files.</p>
+<h2 id="building-and-deploying-usher"><span aria-hidden="true" class="ou-section-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m22.61 19-9.08-9.09c.93-2.34.47-5.1-1.44-7C9.79.61 6.21.4 3.66 2.26L7.5 6.11 6.08 7.5 2.25 3.69C.39 6.23.6 9.82 2.9 12.11c1.86 1.86 4.57 2.35 6.89 1.48l9.11 9.11c.39.39 1.02.39 1.41 0l2.3-2.3c.39-.4.39-1.01 0-1.4m-3 1.59-9.46-9.46c-.61.45-1.29.72-2 .82-1.36.2-2.79-.21-3.83-1.25C3.37 9.76 2.93 8.5 3 7.26l3.09 3.09 4.24-4.24L7.24 3c1.26-.05 2.49.39 3.44 1.33a4.47 4.47 0 0 1 1.24 3.96 4.35 4.35 0 0 1-.88 1.96l9.46 9.45z"></path></svg></span>Building And Deploying USHER<a class="headerlink" href="#building-and-deploying-usher" title="Permanent link">&para;</a></h2>
+<p>Follow <a href="getting-started.html#build-on-your-pc">Build on your PC</a> for local binaries and
+<a href="getting-started.html#deploy-to-mora">Deploy to MORA</a> for cross-building, packaging and
+activation. The root <code>make help</code> lists the supported commands.</p>
+<p>After installing the PC prerequisites, <code>make all</code> prepares its missing SDKs
+and source dependencies, builds every PC and ARM64 application, and checks
+the complete executable list. The same command works after <code>make clean</code>;
+no private camera-library checkout or manual SDK recovery is required.</p>
+<p>Building and packaging do not contact MORA. Activation is a separate step
+that restarts USHER. Keep model/settings changes with the release you deploy.</p>
+<h2 id="start-here-local-simulation"><span aria-hidden="true" class="ou-section-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m22.61 19-9.08-9.09c.93-2.34.47-5.1-1.44-7C9.79.61 6.21.4 3.66 2.26L7.5 6.11 6.08 7.5 2.25 3.69C.39 6.23.6 9.82 2.9 12.11c1.86 1.86 4.57 2.35 6.89 1.48l9.11 9.11c.39.39 1.02.39 1.41 0l2.3-2.3c.39-.4.39-1.01 0-1.4m-3 1.59-9.46-9.46c-.61.45-1.29.72-2 .82-1.36.2-2.79-.21-3.83-1.25C3.37 9.76 2.93 8.5 3 7.26l3.09 3.09 4.24-4.24L7.24 3c1.26-.05 2.49.39 3.44 1.33a4.47 4.47 0 0 1 1.24 3.96 4.35 4.35 0 0 1-.88 1.96l9.46 9.45z"></path></svg></span>Start Here: Local Simulation<a class="headerlink" href="#start-here-local-simulation" title="Permanent link">&para;</a></h2>
+<p>For a full simulated flight, use the
+<a href="assets/source/examples/paparazzi/README.md.txt">Paparazzi demo walkthrough</a>. Its Center
+sessions start the sensor companion, simulator and ground tools together.
+Do not start another USHER beside a session that already owns it.</p>
+<p>For a terminal-only camera peer, use:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>bash<span class="w"> </span>examples/paparazzi/run_local_demo.sh
+</code></pre></div>
+<p>This starts local mock capture, not a complete flight. Leave the terminal
+open while your simulated aircraft connects. Stop it with Ctrl+C afterwards.
+<a href="mimic.html">MIMIC</a> supplies views of cached terrain when you want changing
+camera imagery instead of a fixed test picture.</p>
+<h2 id="deploy-to-mora"><span aria-hidden="true" class="ou-section-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m22.61 19-9.08-9.09c.93-2.34.47-5.1-1.44-7C9.79.61 6.21.4 3.66 2.26L7.5 6.11 6.08 7.5 2.25 3.69C.39 6.23.6 9.82 2.9 12.11c1.86 1.86 4.57 2.35 6.89 1.48l9.11 9.11c.39.39 1.02.39 1.41 0l2.3-2.3c.39-.4.39-1.01 0-1.4m-3 1.59-9.46-9.46c-.61.45-1.29.72-2 .82-1.36.2-2.79-.21-3.83-1.25C3.37 9.76 2.93 8.5 3 7.26l3.09 3.09 4.24-4.24L7.24 3c1.26-.05 2.49.39 3.44 1.33a4.47 4.47 0 0 1 1.24 3.96 4.35 4.35 0 0 1-.88 1.96l9.46 9.45z"></path></svg></span>Deploy To MORA<a class="headerlink" href="#deploy-to-mora" title="Permanent link">&para;</a></h2>
+<p>Complete the <a href="getting-started.html#deploy-to-mora">installation and activation steps</a>,
+then check the selected sensors on the bench. A running service means the
+program started; it does not establish that a camera is focused, a microphone
+gain is suitable or a geographic estimate is accurate.</p>
+<h3 id="when-sudo-requires-your-password">When Sudo Requires Your Password<a class="headerlink" href="#when-sudo-requires-your-password" title="Permanent link">&para;</a></h3>
+<p>For completely hands-free <code>make mora-deploy</code> runs with zero password prompts,
+you can configure passwordless <code>sudo</code> on MORA or create <code>/home/air/pass.txt</code>
+(<code>chmod 600 /home/air/pass.txt</code>, replacing <code>replacewithyourpass</code> with your MORA
+<code>sudo</code> password) as shown in the
+<a href="desk-test.html#optional-full-hands-free-automation-with-homeairpasstxt">desk-test automation guide</a>.</p>
+<p>If you prefer interactive <code>sudo</code> and upload succeeded before activation reported
+that <code>sudo</code> needs a password, connect with <code>ssh air@theatre.local</code>. In that same
+MORA terminal, substitute the exact staging path printed by your upload:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">stage</span><span class="o">=</span>/home/air/sensoraia/.deploy.XXXXXXXX
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">[[</span><span class="w"> </span>-s<span class="w"> </span><span class="s2">"</span><span class="nv">$stage</span><span class="s2">/deploy_mora_remote.sh"</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>-v<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">   </span>bash<span class="w"> </span><span class="s2">"</span><span class="nv">$stage</span><span class="s2">/deploy_mora_remote.sh"</span><span class="w"> </span>/home/air/sensoraia<span class="w"> </span><span class="s2">"</span><span class="nv">$stage</span><span class="s2">"</span>
+</code></pre></div>
+<p>Use your installation directory/account. <code>sudo -v</code> authenticates subsequent
+privileged operations in this terminal; another SSH session may not share
+it. This resumes the uploaded release's normal activation path, so no new
+build/upload is needed merely to enter a password.</p>
+<p>If activation fails, inspect the reported error and service journal before
+trying again. Keep the previous release and the deployment's backup until
+you have confirmed the new one works.</p>
+<h2 id="start-here-physical-desk-test-with-mora"><span aria-hidden="true" class="ou-section-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m22.61 19-9.08-9.09c.93-2.34.47-5.1-1.44-7C9.79.61 6.21.4 3.66 2.26L7.5 6.11 6.08 7.5 2.25 3.69C.39 6.23.6 9.82 2.9 12.11c1.86 1.86 4.57 2.35 6.89 1.48l9.11 9.11c.39.39 1.02.39 1.41 0l2.3-2.3c.39-.4.39-1.01 0-1.4m-3 1.59-9.46-9.46c-.61.45-1.29.72-2 .82-1.36.2-2.79-.21-3.83-1.25C3.37 9.76 2.93 8.5 3 7.26l3.09 3.09 4.24-4.24L7.24 3c1.26-.05 2.49.39 3.44 1.33a4.47 4.47 0 0 1 1.24 3.96 4.35 4.35 0 0 1-.88 1.96l9.46 9.45z"></path></svg></span>Start Here: Physical Desk Test With MORA<a class="headerlink" href="#start-here-physical-desk-test-with-mora" title="Permanent link">&para;</a></h2>
+<p>For a laptop running NPS connected by FTDI, use the
+<a href="desk-test.html">illustrated desk-test guide</a>. It explains the cable's 5 V
+power output, crossed 3.3 V UART, Center session and mock-to-real sequence.</p>
+<p>Connect the FC-to-MORA UART with the documented voltage levels and a common
+ground. Camera and microphone connections go to MORA, not to that UART.</p>
+<ol>
+<li>Check the selected sensor by following its standalone capture/listening
+   guide. Stop any existing owner before opening the same device separately.</li>
+<li>Restore or start the reviewed USHER service configuration.</li>
+<li>Send one capture request through the connected flight controller.</li>
+<li>Check the saved file and the completion result, not just a GCS photo dot.</li>
+<li>Inspect focus, expected image dimensions and the available flight metadata.</li>
+</ol>
+<p>For service status and recent diagnostics:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>systemctl<span class="w"> </span>--no-pager<span class="w"> </span>--full<span class="w"> </span>status<span class="w"> </span>usher.service
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>journalctl<span class="w"> </span>-u<span class="w"> </span>usher.service<span class="w"> </span>-n<span class="w"> </span><span class="m">50</span><span class="w"> </span>--no-pager
+</code></pre></div>
+<p>Run these on MORA, either in an SSH session or a local terminal. Take one
+sensor at a time through this check before combining workloads.</p>
+<h2 id="find-your-results"><span aria-hidden="true" class="ou-section-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"></path></svg></span>Find Your Results<a class="headerlink" href="#find-your-results" title="Permanent link">&para;</a></h2>
+<p>USHER's usual photo directory is <code>~/Pictures/sensoraia/</code> for the account
+running it. The service account and any explicit output settings determine
+the actual location. A simulation companion prints its own session directory.</p>
+<p>Keep original JPEGs. SODA can make separate annotated/cropped review images;
+PANGEA can make maps from accepted originals. Neither is a reason to replace
+the original capture with an edited copy.</p>
+<table>
+<thead>
+<tr>
+<th>What You See</th>
+<th>What It Means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A GCS shot marker</td>
+<td>A trigger was admitted; inspect completion to confirm a saved image</td>
+</tr>
+<tr>
+<td>A saved, readable JPEG</td>
+<td>Image capture completed; optional analysis may still fail</td>
+</tr>
+<tr>
+<td>Zero accepted detections</td>
+<td>A successful model run may have found no accepted objects</td>
+</tr>
+<tr>
+<td>An invalid or missing point</td>
+<td>Do not treat it as a new geographic target</td>
+</tr>
+<tr>
+<td>A map or sound picture</td>
+<td>A derived result; retain its source observations too</td>
+</tr>
+</tbody>
+</table>
+<h2 id="position-and-timing"><span aria-hidden="true" class="ou-section-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"></path></svg></span>Position And Timing<a class="headerlink" href="#position-and-timing" title="Permanent link">&para;</a></h2>
+<p>For measured still-image throughput on MORA or a PC, follow the
+<a href="camera-speedtest.html">Camera Speed Test</a>. Sensor frame rate and saved-image
+throughput are different measurements.</p>
+<p>The aircraft keeps moving between a request and the actual measurement.
+Sensoraia records available pose and timing evidence, but not every camera
+provides the same exposure information. A request-time geotag must not be
+mistaken for a demonstrated exposure-time position.</p>
+<p>See <a href="exif.html">image metadata</a> for what to inspect and the
+<a href="glossary.html#images-and-timing">glossary</a> for pose, latency and uncertainty.
+Use measured camera geometry and mounting when turning image positions into
+ground locations.</p>
+<h3 id="hotspot-gps-coordinates-and-center-temperatures">Hotspot GPS Coordinates And Center Temperatures<a class="headerlink" href="#hotspot-gps-coordinates-and-center-temperatures" title="Permanent link">&para;</a></h3>
+<p>Thermal geolocation needs a supported temperature plane, enabled analysis,
+camera calibration, mounting information and a suitable observation pose.
+Follow the <a href="lwir-calibration.html">thermal calibration guide</a>
+before relying on projected locations. Image-only thermal capture cannot
+supply missing temperature measurements.</p>
+<h3 id="lwir-integration-and-effective-lag">LWIR Integration And Effective Lag<a class="headerlink" href="#lwir-integration-and-effective-lag" title="Permanent link">&para;</a></h3>
+<p>Capture delay, pose timing and camera mounting are separate sources of
+error. A sharper display or a timing label alone does not validate them.
+Use the thermal guide's independent target checks, and inspect the recorded
+timing information rather than assuming the request and exposure coincide.</p>
+<h3 id="spottercam">Spottercam<a class="headerlink" href="#spottercam" title="Permanent link">&para;</a></h3>
+<p>Use the <a href="spottercam.html">Spottercam guide</a> for model
+selection and same-image detections. A box in image coordinates needs valid
+projection and a flight-plan integration before it becomes a geographic target.</p>
+<h3 id="earcam-acoustic-backend">EARcam Acoustic Backend<a class="headerlink" href="#earcam-acoustic-backend" title="Permanent link">&para;</a></h3>
+<p>EARcam combines sound measurements with aircraft positions. Keep microphone
+gain fixed during a search, and inspect whether the result is usable rather
+than assuming every completed search returns a reliable location. Follow the
+<a href="earcam-loudest-spot-explained.html">sound-search guide</a>.</p>
+<h2 id="if-something-stops"><span aria-hidden="true" class="ou-section-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"></path></svg></span>If Something Stops<a class="headerlink" href="#if-something-stops" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Check First</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local endpoint already in use</td>
+<td>Stop the previous simulator/sensor session; do not start a second owner</td>
+</tr>
+<tr>
+<td>Camera busy or unavailable</td>
+<td>Check cabling, device permissions and other camera clients</td>
+</tr>
+<tr>
+<td>No saved photograph</td>
+<td>Read the capture error and check free space/output permissions</td>
+</tr>
+<tr>
+<td>Model rejected</td>
+<td>Check that the graph, descriptor and settings belong together</td>
+</tr>
+<tr>
+<td>Photo saved but no review copy</td>
+<td>There may be zero detections or an analysis error; inspect the original's metadata and worker log</td>
+</tr>
+<tr>
+<td>Target updates stop</td>
+<td>Inspect freshness/model/confirmation diagnostics; the existing target is not a fresh observation</td>
+</tr>
+</tbody>
+</table>
+<p>For the available options, run <code>./usher --help</code> and the selected sensor's
+<code>--help</code>. Diagnose the stage that failed before repeating a physical capture.</p>
+<h2 id="tailor-or-add-a-module"><span aria-hidden="true" class="ou-section-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"></path></svg></span>Tailor Or Add A Module<a class="headerlink" href="#tailor-or-add-a-module" title="Permanent link">&para;</a></h2>
+<p>Each Sensoraia sensor module is self-contained under <code>modules/&lt;module&gt;/</code>:</p>
+<ol>
+<li><strong>Tailor an existing module:</strong> Edit its C/C++ sources or settings file under
+   <code>modules/&lt;module&gt;/</code> (for example <code>modules/lwir_cam/</code> or <code>modules/ear_cam/</code>),
+   update its <code>modules/&lt;module&gt;/README.md</code> and <code>modules/&lt;module&gt;/docs/*.md</code>
+   guide, and run <code>make all</code> to rebuild both PC and ARM64 binaries cleanly.</li>
+<li><strong>Create a new module:</strong>
+   - Create <code>modules/&lt;your_module&gt;/</code> with your C11/C++17 worker source,
+     <code>README.md</code>, and <code>docs/&lt;your-module&gt;.md</code> user guide (keeping within
+     MORA's 512 MB total shared RAM and avoiding Python on MORA).
+   - Register the backend in <code>src/camera_backend_registry.c</code> using the shared
+     <code>struct camera_backend</code> interface in <code>src/camera_backend.h</code> while keeping
+     <code>src/usher_protocol.h</code> wire-compatible with the flight controller.
+   - Add your build rule to <code>build-support/make/camera-modules.mk</code> (and
+     <code>SUITE_APPLICATIONS</code> in <code>Makefile</code> plus <code>build-support/mora-package.list</code>
+     if packaged for MORA) and expose a <code>CAMERA</code> option in <code>camera.conf</code> and
+     <code>build-support/package_mora.sh</code>.</li>
+<li><strong>Share via Fork &amp; Pull Request:</strong> Fork <code>sensoraia</code> on GitHub, commit your
+   module and documentation updates on a feature branch, verify <code>make all</code>, and
+   open a Pull Request.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+<footer class="md-footer ou-site-footer">
+	<div class="md-footer-meta md-typeset">
+		<div class="md-footer-meta__inner md-grid">
+			<div class="md-copyright">Copyright 2026 OpenUAS</div>
+					 <a class="ou-footer-link" href="licensing.html">Licensing</a>
+		</div>
+	</div>
+</footer>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+<script src="assets/material/offline-search.js"></script>
+
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+
+  </body>
+</html>

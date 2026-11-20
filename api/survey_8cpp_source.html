@@ -1,0 +1,2144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/pangea/survey.cpp Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('survey_8cpp_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">survey.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="survey_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @file survey.cpp</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @brief Command-line entry point for completed-session PANGEA mapping.</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * @details Survey processing consumes saved photos and validated session</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * metadata; it is not part of the camera trigger path. Separate per-user locks</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * exclude both another survey and the live PANGEA worker so two independent</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * consumers cannot compete for memory or checkpoint files.</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include "<a class="code" href="application__runtime_8h.html">application_runtime.h</a>"</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include "version.h"</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include "<a class="code" href="map__config_8h.html">map_config.h</a>"</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include "<a class="code" href="ortho__map_8h.html">ortho_map.h</a>"</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include "<a class="code" href="map__exif_8h.html">map_exif.h</a>"</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include "<a class="code" href="map__writer_8h.html">map_writer.h</a>"</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include "<a class="code" href="map__progress_8h.html">map_progress.h</a>"</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include "<a class="code" href="jpeg__encoder_8h.html">jpeg_encoder.h</a>"</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include "<a class="code" href="map__resources_8h.html">map_resources.h</a>"</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &lt;atomic&gt;</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &lt;thread&gt;</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#include &lt;cstring&gt;</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#include &lt;sys/file.h&gt;</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#include &lt;signal.h&gt;</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a19bfb27380067c74ae297dd7dad5fb37">   46</a></span><span class="keyword">using </span><a class="code hl_typedef" href="survey_8cpp.html#a19bfb27380067c74ae297dd7dad5fb37">Clock</a> = std::chrono::steady_clock;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a18b55bef67aea6311cdb2ce16213d665">   47</a></span><span class="keyword">static</span> std::atomic&lt;sig_atomic_t&gt; <a class="code hl_variable" href="ear__inference_8c.html#a3065b71ea2455fb184ad978b7a8bd496">stopping</a>{0};</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keyword">static_assert</span>(<span class="keyword">decltype</span>(<a class="code hl_variable" href="ear__inference_8c.html#a3065b71ea2455fb184ad978b7a8bd496">stopping</a>)::is_always_lock_free,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> <span class="stringliteral">"Signal cancellation requires lock-free atomic access"</span>);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a38447104c9f52f871e3e4e0d92e4cd1e">   50</a></span><span class="keyword">static</span> std::unique_ptr&lt;pangea_survey::MapResources&gt; <a class="code hl_variable" href="survey_8cpp.html#a38447104c9f52f871e3e4e0d92e4cd1e">resources</a>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a7e6404c8d2cd9e7631f424d34a4c70b3">   51</a></span><span class="keyword">static</span> fs::path <a class="code hl_variable" href="survey_8cpp.html#a7e6404c8d2cd9e7631f424d34a4c70b3">activePauseFile</a>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a1f9c4e7164afb0518c0012e3d5b3f873">   52</a></span><span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="survey_8cpp.html#a1f9c4e7164afb0518c0012e3d5b3f873">liveCpuPercent</a> = 0;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a48a9626433c02bb555f5d39d34778b2a">   53</a></span><span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="survey_8cpp.html#a48a9626433c02bb555f5d39d34778b2a">liveCpuStarted</a> = 0;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a9bbb4981e39fa2e92e23694f4bde73ff">   54</a></span><span class="keyword">static</span> Clock::time_point <a class="code hl_variable" href="survey_8cpp.html#a9bbb4981e39fa2e92e23694f4bde73ff">liveStarted</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="comment">/** @brief Read cumulative CPU time across the mapping process's threads.</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="comment"> * @return CPU seconds, independent of elapsed wall time.</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="comment"> * @throws std::runtime_error If the process CPU clock cannot be read. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00058">
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a158c9f24d3edea2484307e4a1d837398">   58</a></span><span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="survey_8cpp.html#a158c9f24d3edea2484307e4a1d837398">processCpuSeconds</a>() {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> <span class="keyword">struct </span>timespec value{};</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> <span class="keywordflow">if</span> (clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &amp;value) != 0)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Cannot measure mapping CPU time"</span>);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> <span class="keywordflow">return</span> value.tv_sec + value.tv_nsec / 1e9;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}<span class="comment"></span></div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment">/** @brief Check cancellation at a cooperative mapping boundary.</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="comment"> * @return True when a stop signal has been recorded.</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="comment"> * @details Wait out operator pauses and throttle against cumulative CPU time.</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="comment"> * Poll in short sleeps so cancellation remains responsive while paused. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00068">
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a66a8dce08bcd2fdc2f4ea65ab1e08b03">   68</a></span><span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="survey_8cpp.html#a66a8dce08bcd2fdc2f4ea65ab1e08b03">isStopping</a>() {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> <span class="keywordflow">while</span> (!<a class="code hl_variable" href="ear__inference_8c.html#a3065b71ea2455fb184ad978b7a8bd496">stopping</a> &amp;&amp; !<a class="code hl_variable" href="survey_8cpp.html#a7e6404c8d2cd9e7631f424d34a4c70b3">activePauseFile</a>.empty() &amp;&amp; fs::exists(<a class="code hl_variable" href="survey_8cpp.html#a7e6404c8d2cd9e7631f424d34a4c70b3">activePauseFile</a>))</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        std::this_thread::sleep_for(std::chrono::milliseconds(250));</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="survey_8cpp.html#a1f9c4e7164afb0518c0012e3d5b3f873">liveCpuPercent</a>) {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> <span class="keyword">const</span> <span class="keyword">auto</span> target = (<a class="code hl_function" href="survey_8cpp.html#a158c9f24d3edea2484307e4a1d837398">processCpuSeconds</a>() - <a class="code hl_variable" href="survey_8cpp.html#a48a9626433c02bb555f5d39d34778b2a">liveCpuStarted</a>) * 100 / <a class="code hl_variable" href="survey_8cpp.html#a1f9c4e7164afb0518c0012e3d5b3f873">liveCpuPercent</a>;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> <span class="keywordflow">while</span> (!<a class="code hl_variable" href="ear__inference_8c.html#a3065b71ea2455fb184ad978b7a8bd496">stopping</a> &amp;&amp; std::chrono::duration&lt;double&gt;(Clock::now() - <a class="code hl_variable" href="survey_8cpp.html#a9bbb4981e39fa2e92e23694f4bde73ff">liveStarted</a>).<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>() &lt; target) {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="survey_8cpp.html#a38447104c9f52f871e3e4e0d92e4cd1e">resources</a>) <a class="code hl_variable" href="survey_8cpp.html#a38447104c9f52f871e3e4e0d92e4cd1e">resources</a>-&gt;checkpoint();</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            std::this_thread::sleep_for(std::chrono::milliseconds(10));</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    }</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> <span class="comment">// Check headroom at the same cooperative boundaries used for cancellation.</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="survey_8cpp.html#a38447104c9f52f871e3e4e0d92e4cd1e">resources</a> &amp;&amp; !<a class="code hl_variable" href="ear__inference_8c.html#a3065b71ea2455fb184ad978b7a8bd496">stopping</a>) <a class="code hl_variable" href="survey_8cpp.html#a38447104c9f52f871e3e4e0d92e4cd1e">resources</a>-&gt;checkpoint();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> <span class="keywordflow">return</span> <a class="code hl_variable" href="ear__inference_8c.html#a3065b71ea2455fb184ad978b7a8bd496">stopping</a> != 0;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>}<span class="comment"></span></div>
+</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="comment">/** @brief Record a stop request without performing cleanup in signal context.</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment"> * @param sig Signal number; all registered stop signals have the same effect. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00084">
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="survey_8cpp.html#ad87d81aad82759b3b0446992f7777f27">   84</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="survey_8cpp.html#ad87d81aad82759b3b0446992f7777f27">signalHandler</a>(<span class="keywordtype">int</span> sig) {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    (void)sig;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> <a class="code hl_variable" href="ear__inference_8c.html#a3065b71ea2455fb184ad978b7a8bd496">stopping</a> = 1;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>}<span class="comment"></span></div>
+</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="comment">/** @brief Resolve the running executable independently of the launch directory.</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="comment"> * @return Canonical Linux executable path.</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="comment"> * @throws std::filesystem::filesystem_error If procfs resolution fails. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00091">
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a6110a63ee5148303e2d996520add6e8e">   91</a></span><span class="keyword">static</span> fs::path <a class="code hl_function" href="survey_8cpp.html#a6110a63ee5148303e2d996520add6e8e">executablePath</a>() {</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> <span class="keywordflow">return</span> fs::canonical(<span class="stringliteral">"/proc/self/exe"</span>);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>}<span class="comment"></span></div>
+</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment">/** @brief Locate the default configuration alongside the executable.</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="comment"> * @return Candidate path; does not check whether the INI exists. */</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a90257057c2bc3c703d64fe9c4c1c5df6">   96</a></span><span class="keyword">static</span> fs::path <a class="code hl_function" href="survey_8cpp.html#a90257057c2bc3c703d64fe9c4c1c5df6">defaultIni</a>() { <span class="keywordflow">return</span> <a class="code hl_function" href="survey_8cpp.html#a6110a63ee5148303e2d996520add6e8e">executablePath</a>().parent_path() / <span class="stringliteral">"pangea.ini"</span>; }<span class="comment"></span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment">/** @brief Convert a monotonic interval without truncating fractional seconds.</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment"> * @param duration Clock interval.</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="comment"> * @return Interval in seconds. */</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="survey_8cpp.html#aa87ec6e8ae1c727c4739426f7564c6be">  100</a></span><span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="survey_8cpp.html#aa87ec6e8ae1c727c4739426f7564c6be">seconds</a>(Clock::duration duration) { <span class="keywordflow">return</span> std::chrono::duration&lt;double&gt;(duration).count(); }<span class="comment"></span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="comment">/** @brief Create a readable, millisecond-resolution session label.</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="comment"> * @return Local wall-clock label, not a uniqueness guarantee. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00103">
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a96cb030bbe06d39854ae523b3eda58dd">  103</a></span><span class="keyword">static</span> std::string <a class="code hl_function" href="survey_8cpp.html#a96cb030bbe06d39854ae523b3eda58dd">sessionName</a>() {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> <span class="keyword">auto</span> now = std::chrono::system_clock::now();</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> <span class="keyword">auto</span> tt = std::chrono::system_clock::to_time_t(now);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    std::tm tm{};</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    localtime_r(&amp;tt, &amp;tm);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> <span class="keyword">auto</span> ms = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(now.time_since_epoch()).count() % 1000;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    std::ostringstream text;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    text &lt;&lt; std::setfill(<span class="charliteral">'0'</span>) &lt;&lt; std::setw(4) &lt;&lt; (tm.tm_year + 1900) &lt;&lt; std::setw(2) &lt;&lt; (tm.tm_mon + 1)</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>         &lt;&lt; std::setw(2) &lt;&lt; tm.tm_mday &lt;&lt; <span class="charliteral">'_'</span> &lt;&lt; std::setw(2) &lt;&lt; tm.tm_hour</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>         &lt;&lt; std::setw(2) &lt;&lt; tm.tm_min &lt;&lt; std::setw(2) &lt;&lt; tm.tm_sec &lt;&lt; <span class="charliteral">'_'</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>         &lt;&lt; std::setw(3) &lt;&lt; ms &lt;&lt; <span class="charliteral">'_'</span> &lt;&lt; getpid();</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> <span class="keywordflow">return</span> text.str();</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}</div>
+</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="preprocessor">#include "<a class="code" href="map__pipeline_8h.html">map_pipeline.h</a>"</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">#include "<a class="code" href="xyz__export_8h.html">xyz_export.h</a>"</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="preprocessor">#include "<a class="code" href="great__session_8h.html">great_session.h</a>"</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">#if SENSORAIA_BUILD_TESTING</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespacecamera__lens__detail.html#ab15544afd56ad4a09b496d1291ef476a">require</a>(<span class="keywordtype">bool</span> value, <span class="keyword">const</span> <span class="keywordtype">char</span>* message) {</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> <span class="keywordflow">if</span> (!value) <span class="keywordflow">throw</span> std::runtime_error(std::string(<span class="stringliteral">"TEST FAILED: "</span>) + message);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>}</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="keyword">static</span> <span class="keywordtype">void</span> testOpenCvParallelBackend() {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> <span class="keyword">const</span> <span class="keywordtype">int</span> previousThreads = cv::getNumThreads();</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> <span class="keyword">struct </span>RestoreThreads {</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        ~RestoreThreads() { cv::setNumThreads(<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>); }</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    } restore{previousThreads};</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> totalItems = 513;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keywordtype">int</span> team : {4, 3}) {</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        cv::setNumThreads(team);</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> <a class="code hl_function" href="namespacecamera__lens__detail.html#ab15544afd56ad4a09b496d1291ef476a">require</a>(cv::getNumThreads() == team, <span class="stringliteral">"OpenCV parallel backend did not apply thread count"</span>);</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        std::vector&lt;std::atomic&lt;int&gt;&gt; hits(totalItems);</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; hit : hits) hit.store(0, std::memory_order_relaxed);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        std::atomic&lt;bool&gt; validThreadIds{<span class="keyword">true</span>};</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        cv::parallel_for_(cv::Range(0, totalItems), [&amp;](<span class="keyword">const</span> cv::Range&amp; <a class="code hl_function" href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a>) {</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> <span class="keyword">const</span> <span class="keywordtype">int</span> tid = cv::getThreadNum();</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> <span class="keywordflow">if</span> (tid &lt; 0 || tid &gt;= team) validThreadIds.store(<span class="keyword">false</span>, std::memory_order_relaxed);</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> <span class="keywordtype">int</span> nestedCount = 0;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            cv::parallel_for_(cv::Range(0, 4), [&amp;](<span class="keyword">const</span> cv::Range&amp; inner) {</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                nestedCount += inner.size();</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            });</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> <span class="keywordflow">if</span> (nestedCount != 4) validThreadIds.store(<span class="keyword">false</span>, std::memory_order_relaxed);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> <span class="keywordflow">for</span> (<span class="keywordtype">int</span> index = <a class="code hl_function" href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a>.start; index &lt; <a class="code hl_function" href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a>.end; ++index)</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>                hits[<span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(index)].fetch_add(1, std::memory_order_relaxed);</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        });</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> <a class="code hl_function" href="namespacecamera__lens__detail.html#ab15544afd56ad4a09b496d1291ef476a">require</a>(validThreadIds.load(std::memory_order_relaxed), <span class="stringliteral">"OpenCV parallel backend reported invalid thread index"</span>);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; hit : hits)</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> <a class="code hl_function" href="namespacecamera__lens__detail.html#ab15544afd56ad4a09b496d1291ef476a">require</a>(hit.load(std::memory_order_relaxed) == 1, <span class="stringliteral">"OpenCV parallel backend missed or duplicated stripe work"</span>);</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> <span class="keywordflow">if</span> (team == 4) {</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            cv::setNumThreads(1);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> <a class="code hl_function" href="namespacecamera__lens__detail.html#ab15544afd56ad4a09b496d1291ef476a">require</a>(cv::getNumThreads() == 1, <span class="stringliteral">"OpenCV parallel backend did not shrink to single thread"</span>);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        }</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    }</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> <span class="keywordtype">bool</span> caught = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        cv::parallel_for_(cv::Range(0, 64), [&amp;](<span class="keyword">const</span> cv::Range&amp; <a class="code hl_function" href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a>) {</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a>.start &lt;= 17 &amp;&amp; 17 &lt; <a class="code hl_function" href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a>.end)</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"synthetic parallel_for failure"</span>);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        });</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>) {</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        caught = std::string(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>.what()).find(<span class="stringliteral">"synthetic parallel_for failure"</span>) != std::string::npos;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    }</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> <a class="code hl_function" href="namespacecamera__lens__detail.html#ab15544afd56ad4a09b496d1291ef476a">require</a>(caught, <span class="stringliteral">"OpenCV parallel backend lost body exception"</span>);</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    cv::setNumThreads(1);</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> <a class="code hl_function" href="namespacecamera__lens__detail.html#ab15544afd56ad4a09b496d1291ef476a">require</a>(cv::getNumThreads() == 1, <span class="stringliteral">"OpenCV parallel backend did not shrink to single thread"</span>);</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    std::atomic&lt;bool&gt; serialOnCaller{<span class="keyword">true</span>};</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    cv::parallel_for_(cv::Range(0, 32), [&amp;](<span class="keyword">const</span> cv::Range&amp;) {</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> <span class="keywordflow">if</span> (cv::getThreadNum() != 0) serialOnCaller.store(<span class="keyword">false</span>, std::memory_order_relaxed);</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    });</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> <a class="code hl_function" href="namespacecamera__lens__detail.html#ab15544afd56ad4a09b496d1291ef476a">require</a>(serialOnCaller.load(std::memory_order_relaxed), <span class="stringliteral">"Single-thread OpenCV region used worker thread"</span>);</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>}</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="preprocessor">#include "map_exif_tests.h"</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="preprocessor">#include "xyz_tests.h"</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="preprocessor">#include "pipeline_tests.h"</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="comment"></span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="comment">/** @brief Validate a source session and print its output layout offline.</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="comment"> * @param config Requested map and source configuration.</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="comment"> * @details For XYZ output, validate the internal render grid separately</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="comment"> * from the published tile plan; they need not share pixel dimensions.</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="comment"> * @throws std::runtime_error If source admission or layout validation fails. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00188">
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="survey_8cpp.html#a9244e500f0327ecfbdbf19a45ba4535f">  188</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="survey_8cpp.html#a9244e500f0327ecfbdbf19a45ba4535f">checkInputs</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structpangea__survey_1_1MapConfig.html">pangea_survey::MapConfig</a>&amp; config) {</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> <span class="keyword">const</span> <span class="keyword">auto</span> working = config.<a class="code hl_variable" href="structpangea__survey_1_1MapConfig.html#a253753848bee0278997a65c61b66da39">outputFormat</a> == <span class="stringliteral">"xyz"</span> ? <a class="code hl_struct" href="structpangea__survey_1_1XyzPlan.html">pangea_survey::XyzPlan</a>(config).<a class="code hl_function" href="structpangea__survey_1_1XyzPlan.html#ae7ee030e014e45f154a80e663fc23285">workingConfig</a>(config) : config;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> <a class="code hl_class" href="classpangea__survey_1_1Orthorectifier.html">pangea_survey::Orthorectifier</a> <a class="code hl_function" href="onnx__session_8c.html#a14f90ccd369275842f05aba2a64fc045">checked</a>(working, config.<a class="code hl_variable" href="structpangea__survey_1_1MapConfig.html#a6a844ae6bec69274a208df825d3a4712">sourceCsv</a>);</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    std::cout &lt;&lt; <span class="stringliteral">"Input valid: "</span> &lt;&lt; config.<a class="code hl_variable" href="structpangea__survey_1_1MapConfig.html#a6a844ae6bec69274a208df825d3a4712">sourceCsv</a>.u8string() &lt;&lt; <span class="stringliteral">"\nMode: "</span> &lt;&lt; config.<a class="code hl_variable" href="structpangea__survey_1_1MapConfig.html#a9e17168c8af7ef68a7e33890d972d7cc">mode</a></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>              &lt;&lt; <span class="stringliteral">"; "</span> &lt;&lt; <a class="code hl_function" href="onnx__session_8c.html#a14f90ccd369275842f05aba2a64fc045">checked</a>.columns() &lt;&lt; <span class="stringliteral">" x "</span> &lt;&lt; <a class="code hl_function" href="onnx__session_8c.html#a14f90ccd369275842f05aba2a64fc045">checked</a>.rows()</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>              &lt;&lt; (config.<a class="code hl_variable" href="structpangea__survey_1_1MapConfig.html#a253753848bee0278997a65c61b66da39">outputFormat</a> == <span class="stringliteral">"xyz"</span> ? <span class="stringliteral">" internal working tiles; "</span> : <span class="stringliteral">" map tiles; "</span>)</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>              &lt;&lt; working.mapPixelSize &lt;&lt; <span class="stringliteral">" m/working pixel; no MSFS connection.\n"</span>;</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> <span class="keywordflow">if</span> (config.<a class="code hl_variable" href="structpangea__survey_1_1MapConfig.html#a253753848bee0278997a65c61b66da39">outputFormat</a> == <span class="stringliteral">"xyz"</span>) {</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> <span class="keyword">const</span> <a class="code hl_struct" href="structpangea__survey_1_1XyzPlan.html">pangea_survey::XyzPlan</a> plan(config);</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        std::cout &lt;&lt; <span class="stringliteral">"XYZ output: "</span> &lt;&lt; plan.size() &lt;&lt; <span class="stringliteral">" complete 256-pixel tiles at zoom "</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                  &lt;&lt; plan.minZoom &lt;&lt; <span class="stringliteral">".."</span> &lt;&lt; plan.base.zoom &lt;&lt; <span class="stringliteral">"; "</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                  &lt;&lt; <a class="code hl_function" href="classpangea__survey_1_1XyzTiles.html#a31ef374e4e1164aeba8651d99f8abf11">pangea_survey::XyzTiles::groundPixel</a>(plan.base.zoom, (plan.north + plan.south) / 2)</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                  &lt;&lt; <span class="stringliteral">" m/ground pixel at area centre.\n"</span>;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    }</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>}</div>
+</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00204">
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="pangea_8cpp.html#a8ea5a830f0142e806b5d7deccfd6d8bc">  204</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="survey_8cpp.html#a8ea5a830f0142e806b5d7deccfd6d8bc">pangeaSurveyMain</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> <span class="keywordflow">if</span> (argc == 2 &amp;&amp; (std::strcmp(argv[1], <span class="stringliteral">"--version"</span>) == 0 || std::strcmp(argv[1], <span class="stringliteral">"-v"</span>) == 0)) {</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>            std::cout &lt;&lt; <a class="code hl_define" href="src_2version_8h.html#a82fa8745faccf83a19bc3f447f516a95">PANGEA_BUILD_VERSION</a> &lt;&lt; <span class="charliteral">'\n'</span>;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        }</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> <span class="keywordflow">if</span> (argc == 2 &amp;&amp; (std::strcmp(argv[1], <span class="stringliteral">"--help"</span>) == 0 || std::strcmp(argv[1], <span class="stringliteral">"-h"</span>) == 0)) {</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>            std::cout &lt;&lt; <span class="stringliteral">"Pangea: completed-survey processing\n"</span></div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> <span class="stringliteral">"  pangea --check [pangea.ini]\n"</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> <span class="stringliteral">"  pangea --run [pangea.ini] [--mode simple|great]\n"</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> <span class="stringliteral">"  pangea --diagnostic [pangea.ini] [--mode simple|great]\n"</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> <span class="stringliteral">"  pangea --update-great pangea.ini\n"</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> <span class="stringliteral">"  pangea --follow-great pangea.ini\n"</span></div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> <span class="stringliteral">"  pangea --finalize-great pangea.ini\n"</span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> <span class="stringliteral">"  pangea --stop\n"</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="preprocessor">#if SENSORAIA_BUILD_TESTING</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> <span class="stringliteral">"  pangea --self-test\n"</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> <span class="stringliteral">"  pangea --version\n"</span>;</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        }</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> <span class="keywordflow">if</span> (argc == 2 &amp;&amp; std::strcmp(argv[1], <span class="stringliteral">"--self-test"</span>) == 0) {</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span><span class="preprocessor">#if SENSORAIA_BUILD_TESTING</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>            testOpenCvParallelBackend();</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>            testSurveyTiming();</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> <a class="code hl_function" href="classpangea__survey_1_1MapProgress.html#a1c24604632af6a9fd088d1d0fcbc5609">pangea_survey::MapProgress::selfTest</a>();</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> <a class="code hl_function" href="classpangea__survey_1_1Orthorectifier.html#ac912f48caf741ce2c2dc485089cb751a">pangea_survey::Orthorectifier::selfTest</a>();</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>            testXyzGrid();</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>            testMapExif();</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>            testSplitPipeline();</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Self-tests require the private development checkout and BUILD_TESTING=ON"</span>);</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        }</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> <span class="keyword">const</span> std::string lockPath = <span class="stringliteral">"/tmp/pangea-survey-"</span> + std::to_string(getuid()) + <span class="stringliteral">".lock"</span>;</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> <span class="keywordflow">if</span> (argc == 2 &amp;&amp; std::strcmp(argv[1], <span class="stringliteral">"--stop"</span>) == 0) {</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>            std::ifstream lockFile(lockPath);</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>            pid_t pid = 0;</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> <span class="keywordflow">if</span> (lockFile &gt;&gt; pid &amp;&amp; pid &gt; 1) {</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> <span class="keyword">const</span> <span class="keyword">auto</span> process = fs::path(<span class="stringliteral">"/proc"</span>) / std::to_string(pid);</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>                std::ifstream arguments(process / <span class="stringliteral">"cmdline"</span>, std::ios::binary);</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                std::string program, command;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                std::getline(arguments, program, <span class="charliteral">'\0'</span>); std::getline(arguments, command, <span class="charliteral">'\0'</span>);</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                std::error_code <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>;</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> <span class="keyword">const</span> <span class="keyword">auto</span> executable = fs::canonical(process / <span class="stringliteral">"exe"</span>, <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>);</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a> &amp;&amp; executable == <a class="code hl_function" href="survey_8cpp.html#a6110a63ee5148303e2d996520add6e8e">executablePath</a>() &amp;&amp;</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                    (command == <span class="stringliteral">"--run"</span> || command == <span class="stringliteral">"--diagnostic"</span> || command == <span class="stringliteral">"--update-great"</span> ||</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                     command == <span class="stringliteral">"--follow-great"</span> || command == <span class="stringliteral">"--finalize-great"</span>) &amp;&amp;</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                    kill(pid, SIGTERM) == 0) {</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>                    std::cout &lt;&lt; <span class="stringliteral">"Stopped Pangea survey PID "</span> &lt;&lt; pid &lt;&lt; <span class="stringliteral">".\n"</span>;</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>                }</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            }</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            std::cerr &lt;&lt; <span class="stringliteral">"No Pangea survey is running.\n"</span>;</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        }</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> <span class="keywordflow">if</span> (argc == 3 &amp;&amp; (std::strcmp(argv[1], <span class="stringliteral">"--update-great"</span>) == 0 ||</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                          std::strcmp(argv[1], <span class="stringliteral">"--follow-great"</span>) == 0 ||</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                          std::strcmp(argv[1], <span class="stringliteral">"--finalize-great"</span>) == 0)) {</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> <span class="keyword">const</span> <span class="keyword">auto</span> ini = fs::path(argv[2]);</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> <span class="keyword">const</span> <span class="keyword">auto</span> config = <a class="code hl_function" href="namespacepangea__survey.html#a1c1c299ab21c72e6106fa64fc1fbcf74">pangea_survey::loadMapConfig</a>(ini);</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> <a class="code hl_class" href="classpangea__survey_1_1GreatSessionLease.html">pangea_survey::GreatSessionLease</a> lease;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> <a class="code hl_variable" href="survey_8cpp.html#a38447104c9f52f871e3e4e0d92e4cd1e">resources</a> = std::make_unique&lt;pangea_survey::MapResources&gt;(config);</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>            signal(SIGINT, <a class="code hl_function" href="survey_8cpp.html#ad87d81aad82759b3b0446992f7777f27">signalHandler</a>);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>            signal(SIGTERM, <a class="code hl_function" href="survey_8cpp.html#ad87d81aad82759b3b0446992f7777f27">signalHandler</a>);</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> <a class="code hl_variable" href="survey_8cpp.html#a7e6404c8d2cd9e7631f424d34a4c70b3">activePauseFile</a> = config.livePauseFile;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> <a class="code hl_variable" href="survey_8cpp.html#a1f9c4e7164afb0518c0012e3d5b3f873">liveCpuPercent</a> = config.liveCpuPercent;</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> <a class="code hl_variable" href="survey_8cpp.html#a48a9626433c02bb555f5d39d34778b2a">liveCpuStarted</a> = <a class="code hl_function" href="survey_8cpp.html#a158c9f24d3edea2484307e4a1d837398">processCpuSeconds</a>();</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> <a class="code hl_variable" href="survey_8cpp.html#a9bbb4981e39fa2e92e23694f4bde73ff">liveStarted</a> = Clock::now();</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> follow = std::strcmp(argv[1], <span class="stringliteral">"--follow-great"</span>) == 0;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> finalize = std::strcmp(argv[1], <span class="stringliteral">"--finalize-great"</span>) == 0;</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> <span class="keyword">auto</span> updated = Clock::now() - std::chrono::seconds(config.liveUpdateSeconds);</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            std::string previous;</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>            std::string prepared;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> <span class="keywordtype">bool</span> pressureReported = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> <span class="keywordflow">do</span> {</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="survey_8cpp.html#a66a8dce08bcd2fdc2f4ea65ab1e08b03">isStopping</a>()) <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <span class="keyword">final</span> = finalize || (!config.liveFinalFile.empty() &amp;&amp; fs::exists(config.liveFinalFile));</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> <span class="keyword">auto</span> snapshot = <a class="code hl_function" href="namespacepangea__survey.html#a6e9613d6c239f877ab878c1acd0abec6">pangea_survey::greatInputText</a>(config);</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> <span class="keyword">const</span> <span class="keyword">auto</span> end = snapshot.rfind(<span class="charliteral">'\n'</span>);</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> <span class="keywordflow">if</span> (end != std::string::npos) snapshot.resize(end + 1);</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> <span class="keyword">const</span> <span class="keyword">auto</span> added = std::count(snapshot.begin(), snapshot.end(), <span class="charliteral">'\n'</span>) -</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                                   std::count(previous.begin(), previous.end(), <span class="charliteral">'\n'</span>);</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> <span class="keywordflow">if</span> (follow &amp;&amp; !<span class="keyword">final</span> &amp;&amp; snapshot != prepared &amp;&amp;</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> <a class="code hl_function" href="namespacepangea__survey.html#a24fa50c73e816bdb74937bd33edf0e5c">pangea_survey::updateGreatSession</a>(config, ini, <span class="keyword">false</span>, <span class="keyword">false</span>)) prepared = snapshot;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> <span class="keywordflow">if</span> (!follow || <span class="keyword">final</span> || (snapshot != previous &amp;&amp;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                    (added &gt;= config.liveBatchPhotos || Clock::now() - updated &gt;= std::chrono::seconds(config.liveUpdateSeconds)))) {</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="namespacepangea__survey.html#a24fa50c73e816bdb74937bd33edf0e5c">pangea_survey::updateGreatSession</a>(config, ini, <span class="keyword">final</span>)) {</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>                        previous = snapshot;</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>                        updated = Clock::now();</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<span class="keyword">final</span>) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Cannot finalize an empty photo session"</span>);</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                }</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> <span class="keywordflow">if</span> (!follow || <span class="keyword">final</span>) <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                pressureReported = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                } <span class="keywordflow">catch</span> (<span class="keyword">const</span> <a class="code hl_class" href="classpangea__survey_1_1MapResourcePressure.html">pangea_survey::MapResourcePressure</a>&amp; <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>) {</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> <span class="keywordflow">if</span> (!follow) <span class="keywordflow">throw</span>;</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> <span class="keywordflow">if</span> (!pressureReported) std::cout &lt;&lt; <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>.what() &lt;&lt; <span class="stringliteral">"; waiting for headroom.\n"</span>;</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                    pressureReported = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                }</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>                std::this_thread::sleep_for(std::chrono::milliseconds(250));</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>            } <span class="keywordflow">while</span> (!<a class="code hl_variable" href="ear__inference_8c.html#a3065b71ea2455fb184ad978b7a8bd496">stopping</a>);</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>            std::cout &lt;&lt; <span class="stringliteral">"GREAT session stopped; previous revision and working checkpoints retained.\n"</span>;</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        }</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> run = argc &gt;= 2 &amp;&amp; std::strcmp(argv[1], <span class="stringliteral">"--run"</span>) == 0;</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> check = argc &gt;= 2 &amp;&amp; std::strcmp(argv[1], <span class="stringliteral">"--check"</span>) == 0;</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> diagnostic = argc &gt;= 2 &amp;&amp; std::strcmp(argv[1], <span class="stringliteral">"--diagnostic"</span>) == 0;</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span> <span class="keywordflow">if</span> ((run || check || diagnostic) &amp;&amp; (argc == 2 || argc == 3 || argc == 5)) {</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span> <span class="keywordflow">if</span> (argc == 5 &amp;&amp; std::strcmp(argv[3], <span class="stringliteral">"--mode"</span>) != 0) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Expected --mode"</span>);</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span> <span class="keyword">const</span> <span class="keyword">auto</span> iniPath = argc &gt;= 3 ? fs::path(argv[2]) : <a class="code hl_function" href="survey_8cpp.html#a90257057c2bc3c703d64fe9c4c1c5df6">defaultIni</a>();</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> <span class="keyword">const</span> std::string modeOverride = argc == 5 ? argv[4] : <span class="stringliteral">""</span>;</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> <span class="keyword">auto</span> config = <a class="code hl_function" href="namespacepangea__survey.html#a1c1c299ab21c72e6106fa64fc1fbcf74">pangea_survey::loadMapConfig</a>(iniPath, modeOverride);</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span> <span class="keywordflow">if</span> (!config.photoDirectory.empty())</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"AI Camera directories use --update-great, --follow-great or --finalize-great"</span>);</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span> <span class="keywordflow">if</span> (!check) <a class="code hl_variable" href="survey_8cpp.html#a38447104c9f52f871e3e4e0d92e4cd1e">resources</a> = std::make_unique&lt;pangea_survey::MapResources&gt;(config);</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span> <a class="code hl_function" href="survey_8cpp.html#a9244e500f0327ecfbdbf19a45ba4535f">checkInputs</a>(config);</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> <span class="keywordflow">if</span> (check) <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> <span class="keywordtype">int</span> lockFd = <a class="code hl_variable" href="chdkbridge_8c.html#ad3eb2137f22498456a6964cef7b12fc6">open</a>(lockPath.c_str(), O_CREAT | O_RDWR | O_CLOEXEC, 0600);</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> <span class="keywordflow">if</span> (lockFd &lt; 0 || flock(lockFd, LOCK_EX | LOCK_NB) != 0) {</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> <span class="keywordflow">if</span> (lockFd &gt;= 0) <a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(lockFd);</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Pangea survey already running"</span>);</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>            }</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> <span class="keyword">const</span> <span class="keyword">auto</span> liveLockPath = <span class="stringliteral">"/tmp/usher-pangea-"</span> + std::to_string(getuid()) + <span class="stringliteral">".lock"</span>;</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> <span class="comment">// The live worker has its own lock; taking both prevents offline mapping from competing with capture.</span></div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> <span class="keyword">const</span> <span class="keywordtype">int</span> liveLock = <a class="code hl_variable" href="chdkbridge_8c.html#ad3eb2137f22498456a6964cef7b12fc6">open</a>(liveLockPath.c_str(), O_CREAT | O_RDWR | O_NOFOLLOW | O_CLOEXEC, 0600);</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span> <span class="keywordflow">if</span> (liveLock &lt; 0 || flock(liveLock, LOCK_EX | LOCK_NB) != 0)</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Another Pangea live or survey worker is active; mapping remains optional"</span>);</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> <span class="keywordflow">if</span> (ftruncate(lockFd, 0) == 0) {</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>                std::string pidStr = std::to_string(getpid()) + <span class="stringliteral">"\n"</span>;</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>                ssize_t written = write(lockFd, pidStr.data(), pidStr.size());</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>                (void)written;</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>                fsync(lockFd);</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>            }</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>            signal(SIGINT, <a class="code hl_function" href="survey_8cpp.html#ad87d81aad82759b3b0446992f7777f27">signalHandler</a>);</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>            signal(SIGTERM, <a class="code hl_function" href="survey_8cpp.html#ad87d81aad82759b3b0446992f7777f27">signalHandler</a>);</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span> <span class="keywordflow">if</span> (config.outputFormat == <span class="stringliteral">"xyz"</span> &amp;&amp; !diagnostic &amp;&amp; !config.lowMemory)</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span> <a class="code hl_struct" href="structpangea__survey_1_1XyzPlan.html">pangea_survey::XyzPlan</a>(config).<a class="code hl_function" href="structpangea__survey_1_1XyzPlan.html#ab068e1a5ab35cc86a04e64b6e1967459">checkOutput</a>(config.output);</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> <span class="keyword">auto</span> workDirectory = config.outputFormat == <span class="stringliteral">"xyz"</span> ?</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>                config.output.parent_path() / <span class="stringliteral">"pangea_exports"</span> / (<span class="stringliteral">"xyz_"</span> + <a class="code hl_function" href="survey_8cpp.html#a96cb030bbe06d39854ae523b3eda58dd">sessionName</a>()) : config.output;</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span> <span class="keywordflow">if</span> (config.lowMemory) {</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span> <span class="keywordflow">if</span> (diagnostic) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Low-memory profile publishes strict XYZ; use --run"</span>);</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span> <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a> = fs::weakly_canonical(fs::absolute(config.output)).generic_string();</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span> <span class="keyword">const</span> <span class="keyword">auto</span> key = <a class="code hl_function" href="namespacepangea__survey.html#a98ba8f6dae2fb67c5634ecabe6356003">pangea_survey::dataDigest</a>(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>.data(), <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>.size());</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span> <span class="keyword">const</span> <span class="keyword">auto</span> jobName = <span class="stringliteral">"xyz_low_memory_"</span> + key.substr(0, 16);</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>                workDirectory = config.output.parent_path() / <span class="stringliteral">"pangea_exports"</span> / jobName;</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span> <span class="keyword">const</span> <span class="keyword">auto</span> ini = argc &gt;= 3 ? fs::path(argv[2]) : <a class="code hl_function" href="survey_8cpp.html#a90257057c2bc3c703d64fe9c4c1c5df6">defaultIni</a>();</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span> <span class="keyword">const</span> <span class="keyword">auto</span> fingerprint =</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span> <a class="code hl_function" href="namespacepangea__survey.html#a66aed1d9cd5b6b640d045405460dca70">pangea_survey::fileDigest</a>(ini) + <span class="stringliteral">"\n"</span> + <a class="code hl_function" href="namespacepangea__survey.html#a66aed1d9cd5b6b640d045405460dca70">pangea_survey::fileDigest</a>(config.sourceCsv) + <span class="stringliteral">"\n"</span> +</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>                    (config.captureManifest.empty() ? <span class="stringliteral">"none"</span> : <a class="code hl_function" href="namespacepangea__survey.html#a66aed1d9cd5b6b640d045405460dca70">pangea_survey::fileDigest</a>(config.captureManifest)) + <span class="stringliteral">"\n"</span> +</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>                    fs::canonical(config.sourceCsv).generic_string() + <span class="stringliteral">"\n"</span> + <a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a> + <span class="stringliteral">"\n"</span> + config.mode + <span class="stringliteral">"\n"</span>;</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span> <span class="keyword">const</span> <span class="keyword">auto</span> identity = std::string(<span class="stringliteral">"PANGEA_LOW_MEMORY_V1\n"</span>) + fingerprint;</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span> <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> = workDirectory / <span class="stringliteral">"identity"</span>;</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span> <span class="comment">// Reusing tiles is safe only when inputs, geographic bounds, and mode are identical.</span></div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span> <span class="keywordflow">if</span> (fs::exists(workDirectory)) {</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>                    std::ifstream input(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>);</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span> <span class="keyword">const</span> std::string saved((std::istreambuf_iterator&lt;char&gt;(input)), std::istreambuf_iterator&lt;char&gt;());</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span> <span class="keywordflow">if</span> (!input || saved != identity)</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Working job identity changed; choose a new output directory"</span>);</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span> <a class="code hl_struct" href="structpangea__survey_1_1XyzPlan.html">pangea_survey::XyzPlan</a>(config).<a class="code hl_function" href="structpangea__survey_1_1XyzPlan.html#ab068e1a5ab35cc86a04e64b6e1967459">checkOutput</a>(config.output);</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>                    fs::create_directories(workDirectory);</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span> <a class="code hl_function" href="namespacepangea__survey.html#aa686f83b4944e95a3c4e4397098ae055">pangea_survey::saveWorkingText</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>, identity);</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>                }</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>                config.workingDirectory = workDirectory;</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>            }</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>            fs::create_directories(workDirectory);</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span> <a class="code hl_class" href="classSessionLog.html">SessionLog</a> log(workDirectory, <span class="stringliteral">"pangea.log"</span>);</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>            config.originalSourceCsv = config.sourceCsv;</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span> <span class="keywordflow">if</span> (!config.lowMemory) config.sourceCsv = <a class="code hl_function" href="classpangea__survey_1_1Orthorectifier.html#aba052c567efbe3f0e388640ea4a44f43">pangea_survey::Orthorectifier::normalizeSources</a>(config.sourceCsv,</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>                workDirectory / (<span class="stringliteral">"rectified_"</span> + <a class="code hl_function" href="survey_8cpp.html#a96cb030bbe06d39854ae523b3eda58dd">sessionName</a>()), <a class="code hl_function" href="survey_8cpp.html#a66a8dce08bcd2fdc2f4ea65ab1e08b03">isStopping</a>, config.mosaicThreads,</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span><span class="keyword">&gt;</span>(config.mosaicPhotoCacheMiB));</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a> = config.outputFormat == <span class="stringliteral">"xyz"</span> ? <a class="code hl_function" href="xyz__export_8h.html#a7fb0c75137b3cd70c30f523927944476">exportXyzTiles</a>(config, config.sourceCsv, workDirectory, diagnostic) :</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span> <a class="code hl_function" href="map__pipeline_8h.html#a8a0a00458779b04e8aa176afd519c114">orthorectify</a>(config, config.sourceCsv, diagnostic);</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> <a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(lockFd);</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span> <a class="code hl_variable" href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a>(liveLock);</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>            unlink(lockPath.c_str());</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span> <span class="keywordflow">return</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>;</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        }</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        std::cout &lt;&lt; <span class="stringliteral">"Pangea: completed-survey processing\n"</span></div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span> <span class="stringliteral">"  pangea --check [pangea.ini]\n"</span></div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span> <span class="stringliteral">"  pangea --run [pangea.ini] [--mode simple|great]\n"</span></div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span> <span class="stringliteral">"  pangea --diagnostic [pangea.ini] [--mode simple|great]\n"</span></div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span> <span class="stringliteral">"  pangea --update-great pangea.ini\n"</span></div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span> <span class="stringliteral">"  pangea --follow-great pangea.ini\n"</span></div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span> <span class="stringliteral">"  pangea --finalize-great pangea.ini\n"</span></div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span> <span class="stringliteral">"  pangea --stop\n"</span></div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span><span class="preprocessor">#if SENSORAIA_BUILD_TESTING</span></div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span> <span class="stringliteral">"  pangea --self-test\n"</span></div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>                 ;</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span> <span class="keywordflow">return</span> argc == 1 ? 0 : 2;</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>) {</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>        std::cerr &lt;&lt; <span class="stringliteral">"ERROR: "</span> &lt;&lt; <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>.what() &lt;&lt; <span class="charliteral">'\n'</span>;</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>    }</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>}</div>
+</div>
+<div class="ttc" id="aapplication__runtime_8h_html"><div class="ttname"><a href="application__runtime_8h.html">application_runtime.h</a></div><div class="ttdoc">Shared logging and operating-system checks for the survey executable.</div></div>
+<div class="ttc" id="achdkbridge_8c_html_a176b06ffdcdd2008ad3cd0178c2a10cf"><div class="ttname"><a href="chdkbridge_8c.html#a176b06ffdcdd2008ad3cd0178c2a10cf">close</a></div><div class="ttdeci">void(* close)(struct usbfs_handle *)</div><div class="ttdef"><b>Definition</b> <a href="chdkbridge_8c_source.html#l00057">chdkbridge.c:57</a></div></div>
+<div class="ttc" id="achdkbridge_8c_html_ad3eb2137f22498456a6964cef7b12fc6"><div class="ttname"><a href="chdkbridge_8c.html#ad3eb2137f22498456a6964cef7b12fc6">open</a></div><div class="ttdeci">int(* open)(const struct usbfs_device *, struct usbfs_handle *)</div><div class="ttdef"><b>Definition</b> <a href="chdkbridge_8c_source.html#l00056">chdkbridge.c:56</a></div></div>
+<div class="ttc" id="aclassSessionLog_html"><div class="ttname"><a href="classSessionLog.html">SessionLog</a></div><div class="ttdoc">Mirror stdout and stderr into one session file for a scoped run.</div><div class="ttdef"><b>Definition</b> <a href="application__runtime_8h_source.html#l00096">application_runtime.h:96</a></div></div>
+<div class="ttc" id="aclasspangea__survey_1_1GreatSessionLease_html"><div class="ttname"><a href="classpangea__survey_1_1GreatSessionLease.html">pangea_survey::GreatSessionLease</a></div><div class="ttdoc">Hold the per-user GREAT and live-PANGEA locks for one session update.</div><div class="ttdef"><b>Definition</b> <a href="great__session_8h_source.html#l00036">great_session.h:36</a></div></div>
+<div class="ttc" id="aclasspangea__survey_1_1MapProgress_html_a1c24604632af6a9fd088d1d0fcbc5609"><div class="ttname"><a href="classpangea__survey_1_1MapProgress.html#a1c24604632af6a9fd088d1d0fcbc5609">pangea_survey::MapProgress::selfTest</a></div><div class="ttdeci">static void selfTest()</div><div class="ttdoc">Exercise stage progress, monotonic updates, and completion behavior.</div><div class="ttdef"><b>Definition</b> <a href="map__progress_8h_source.html#l00198">map_progress.h:198</a></div></div>
+<div class="ttc" id="aclasspangea__survey_1_1MapResourcePressure_html"><div class="ttname"><a href="classpangea__survey_1_1MapResourcePressure.html">pangea_survey::MapResourcePressure</a></div><div class="ttdef"><b>Definition</b> <a href="map__resources_8h_source.html#l00040">map_resources.h:40</a></div></div>
+<div class="ttc" id="aclasspangea__survey_1_1Orthorectifier_html"><div class="ttname"><a href="classpangea__survey_1_1Orthorectifier.html">pangea_survey::Orthorectifier</a></div><div class="ttdoc">Load a fixed-session source set and render its projected tiles/windows.</div><div class="ttdef"><b>Definition</b> <a href="ortho__map_8h_source.html#l00098">ortho_map.h:98</a></div></div>
+<div class="ttc" id="aclasspangea__survey_1_1Orthorectifier_html_aba052c567efbe3f0e388640ea4a44f43"><div class="ttname"><a href="classpangea__survey_1_1Orthorectifier.html#aba052c567efbe3f0e388640ea4a44f43">pangea_survey::Orthorectifier::normalizeSources</a></div><div class="ttdeci">static std::filesystem::path normalizeSources(const std::filesystem::path &amp;csv, const std::filesystem::path &amp;directory, const std::function&lt; bool()&gt; &amp;stopped, unsigned workers=1, unsigned memoryMiB=128)</div><div class="ttdoc">Rectify JPEG sources into working JPEGs and write a new CSV.</div><div class="ttdef"><b>Definition</b> <a href="ortho__map_8cpp_source.html#l01120">ortho_map.cpp:1120</a></div></div>
+<div class="ttc" id="aclasspangea__survey_1_1Orthorectifier_html_ac912f48caf741ce2c2dc485089cb751a"><div class="ttname"><a href="classpangea__survey_1_1Orthorectifier.html#ac912f48caf741ce2c2dc485089cb751a">pangea_survey::Orthorectifier::selfTest</a></div><div class="ttdeci">static void selfTest()</div><div class="ttdoc">Run synthetic orthorectification regression cases.</div><div class="ttdef"><b>Definition</b> <a href="ortho__map_8cpp_source.html#l01422">ortho_map.cpp:1422</a></div></div>
+<div class="ttc" id="aclasspangea__survey_1_1XyzTiles_html_a31ef374e4e1164aeba8651d99f8abf11"><div class="ttname"><a href="classpangea__survey_1_1XyzTiles.html#a31ef374e4e1164aeba8651d99f8abf11">pangea_survey::XyzTiles::groundPixel</a></div><div class="ttdeci">static double groundPixel(int zoom, double latitude)</div><div class="ttdoc">Ground metres per pixel at a latitude after Mercator scale correction.</div><div class="ttdef"><b>Definition</b> <a href="xyz__tiles_8h_source.html#l00071">xyz_tiles.h:71</a></div></div>
+<div class="ttc" id="adipla__camera__backend_8c_html_ac395aa5127c49db063effce9818917f3"><div class="ttname"><a href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a></div><div class="ttdeci">static int record(const union dc_shot_union *shot)</div><div class="ttdoc">Retrieve a point and admit a new observation only when its credit is free.</div><div class="ttdef"><b>Definition</b> <a href="dipla__camera__backend_8c_source.html#l00206">dipla_camera_backend.c:206</a></div></div>
+<div class="ttc" id="aear__inference_8c_html_a3065b71ea2455fb184ad978b7a8bd496"><div class="ttname"><a href="ear__inference_8c.html#a3065b71ea2455fb184ad978b7a8bd496">stopping</a></div><div class="ttdeci">static bool stopping</div><div class="ttdef"><b>Definition</b> <a href="ear__inference_8c_source.html#l00038">ear_inference.c:38</a></div></div>
+<div class="ttc" id="aexifite_8c_html_ae208d7773b764ff52127e9e76389e0bd"><div class="ttname"><a href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a></div><div class="ttdeci">static bool range(size_t total, size_t offset, size_t length)</div><div class="ttdoc">Check a byte span without forming a potentially overflowing end offset.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8c_source.html#l00133">exifite.c:133</a></div></div>
+<div class="ttc" id="agreat__session_8h_html"><div class="ttname"><a href="great__session_8h.html">great_session.h</a></div><div class="ttdoc">Coordinate append-only, restartable GREAT XYZ survey sessions.</div></div>
+<div class="ttc" id="ajpeg__encoder_8h_html"><div class="ttname"><a href="jpeg__encoder_8h.html">jpeg_encoder.h</a></div><div class="ttdoc">Encode BGRA map pixels and publish JPEGs with optional EXIF.</div></div>
+<div class="ttc" id="alwir__image_8c_html_aded4335c2df32c709945a69dfe77220d"><div class="ttname"><a href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a></div><div class="ttdeci">struct jpeg_error_mgr error</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00060">lwir_image.c:60</a></div></div>
+<div class="ttc" id="amap__config_8h_html"><div class="ttname"><a href="map__config_8h.html">map_config.h</a></div><div class="ttdoc">Own the survey mapper's validated configuration and mode defaults.</div></div>
+<div class="ttc" id="amap__exif_8h_html"><div class="ttname"><a href="map__exif_8h.html">map_exif.h</a></div><div class="ttdoc">Add projection, coverage, and source provenance to map EXIF.</div></div>
+<div class="ttc" id="amap__pipeline_8h_html"><div class="ttname"><a href="map__pipeline_8h.html">map_pipeline.h</a></div><div class="ttdoc">Orchestrate orthophoto rendering, evidence, and final publication.</div></div>
+<div class="ttc" id="amap__pipeline_8h_html_a8a0a00458779b04e8aa176afd519c114"><div class="ttname"><a href="map__pipeline_8h.html#a8a0a00458779b04e8aa176afd519c114">orthorectify</a></div><div class="ttdeci">static int orthorectify(const pangea_survey::MapConfig &amp;config, const fs::path &amp;csv, bool diagnostic=false, pangea_survey::MapProgress *progress=nullptr, double first=0)</div><div class="ttdoc">Render orthophoto tiles and publish their coverage/provenance manifest.</div><div class="ttdef"><b>Definition</b> <a href="map__pipeline_8h_source.html#l00041">map_pipeline.h:41</a></div></div>
+<div class="ttc" id="amap__progress_8h_html"><div class="ttname"><a href="map__progress_8h.html">map_progress.h</a></div><div class="ttdoc">Report monotonic progress, stage timings, and explicit interruption.</div></div>
+<div class="ttc" id="amap__resources_8h_html"><div class="ttname"><a href="map__resources_8h.html">map_resources.h</a></div><div class="ttdoc">Apply and periodically check the survey process's low-memory policy.</div></div>
+<div class="ttc" id="amap__writer_8h_html"><div class="ttname"><a href="map__writer_8h.html">map_writer.h</a></div><div class="ttdoc">Write georeferencing sidecars for rendered Pangea map images.</div></div>
+<div class="ttc" id="anamespacecamera__lens__detail_html_ab15544afd56ad4a09b496d1291ef476a"><div class="ttname"><a href="namespacecamera__lens__detail.html#ab15544afd56ad4a09b496d1291ef476a">camera_lens_detail::require</a></div><div class="ttdeci">void require(bool valid, const char *message)</div><div class="ttdoc">Route a failed precondition to the CLI's diagnostic handler.</div><div class="ttdef"><b>Definition</b> <a href="camera__lens_8cpp_source.html#l00122">camera_lens.cpp:122</a></div></div>
+<div class="ttc" id="anamespacepangea__survey_html_a1c1c299ab21c72e6106fa64fc1fbcf74"><div class="ttname"><a href="namespacepangea__survey.html#a1c1c299ab21c72e6106fa64fc1fbcf74">pangea_survey::loadMapConfig</a></div><div class="ttdeci">MapConfig loadMapConfig(const std::filesystem::path &amp;path, const std::string &amp;modeOverride={})</div><div class="ttdoc">Load and validate a survey INI plus its capture manifest or source CSV.</div><div class="ttdef"><b>Definition</b> <a href="map__config_8h_source.html#l00128">map_config.h:128</a></div></div>
+<div class="ttc" id="anamespacepangea__survey_html_a24fa50c73e816bdb74937bd33edf0e5c"><div class="ttname"><a href="namespacepangea__survey.html#a24fa50c73e816bdb74937bd33edf0e5c">pangea_survey::updateGreatSession</a></div><div class="ttdeci">static bool updateGreatSession(const MapConfig &amp;settings, const fs::path &amp;ini, bool final, bool render=true)</div><div class="ttdoc">Admit new photos and optionally publish a GREAT preview/final revision.</div><div class="ttdef"><b>Definition</b> <a href="great__session_8h_source.html#l00173">great_session.h:173</a></div></div>
+<div class="ttc" id="anamespacepangea__survey_html_a66aed1d9cd5b6b640d045405460dca70"><div class="ttname"><a href="namespacepangea__survey.html#a66aed1d9cd5b6b640d045405460dca70">pangea_survey::fileDigest</a></div><div class="ttdeci">std::string fileDigest(const std::filesystem::path &amp;path, const std::function&lt; bool()&gt; &amp;stopped={})</div><div class="ttdoc">Hash a file in bounded chunks, optionally honoring cancellation.</div><div class="ttdef"><b>Definition</b> <a href="map__storage_8h_source.html#l00089">map_storage.h:89</a></div></div>
+<div class="ttc" id="anamespacepangea__survey_html_a6e9613d6c239f877ab878c1acd0abec6"><div class="ttname"><a href="namespacepangea__survey.html#a6e9613d6c239f877ab878c1acd0abec6">pangea_survey::greatInputText</a></div><div class="ttdeci">std::string greatInputText(const MapConfig &amp;config)</div><div class="ttdoc">Snapshot the current accepted photo list for one GREAT revision.</div><div class="ttdef"><b>Definition</b> <a href="great__session_8h_source.html#l00108">great_session.h:108</a></div></div>
+<div class="ttc" id="anamespacepangea__survey_html_a98ba8f6dae2fb67c5634ecabe6356003"><div class="ttname"><a href="namespacepangea__survey.html#a98ba8f6dae2fb67c5634ecabe6356003">pangea_survey::dataDigest</a></div><div class="ttdeci">std::string dataDigest(const void *data, std::size_t size)</div><div class="ttdoc">Compute a lowercase SHA-256 digest for an in-memory byte range.</div><div class="ttdef"><b>Definition</b> <a href="map__storage_8h_source.html#l00077">map_storage.h:77</a></div></div>
+<div class="ttc" id="anamespacepangea__survey_html_aa686f83b4944e95a3c4e4397098ae055"><div class="ttname"><a href="namespacepangea__survey.html#aa686f83b4944e95a3c4e4397098ae055">pangea_survey::saveWorkingText</a></div><div class="ttdeci">void saveWorkingText(const std::filesystem::path &amp;target, const std::string &amp;text)</div><div class="ttdoc">Save checkpoint text through the durable working-file publisher.</div><div class="ttdef"><b>Definition</b> <a href="map__storage_8h_source.html#l00158">map_storage.h:158</a></div></div>
+<div class="ttc" id="aonnx__session_8c_html_a14f90ccd369275842f05aba2a64fc045"><div class="ttname"><a href="onnx__session_8c.html#a14f90ccd369275842f05aba2a64fc045">checked</a></div><div class="ttdeci">static bool checked(OrtStatus *status, char *error, size_t capacity)</div><div class="ttdoc">Consume every ORT error object exactly once while copying its diagnostic before release.</div><div class="ttdef"><b>Definition</b> <a href="onnx__session_8c_source.html#l00031">onnx_session.c:31</a></div></div>
+<div class="ttc" id="aortho__map_8h_html"><div class="ttname"><a href="ortho__map_8h.html">ortho_map.h</a></div><div class="ttdoc">Describe the validated photo set and render projected map windows.</div></div>
+<div class="ttc" id="apose__log_8c_html_a76d971a3c552bc58ba9f0d5fceae9806"><div class="ttname"><a href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a></div><div class="ttdeci">static size_t count</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00079">pose_log.c:79</a></div></div>
+<div class="ttc" id="apose__log_8c_html_ab41bf19330e50c3c7bf3544c53f30971"><div class="ttname"><a href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a></div><div class="ttdeci">static FILE * output</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00077">pose_log.c:77</a></div></div>
+<div class="ttc" id="asrc_2version_8h_html_a82fa8745faccf83a19bc3f447f516a95"><div class="ttname"><a href="src_2version_8h.html#a82fa8745faccf83a19bc3f447f516a95">PANGEA_BUILD_VERSION</a></div><div class="ttdeci">#define PANGEA_BUILD_VERSION</div><div class="ttdef"><b>Definition</b> <a href="src_2version_8h_source.html#l00076">version.h:76</a></div></div>
+<div class="ttc" id="astructpangea__survey_1_1MapConfig_html"><div class="ttname"><a href="structpangea__survey_1_1MapConfig.html">pangea_survey::MapConfig</a></div><div class="ttdoc">Fully parsed settings shared by orthomap and XYZ export.</div><div class="ttdef"><b>Definition</b> <a href="map__config_8h_source.html#l00041">map_config.h:41</a></div></div>
+<div class="ttc" id="astructpangea__survey_1_1MapConfig_html_a253753848bee0278997a65c61b66da39"><div class="ttname"><a href="structpangea__survey_1_1MapConfig.html#a253753848bee0278997a65c61b66da39">pangea_survey::MapConfig::outputFormat</a></div><div class="ttdeci">std::string outputFormat</div><div class="ttdef"><b>Definition</b> <a href="map__config_8h_source.html#l00067">map_config.h:67</a></div></div>
+<div class="ttc" id="astructpangea__survey_1_1MapConfig_html_a6a844ae6bec69274a208df825d3a4712"><div class="ttname"><a href="structpangea__survey_1_1MapConfig.html#a6a844ae6bec69274a208df825d3a4712">pangea_survey::MapConfig::sourceCsv</a></div><div class="ttdeci">std::filesystem::path sourceCsv</div><div class="ttdef"><b>Definition</b> <a href="map__config_8h_source.html#l00071">map_config.h:71</a></div></div>
+<div class="ttc" id="astructpangea__survey_1_1MapConfig_html_a9e17168c8af7ef68a7e33890d972d7cc"><div class="ttname"><a href="structpangea__survey_1_1MapConfig.html#a9e17168c8af7ef68a7e33890d972d7cc">pangea_survey::MapConfig::mode</a></div><div class="ttdeci">std::string mode</div><div class="ttdef"><b>Definition</b> <a href="map__config_8h_source.html#l00070">map_config.h:70</a></div></div>
+<div class="ttc" id="astructpangea__survey_1_1XyzPlan_html"><div class="ttname"><a href="structpangea__survey_1_1XyzPlan.html">pangea_survey::XyzPlan</a></div><div class="ttdoc">Derive requested XYZ bounds, map grid, and per-zoom tile ranges.</div><div class="ttdef"><b>Definition</b> <a href="xyz__tiles_8h_source.html#l00119">xyz_tiles.h:119</a></div></div>
+<div class="ttc" id="astructpangea__survey_1_1XyzPlan_html_ab068e1a5ab35cc86a04e64b6e1967459"><div class="ttname"><a href="structpangea__survey_1_1XyzPlan.html#ab068e1a5ab35cc86a04e64b6e1967459">pangea_survey::XyzPlan::checkOutput</a></div><div class="ttdeci">void checkOutput(const std::filesystem::path &amp;root) const</div><div class="ttdoc">Reject any existing tile or partial file in the output plan.</div><div class="ttdef"><b>Definition</b> <a href="xyz__tiles_8h_source.html#l00189">xyz_tiles.h:189</a></div></div>
+<div class="ttc" id="astructpangea__survey_1_1XyzPlan_html_ae7ee030e014e45f154a80e663fc23285"><div class="ttname"><a href="structpangea__survey_1_1XyzPlan.html#ae7ee030e014e45f154a80e663fc23285">pangea_survey::XyzPlan::workingConfig</a></div><div class="ttdeci">MapConfig workingConfig(const MapConfig &amp;original) const</div><div class="ttdoc">Derive the padded UTM working-grid settings needed for resampling.</div><div class="ttdef"><b>Definition</b> <a href="xyz__tiles_8h_source.html#l00171">xyz_tiles.h:171</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a158c9f24d3edea2484307e4a1d837398"><div class="ttname"><a href="survey_8cpp.html#a158c9f24d3edea2484307e4a1d837398">processCpuSeconds</a></div><div class="ttdeci">static double processCpuSeconds()</div><div class="ttdoc">Read cumulative CPU time across the mapping process's threads.</div><div class="ttdef"><b>Definition</b> <a href="#l00058">survey.cpp:58</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a19bfb27380067c74ae297dd7dad5fb37"><div class="ttname"><a href="survey_8cpp.html#a19bfb27380067c74ae297dd7dad5fb37">Clock</a></div><div class="ttdeci">std::chrono::steady_clock Clock</div><div class="ttdef"><b>Definition</b> <a href="#l00046">survey.cpp:46</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a1f9c4e7164afb0518c0012e3d5b3f873"><div class="ttname"><a href="survey_8cpp.html#a1f9c4e7164afb0518c0012e3d5b3f873">liveCpuPercent</a></div><div class="ttdeci">static int liveCpuPercent</div><div class="ttdef"><b>Definition</b> <a href="#l00052">survey.cpp:52</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a38447104c9f52f871e3e4e0d92e4cd1e"><div class="ttname"><a href="survey_8cpp.html#a38447104c9f52f871e3e4e0d92e4cd1e">resources</a></div><div class="ttdeci">static std::unique_ptr&lt; pangea_survey::MapResources &gt; resources</div><div class="ttdef"><b>Definition</b> <a href="#l00050">survey.cpp:50</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a48a9626433c02bb555f5d39d34778b2a"><div class="ttname"><a href="survey_8cpp.html#a48a9626433c02bb555f5d39d34778b2a">liveCpuStarted</a></div><div class="ttdeci">static double liveCpuStarted</div><div class="ttdef"><b>Definition</b> <a href="#l00053">survey.cpp:53</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a6110a63ee5148303e2d996520add6e8e"><div class="ttname"><a href="survey_8cpp.html#a6110a63ee5148303e2d996520add6e8e">executablePath</a></div><div class="ttdeci">static fs::path executablePath()</div><div class="ttdoc">Resolve the running executable independently of the launch directory.</div><div class="ttdef"><b>Definition</b> <a href="#l00091">survey.cpp:91</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a66a8dce08bcd2fdc2f4ea65ab1e08b03"><div class="ttname"><a href="survey_8cpp.html#a66a8dce08bcd2fdc2f4ea65ab1e08b03">isStopping</a></div><div class="ttdeci">static bool isStopping()</div><div class="ttdoc">Check cancellation at a cooperative mapping boundary.</div><div class="ttdef"><b>Definition</b> <a href="#l00068">survey.cpp:68</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a7e6404c8d2cd9e7631f424d34a4c70b3"><div class="ttname"><a href="survey_8cpp.html#a7e6404c8d2cd9e7631f424d34a4c70b3">activePauseFile</a></div><div class="ttdeci">static fs::path activePauseFile</div><div class="ttdef"><b>Definition</b> <a href="#l00051">survey.cpp:51</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a8ea5a830f0142e806b5d7deccfd6d8bc"><div class="ttname"><a href="survey_8cpp.html#a8ea5a830f0142e806b5d7deccfd6d8bc">pangeaSurveyMain</a></div><div class="ttdeci">int pangeaSurveyMain(int argc, char **argv)</div><div class="ttdef"><b>Definition</b> <a href="#l00204">survey.cpp:204</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a90257057c2bc3c703d64fe9c4c1c5df6"><div class="ttname"><a href="survey_8cpp.html#a90257057c2bc3c703d64fe9c4c1c5df6">defaultIni</a></div><div class="ttdeci">static fs::path defaultIni()</div><div class="ttdoc">Locate the default configuration alongside the executable.</div><div class="ttdef"><b>Definition</b> <a href="#l00096">survey.cpp:96</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a9244e500f0327ecfbdbf19a45ba4535f"><div class="ttname"><a href="survey_8cpp.html#a9244e500f0327ecfbdbf19a45ba4535f">checkInputs</a></div><div class="ttdeci">static void checkInputs(const pangea_survey::MapConfig &amp;config)</div><div class="ttdoc">Validate a source session and print its output layout offline.</div><div class="ttdef"><b>Definition</b> <a href="#l00188">survey.cpp:188</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a96cb030bbe06d39854ae523b3eda58dd"><div class="ttname"><a href="survey_8cpp.html#a96cb030bbe06d39854ae523b3eda58dd">sessionName</a></div><div class="ttdeci">static std::string sessionName()</div><div class="ttdoc">Create a readable, millisecond-resolution session label.</div><div class="ttdef"><b>Definition</b> <a href="#l00103">survey.cpp:103</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_a9bbb4981e39fa2e92e23694f4bde73ff"><div class="ttname"><a href="survey_8cpp.html#a9bbb4981e39fa2e92e23694f4bde73ff">liveStarted</a></div><div class="ttdeci">static Clock::time_point liveStarted</div><div class="ttdef"><b>Definition</b> <a href="#l00054">survey.cpp:54</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_aa87ec6e8ae1c727c4739426f7564c6be"><div class="ttname"><a href="survey_8cpp.html#aa87ec6e8ae1c727c4739426f7564c6be">seconds</a></div><div class="ttdeci">static double seconds(Clock::duration duration)</div><div class="ttdoc">Convert a monotonic interval without truncating fractional seconds.</div><div class="ttdef"><b>Definition</b> <a href="#l00100">survey.cpp:100</a></div></div>
+<div class="ttc" id="asurvey_8cpp_html_ad87d81aad82759b3b0446992f7777f27"><div class="ttname"><a href="survey_8cpp.html#ad87d81aad82759b3b0446992f7777f27">signalHandler</a></div><div class="ttdeci">static void signalHandler(int sig)</div><div class="ttdoc">Record a stop request without performing cleanup in signal context.</div><div class="ttdef"><b>Definition</b> <a href="#l00084">survey.cpp:84</a></div></div>
+<div class="ttc" id="ausher_8c_html_a349e1179d2a6ecbcc88c95eb2751e226"><div class="ttname"><a href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a></div><div class="ttdeci">struct usher_control_result result</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00377">usher.c:377</a></div></div>
+<div class="ttc" id="axyz__export_8h_html"><div class="ttname"><a href="xyz__export_8h.html">xyz_export.h</a></div><div class="ttdoc">Resample the UTM source mosaic into complete 256-pixel XYZ tiles.</div></div>
+<div class="ttc" id="axyz__export_8h_html_a7fb0c75137b3cd70c30f523927944476"><div class="ttname"><a href="xyz__export_8h.html#a7fb0c75137b3cd70c30f523927944476">exportXyzTiles</a></div><div class="ttdeci">static int exportXyzTiles(const pangea_survey::MapConfig &amp;config, const fs::path &amp;csv, const fs::path &amp;workDirectory, bool diagnostic=false)</div><div class="ttdoc">Render and publish the planned XYZ pyramid, optionally as diagnostics.</div><div class="ttdef"><b>Definition</b> <a href="xyz__export_8h_source.html#l00230">xyz_export.h:230</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

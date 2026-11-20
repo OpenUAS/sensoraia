@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['pangea_5fbuild_5fversion_0',['PANGEA_BUILD_VERSION',['../src_2version_8h.html#a82fa8745faccf83a19bc3f447f516a95',1,'version.h']]],
+  ['pangea_5fversion_1',['PANGEA_VERSION',['../src_2version_8h.html#a88decfe9036aea02396905bde128f6c9',1,'version.h']]],
+  ['path_5fmax_2',['PATH_MAX',['../path__utils_8h.html#ae688d728e1acdfe5988c7db45d6f0166',1,'path_utils.h']]],
+  ['pcm_5fs16_5ffull_5fscale_3',['PCM_S16_FULL_SCALE',['../earcam_8c.html#a1a31ce124401ba3e65b74d480a1b6cc9',1,'earcam.c']]],
+  ['pi_4',['PI',['../earcam_8c.html#a598a3330b3c21701223ee0ca14316eca',1,'PI:&#160;earcam.c'],['../ear__heatmap__overlay_8c.html#a598a3330b3c21701223ee0ca14316eca',1,'PI:&#160;ear_heatmap_overlay.c']]],
+  ['pose_5flog_5fbatch_5',['POSE_LOG_BATCH',['../pose__log_8c.html#af2b4fccf8265a7088b4368123860aaf1',1,'pose_log.c']]],
+  ['pose_5flog_5fcapacity_6',['POSE_LOG_CAPACITY',['../pose__log_8c.html#aff45601da86d471b63c44cecb7ff0a00',1,'pose_log.c']]],
+  ['pose_5flog_5fcoordinate_5fscale_7',['POSE_LOG_COORDINATE_SCALE',['../pose__log_8c.html#ada627c51525ff0bb9c34bfee378f5e15',1,'pose_log.c']]],
+  ['pose_5flog_5fmax_5fbytes_8',['POSE_LOG_MAX_BYTES',['../pose__log_8c.html#abc743740089fdbc6d0ea809a53310e88',1,'pose_log.c']]],
+  ['pose_5flog_5fmax_5fsample_5fwindow_5fus_9',['POSE_LOG_MAX_SAMPLE_WINDOW_US',['../pose__log_8c.html#a34bb01fd12c7712ad36e32bd7834bb38',1,'pose_log.c']]],
+  ['pose_5flog_5fschema_5fversion_10',['POSE_LOG_SCHEMA_VERSION',['../pose__log_8c.html#aa75c2c05cba823ddcd2c75ab8f436241',1,'pose_log.c']]],
+  ['position_5fbfp_5fscale_11',['POSITION_BFP_SCALE',['../ear__cam__pipe_8c.html#ada7d2a3ff43e8679d7695f6721b99114',1,'POSITION_BFP_SCALE:&#160;ear_cam_pipe.c'],['../image__exif_8c.html#ada7d2a3ff43e8679d7695f6721b99114',1,'POSITION_BFP_SCALE:&#160;image_exif.c'],['../image__mock__transform_8c.html#ada7d2a3ff43e8679d7695f6721b99114',1,'POSITION_BFP_SCALE:&#160;image_mock_transform.c'],['../usher_8c.html#ada7d2a3ff43e8679d7695f6721b99114',1,'POSITION_BFP_SCALE:&#160;usher.c']]],
+  ['projection_5fepsilon_12',['PROJECTION_EPSILON',['../image__mock__transform_8c.html#a3739185762a7b75aa4acb74ce81e5fb2',1,'image_mock_transform.c']]],
+  ['projection_5ffov_5fsamples_13',['PROJECTION_FOV_SAMPLES',['../image__mock__transform_8c.html#a84740588a78a745789c9c955d6fc6d35',1,'image_mock_transform.c']]],
+  ['projection_5fmin_5fdepth_14',['PROJECTION_MIN_DEPTH',['../image__mock__transform_8c.html#abd623595244a0280996ed538565dac9b',1,'image_mock_transform.c']]],
+  ['projection_5fmin_5fray_5fscale_15',['PROJECTION_MIN_RAY_SCALE',['../image__mock__transform_8c.html#a0a791d1363837005868374b9750fa7b6',1,'image_mock_transform.c']]],
+  ['projection_5frefine_5fsteps_16',['PROJECTION_REFINE_STEPS',['../image__mock__transform_8c.html#a1e2f0371cfc68516158afa2edc15142b',1,'image_mock_transform.c']]]
+];

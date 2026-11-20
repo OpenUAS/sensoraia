@@ -1,0 +1,1851 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/lwir_cam/lwir_inference.c Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('lwir__inference_8c_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">lwir_inference.c</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="lwir__inference_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/** @file lwir_inference.c</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @brief Classifier evidence with explicit display-versus-radiometric model inputs.</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @details A class probability is neither a temperature correction nor a geographic hotspot result.</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * One model is held in module-static storage (no heap here; the inference context</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * owns its own storage). Pixel-domain models read the display JPEG; other models</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * require the embedded temperature layer. Results go to an exclusively created</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * "&lt;photo&gt;.lwir.ini" sidecar; the photograph itself is never modified. */</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include "<a class="code" href="lwir__inference_8h.html">lwir_inference.h</a>"</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include "<a class="code" href="lwir__container_8h.html">lwir_container.h</a>"</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#include "<a class="code" href="lwir__frame_8h.html">lwir_frame.h</a>"</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include "<a class="code" href="inference__jpeg_8h.html">inference_jpeg.h</a>"</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="lwir__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">   35</a></span><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structinference__context.html">inference_context</a> <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>; <span class="comment">///&lt; The single open classifier; storage != NULL means open.</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="lwir__inference_8c.html#a1985c3ad94f781625b6ffdb95308e316">   36</a></span><span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code hl_variable" href="lwir__inference_8c.html#a1985c3ad94f781625b6ffdb95308e316">thermal_plane</a>[<a class="code hl_define" href="lwir__frame_8h.html#a0b6e411350bc5b9500943d73cefdcb8c">LWIR_MAX_WIDTH</a> * <a class="code hl_define" href="lwir__frame_8h.html#af419b607d53b7ebf209b1660f3c7b933">LWIR_MAX_HEIGHT</a> * 2]; <span class="comment">///&lt; Kelvin*64 samples for radiometric models.</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="lwir__inference_8c.html#a78be9e7d37571059456305628ab17557">   37</a></span><span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="ear__inference_8c.html#a78be9e7d37571059456305628ab17557">score_threshold</a>; <span class="comment">///&lt; Inclusive acceptance threshold set at open.</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="lwir__inference_8c.html#a99c22b92faa0e14957fef6d571fa1b29">   38</a></span><span class="keyword">static</span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="ear__inference_8c.html#a99c22b92faa0e14957fef6d571fa1b29">class_index</a>; <span class="comment">///&lt; Reported class within the probability vector.</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment"></span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="comment"> * @brief Open and qualify the LWIR classifier (see lwir_inference.h).</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="comment"> * @return True if open (or already open); false on bad arguments, open failure or</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment"> * an unsupported model contract, leaving nothing open.</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment"> * @details Requires exactly one input and one float32 output of at most 4096</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment"> * classes containing @p category; non-pixel (temperature) inputs must be single</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment"> * channel.</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment"> * @note Already open: returns true immediately and keeps the earlier threshold/category.</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00049">
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="lwir__inference_8c.html#af34b807f4663bb524f5241c5da7d0d98">   49</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__inference_8c.html#af34b807f4663bb524f5241c5da7d0d98">lwir_inference_open</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structinference__settings.html">inference_settings</a> *settings, <span class="keywordtype">double</span> threshold, <span class="keywordtype">unsigned</span> category,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>{</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a> || !<a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> <span class="comment">/* Pre-filled so every early false return carries a diagnostic. */</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Invalid LWIR classifier settings or probability threshold"</span>);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> <span class="keywordflow">if</span> (!settings || !isfinite(threshold) || threshold &lt; 0 || threshold &gt; 1) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.storage) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="inference__model_8c.html#aa684db3ec347f81b301fa26475b99e19">inference_context_open</a>(&amp;<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>, settings, <span class="stringliteral">"lwir_classifier_v1"</span>, <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.input_count != 1 || <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.output_count != 1 || !<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.image.channels ||</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.outputs[0].type != <a class="code hl_enumvalue" href="onnx__session_8h.html#a91bb5b95378b6f1b76a6ef3ae2855237a5c766ccf86a630917335148297156b4d">ONNX_FLOAT32</a> || <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.outputs[0].bytes / <span class="keyword">sizeof</span>(<span class="keywordtype">float</span>) &gt; 4096 ||</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      category &gt;= <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.outputs[0].bytes / <span class="keyword">sizeof</span>(<span class="keywordtype">float</span>) ||</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>      (<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.image.units != <a class="code hl_enumvalue" href="inference__image_8h.html#a6933a1958bfabf95b5b27d648f790428a47659f70013834e43bccb36cc506fc7e">INFERENCE_PIXEL</a> &amp;&amp; <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.image.channels != 1)) {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"LWIR classifier requires one declared image/temperature input and float probabilities"</span>);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> <a class="code hl_function" href="inference__model_8c.html#ad67b0588ecc54c14c19a4999af7866ee">inference_context_close</a>(&amp;<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  }</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> <a class="code hl_variable" href="ear__inference_8c.html#a78be9e7d37571059456305628ab17557">score_threshold</a> = threshold;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> <a class="code hl_variable" href="ear__inference_8c.html#a99c22b92faa0e14957fef6d571fa1b29">class_index</a> = category;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}</div>
+</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="comment"></span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="comment"> * @brief Classify one saved photo and publish its evidence sidecar.</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment"> * @return True once the sidecar is fully written and fsynced. False if the model</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment"> * is not open, input is missing/invalid, any probability is outside [0,1],</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment"> * hashing fails, or the sidecar exists or cannot be written (a partial sidecar</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="comment"> * is removed). The photograph is untouched in every case.</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="comment"> * @details Records image and model hashes, input units, synthetic-temperature</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="comment"> * flag, source size, class, probability and accepted (probability &gt;= threshold).</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="comment"> * @note synthetic_temperature is only meaningful for temperature-input models;</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="comment"> * pixel-input models always record 0.</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="comment"> * @note The image hash is computed after inference by a separate file read.</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00083">
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="lwir__inference_8c.html#a8eb8ead606525383998a6bd817d4f801">   83</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__inference_8c.html#a8eb8ead606525383998a6bd817d4f801">lwir_inference_image</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> sequence, <span class="keywordtype">char</span> *<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>{</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a> || !<a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"LWIR classifier is unavailable or its input is invalid"</span>);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> <span class="keywordflow">if</span> (!filename || !<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.storage) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> length = strnlen(filename, <a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> <span class="keywordflow">if</span> (length &lt; 4 || length &gt;= <a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a> || strcmp(filename + length - 4, <span class="stringliteral">".jpg"</span>)) {</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"LWIR classifier requires a bounded .jpg input path"</span>);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  }</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> <span class="keywordtype">bool</span> synthetic = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.image.units == <a class="code hl_enumvalue" href="inference__image_8h.html#a6933a1958bfabf95b5b27d648f790428a47659f70013834e43bccb36cc506fc7e">INFERENCE_PIXEL</a>) {</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="inference__jpeg_8c.html#a1f345f5ad2dceda5bdea203ec5a66e00">inference_jpeg_prepare</a>(&amp;<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>, filename, <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> <span class="comment">/* A display JPEG cannot replace missing physical temperature samples, even if it looks thermal. */</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> <span class="keywordtype">unsigned</span> width = 0, height = 0;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> <span class="keywordflow">if</span> (<a class="code hl_function" href="lwir__container_8c.html#a0696b94529075b82f6e0604295fcf8db">lwir_read_temperature_layer</a>(filename, <a class="code hl_variable" href="lwir__inference_8c.html#a1985c3ad94f781625b6ffdb95308e316">thermal_plane</a>, <span class="keyword">sizeof</span>(<a class="code hl_variable" href="lwir__inference_8c.html#a1985c3ad94f781625b6ffdb95308e316">thermal_plane</a>), &amp;width, &amp;height, &amp;synthetic) != 1) {</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>      snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Model requires a valid radiometric temperature plane; display pixels are not temperatures"</span>);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    }</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structinference__image.html">inference_image</a> <a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a> = {.planes = {<a class="code hl_variable" href="lwir__inference_8c.html#a1985c3ad94f781625b6ffdb95308e316">thermal_plane</a>}, .lengths = {(size_t)<a class="code hl_variable" href="structinference__image.html#ad634463268896ffb61ce3e9905af855d">width</a> * <a class="code hl_variable" href="structinference__image.html#abab4eecf685c78e65292ece42bcd76d0">height</a> * 2},</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      .strides = {(size_t)<a class="code hl_variable" href="structinference__image.html#ad634463268896ffb61ce3e9905af855d">width</a> * 2}, .width = <a class="code hl_variable" href="structinference__image.html#ad634463268896ffb61ce3e9905af855d">width</a>, .height = <a class="code hl_variable" href="structinference__image.html#abab4eecf685c78e65292ece42bcd76d0">height</a>, .format = <a class="code hl_enumvalue" href="inference__image_8h.html#ac11345b0dd57784ba44549fb0ecaf50ea111182ac0a5ad714adc37e44899c6786">INFERENCE_KELVIN64</a>};</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="inference__model_8c.html#aafe35a30ef69a9377e27992d144141b9">inference_context_prepare_image</a>(&amp;<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>, &amp;<a class="code hl_variable" href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a>, <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  }</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="inference__model_8c.html#a321c97fa4b8ecee679ba4da4b7321f9d">inference_context_run</a>(&amp;<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>, <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> <span class="keyword">const</span> <span class="keywordtype">float</span> *scores = <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.outputs[0].data;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> classes = <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.outputs[0].bytes / <span class="keyword">sizeof</span>(float);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> <span class="comment">/* Range check only; probabilities are not required to sum to 1. */</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; classes; ++index) {</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> <span class="keywordflow">if</span> (!isfinite(scores[index]) || scores[index] &lt; 0 || scores[index] &gt; 1) {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>      snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Invalid thermal classifier probability"</span>);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  }</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> <span class="keywordtype">char</span> output_path[<a class="code hl_define" href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a>], digest[65];</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="inference__model_8c.html#ab4960d21aeb783a12fb356a39031cb46">inference_file_sha256</a>(filename, digest)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = snprintf(output_path, <span class="keyword">sizeof</span>(output_path), <span class="stringliteral">"%.*s.lwir.ini"</span>, (<span class="keywordtype">int</span>)(length - 4), filename);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &lt; 0 || (<span class="keywordtype">size_t</span>)<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &gt;= <span class="keyword">sizeof</span>(output_path)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> <span class="comment">/* Exclusive creation prevents a retry from silently replacing evidence for an earlier input. */</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  FILE *<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a> = fopen(output_path, <span class="stringliteral">"wx"</span>);</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) { snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Cannot exclusively create LWIR classifier evidence: %s"</span>, output_path); <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  fprintf(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <span class="stringliteral">"schema=LWIR_ONNX_CLASS_V1\nsequence=%llu\nimage_sha256=%s\nmodel_sha256=%s\n"</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> <span class="stringliteral">"model_descriptor_sha256=%s\ninput_units=%u\nsynthetic_temperature=%u\n"</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> <span class="stringliteral">"source_width=%u\nsource_height=%u\nclass=%u\nprobability=%.9g\naccepted=%u\n"</span>,</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    sequence, digest, <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.graph_sha256, <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.descriptor_sha256,</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    (<span class="keywordtype">unsigned</span>)<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.model.image.units, synthetic ? 1U : 0U,</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.transform.source_width, <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.transform.source_height, <a class="code hl_variable" href="ear__inference_8c.html#a99c22b92faa0e14957fef6d571fa1b29">class_index</a>,</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    (<span class="keywordtype">double</span>)scores[<a class="code hl_variable" href="ear__inference_8c.html#a99c22b92faa0e14957fef6d571fa1b29">class_index</a>], scores[<a class="code hl_variable" href="ear__inference_8c.html#a99c22b92faa0e14957fef6d571fa1b29">class_index</a>] &gt;= <a class="code hl_variable" href="ear__inference_8c.html#a78be9e7d37571059456305628ab17557">score_threshold</a> ? 1U : 0U);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> = !ferror(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) &amp;&amp; fflush(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>) == 0 &amp;&amp; fsync(fileno(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)) == 0;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> <span class="keywordflow">if</span> (fclose(<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>)) <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> <span class="comment">/* Never leave a truncated sidecar that a reader could mistake for evidence. */</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a>) { unlink(output_path); snprintf(<a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="stringliteral">"Cannot publish LWIR classifier evidence"</span>); }</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> <span class="keywordflow">return</span> <a class="code hl_variable" href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a>;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>}</div>
+</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="comment"></span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="comment">/** @brief Release the classifier; harmless when not open. Threshold/category are reset by the next open. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00139">
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="lwir__inference_8c.html#a5e10b183e5af1818eb1d3be169e56d1c">  139</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="lwir__inference_8c.html#a5e10b183e5af1818eb1d3be169e56d1c">lwir_inference_close</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>{</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> <a class="code hl_function" href="inference__model_8c.html#ad67b0588ecc54c14c19a4999af7866ee">inference_context_close</a>(&amp;<a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>);</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>}</div>
+</div>
+<div class="ttc" id="acapture__arbiter_8c_html_a6d68504c09ee186ab8deb6b756b4bd66"><div class="ttname"><a href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a></div><div class="ttdeci">static unsigned capacity[COVERAGE_CAMERAS]</div><div class="ttdef"><b>Definition</b> <a href="capture__arbiter_8c_source.html#l00075">capture_arbiter.c:75</a></div></div>
+<div class="ttc" id="aear__inference_8c_html_a78be9e7d37571059456305628ab17557"><div class="ttname"><a href="ear__inference_8c.html#a78be9e7d37571059456305628ab17557">score_threshold</a></div><div class="ttdeci">static double score_threshold</div><div class="ttdef"><b>Definition</b> <a href="ear__inference_8c_source.html#l00046">ear_inference.c:46</a></div></div>
+<div class="ttc" id="aear__inference_8c_html_a99c22b92faa0e14957fef6d571fa1b29"><div class="ttname"><a href="ear__inference_8c.html#a99c22b92faa0e14957fef6d571fa1b29">class_index</a></div><div class="ttdeci">static unsigned class_index</div><div class="ttdef"><b>Definition</b> <a href="ear__inference_8c_source.html#l00047">ear_inference.c:47</a></div></div>
+<div class="ttc" id="aear__inference_8c_html_a9d7475c1fcdbe454f3c09344c794b6b0"><div class="ttname"><a href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a></div><div class="ttdeci">static struct inference_context network</div><div class="ttdef"><b>Definition</b> <a href="ear__inference_8c_source.html#l00034">ear_inference.c:34</a></div></div>
+<div class="ttc" id="ainference__image_8h_html_a6933a1958bfabf95b5b27d648f790428a47659f70013834e43bccb36cc506fc7e"><div class="ttname"><a href="inference__image_8h.html#a6933a1958bfabf95b5b27d648f790428a47659f70013834e43bccb36cc506fc7e">INFERENCE_PIXEL</a></div><div class="ttdeci">@ INFERENCE_PIXEL</div><div class="ttdef"><b>Definition</b> <a href="inference__image_8h_source.html#l00034">inference_image.h:34</a></div></div>
+<div class="ttc" id="ainference__image_8h_html_ac11345b0dd57784ba44549fb0ecaf50ea111182ac0a5ad714adc37e44899c6786"><div class="ttname"><a href="inference__image_8h.html#ac11345b0dd57784ba44549fb0ecaf50ea111182ac0a5ad714adc37e44899c6786">INFERENCE_KELVIN64</a></div><div class="ttdeci">@ INFERENCE_KELVIN64</div><div class="ttdef"><b>Definition</b> <a href="inference__image_8h_source.html#l00030">inference_image.h:30</a></div></div>
+<div class="ttc" id="ainference__jpeg_8c_html_a1f345f5ad2dceda5bdea203ec5a66e00"><div class="ttname"><a href="inference__jpeg_8c.html#a1f345f5ad2dceda5bdea203ec5a66e00">inference_jpeg_prepare</a></div><div class="ttdeci">bool inference_jpeg_prepare(struct inference_context *context, const char *filename, char *error, size_t capacity)</div><div class="ttdoc">Stream a JPEG into an open context's single declared image input.</div><div class="ttdef"><b>Definition</b> <a href="inference__jpeg_8c_source.html#l00167">inference_jpeg.c:167</a></div></div>
+<div class="ttc" id="ainference__jpeg_8h_html"><div class="ttname"><a href="inference__jpeg_8h.html">inference_jpeg.h</a></div><div class="ttdoc">Bounded JPEG-to-tensor preparation without running the graph or modifying the input file.</div></div>
+<div class="ttc" id="ainference__model_8c_html_a321c97fa4b8ecee679ba4da4b7321f9d"><div class="ttname"><a href="inference__model_8c.html#a321c97fa4b8ecee679ba4da4b7321f9d">inference_context_run</a></div><div class="ttdeci">bool inference_context_run(struct inference_context *context, char *error, size_t capacity)</div><div class="ttdoc">Run the currently prepared tensors using the context's timeout policy.</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8c_source.html#l00346">inference_model.c:346</a></div></div>
+<div class="ttc" id="ainference__model_8c_html_aa684db3ec347f81b301fa26475b99e19"><div class="ttname"><a href="inference__model_8c.html#aa684db3ec347f81b301fa26475b99e19">inference_context_open</a></div><div class="ttdeci">bool inference_context_open(struct inference_context *context, const struct inference_settings *settings, const char *adapter, char *error, size_t capacity)</div><div class="ttdoc">Verify a bundle, map bounded tensors and bind one warm session.</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8c_source.html#l00277">inference_model.c:277</a></div></div>
+<div class="ttc" id="ainference__model_8c_html_aafe35a30ef69a9377e27992d144141b9"><div class="ttname"><a href="inference__model_8c.html#aafe35a30ef69a9377e27992d144141b9">inference_context_prepare_image</a></div><div class="ttdeci">bool inference_context_prepare_image(struct inference_context *context, const struct inference_image *image, char *error, size_t capacity)</div><div class="ttdoc">Prepare a single image input without running the model, so camera leases can be released first.</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8c_source.html#l00361">inference_model.c:361</a></div></div>
+<div class="ttc" id="ainference__model_8c_html_ab4960d21aeb783a12fb356a39031cb46"><div class="ttname"><a href="inference__model_8c.html#ab4960d21aeb783a12fb356a39031cb46">inference_file_sha256</a></div><div class="ttdeci">bool inference_file_sha256(const char *filename, char digest[65])</div><div class="ttdoc">Hash a stable nonempty regular file using bounded streaming scratch.</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8c_source.html#l00041">inference_model.c:41</a></div></div>
+<div class="ttc" id="ainference__model_8c_html_ad67b0588ecc54c14c19a4999af7866ee"><div class="ttname"><a href="inference__model_8c.html#ad67b0588ecc54c14c19a4999af7866ee">inference_context_close</a></div><div class="ttdeci">void inference_context_close(struct inference_context *context)</div><div class="ttdoc">Release the session before unmapping its borrowed tensor storage.</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8c_source.html#l00373">inference_model.c:373</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_aa4d8d5cefef1dcae62c784bf4698f487"><div class="ttname"><a href="inference__settings_8h.html#aa4d8d5cefef1dcae62c784bf4698f487">INFERENCE_PATH_CAPACITY</a></div><div class="ttdeci">#define INFERENCE_PATH_CAPACITY</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00031">inference_settings.h:31</a></div></div>
+<div class="ttc" id="alwir__container_8c_html_a0696b94529075b82f6e0604295fcf8db"><div class="ttname"><a href="lwir__container_8c.html#a0696b94529075b82f6e0604295fcf8db">lwir_read_temperature_layer</a></div><div class="ttdeci">int lwir_read_temperature_layer(const char *filename, uint8_t *destination, size_t capacity, unsigned *width, unsigned *height, bool *synthetic)</div><div class="ttdoc">Open filename safely and read the layer only; see lwir_container.h.</div><div class="ttdef"><b>Definition</b> <a href="lwir__container_8c_source.html#l00272">lwir_container.c:272</a></div></div>
+<div class="ttc" id="alwir__container_8h_html"><div class="ttname"><a href="lwir__container_8h.html">lwir_container.h</a></div><div class="ttdoc">Exact thermal evidence in JPEG containers, independent of analysis.</div></div>
+<div class="ttc" id="alwir__frame_8h_html"><div class="ttname"><a href="lwir__frame_8h.html">lwir_frame.h</a></div><div class="ttdoc">Native frame arithmetic and camera measurements; no codec or flight dependencies.</div></div>
+<div class="ttc" id="alwir__frame_8h_html_a0b6e411350bc5b9500943d73cefdcb8c"><div class="ttname"><a href="lwir__frame_8h.html#a0b6e411350bc5b9500943d73cefdcb8c">LWIR_MAX_WIDTH</a></div><div class="ttdeci">#define LWIR_MAX_WIDTH</div><div class="ttdoc">Largest supported native width in pixels.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8h_source.html#l00047">lwir_frame.h:47</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html_af419b607d53b7ebf209b1660f3c7b933"><div class="ttname"><a href="lwir__frame_8h.html#af419b607d53b7ebf209b1660f3c7b933">LWIR_MAX_HEIGHT</a></div><div class="ttdeci">#define LWIR_MAX_HEIGHT</div><div class="ttdoc">Largest supported native height in pixels.</div><div class="ttdef"><b>Definition</b> <a href="lwir__frame_8h_source.html#l00049">lwir_frame.h:49</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_aded4335c2df32c709945a69dfe77220d"><div class="ttname"><a href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a></div><div class="ttdeci">struct jpeg_error_mgr error</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00060">lwir_image.c:60</a></div></div>
+<div class="ttc" id="alwir__inference_8c_html_a1985c3ad94f781625b6ffdb95308e316"><div class="ttname"><a href="lwir__inference_8c.html#a1985c3ad94f781625b6ffdb95308e316">thermal_plane</a></div><div class="ttdeci">static unsigned char thermal_plane[LWIR_MAX_WIDTH *LWIR_MAX_HEIGHT *2]</div><div class="ttdoc">Kelvin*64 samples for radiometric models.</div><div class="ttdef"><b>Definition</b> <a href="#l00036">lwir_inference.c:36</a></div></div>
+<div class="ttc" id="alwir__inference_8c_html_a5e10b183e5af1818eb1d3be169e56d1c"><div class="ttname"><a href="lwir__inference_8c.html#a5e10b183e5af1818eb1d3be169e56d1c">lwir_inference_close</a></div><div class="ttdeci">void lwir_inference_close(void)</div><div class="ttdoc">Release the classifier; harmless when not open. Threshold/category are reset by the next open.</div><div class="ttdef"><b>Definition</b> <a href="#l00139">lwir_inference.c:139</a></div></div>
+<div class="ttc" id="alwir__inference_8c_html_a8eb8ead606525383998a6bd817d4f801"><div class="ttname"><a href="lwir__inference_8c.html#a8eb8ead606525383998a6bd817d4f801">lwir_inference_image</a></div><div class="ttdeci">bool lwir_inference_image(const char *filename, unsigned long long sequence, char *error, size_t capacity)</div><div class="ttdoc">Classify one saved photo and publish its evidence sidecar.</div><div class="ttdef"><b>Definition</b> <a href="#l00083">lwir_inference.c:83</a></div></div>
+<div class="ttc" id="alwir__inference_8c_html_af34b807f4663bb524f5241c5da7d0d98"><div class="ttname"><a href="lwir__inference_8c.html#af34b807f4663bb524f5241c5da7d0d98">lwir_inference_open</a></div><div class="ttdeci">bool lwir_inference_open(const struct inference_settings *settings, double threshold, unsigned category, char *error, size_t capacity)</div><div class="ttdoc">Open and qualify the LWIR classifier (see lwir_inference.h).</div><div class="ttdef"><b>Definition</b> <a href="#l00049">lwir_inference.c:49</a></div></div>
+<div class="ttc" id="alwir__inference_8h_html"><div class="ttname"><a href="lwir__inference_8h.html">lwir_inference.h</a></div><div class="ttdoc">Optional serialized LWIR model adapter, separate from USB capture and calibration.</div></div>
+<div class="ttc" id="aonnx__session_8h_html_a91bb5b95378b6f1b76a6ef3ae2855237a5c766ccf86a630917335148297156b4d"><div class="ttname"><a href="onnx__session_8h.html#a91bb5b95378b6f1b76a6ef3ae2855237a5c766ccf86a630917335148297156b4d">ONNX_FLOAT32</a></div><div class="ttdeci">@ ONNX_FLOAT32</div><div class="ttdef"><b>Definition</b> <a href="onnx__session_8h_source.html#l00039">onnx_session.h:39</a></div></div>
+<div class="ttc" id="apose__log_8c_html_a76d971a3c552bc58ba9f0d5fceae9806"><div class="ttname"><a href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a></div><div class="ttdeci">static size_t count</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00079">pose_log.c:79</a></div></div>
+<div class="ttc" id="apose__log_8c_html_ab41bf19330e50c3c7bf3544c53f30971"><div class="ttname"><a href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a></div><div class="ttdeci">static FILE * output</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00077">pose_log.c:77</a></div></div>
+<div class="ttc" id="astructinference__context_html"><div class="ttname"><a href="structinference__context.html">inference_context</a></div><div class="ttdoc">Independent, noncopyable model owner; mapped tensor buffers and session are reused between jobs.</div><div class="ttdef"><b>Definition</b> <a href="inference__model_8h_source.html#l00043">inference_model.h:43</a></div></div>
+<div class="ttc" id="astructinference__image_html"><div class="ttname"><a href="structinference__image.html">inference_image</a></div><div class="ttdoc">Borrowed immutable planes; lengths/strides prove all addressed rows are available.</div><div class="ttdef"><b>Definition</b> <a href="inference__image_8h_source.html#l00037">inference_image.h:37</a></div></div>
+<div class="ttc" id="astructinference__image_html_abab4eecf685c78e65292ece42bcd76d0"><div class="ttname"><a href="structinference__image.html#abab4eecf685c78e65292ece42bcd76d0">inference_image::height</a></div><div class="ttdeci">unsigned height</div><div class="ttdef"><b>Definition</b> <a href="inference__image_8h_source.html#l00040">inference_image.h:40</a></div></div>
+<div class="ttc" id="astructinference__image_html_ad634463268896ffb61ce3e9905af855d"><div class="ttname"><a href="structinference__image.html#ad634463268896ffb61ce3e9905af855d">inference_image::width</a></div><div class="ttdeci">unsigned width</div><div class="ttdef"><b>Definition</b> <a href="inference__image_8h_source.html#l00040">inference_image.h:40</a></div></div>
+<div class="ttc" id="astructinference__settings_html"><div class="ttname"><a href="structinference__settings.html">inference_settings</a></div><div class="ttdoc">Per-application configuration; all resolved paths belong to this caller-owned value.</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00039">inference_settings.h:39</a></div></div>
+<div class="ttc" id="ausher_8c_html_a28e3c179a86f337095088b3ca02a2b2a"><div class="ttname"><a href="usher_8c.html#a28e3c179a86f337095088b3ca02a2b2a">valid</a></div><div class="ttdeci">bool valid</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00537">usher.c:537</a></div></div>
+<div class="ttc" id="ausher_8c_html_aeb3b7430902b8a68714e52892fa4528e"><div class="ttname"><a href="usher_8c.html#aeb3b7430902b8a68714e52892fa4528e">image</a></div><div class="ttdeci">struct captured_image image</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00371">usher.c:371</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

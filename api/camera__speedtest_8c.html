@@ -1,0 +1,2267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/camera_speedtest.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('camera__speedtest_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">camera_speedtest.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Backend-neutral still-image throughput benchmark and asynchronous progress reporter.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include "<a class="el" href="camera__speedtest_8h_source.html">camera_speedtest.h</a>"</code><br/>
+<code>#include "<a class="el" href="camera__capture_8h_source.html">camera_capture.h</a>"</code><br/>
+<code>#include "<a class="el" href="path__utils_8h_source.html">path_utils.h</a>"</code><br/>
+<code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &lt;fcntl.h&gt;</code><br/>
+<code>#include &lt;inttypes.h&gt;</code><br/>
+<code>#include &lt;limits.h&gt;</code><br/>
+<code>#include &lt;pthread.h&gt;</code><br/>
+<code>#include &lt;poll.h&gt;</code><br/>
+<code>#include &lt;stdbool.h&gt;</code><br/>
+<code>#include &lt;stdint.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;sys/stat.h&gt;</code><br/>
+<code>#include &lt;time.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for camera_speedtest.c:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="camera__speedtest_8c__incl.png" usemap="#asrc_2camera__speedtest_8c"/></div>
+<map id="asrc_2camera__speedtest_8c" name="asrc_2camera__speedtest_8c">
+<area alt="" coords="991,24,986,18,969,13,944,9,912,6,877,5,842,6,810,9,785,13,769,18,763,24,769,30,785,35,810,39,842,42,877,43,912,42,944,39,969,35,986,30" shape="poly" title="Backend-neutral still-image throughput benchmark and asynchronous progress reporter."/>
+<area alt="" coords="202,110,198,104,184,99,162,95,134,92,104,91,73,92,46,95,24,99,10,104,5,110,10,116,24,121,46,125,73,128,104,129,134,128,162,125,184,121,198,116" href="camera__speedtest_8h.html" shape="poly" title="Standalone, backend-neutral still-camera throughput benchmark."/>
+<area alt="" coords="775,34,522,59,215,94,191,97,190,92,214,88,521,54,780,33" shape="poly" title=" "/>
+<area alt="" coords="367,196,365,190,357,185,345,180,331,178,315,177,298,178,284,180,272,185,265,190,262,196,265,201,272,207,284,211,298,214,315,214,331,214,345,211,357,207,365,201" shape="poly" title=" "/>
+<area alt="" coords="781,36,659,59,590,74,523,94,431,133,353,174,352,169,428,128,522,89,589,69,658,53,787,35" shape="poly" title=" "/>
+<area alt="" coords="403,110,399,104,386,99,367,95,342,92,315,91,287,92,262,95,243,99,230,104,226,110,230,116,243,121,262,125,287,128,315,129,342,128,367,125,386,121,399,116" href="camera__capture_8h.html" shape="poly" title="Optional split-phase capture contract for USHER image backends."/>
+<area alt="" coords="793,40,401,99,400,93,797,36" shape="poly" title=" "/>
+<area alt="" coords="814,110,811,104,802,99,789,95,771,92,752,91,733,92,715,95,701,99,692,104,689,110,692,116,701,121,715,125,733,128,752,129,771,128,789,125,802,121,811,116" href="path__utils_8h.html" shape="poly" title="Small path and writable-directory helpers shared by USHER backends."/>
+<area alt="" coords="853,42,790,86,788,82,848,44" shape="poly" title=" "/>
+<area alt="" coords="478,196,476,190,470,185,460,180,448,178,435,177,421,178,409,180,399,185,393,190,391,196,393,201,399,207,409,211,421,214,435,214,448,214,460,211,470,207,476,201" shape="poly" title=" "/>
+<area alt="" coords="791,38,699,61,648,75,598,93,527,131,467,172,465,167,524,127,596,89,646,70,697,55,797,37" shape="poly" title=" "/>
+<area alt="" coords="583,196,581,190,575,185,566,180,555,178,543,177,530,178,519,180,510,185,504,190,502,196,504,201,510,207,519,211,530,214,543,214,555,214,566,211,575,207,581,201" shape="poly" title=" "/>
+<area alt="" coords="803,38,727,61,689,76,653,93,605,129,567,169,564,164,602,125,650,89,687,71,725,56,797,39" shape="poly" title=" "/>
+<area alt="" coords="697,196,694,190,688,185,678,180,666,178,652,177,638,178,626,180,616,185,609,190,607,196,609,201,616,207,626,211,638,214,652,214,666,214,678,211,688,207,694,201" shape="poly" title=" "/>
+<area alt="" coords="788,35,729,58,702,73,679,93,668,108,661,126,654,163,650,159,656,124,664,106,675,89,699,69,726,53,783,36" shape="poly" title=" "/>
+<area alt="" coords="920,196,918,190,912,185,902,180,890,178,877,177,864,178,852,180,843,185,837,190,835,196,837,201,843,207,852,211,864,214,877,214,890,214,902,211,912,207,918,201" shape="poly" title=" "/>
+<area alt="" coords="879,42,879,163,875,160,875,45" shape="poly" title=" "/>
+<area alt="" coords="1035,196,1032,190,1026,185,1016,180,1003,178,989,177,975,178,962,180,952,185,946,190,944,196,946,201,952,207,962,211,975,214,989,214,1003,214,1016,211,1026,207,1032,201" shape="poly" title=" "/>
+<area alt="" coords="887,41,909,82,937,127,966,167,961,165,932,130,904,85,884,46" shape="poly" title=" "/>
+<area alt="" coords="1171,196,1168,190,1160,185,1147,180,1132,178,1115,177,1097,178,1082,180,1069,185,1061,190,1058,196,1061,201,1069,207,1082,211,1097,214,1115,214,1132,214,1147,211,1160,207,1168,201" shape="poly" title=" "/>
+<area alt="" coords="894,41,935,83,987,127,1027,151,1069,174,1064,173,1024,156,984,131,931,87,892,46" shape="poly" title=" "/>
+<area alt="" coords="1290,196,1288,190,1281,185,1271,180,1257,178,1243,177,1228,178,1215,180,1204,185,1197,190,1195,196,1197,201,1204,207,1215,211,1228,214,1243,214,1257,214,1271,211,1281,207,1288,201" shape="poly" title=" "/>
+<area alt="" coords="907,40,983,89,1006,109,1030,126,1194,179,1188,179,1028,131,1003,113,980,93,906,45" shape="poly" title=" "/>
+<area alt="" coords="1153,110,1150,104,1142,99,1130,95,1114,92,1097,91,1080,92,1065,95,1052,99,1045,104,1042,110,1045,116,1052,121,1065,125,1080,128,1097,129,1114,128,1130,125,1142,121,1150,116" shape="poly" title=" "/>
+<area alt="" coords="922,39,1050,90,1044,89,921,45" shape="poly" title=" "/>
+<area alt="" coords="1282,110,1280,104,1272,99,1261,95,1246,92,1229,91,1213,92,1198,95,1186,99,1179,104,1176,110,1179,116,1186,121,1198,125,1213,128,1229,129,1246,128,1261,125,1272,121,1280,116" shape="poly" title=" "/>
+<area alt="" coords="945,37,1166,88,1177,93,1171,93,1165,94,944,43" shape="poly" title=" "/>
+<area alt="" coords="1381,110,1379,104,1374,99,1366,95,1355,92,1344,91,1332,92,1322,95,1314,99,1309,104,1307,110,1309,116,1314,121,1322,125,1332,128,1344,129,1355,128,1366,125,1374,121,1379,116" shape="poly" title=" "/>
+<area alt="" coords="971,33,1124,54,1210,69,1295,88,1304,93,1298,93,1294,94,1209,75,1124,59,971,38" shape="poly" title=" "/>
+<area alt="" coords="1496,110,1494,104,1487,99,1477,95,1465,92,1451,91,1436,92,1424,95,1414,99,1407,104,1405,110,1407,116,1414,121,1424,125,1436,128,1451,129,1465,128,1477,125,1487,121,1494,116" shape="poly" title=" "/>
+<area alt="" coords="978,31,1172,51,1283,68,1394,88,1404,93,1399,93,1393,94,1283,73,1171,57,978,36" shape="poly" title=" "/>
+<area alt="" coords="1602,110,1600,104,1594,99,1585,95,1574,92,1561,91,1549,92,1537,95,1528,99,1523,104,1521,110,1523,116,1528,121,1537,125,1549,128,1561,129,1574,128,1585,125,1594,121,1600,116" shape="poly" title=" "/>
+<area alt="" coords="987,27,1227,46,1369,64,1508,88,1519,93,1513,93,1507,94,1368,69,1227,51,987,32" shape="poly" title=" "/>
+<area alt="" coords="237,196,235,190,228,185,218,180,205,178,191,177,176,178,163,180,153,185,146,190,144,196,146,201,153,207,163,211,176,214,191,214,205,214,218,211,228,207,235,201" shape="poly" title=" "/>
+<area alt="" coords="123,126,165,167,160,168,121,131" shape="poly" title=" "/>
+<area alt="" coords="146,125,269,174,264,177,144,130" shape="poly" title=" "/>
+<area alt="" coords="120,196,118,190,111,185,100,180,87,178,72,177,57,178,43,180,33,185,26,190,24,196,26,201,33,207,43,211,57,214,72,214,87,214,100,211,111,207,118,201" shape="poly" title=" "/>
+<area alt="" coords="99,127,87,163,82,161,95,131" shape="poly" title=" "/>
+<area alt="" coords="291,128,227,173,225,168,286,129" shape="poly" title=" "/>
+<area alt="" coords="316,127,317,163,312,160,313,131" shape="poly" title=" "/>
+<area alt="" coords="270,129,123,180,121,175,268,124" shape="poly" title=" "/>
+<area alt="" coords="700,119,553,145,379,179,370,182,369,176,378,174,552,140,694,120" shape="poly" title=" "/>
+<area alt="" coords="707,122,491,179,483,182,482,176,490,174,701,123" shape="poly" title=" "/>
+<area alt="" coords="718,125,587,180,586,174,713,126" shape="poly" title=" "/>
+<area alt="" coords="734,127,684,171,682,166,729,129" shape="poly" title=" "/>
+<area alt="" coords="777,125,845,172,840,171,776,130" shape="poly" title=" "/>
+<area alt="" coords="810,196,808,190,801,185,792,180,779,178,765,177,751,178,739,180,729,185,723,190,720,196,723,201,729,207,739,211,751,214,765,214,779,214,792,211,801,207,808,201" shape="poly" title=" "/>
+<area alt="" coords="756,127,762,163,758,160,753,131" shape="poly" title=" "/>
+<area alt="" coords="792,122,944,178,939,177,791,128" shape="poly" title=" "/>
+<area alt="" coords="802,119,1047,174,1059,179,1054,179,1046,179,801,124" shape="poly" title=" "/>
+<area alt="" coords="810,115,978,137,1183,174,1195,179,1189,179,1182,179,977,142,810,120" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="camera__speedtest_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-nested-classes"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:progress_5Frecord" id="r_progress_5Frecord"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structprogress__record.html">progress_record</a></td></tr>
+<tr class="memitem:progress_5Freporter" id="r_progress_5Freporter"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structprogress__reporter.html">progress_reporter</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-define-members"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ad2b102d8cdf54159f37003c077c7d828" id="r_ad2b102d8cdf54159f37003c077c7d828"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2b102d8cdf54159f37003c077c7d828">SPEEDTEST_FILENAME_SIZE</a>   512</td></tr>
+<tr class="memitem:ad68ba529467f62b361db494ffbededae" id="r_ad68ba529467f62b361db494ffbededae"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad68ba529467f62b361db494ffbededae">SPEEDTEST_PROGRESS_CAPACITY</a>   ((<a class="el" href="camera__speedtest_8h.html#a49b70259aac3009d50951e8ec6299141">CAMERA_SPEEDTEST_SAMPLE_COUNT</a> + 1) * 2)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-enum-members"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ab132b2f3bf0ac11e851cb9119c086ce4" id="r_ab132b2f3bf0ac11e851cb9119c086ce4"><td align="right" class="memItemLeft" valign="top">enum  </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab132b2f3bf0ac11e851cb9119c086ce4">progress_kind</a> { <a class="el" href="#ab132b2f3bf0ac11e851cb9119c086ce4a7988715b71434784a44e1b1c4ade72fd">PROGRESS_STARTED</a>
+, <a class="el" href="#ab132b2f3bf0ac11e851cb9119c086ce4adad0bed36f84c5282f34f16232e2a0cb">PROGRESS_COMPLETED</a>
+ }</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a17ee4c02fe0d2b356468a2691789c23e" id="r_a17ee4c02fe0d2b356468a2691789c23e"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a17ee4c02fe0d2b356468a2691789c23e">format_image_path</a> (const struct <a class="el" href="structcamera__speedtest__config.html">camera_speedtest_config</a> *config, int image_number, char *path, size_t path_size)</td></tr>
+<tr class="memdesc:a17ee4c02fe0d2b356468a2691789c23e"><td class="mdescLeft"> </td><td class="mdescRight">Derive the expected JPEG path for a benchmark capture.  <br/></td></tr>
+<tr class="memitem:aa6395cfbc66f2d466384892b7fed549d" id="r_aa6395cfbc66f2d466384892b7fed549d"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6395cfbc66f2d466384892b7fed549d">monotonic_time_ns</a> (uint64_t *time_ns)</td></tr>
+<tr class="memdesc:aa6395cfbc66f2d466384892b7fed549d"><td class="mdescLeft"> </td><td class="mdescRight">Read a non-negative monotonic timestamp in nanoseconds.  <br/></td></tr>
+<tr class="memitem:a478de544f29390bc40a11c89623848c5" id="r_a478de544f29390bc40a11c89623848c5"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a478de544f29390bc40a11c89623848c5">camera_speedtest_create_output_directory</a> (const char *base_directory, char *<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, size_t output_size)</td></tr>
+<tr class="memdesc:a478de544f29390bc40a11c89623848c5"><td class="mdescLeft"> </td><td class="mdescRight">Atomically create a private directory for one benchmark run.  <br/></td></tr>
+<tr class="memitem:abbfa93b0ac42458bbd46f95e818e45c8" id="r_abbfa93b0ac42458bbd46f95e818e45c8"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#abbfa93b0ac42458bbd46f95e818e45c8">validate_capture</a> (const char *actual_filename, const char *expected_filename)</td></tr>
+<tr class="memdesc:abbfa93b0ac42458bbd46f95e818e45c8"><td class="mdescLeft"> </td><td class="mdescRight">Confirm that a backend produced exactly the requested usable image.  <br/></td></tr>
+<tr class="memitem:a02fa226151fb9719691c5fb9875bc1ba" id="r_a02fa226151fb9719691c5fb9875bc1ba"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a02fa226151fb9719691c5fb9875bc1ba">write_progress</a> (struct <a class="el" href="structprogress__reporter.html">progress_reporter</a> *reporter, const struct <a class="el" href="structprogress__record.html">progress_record</a> *<a class="el" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>)</td></tr>
+<tr class="memdesc:a02fa226151fb9719691c5fb9875bc1ba"><td class="mdescLeft"> </td><td class="mdescRight">Write one progress record without waiting indefinitely for stdout.  <br/></td></tr>
+<tr class="memitem:a98fce0fb6642174f2b95772325cb3a48" id="r_a98fce0fb6642174f2b95772325cb3a48"><td align="right" class="memItemLeft" valign="top">static void * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a98fce0fb6642174f2b95772325cb3a48">report_progress</a> (void *argument)</td></tr>
+<tr class="memdesc:a98fce0fb6642174f2b95772325cb3a48"><td class="mdescLeft"> </td><td class="mdescRight">Drain queued progress records on the dedicated reporter thread.  <br/></td></tr>
+<tr class="memitem:aa65951e87337ef8aafd47f791f0625a7" id="r_aa65951e87337ef8aafd47f791f0625a7"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa65951e87337ef8aafd47f791f0625a7">reporter_start</a> (struct <a class="el" href="structprogress__reporter.html">progress_reporter</a> *reporter)</td></tr>
+<tr class="memdesc:aa65951e87337ef8aafd47f791f0625a7"><td class="mdescLeft"> </td><td class="mdescRight">Initialize and launch the bounded progress reporter.  <br/></td></tr>
+<tr class="memitem:a2bcd2293cc26ec83172977d51921f144" id="r_a2bcd2293cc26ec83172977d51921f144"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2bcd2293cc26ec83172977d51921f144">reporter_enqueue</a> (struct <a class="el" href="structprogress__reporter.html">progress_reporter</a> *reporter, enum <a class="el" href="#ab132b2f3bf0ac11e851cb9119c086ce4">progress_kind</a> kind, unsigned sample, bool warmup, bool succeeded, uint64_t duration_ns, const char *filename)</td></tr>
+<tr class="memdesc:a2bcd2293cc26ec83172977d51921f144"><td class="mdescLeft"> </td><td class="mdescRight">Queue one capture lifecycle event without performing output I/O.  <br/></td></tr>
+<tr class="memitem:aeffe9fa7a4fb02afdeb9ad37170ecc73" id="r_aeffe9fa7a4fb02afdeb9ad37170ecc73"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aeffe9fa7a4fb02afdeb9ad37170ecc73">reporter_stop</a> (struct <a class="el" href="structprogress__reporter.html">progress_reporter</a> *reporter)</td></tr>
+<tr class="memdesc:aeffe9fa7a4fb02afdeb9ad37170ecc73"><td class="mdescLeft"> </td><td class="mdescRight">Request reporter shutdown, drain queued output, and release its resources.  <br/></td></tr>
+<tr class="memitem:addaaea6c5b2f10e7181c85fc1eefc35e" id="r_addaaea6c5b2f10e7181c85fc1eefc35e"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#addaaea6c5b2f10e7181c85fc1eefc35e">camera_speedtest_find_image_block</a> (const struct <a class="el" href="structcamera__speedtest__config.html">camera_speedtest_config</a> *config, int *first_image)</td></tr>
+<tr class="memdesc:addaaea6c5b2f10e7181c85fc1eefc35e"><td class="mdescLeft"> </td><td class="mdescRight">Find an unused consecutive image-number block for warm-up and samples.  <br/></td></tr>
+<tr class="memitem:a9db01552f384565467777293c162220a" id="r_a9db01552f384565467777293c162220a"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9db01552f384565467777293c162220a">camera_speedtest_run</a> (const struct <a class="el" href="structcamera__speedtest__config.html">camera_speedtest_config</a> *config, int first_image)</td></tr>
+<tr class="memdesc:a9db01552f384565467777293c162220a"><td class="mdescLeft"> </td><td class="mdescRight">Capture one untimed warm-up image and ten timed images sequentially.  <br/></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>Backend-neutral still-image throughput benchmark and asynchronous progress reporter. </p>
+<p>The benchmark performs one untimed warm-up followed by ten sequential synchronous captures. It validates each returned JPEG before accepting it as evidence. Timing uses <code>CLOCK_MONOTONIC</code> around only the backend capture call, excluding setup, UART, EXIF, SODA, and terminal I/O. Progress is copied into a fixed-size queue and written by a separate bounded-I/O thread so an unread pipe or slow terminal cannot throttle capture requests. </p>
+<p class="definition">Definition in file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div><a id="doc-define-members" name="doc-define-members"></a><h2 class="groupheader" id="header-doc-define-members">Macro Definition Documentation</h2>
+<a id="ad2b102d8cdf54159f37003c077c7d828" name="ad2b102d8cdf54159f37003c077c7d828"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2b102d8cdf54159f37003c077c7d828">◆ </a></span>SPEEDTEST_FILENAME_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define SPEEDTEST_FILENAME_SIZE   512</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00046">46</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="ad68ba529467f62b361db494ffbededae" name="ad68ba529467f62b361db494ffbededae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad68ba529467f62b361db494ffbededae">◆ </a></span>SPEEDTEST_PROGRESS_CAPACITY</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define SPEEDTEST_PROGRESS_CAPACITY   ((<a class="el" href="camera__speedtest_8h.html#a49b70259aac3009d50951e8ec6299141">CAMERA_SPEEDTEST_SAMPLE_COUNT</a> + 1) * 2)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00047">47</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="doc-enum-members" name="doc-enum-members"></a><h2 class="groupheader" id="header-doc-enum-members">Enumeration Type Documentation</h2>
+<a id="ab132b2f3bf0ac11e851cb9119c086ce4" name="ab132b2f3bf0ac11e851cb9119c086ce4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab132b2f3bf0ac11e851cb9119c086ce4">◆ </a></span>progress_kind</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">enum <a class="el" href="#ab132b2f3bf0ac11e851cb9119c086ce4">progress_kind</a></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab132b2f3bf0ac11e851cb9119c086ce4a7988715b71434784a44e1b1c4ade72fd" name="ab132b2f3bf0ac11e851cb9119c086ce4a7988715b71434784a44e1b1c4ade72fd"></a>PROGRESS_STARTED </td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab132b2f3bf0ac11e851cb9119c086ce4adad0bed36f84c5282f34f16232e2a0cb" name="ab132b2f3bf0ac11e851cb9119c086ce4adad0bed36f84c5282f34f16232e2a0cb"></a>PROGRESS_COMPLETED </td><td class="fielddoc"></td></tr>
+</table>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00049">49</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="a478de544f29390bc40a11c89623848c5" name="a478de544f29390bc40a11c89623848c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a478de544f29390bc40a11c89623848c5">◆ </a></span>camera_speedtest_create_output_directory()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int camera_speedtest_create_output_directory </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>base_directory</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>output</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>output_size</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Atomically create a private directory for one benchmark run. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">base_directory</td><td>Configured backend photo root. </td></tr>
+<tr><td class="paramname">output</td><td>Receives the new directory path. </td></tr>
+<tr><td class="paramname">output_size</td><td>Capacity of <code class="param">output</code>. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, otherwise -1 with errno set.</dd></dl>
+<p>A private mode-0700 directory prevents benchmark backends, which normally replace same-number files, from racing with or overwriting mission photographs. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00117">117</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="addaaea6c5b2f10e7181c85fc1eefc35e" name="addaaea6c5b2f10e7181c85fc1eefc35e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addaaea6c5b2f10e7181c85fc1eefc35e">◆ </a></span>camera_speedtest_find_image_block()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int camera_speedtest_find_image_block </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structcamera__speedtest__config.html">camera_speedtest_config</a> *</td> <td class="paramname"><span class="paramname"><em>config</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int *</td> <td class="paramname"><span class="paramname"><em>first_image</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Find an unused consecutive image-number block for warm-up and samples. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">config</td><td>Backend filename information. </td></tr>
+<tr><td class="paramname">first_image</td><td>Receives the warm-up image number. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on invalid input, filesystem error, or exhausted range.</dd></dl>
+<p>USHER camera backends replace an existing same-number image. Preflighting the complete block before camera initialization keeps benchmark evidence separate from mission captures and prevents accidental replacement of an existing photo. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00404">404</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="a9db01552f384565467777293c162220a" name="a9db01552f384565467777293c162220a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9db01552f384565467777293c162220a">◆ </a></span>camera_speedtest_run()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int camera_speedtest_run </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structcamera__speedtest__config.html">camera_speedtest_config</a> *</td> <td class="paramname"><span class="paramname"><em>config</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>first_image</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Capture one untimed warm-up image and ten timed images sequentially. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">config</td><td>Selected and initialized camera backend. </td></tr>
+<tr><td class="paramname">first_image</td><td>Warm-up image number returned by <a class="el" href="camera__speedtest_8h.html#addaaea6c5b2f10e7181c85fc1eefc35e" title="Find an unused consecutive image-number block for warm-up and samples.">camera_speedtest_find_image_block()</a>. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 only when every requested image was captured and validated.</dd></dl>
+<p>Only synchronous shoot time is used for camera throughput. Progress records are written through bounded nonblocking I/O by a separate reporter thread, so a slow terminal cannot delay capture requests or inflate measured camera latency. Images are retained for review. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00438">438</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="a17ee4c02fe0d2b356468a2691789c23e" name="a17ee4c02fe0d2b356468a2691789c23e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17ee4c02fe0d2b356468a2691789c23e">◆ </a></span>format_image_path()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int format_image_path </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structcamera__speedtest__config.html">camera_speedtest_config</a> *</td> <td class="paramname"><span class="paramname"><em>config</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>image_number</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>path_size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Derive the expected JPEG path for a benchmark capture. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir"></td><td class="paramname">config</td><td>Output directory and camera prefix used by the measured backend. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">image_number</td><td>Photo number. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">path</td><td>Path buffer. </td></tr>
+<tr><td class="paramdir"></td><td class="paramname">path_size</td><td>Capacity including the terminator. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero for a complete path, or -1 on formatting failure or truncation.</dd></dl>
+<p>Match the production naming convention so checks address the capture under test rather than a separate benchmark artifact. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00086">86</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="aa6395cfbc66f2d466384892b7fed549d" name="aa6395cfbc66f2d466384892b7fed549d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6395cfbc66f2d466384892b7fed549d">◆ </a></span>monotonic_time_ns()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int monotonic_time_ns </td>
+<td>(</td>
+<td class="paramtype">uint64_t *</td> <td class="paramname"><span class="paramname"><em>time_ns</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read a non-negative monotonic timestamp in nanoseconds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">time_ns</td><td>Destination for the timestamp. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success; -1 if the clock is unavailable, invalid, or overflows conversion.</dd></dl>
+<p>Nanoseconds retain sub-millisecond capture differences without requiring floating point arithmetic in the measurement loop. The conversion rejects impossible values rather than silently wrapping and publishing a plausible but false rate. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00106">106</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="a98fce0fb6642174f2b95772325cb3a48" name="a98fce0fb6642174f2b95772325cb3a48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98fce0fb6642174f2b95772325cb3a48">◆ </a></span>report_progress()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void * report_progress </td>
+<td>(</td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>argument</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Drain queued progress records on the dedicated reporter thread. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">argument</td><td>Pointer to the initialized <code><a class="el" href="structprogress__reporter.html">progress_reporter</a></code>. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Always <code>NULL</code> when the stop request is observed.</dd></dl>
+<p>Records are removed under the mutex, then formatted and written without holding it. This keeps producer critical sections constant-time and ensures slow output never prevents the benchmark thread from issuing its next capture. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00226">226</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="a2bcd2293cc26ec83172977d51921f144" name="a2bcd2293cc26ec83172977d51921f144"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bcd2293cc26ec83172977d51921f144">◆ </a></span>reporter_enqueue()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int reporter_enqueue </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structprogress__reporter.html">progress_reporter</a> *</td> <td class="paramname"><span class="paramname"><em>reporter</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">enum <a class="el" href="#ab132b2f3bf0ac11e851cb9119c086ce4">progress_kind</a></td> <td class="paramname"><span class="paramname"><em>kind</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>sample</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>warmup</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>succeeded</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>duration_ns</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Queue one capture lifecycle event without performing output I/O. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">reporter</td><td>Running reporter. </td></tr>
+<tr><td class="paramname">kind</td><td>Start or completion event. </td></tr>
+<tr><td class="paramname">sample</td><td>One-based measured sample number, or zero for warm-up. </td></tr>
+<tr><td class="paramname">warmup</td><td>True for the excluded warm-up capture. </td></tr>
+<tr><td class="paramname">succeeded</td><td>Completion success state. </td></tr>
+<tr><td class="paramname">duration_ns</td><td>Measured duration for completion records. </td></tr>
+<tr><td class="paramname">filename</td><td>Expected output path copied into the fixed-size event. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if queued; -1 when the bounded queue or filename capacity is exhausted.</dd></dl>
+<p>The queue has room for every planned start and completion event. Exhaustion is an invariant breach, so failing explicitly is safer than silently dropping operator progress. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00340">340</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="aa65951e87337ef8aafd47f791f0625a7" name="aa65951e87337ef8aafd47f791f0625a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa65951e87337ef8aafd47f791f0625a7">◆ </a></span>reporter_start()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int reporter_start </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structprogress__reporter.html">progress_reporter</a> *</td> <td class="paramname"><span class="paramname"><em>reporter</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Initialize and launch the bounded progress reporter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">reporter</td><td>Storage owned by the caller for the reporter lifetime. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success; -1 after cleaning up any partially initialized resources.</dd></dl>
+<p>Regular redirected stdout is temporarily opened with append semantics so the reporter cannot overwrite buffered summary output. The duplicate nonblocking descriptor isolates progress backpressure from the benchmark's normal stdout stream. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00259">259</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="aeffe9fa7a4fb02afdeb9ad37170ecc73" name="aeffe9fa7a4fb02afdeb9ad37170ecc73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeffe9fa7a4fb02afdeb9ad37170ecc73">◆ </a></span>reporter_stop()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int reporter_stop </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structprogress__reporter.html">progress_reporter</a> *</td> <td class="paramname"><span class="paramname"><em>reporter</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Request reporter shutdown, drain queued output, and release its resources. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">reporter</td><td>Running reporter. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 only when the thread joined and all queued progress was written.</dd></dl>
+<p>Joining before closing the descriptor preserves event order and prevents a writer from racing descriptor reuse. Restoring redirected stdout flags keeps benchmark setup from leaking output-mode changes into callers that continue running after a failed test. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00379">379</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="abbfa93b0ac42458bbd46f95e818e45c8" name="abbfa93b0ac42458bbd46f95e818e45c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbfa93b0ac42458bbd46f95e818e45c8">◆ </a></span>validate_capture()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int validate_capture </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>actual_filename</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>expected_filename</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Confirm that a backend produced exactly the requested usable image. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">actual_filename</td><td>Path returned by the backend capture operation. </td></tr>
+<tr><td class="paramname">expected_filename</td><td>Deterministic path reserved before capture began. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 when the path matches and names a nonempty regular file; -1 otherwise.</dd></dl>
+<p>Path equality prevents a backend fallback or stale output from being counted as a benchmark sample. Regular-file and size checks catch missing, directory, FIFO, and empty outputs while leaving image decoding to the normal backend contract. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00154">154</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+<a id="a02fa226151fb9719691c5fb9875bc1ba" name="a02fa226151fb9719691c5fb9875bc1ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02fa226151fb9719691c5fb9875bc1ba">◆ </a></span>write_progress()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int write_progress </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structprogress__reporter.html">progress_reporter</a> *</td> <td class="paramname"><span class="paramname"><em>reporter</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structprogress__record.html">progress_record</a> *</td> <td class="paramname"><span class="paramname"><em>record</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Write one progress record without waiting indefinitely for stdout. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">reporter</td><td>Reporter owning the nonblocking output descriptor. </td></tr>
+<tr><td class="paramname">record</td><td>Immutable event to render. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if the complete line was written; -1 when output is unavailable or partial.</dd></dl>
+<p>The 100 ms poll bound is a reporting policy, not a capture timeout. On failure the reporter records the condition and the benchmark fails after draining, rather than blocking the capture loop behind a terminal or pipe consumer. </p>
+<p class="definition">Definition at line <a class="el" href="camera__speedtest_8c_source.html#l00183">183</a> of file <a class="el" href="camera__speedtest_8c_source.html">camera_speedtest.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

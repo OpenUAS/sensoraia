@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['rate_0',['Increase The Shot Rate',['../index.html#autotoc_md12',1,'']]],
+  ['receive_5fbytes_1',['receive_bytes',['../chdkbridge_8c.html#aeb7231105217b86eae4ba2d93143ac6e',1,'chdkbridge.c']]],
+  ['received_2',['received',['../structdirect__download.html#a74a0c70ca5ee393f35a7cfe5d913fe56',1,'direct_download']]],
+  ['record_5fmode_5fscript_3',['record_mode_script',['../chdkbridge_8c.html#a6556c25e2f2082851283d0931a58c816',1,'chdkbridge.c']]],
+  ['recover_20before_20requesting_20another_20photo_4',['Recover Before Requesting Another Photo',['../index.html#autotoc_md14',1,'']]],
+  ['recover_5fptp_5',['recover_ptp',['../chdkbridge_8c.html#aee3df4ea5a145f2de004d79d9224e08a',1,'chdkbridge.c']]],
+  ['recovery_5fcontrol_5fms_6',['RECOVERY_CONTROL_MS',['../chdkbridge_8c.html#ae7a6e45b54db83164eb616c823df99a9ad3e822c34f91c43c93793937164941d7',1,'chdkbridge.c']]],
+  ['recovery_5fdrain_5fms_7',['RECOVERY_DRAIN_MS',['../chdkbridge_8c.html#ae7a6e45b54db83164eb616c823df99a9a60746baeb1927ac876aad679d84b1d0d',1,'chdkbridge.c']]],
+  ['recovery_5fdrain_5freads_8',['RECOVERY_DRAIN_READS',['../chdkbridge_8c.html#ae7a6e45b54db83164eb616c823df99a9a6ce3821248127598b0d3110ad12c27ba',1,'chdkbridge.c']]],
+  ['refill_5fbuffer_9',['refill_buffer',['../chdkbridge_8c.html#a7deb415089d42d09f2fb9350403c28f4',1,'chdkbridge.c']]],
+  ['release_5fdesktop_5fcamera_10',['release_desktop_camera',['../chdkbridge_8c.html#a8c22a6d860b9d853fb2ef751c6a54b98',1,'chdkbridge.c']]],
+  ['release_5finterface_11',['release_interface',['../chdkbridge_8c.html#a9f92ba77df84fffa63fc110036549d3f',1,'chdkbridge.c']]],
+  ['remaining_5fms_12',['remaining_ms',['../chdkbridge_8c.html#a2bbd65b33ca4e860317453887e19f5cc',1,'chdkbridge.c']]],
+  ['requesting_20another_20photo_13',['Recover Before Requesting Another Photo',['../index.html#autotoc_md14',1,'']]],
+  ['response_14',['response',['../structresponse.html',1,'']]],
+  ['retract_5flens_15',['retract_lens',['../chdkbridge_8c.html#a8995eca206eaae7c7338019ba6226889',1,'chdkbridge.c']]],
+  ['retract_5flens_5fscript_16',['retract_lens_script',['../chdkbridge_8c.html#a9e016b50878896fcf980b9a968c0bfcd',1,'chdkbridge.c']]],
+  ['retraction_17',['Powered Lens Retraction',['../index.html#autotoc_md6',1,'']]],
+  ['retrieve_20a_20camera_20crash_20log_18',['Retrieve A Camera Crash Log',['../index.html#autotoc_md8',1,'']]],
+  ['romlog_5fscript_19',['romlog_script',['../chdkbridge_8c.html#aad12f0c01d17f82e8e2fc05ac3f3dbd4',1,'chdkbridge.c']]],
+  ['root_5fget_20',['root_get',['../structdesktop__api.html#a13ae10b8d6fdeb74b870cf1d6e8b6668',1,'desktop_api']]],
+  ['run_5fscript_21',['run_script',['../chdkbridge_8c.html#a298275e4dd9368180321228cfda9995d',1,'chdkbridge.c']]],
+  ['run_5fscript_5foperation_22',['run_script_operation',['../chdkbridge_8c.html#aa3d38be12d3674e265e9a5b512a4eca8',1,'chdkbridge.c']]]
+];

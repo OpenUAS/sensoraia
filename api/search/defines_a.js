@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['jpeg_5fcomponents_0',['JPEG_COMPONENTS',['../image__mock__transform_8c.html#abea548d7acceb735789040ded2ccb18b',1,'image_mock_transform.c']]],
+  ['jpeg_5fmax_5fheader_5fbytes_1',['JPEG_MAX_HEADER_BYTES',['../exifite_8c.html#a7600541cd59ace6795beb6610ded6d34',1,'exifite.c']]],
+  ['jpeg_5fmax_5fheader_5fsegments_2',['JPEG_MAX_HEADER_SEGMENTS',['../exifite_8c.html#a3e80371b55820ae72624e09184ea1847',1,'exifite.c']]],
+  ['jpeg_5fquality_3',['JPEG_QUALITY',['../ear__heatmap__overlay_8c.html#acd2ae478f38783ee63adaed71b43ec10',1,'JPEG_QUALITY:&#160;ear_heatmap_overlay.c'],['../image__mock__transform_8c.html#acd2ae478f38783ee63adaed71b43ec10',1,'JPEG_QUALITY:&#160;image_mock_transform.c']]],
+  ['jpeg_5fstream_5fcapacity_4',['JPEG_STREAM_CAPACITY',['../exifite_8c.html#aacede6c301c58c7443ab965adcdf6395',1,'exifite.c']]],
+  ['jsonbourne_5falignof_5',['JSONBOURNE_ALIGNOF',['../jsonbourne_8c.html#a108944caa36f900a3411ad38832a8d91',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5fdepth_5fmsg_6',['JSONBOURNE_READ_ERROR_DEPTH_MSG',['../jsonbourne_8c.html#ad565abff80fcae58d2565c309288ae53',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5fexpected_5fcolon_5fmsg_7',['JSONBOURNE_READ_ERROR_EXPECTED_COLON_MSG',['../jsonbourne_8c.html#a74d5af0fbdd9b7d726579f54b334025b',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5fexpected_5fkey_5fmsg_8',['JSONBOURNE_READ_ERROR_EXPECTED_KEY_MSG',['../jsonbourne_8c.html#ad6a3c00dc959e40f6d1b7417ede67909',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5fexpected_5fseparator_5fmsg_9',['JSONBOURNE_READ_ERROR_EXPECTED_SEPARATOR_MSG',['../jsonbourne_8c.html#a085fb84f3e53f8ff03981f542192eee5',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5finvalid_5fcomment_5fmsg_10',['JSONBOURNE_READ_ERROR_INVALID_COMMENT_MSG',['../jsonbourne_8c.html#a9442924957549fc48c45923914e5d90d',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5finvalid_5fescape_5fmsg_11',['JSONBOURNE_READ_ERROR_INVALID_ESCAPE_MSG',['../jsonbourne_8c.html#ad28c40d0e205c00fea0e4e339e904a95',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5finvalid_5fnumber_5fmsg_12',['JSONBOURNE_READ_ERROR_INVALID_NUMBER_MSG',['../jsonbourne_8c.html#acdc94614538466ee3d0280939da68570',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5finvalid_5fparameter_5fmsg_13',['JSONBOURNE_READ_ERROR_INVALID_PARAMETER_MSG',['../jsonbourne_8c.html#ae780a1374ad9baf38e47d8c8576f76b2',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5finvalid_5fstring_5fmsg_14',['JSONBOURNE_READ_ERROR_INVALID_STRING_MSG',['../jsonbourne_8c.html#ab7f48c996d61f294d03a62cde5037496',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5finvalid_5futf8_5fmsg_15',['JSONBOURNE_READ_ERROR_INVALID_UTF8_MSG',['../jsonbourne_8c.html#aab7244ff9d0603774fbc4a423be76c04',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5flimit_5fmsg_16',['JSONBOURNE_READ_ERROR_LIMIT_MSG',['../jsonbourne_8c.html#a9cf88c362fa4ec4714691ccedbd4e967',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5fliteral_5fmsg_17',['JSONBOURNE_READ_ERROR_LITERAL_MSG',['../jsonbourne_8c.html#a5d796638666e851c8c7dbd9f09494aba',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5fmemory_5fallocation_5fmsg_18',['JSONBOURNE_READ_ERROR_MEMORY_ALLOCATION_MSG',['../jsonbourne_8c.html#a1af25ebbe4d594fcfaaf86ff92ec7f32',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5funexpected_5fcontent_5fmsg_19',['JSONBOURNE_READ_ERROR_UNEXPECTED_CONTENT_MSG',['../jsonbourne_8c.html#a0c1774806be2cd959555a0999f64f82e',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5funexpected_5fend_5fmsg_20',['JSONBOURNE_READ_ERROR_UNEXPECTED_END_MSG',['../jsonbourne_8c.html#a47d2eee275cf72f1d5162fdd8782295b',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5ferror_5funknown_5fmsg_21',['JSONBOURNE_READ_ERROR_UNKNOWN_MSG',['../jsonbourne_8c.html#a10331c7411e5628f214694fa2e48e0b4',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5fflag_5fmask_22',['JSONBOURNE_READ_FLAG_MASK',['../jsonbourne_8c.html#abe9bfa9cb9f1fe9652f2153e9c52af46',1,'jsonbourne.c']]],
+  ['jsonbourne_5fread_5fsuccess_5fmsg_23',['JSONBOURNE_READ_SUCCESS_MSG',['../jsonbourne_8c.html#a7c29908e4f833feaf3fbf88f2b9c3fb5',1,'jsonbourne.c']]],
+  ['jsonbourne_5fzero_24',['JSONBOURNE_ZERO',['../jsonbourne_8c.html#ace34c224c63452ebcbc9b193ba9b4753',1,'jsonbourne.c']]]
+];

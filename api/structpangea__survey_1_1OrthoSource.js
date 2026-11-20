@@ -1,0 +1,28 @@
+var structpangea__survey_1_1OrthoSource =
+[
+    [ "altitude", "structpangea__survey_1_1OrthoSource.html#a07fbec17467aad868ac0cd4dd319ba02", null ],
+    [ "bank", "structpangea__survey_1_1OrthoSource.html#a19924d223d7581e591853e9c89c24d8f", null ],
+    [ "camera", "structpangea__survey_1_1OrthoSource.html#a28e13dcf8eb87846c23456cd93e7cd6b", null ],
+    [ "captureCell", "structpangea__survey_1_1OrthoSource.html#a2f21cec2abe30a04ee24ed3d4ce0c1fe", null ],
+    [ "captureUtc", "structpangea__survey_1_1OrthoSource.html#a8ba63f29cf5ef6e1249e0319a2bbc1fa", null ],
+    [ "cx", "structpangea__survey_1_1OrthoSource.html#af32868bd4a4ee9563ed6713de1667785", null ],
+    [ "cy", "structpangea__survey_1_1OrthoSource.html#a0a724bdf8fefccddf86cce188c10801b", null ],
+    [ "distorted", "structpangea__survey_1_1OrthoSource.html#add0ff9ef3ec3f2cb991df9f237f2f8e0", null ],
+    [ "focal", "structpangea__survey_1_1OrthoSource.html#a05fac88e130cafbe76c3ff7b46a884da", null ],
+    [ "focalY", "structpangea__survey_1_1OrthoSource.html#a5b86acbcf8bc6fd505a04e3ae3cd39fb", null ],
+    [ "fov", "structpangea__survey_1_1OrthoSource.html#aa66194cfdf1a5706ca7455561dc64e3f", null ],
+    [ "frameTime", "structpangea__survey_1_1OrthoSource.html#a1901d4522dfb297952b3c6a1407db9b3", null ],
+    [ "heading", "structpangea__survey_1_1OrthoSource.html#a2a416f8a7798d02e1152656506fa6dec", null ],
+    [ "height", "structpangea__survey_1_1OrthoSource.html#a84386e39bbe75c7082aa6e2ca777eb13", null ],
+    [ "latitude", "structpangea__survey_1_1OrthoSource.html#a15a23c78192f99090d0c224405029036", null ],
+    [ "lens", "structpangea__survey_1_1OrthoSource.html#a3337e311a5f1f29b00a0a9c15f6f4a88", null ],
+    [ "longitude", "structpangea__survey_1_1OrthoSource.html#abea32b8f9c31df35a729b3079b516f22", null ],
+    [ "path", "structpangea__survey_1_1OrthoSource.html#a2770d1b2a1c4452a8151a7f9186043a7", null ],
+    [ "pitch", "structpangea__survey_1_1OrthoSource.html#a5b089e3c480dc848faabb7ef3da98d2b", null ],
+    [ "poseTime", "structpangea__survey_1_1OrthoSource.html#ae3c4cf371558ee821c9d34990f9c2bd0", null ],
+    [ "poseUncertainty", "structpangea__survey_1_1OrthoSource.html#ab97310abd9e53f3fe48e0cff1bf99ba1", null ],
+    [ "referencePlane", "structpangea__survey_1_1OrthoSource.html#aff1a7c6cdd0a6605b6d7d7995b495baf", null ],
+    [ "utcAbsoluteSeconds", "structpangea__survey_1_1OrthoSource.html#a7b3da177f5d376820431b302a91c38d9", null ],
+    [ "utcRead100ns", "structpangea__survey_1_1OrthoSource.html#ab1abf480529a9a54cb3dc0985c8e8cc4", null ],
+    [ "width", "structpangea__survey_1_1OrthoSource.html#ac7bc4f7df555686c014b125b23d43ce5", null ]
+];

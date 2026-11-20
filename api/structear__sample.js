@@ -1,0 +1,25 @@
+var structear__sample =
+[
+    [ "agl_m", "structear__sample.html#a7820a8a029f4907e438bb908677c7321", null ],
+    [ "alarm", "structear__sample.html#aed504d24fcb471ca6a67f8ea49cb807d", null ],
+    [ "alt_m", "structear__sample.html#a87e8b6f374f1722381c73efc3d14aa76", null ],
+    [ "classifier", "structear__sample.html#a3daa1d831f4f9e401b33fbe006953250", null ],
+    [ "classifier_class", "structear__sample.html#a8af2e0f78793d07872457da7383d25a8", null ],
+    [ "classifier_score", "structear__sample.html#ac1bcc33788d1e9f826218454b3c6cfe9", null ],
+    [ "clipped", "structear__sample.html#a0c5ae54ed681ff2f18f39dc1bb03dd31", null ],
+    [ "contrast_db", "structear__sample.html#a81e05887b831e10468de6e618d5802e7", null ],
+    [ "frequency_hz", "structear__sample.html#a66ae0e467e27a38e01c55b907d9b54e9", null ],
+    [ "lat_deg", "structear__sample.html#a02fd8bd01c97eeadacb63c1c28dce9a7", null ],
+    [ "level_db", "structear__sample.html#aa7b0d5ef4fb23f4728f7bc5fabb0532f", null ],
+    [ "lon_deg", "structear__sample.html#a7e5a8ac5c3a9cd3914c40f0c1040df7a", null ],
+    [ "pose_aligned", "structear__sample.html#ab55e020a1624c8a84fee17d833d48abb", null ],
+    [ "pose_uncertainty_m", "structear__sample.html#a46a16734f4a3811e61852b71b6701e56", null ],
+    [ "request_lat", "structear__sample.html#a121e97d2f0b3bfac887738fec8575a5f", null ],
+    [ "request_lon", "structear__sample.html#a2c6540949d56af349af6c9d4d68faad2", null ],
+    [ "shot_nr", "structear__sample.html#a00512ea48313a4a0b501bef81c63fb6a", null ],
+    [ "timestamp_ms", "structear__sample.html#ae6493c42171f0cf0a17c06ba5b461d80", null ],
+    [ "trend_db", "structear__sample.html#a058b6690862c9679a2c719831fadc9b5", null ],
+    [ "window_earliest_us", "structear__sample.html#ac97cc8e0172c005b39a0ee150a305eab", null ],
+    [ "window_latest_us", "structear__sample.html#a20c8502856b89bae1e6e4091070a4d90", null ],
+    [ "window_sequence", "structear__sample.html#a63ffbc795d42a82b879b34d37218b9a6", null ]
+];

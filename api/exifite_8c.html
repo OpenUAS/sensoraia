@@ -1,0 +1,3322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/exifite.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('exifite_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">exifite.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Allocation-free EXIF parsing, serialization and bounded JPEG streaming.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include "<a class="el" href="exifite_8h_source.html">exifite.h</a>"</code><br/>
+<code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &lt;limits.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;sys/stat.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for exifite.c:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="exifite_8c__incl.png" usemap="#asrc_2exifite_8c"/></div>
+<map id="asrc_2exifite_8c" name="asrc_2exifite_8c">
+<area alt="" coords="656,24,653,18,644,13,630,9,612,6,593,5,573,6,555,9,541,13,532,18,529,24,532,30,541,35,555,39,573,42,593,43,612,42,630,39,644,35,653,30" shape="poly" title="Allocation-free EXIF parsing, serialization and bounded JPEG streaming."/>
+<area alt="" coords="348,110,346,104,339,99,329,95,315,92,301,91,286,92,273,95,262,99,255,104,253,110,255,116,262,121,273,125,286,128,301,129,315,128,329,125,339,121,346,116" href="exifite_8h.html" shape="poly" title="Bounded C11 EXIF metadata and JPEG streaming interfaces."/>
+<area alt="" coords="546,39,354,96,352,91,551,37" shape="poly" title=" "/>
+<area alt="" coords="455,196,453,190,447,185,438,180,426,178,413,177,399,178,387,180,378,185,372,190,370,196,372,201,378,207,387,211,399,214,413,214,426,214,438,211,447,207,453,201" shape="poly" title=" "/>
+<area alt="" coords="533,33,507,43,477,54,449,71,427,93,418,108,413,126,410,163,406,160,408,125,413,106,422,89,446,66,475,50,505,38,538,32" shape="poly" title=" "/>
+<area alt="" coords="524,110,522,104,516,99,506,95,494,92,481,91,467,92,455,95,445,99,439,104,437,110,439,116,445,121,455,125,467,128,481,129,494,128,506,125,516,121,522,116" shape="poly" title=" "/>
+<area alt="" coords="572,41,515,87,512,82,567,43" shape="poly" title=" "/>
+<area alt="" coords="637,110,635,104,629,99,619,95,606,92,593,91,579,92,566,95,556,99,550,104,548,110,550,116,556,121,566,125,579,128,593,129,606,128,619,125,629,121,635,116" shape="poly" title=" "/>
+<area alt="" coords="594,41,595,77,590,74,591,46" shape="poly" title=" "/>
+<area alt="" coords="753,110,750,104,744,99,734,95,721,92,707,91,693,92,680,95,670,99,664,104,662,110,664,116,670,121,680,125,693,128,707,129,721,128,734,125,744,121,750,116" shape="poly" title=" "/>
+<area alt="" coords="616,40,676,84,671,84,615,45" shape="poly" title=" "/>
+<area alt="" coords="889,110,886,104,878,99,866,95,850,92,833,91,815,92,800,95,787,99,779,104,776,110,779,116,787,121,800,125,815,128,833,129,850,128,866,125,878,121,886,116" shape="poly" title=" "/>
+<area alt="" coords="633,37,783,90,778,91,632,42" shape="poly" title=" "/>
+<area alt="" coords="1008,110,1006,104,999,99,989,95,975,92,961,91,946,92,933,95,922,99,915,104,913,110,915,116,922,121,933,125,946,128,961,129,975,128,989,125,999,121,1006,116" shape="poly" title=" "/>
+<area alt="" coords="645,33,763,57,901,88,912,93,907,93,900,94,762,62,645,38" shape="poly" title=" "/>
+<area alt="" coords="110,196,108,190,100,185,89,180,74,178,58,177,42,178,27,180,15,185,8,190,5,196,8,201,15,207,27,211,42,214,58,214,74,214,89,211,100,207,108,201" shape="poly" title=" "/>
+<area alt="" coords="267,126,110,179,108,174,265,121" shape="poly" title=" "/>
+<area alt="" coords="232,196,229,190,222,185,212,180,198,178,183,177,168,178,155,180,144,185,137,190,135,196,137,201,144,207,155,211,168,214,183,214,198,214,212,211,222,207,229,201" shape="poly" title=" "/>
+<area alt="" coords="281,126,219,172,216,167,276,128" shape="poly" title=" "/>
+<area alt="" coords="346,196,344,190,337,185,327,180,315,178,301,177,287,178,274,180,264,185,257,190,255,196,257,201,264,207,274,211,287,214,301,214,315,214,327,211,337,207,344,201" shape="poly" title=" "/>
+<area alt="" coords="302,127,303,163,298,160,299,131" shape="poly" title=" "/>
+<area alt="" coords="323,125,382,170,377,169,321,130" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="exifite_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-nested-classes"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:jpeg_5Fremoval" id="r_jpeg_5Fremoval"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structjpeg__removal.html">jpeg_removal</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Original-file interval occupied by one discarded EXIF segment.  <a href="structjpeg__removal.html#details">More...</a><br/></td></tr>
+<tr class="memitem:jpeg_5Fedit_5Fplan" id="r_jpeg_5Fedit_5Fplan"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structjpeg__edit__plan.html">jpeg_edit_plan</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Bounded edit list produced by the same parser used for streaming rewrites.  <a href="structjpeg__edit__plan.html#details">More...</a><br/></td></tr>
+<tr class="memitem:jpeg_5Fstream" id="r_jpeg_5Fstream"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structjpeg__stream.html">jpeg_stream</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">One bounded read-ahead buffer shared by JPEG inspection and rewriting.  <a href="structjpeg__stream.html#details">More...</a><br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-define-members"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a113dae9a78a8b76dcc473e55df62dd82" id="r_a113dae9a78a8b76dcc473e55df62dd82"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a113dae9a78a8b76dcc473e55df62dd82">EXIF_CAMERA_POINTER</a>   0x8769U</td></tr>
+<tr class="memdesc:a113dae9a78a8b76dcc473e55df62dd82"><td class="mdescLeft"> </td><td class="mdescRight">Standard primary-IFD link to the camera/EXIF directory.  <br/></td></tr>
+<tr class="memitem:a97652825ee9e284ea62cdafe899046a8" id="r_a97652825ee9e284ea62cdafe899046a8"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a97652825ee9e284ea62cdafe899046a8">EXIF_GPS_POINTER</a>   0x8825U</td></tr>
+<tr class="memdesc:a97652825ee9e284ea62cdafe899046a8"><td class="mdescLeft"> </td><td class="mdescRight">Standard primary-IFD link to the GPS directory.  <br/></td></tr>
+<tr class="memitem:a87dd23271252e25e8dfc7f2b53c6a91e" id="r_a87dd23271252e25e8dfc7f2b53c6a91e"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a87dd23271252e25e8dfc7f2b53c6a91e">EXIF_MAX_INPUT_ENTRIES</a>   256U</td></tr>
+<tr class="memdesc:a87dd23271252e25e8dfc7f2b53c6a91e"><td class="mdescLeft"> </td><td class="mdescRight">Bounds validation work and its stack-based duplicate-tag table.  <br/></td></tr>
+<tr class="memitem:aa783462b6445302dc5b142936066b417" id="r_aa783462b6445302dc5b142936066b417"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa783462b6445302dc5b142936066b417">TIFF_HEADER_SIZE</a>   8U</td></tr>
+<tr class="memdesc:aa783462b6445302dc5b142936066b417"><td class="mdescLeft"> </td><td class="mdescRight">Fixed TIFF layout widths, expressed separately from JPEG framing.  <br/></td></tr>
+<tr class="memitem:a6cf09359d43fc33a306153ef4a466315" id="r_a6cf09359d43fc33a306153ef4a466315"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6cf09359d43fc33a306153ef4a466315">TIFF_ENTRY_SIZE</a>   12U</td></tr>
+<tr class="memdesc:a6cf09359d43fc33a306153ef4a466315"><td class="mdescLeft"> </td><td class="mdescRight">Bytes occupied by one TIFF directory entry.  <br/></td></tr>
+<tr class="memitem:ad950ba6c2d3808d311faa98f4dddde74" id="r_ad950ba6c2d3808d311faa98f4dddde74"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad950ba6c2d3808d311faa98f4dddde74">TIFF_INLINE_SIZE</a>   4U</td></tr>
+<tr class="memdesc:ad950ba6c2d3808d311faa98f4dddde74"><td class="mdescLeft"> </td><td class="mdescRight">Maximum TIFF value length stored directly in a directory entry.  <br/></td></tr>
+<tr class="memitem:ab3b618d9d62a8263429f3b0f69297c12" id="r_ab3b618d9d62a8263429f3b0f69297c12"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab3b618d9d62a8263429f3b0f69297c12">TIFF_DIRECTORY_COUNT_SIZE</a>   2U</td></tr>
+<tr class="memdesc:ab3b618d9d62a8263429f3b0f69297c12"><td class="mdescLeft"> </td><td class="mdescRight">Bytes occupied by a TIFF directory's entry count.  <br/></td></tr>
+<tr class="memitem:a69d59611a3bd1c3460c6ef6b54efdc94" id="r_a69d59611a3bd1c3460c6ef6b54efdc94"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a69d59611a3bd1c3460c6ef6b54efdc94">TIFF_DIRECTORY_NEXT_SIZE</a>   4U</td></tr>
+<tr class="memdesc:a69d59611a3bd1c3460c6ef6b54efdc94"><td class="mdescLeft"> </td><td class="mdescRight">Bytes occupied by the next-directory link after an entry table.  <br/></td></tr>
+<tr class="memitem:a3e80371b55820ae72624e09184ea1847" id="r_a3e80371b55820ae72624e09184ea1847"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3e80371b55820ae72624e09184ea1847">JPEG_MAX_HEADER_SEGMENTS</a>   1024U</td></tr>
+<tr class="memdesc:a3e80371b55820ae72624e09184ea1847"><td class="mdescLeft"> </td><td class="mdescRight">Limit on JPEG header segments inspected before reaching image data.  <br/></td></tr>
+<tr class="memitem:a7600541cd59ace6795beb6610ded6d34" id="r_a7600541cd59ace6795beb6610ded6d34"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7600541cd59ace6795beb6610ded6d34">JPEG_MAX_HEADER_BYTES</a>   (4U * 1024U * 1024U)</td></tr>
+<tr class="memdesc:a7600541cd59ace6795beb6610ded6d34"><td class="mdescLeft"> </td><td class="mdescRight">Limit on ordinary JPEG header segment bytes inspected.  <br/></td></tr>
+<tr class="memitem:aacede6c301c58c7443ab965adcdf6395" id="r_aacede6c301c58c7443ab965adcdf6395"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aacede6c301c58c7443ab965adcdf6395">JPEG_STREAM_CAPACITY</a>   8192U</td></tr>
+<tr class="memdesc:aacede6c301c58c7443ab965adcdf6395"><td class="mdescLeft"> </td><td class="mdescRight">Read-ahead capacity independent of image dimensions.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a8c21b9a2c454c782f8aae4f2a288e55c" id="r_a8c21b9a2c454c782f8aae4f2a288e55c"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c21b9a2c454c782f8aae4f2a288e55c">invalid</a> (void)</td></tr>
+<tr class="memdesc:a8c21b9a2c454c782f8aae4f2a288e55c"><td class="mdescLeft"> </td><td class="mdescRight">Use one predictable error for invalid arguments and malformed values.  <br/></td></tr>
+<tr class="memitem:a5c5c6da0b10a9a3a0a05495f7d18684a" id="r_a5c5c6da0b10a9a3a0a05495f7d18684a"><td align="right" class="memItemLeft" valign="top">static uint16_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c5c6da0b10a9a3a0a05495f7d18684a">read_short</a> (const unsigned char *data, bool little)</td></tr>
+<tr class="memdesc:a5c5c6da0b10a9a3a0a05495f7d18684a"><td class="mdescLeft"> </td><td class="mdescRight">Read two already-checked bytes without alignment or host-endian assumptions.  <br/></td></tr>
+<tr class="memitem:a2138d60fc8a8d39f0777e55a6a0cc07e" id="r_a2138d60fc8a8d39f0777e55a6a0cc07e"><td align="right" class="memItemLeft" valign="top">static uint32_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2138d60fc8a8d39f0777e55a6a0cc07e">read_long</a> (const unsigned char *data, bool little)</td></tr>
+<tr class="memdesc:a2138d60fc8a8d39f0777e55a6a0cc07e"><td class="mdescLeft"> </td><td class="mdescRight">Read four checked bytes; casts precede shifts to avoid signed promotion.  <br/></td></tr>
+<tr class="memitem:gaf5948d2ac9c4b00814753dad62c287b9" id="r_gaf5948d2ac9c4b00814753dad62c287b9"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#gaf5948d2ac9c4b00814753dad62c287b9">exif_encode_short</a> (unsigned char *data, uint16_t value)</td></tr>
+<tr class="memdesc:gaf5948d2ac9c4b00814753dad62c287b9"><td class="mdescLeft"> </td><td class="mdescRight">Encode a 16-bit value in the writer's little-endian representation.  <br/></td></tr>
+<tr class="memitem:ga22f4ef0eca474c34f1227b04e0573f48" id="r_ga22f4ef0eca474c34f1227b04e0573f48"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga22f4ef0eca474c34f1227b04e0573f48">exif_encode_long</a> (unsigned char *data, uint32_t value)</td></tr>
+<tr class="memdesc:ga22f4ef0eca474c34f1227b04e0573f48"><td class="mdescLeft"> </td><td class="mdescRight">Encode a 32-bit value in the writer's little-endian representation.  <br/></td></tr>
+<tr class="memitem:a10486ee93efe9866d86ffa5c606e58cf" id="r_a10486ee93efe9866d86ffa5c606e58cf"><td align="right" class="memItemLeft" valign="top">static size_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a10486ee93efe9866d86ffa5c606e58cf">format_size</a> (uint16_t format)</td></tr>
+<tr class="memdesc:a10486ee93efe9866d86ffa5c606e58cf"><td class="mdescLeft"> </td><td class="mdescRight">Map TIFF's numbered representations to their component byte widths.  <br/></td></tr>
+<tr class="memitem:ae208d7773b764ff52127e9e76389e0bd" id="r_ae208d7773b764ff52127e9e76389e0bd"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae208d7773b764ff52127e9e76389e0bd">range</a> (size_t total, size_t offset, size_t length)</td></tr>
+<tr class="memdesc:ae208d7773b764ff52127e9e76389e0bd"><td class="mdescLeft"> </td><td class="mdescRight">Check a byte span without forming a potentially overflowing end offset.  <br/></td></tr>
+<tr class="memitem:a50b1cf78a2a9af82e3c3e12daf92310a" id="r_a50b1cf78a2a9af82e3c3e12daf92310a"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a50b1cf78a2a9af82e3c3e12daf92310a">overlaps</a> (const void *first, size_t first_size, const void *second, size_t second_size)</td></tr>
+<tr class="memdesc:a50b1cf78a2a9af82e3c3e12daf92310a"><td class="mdescLeft"> </td><td class="mdescRight">Detect caller-buffer aliasing without adding lengths to addresses.  <br/></td></tr>
+<tr class="memitem:ae4131befd1d4cddfb35547322ffacc47" id="r_ae4131befd1d4cddfb35547322ffacc47"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae4131befd1d4cddfb35547322ffacc47">entry_value</a> (const struct <a class="el" href="structexif__view.html">exif_view</a> *view, size_t offset, struct <a class="el" href="structexif__value.html">exif_value</a> *value)</td></tr>
+<tr class="memdesc:ae4131befd1d4cddfb35547322ffacc47"><td class="mdescLeft"> </td><td class="mdescRight">Resolve one TIFF entry into checked, borrowed value bytes.  <br/></td></tr>
+<tr class="memitem:a22d3dfe99232cf6802e72f0d5c37d1f2" id="r_a22d3dfe99232cf6802e72f0d5c37d1f2"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a22d3dfe99232cf6802e72f0d5c37d1f2">validate_directory</a> (struct <a class="el" href="structexif__view.html">exif_view</a> *view, enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> directory)</td></tr>
+<tr class="memdesc:a22d3dfe99232cf6802e72f0d5c37d1f2"><td class="mdescLeft"> </td><td class="mdescRight">Validate one bounded IFD and discover the two supported child links.  <br/></td></tr>
+<tr class="memitem:ga2bf3c13d67fd162e6b7f6ec711167b15" id="r_ga2bf3c13d67fd162e6b7f6ec711167b15"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga2bf3c13d67fd162e6b7f6ec711167b15">exif_parse</a> (struct <a class="el" href="structexif__view.html">exif_view</a> *view, const unsigned char *payload, size_t <a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:ga2bf3c13d67fd162e6b7f6ec711167b15"><td class="mdescLeft"> </td><td class="mdescRight">Validate an EXIF APP1 payload and create a borrowed view.  <br/></td></tr>
+<tr class="memitem:ga43bd369d5f5287fdd92e86b15df7bcd4" id="r_ga43bd369d5f5287fdd92e86b15df7bcd4"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga43bd369d5f5287fdd92e86b15df7bcd4">exif_get</a> (const struct <a class="el" href="structexif__view.html">exif_view</a> *view, enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> directory, uint16_t tag, struct <a class="el" href="structexif__value.html">exif_value</a> *value)</td></tr>
+<tr class="memdesc:ga43bd369d5f5287fdd92e86b15df7bcd4"><td class="mdescLeft"> </td><td class="mdescRight">Look up a directory-local tag without copying its bytes.  <br/></td></tr>
+<tr class="memitem:ga1f007f780262fe1c08d1856a64d7f7f0" id="r_ga1f007f780262fe1c08d1856a64d7f7f0"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga1f007f780262fe1c08d1856a64d7f7f0">exif_value_unsigned</a> (const struct <a class="el" href="structexif__value.html">exif_value</a> *value, size_t index, uint32_t *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>)</td></tr>
+<tr class="memdesc:ga1f007f780262fe1c08d1856a64d7f7f0"><td class="mdescLeft"> </td><td class="mdescRight">Decode one BYTE, SHORT or LONG component without an unaligned load.  <br/></td></tr>
+<tr class="memitem:a8e7659e00e642bee8af3f2632b474516" id="r_a8e7659e00e642bee8af3f2632b474516"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e7659e00e642bee8af3f2632b474516">signed_long</a> (uint32_t value)</td></tr>
+<tr class="memdesc:a8e7659e00e642bee8af3f2632b474516"><td class="mdescLeft"> </td><td class="mdescRight">Interpret a TIFF signed component without an implementation-defined cast.  <br/></td></tr>
+<tr class="memitem:gaacfe4c2bce51fbd66926163b93ef573c" id="r_gaacfe4c2bce51fbd66926163b93ef573c"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#gaacfe4c2bce51fbd66926163b93ef573c">exif_value_rational</a> (const struct <a class="el" href="structexif__value.html">exif_value</a> *value, size_t index, double *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>)</td></tr>
+<tr class="memdesc:gaacfe4c2bce51fbd66926163b93ef573c"><td class="mdescLeft"> </td><td class="mdescRight">Decode one unsigned or signed rational component as a double.  <br/></td></tr>
+<tr class="memitem:gada430e3928a2aca563fa334e030d18ea" id="r_gada430e3928a2aca563fa334e030d18ea"><td align="right" class="memItemLeft" valign="top">size_t </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#gada430e3928a2aca563fa334e030d18ea">exif_text_length</a> (const struct <a class="el" href="structexif__value.html">exif_value</a> *value)</td></tr>
+<tr class="memdesc:gada430e3928a2aca563fa334e030d18ea"><td class="mdescLeft"> </td><td class="mdescRight">Count text bytes after trimming trailing NUL padding only.  <br/></td></tr>
+<tr class="memitem:ga182eedc3101f4d24540e8be983ac8f47" id="r_ga182eedc3101f4d24540e8be983ac8f47"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga182eedc3101f4d24540e8be983ac8f47">exif_document_init</a> (struct <a class="el" href="structexif__document.html">exif_document</a> *document)</td></tr>
+<tr class="memdesc:ga182eedc3101f4d24540e8be983ac8f47"><td class="mdescLeft"> </td><td class="mdescRight">Start a fresh upright sRGB/Y-Cb-Cr document with EXIF 2.32 defaults.  <br/></td></tr>
+<tr class="memitem:ga6b863f87f3cbf4baf4d755e147321310" id="r_ga6b863f87f3cbf4baf4d755e147321310"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga6b863f87f3cbf4baf4d755e147321310">exif_document_get</a> (const struct <a class="el" href="structexif__document.html">exif_document</a> *document, enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> directory, uint16_t tag, struct <a class="el" href="structexif__value.html">exif_value</a> *value)</td></tr>
+<tr class="memdesc:ga6b863f87f3cbf4baf4d755e147321310"><td class="mdescLeft"> </td><td class="mdescRight">Borrow a field from the current writable document.  <br/></td></tr>
+<tr class="memitem:ga37937c357ddc140c0351c79ef969978b" id="r_ga37937c357ddc140c0351c79ef969978b"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga37937c357ddc140c0351c79ef969978b">exif_document_remove</a> (struct <a class="el" href="structexif__document.html">exif_document</a> *document, enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> directory, uint16_t tag)</td></tr>
+<tr class="memdesc:ga37937c357ddc140c0351c79ef969978b"><td class="mdescLeft"> </td><td class="mdescRight">Remove a tag and reclaim its packed value storage.  <br/></td></tr>
+<tr class="memitem:ga203a2588543f516ee2e5ab3c3f843ad5" id="r_ga203a2588543f516ee2e5ab3c3f843ad5"><td align="right" class="memItemLeft" valign="top">unsigned char * </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga203a2588543f516ee2e5ab3c3f843ad5">exif_document_reserve</a> (struct <a class="el" href="structexif__document.html">exif_document</a> *document, enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> directory, uint16_t tag, enum <a class="el" href="group__exifite.html#ga3361e18a3bdc07f5cb5a0c9a1045462f">exif_format</a> format, uint32_t <a class="el" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>)</td></tr>
+<tr class="memdesc:ga203a2588543f516ee2e5ab3c3f843ad5"><td class="mdescLeft"> </td><td class="mdescRight">Create or replace a field with zeroed, bounded value storage.  <br/></td></tr>
+<tr class="memitem:ga9d08199d73efa3dba9fe7e65978a16ff" id="r_ga9d08199d73efa3dba9fe7e65978a16ff"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga9d08199d73efa3dba9fe7e65978a16ff">exif_document_ascii</a> (struct <a class="el" href="structexif__document.html">exif_document</a> *document, enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> directory, uint16_t tag, const char *text)</td></tr>
+<tr class="memdesc:ga9d08199d73efa3dba9fe7e65978a16ff"><td class="mdescLeft"> </td><td class="mdescRight">Replace an ASCII field, including its terminating NUL byte.  <br/></td></tr>
+<tr class="memitem:ga62798807377c1a085ddf7999189b6f0e" id="r_ga62798807377c1a085ddf7999189b6f0e"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga62798807377c1a085ddf7999189b6f0e">exif_document_rational</a> (struct <a class="el" href="structexif__document.html">exif_document</a> *document, enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> directory, uint16_t tag, uint32_t numerator, uint32_t denominator)</td></tr>
+<tr class="memdesc:ga62798807377c1a085ddf7999189b6f0e"><td class="mdescLeft"> </td><td class="mdescRight">Store an unsigned measurement as an exact numerator/denominator pair.  <br/></td></tr>
+<tr class="memitem:af48849b21f10f3f3c04ab9319a8871aa" id="r_af48849b21f10f3f3c04ab9319a8871aa"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#af48849b21f10f3f3c04ab9319a8871aa">supported</a> (enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> directory, uint16_t tag)</td></tr>
+<tr class="memdesc:af48849b21f10f3f3c04ab9319a8871aa"><td class="mdescLeft"> </td><td class="mdescRight">Select standard fields retained by the default import policy.  <br/></td></tr>
+<tr class="memitem:ad6c4e193c6c46586e0226c734f91dc39" id="r_ad6c4e193c6c46586e0226c734f91dc39"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6c4e193c6c46586e0226c734f91dc39">import_directory</a> (struct <a class="el" href="structexif__document.html">exif_document</a> *document, const struct <a class="el" href="structexif__view.html">exif_view</a> *view, enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a> directory, <a class="el" href="group__exifite.html#ga69343d15165a868928b74a4e3eb8809f">exif_tag_selector</a> select, void *context)</td></tr>
+<tr class="memdesc:ad6c4e193c6c46586e0226c734f91dc39"><td class="mdescLeft"> </td><td class="mdescRight">Copy supported fields from one directory into writer storage.  <br/></td></tr>
+<tr class="memitem:gab88863c0e8cd7db07c53b4601a0d6f12" id="r_gab88863c0e8cd7db07c53b4601a0d6f12"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#gab88863c0e8cd7db07c53b4601a0d6f12">exif_document_import_custom</a> (struct <a class="el" href="structexif__document.html">exif_document</a> *document, const struct <a class="el" href="structexif__view.html">exif_view</a> *view, <a class="el" href="group__exifite.html#ga69343d15165a868928b74a4e3eb8809f">exif_tag_selector</a> select, void *context)</td></tr>
+<tr class="memdesc:gab88863c0e8cd7db07c53b4601a0d6f12"><td class="mdescLeft"> </td><td class="mdescRight">Import standard fields plus additional tags selected by the caller.  <br/></td></tr>
+<tr class="memitem:ga072c41ba4e4db69f430d3a76f228cda9" id="r_ga072c41ba4e4db69f430d3a76f228cda9"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga072c41ba4e4db69f430d3a76f228cda9">exif_document_import</a> (struct <a class="el" href="structexif__document.html">exif_document</a> *document, const struct <a class="el" href="structexif__view.html">exif_view</a> *view)</td></tr>
+<tr class="memdesc:ga072c41ba4e4db69f430d3a76f228cda9"><td class="mdescLeft"> </td><td class="mdescRight">Rebuild a writable document from supported Sensoraia fields.  <br/></td></tr>
+<tr class="memitem:a2fa6e11c98e8ffed310263c7ca8c1fb6" id="r_a2fa6e11c98e8ffed310263c7ca8c1fb6"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2fa6e11c98e8ffed310263c7ca8c1fb6">valid_document_entry</a> (const struct <a class="el" href="structexif__document.html">exif_document</a> *document, const struct <a class="el" href="structexif__item.html">exif_item</a> *entry)</td></tr>
+<tr class="memdesc:a2fa6e11c98e8ffed310263c7ca8c1fb6"><td class="mdescLeft"> </td><td class="mdescRight">Validate a writer field before calculating offsets or touching output.  <br/></td></tr>
+<tr class="memitem:aee78afeef628a80cfb86834fe120a3c0" id="r_aee78afeef628a80cfb86834fe120a3c0"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#aee78afeef628a80cfb86834fe120a3c0">entry_precedes</a> (const struct <a class="el" href="structexif__item.html">exif_item</a> *first, const struct <a class="el" href="structexif__item.html">exif_item</a> *second)</td></tr>
+<tr class="memdesc:aee78afeef628a80cfb86834fe120a3c0"><td class="mdescLeft"> </td><td class="mdescRight">Compare the wire ordering of two directory-local fields.  <br/></td></tr>
+<tr class="memitem:ga16bedc86c30bae9cd3ef503a59f55bd8" id="r_ga16bedc86c30bae9cd3ef503a59f55bd8"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga16bedc86c30bae9cd3ef503a59f55bd8">exif_serialize</a> (const struct <a class="el" href="structexif__document.html">exif_document</a> *document, unsigned char *payload, size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, size_t *<a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:ga16bedc86c30bae9cd3ef503a59f55bd8"><td class="mdescLeft"> </td><td class="mdescRight">Serialize a document into one complete EXIF APP1 payload.  <br/></td></tr>
+<tr class="memitem:a1e53405a513a5ec519f80079678cd488" id="r_a1e53405a513a5ec519f80079678cd488"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e53405a513a5ec519f80079678cd488">read_exact</a> (FILE *input, unsigned char *buffer, size_t <a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:a1e53405a513a5ec519f80079678cd488"><td class="mdescLeft"> </td><td class="mdescRight">Read an entire declared span or report truncation.  <br/></td></tr>
+<tr class="memitem:afc5b9599640ec0a18a5725af2b240b37" id="r_afc5b9599640ec0a18a5725af2b240b37"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#afc5b9599640ec0a18a5725af2b240b37">skip_exact</a> (FILE *input, size_t <a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:afc5b9599640ec0a18a5725af2b240b37"><td class="mdescLeft"> </td><td class="mdescRight">Consume unwanted bytes without trusting a seek past end-of-file.  <br/></td></tr>
+<tr class="memitem:a5ceea8a25c0fcab7bcdc98bcd56a760d" id="r_a5ceea8a25c0fcab7bcdc98bcd56a760d"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ceea8a25c0fcab7bcdc98bcd56a760d">read_exif_stream</a> (FILE *input, unsigned char *payload, size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, size_t *<a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:a5ceea8a25c0fcab7bcdc98bcd56a760d"><td class="mdescLeft"> </td><td class="mdescRight">Extract the unique EXIF payload from a caller-owned JPEG stream.  <br/></td></tr>
+<tr class="memitem:ga9321fe8c1a9dc6afaa192090b561ddd5" id="r_ga9321fe8c1a9dc6afaa192090b561ddd5"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga9321fe8c1a9dc6afaa192090b561ddd5">exif_read_stream</a> (FILE *input, unsigned char *payload, size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, size_t *<a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:ga9321fe8c1a9dc6afaa192090b561ddd5"><td class="mdescLeft"> </td><td class="mdescRight">Read capture EXIF from an already-open JPEG without reopening its path.  <br/></td></tr>
+<tr class="memitem:ga4684583ba9a66243fb5aec629d8b6461" id="r_ga4684583ba9a66243fb5aec629d8b6461"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga4684583ba9a66243fb5aec629d8b6461">exif_read_jpeg</a> (const char *filename, unsigned char *payload, size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, size_t *<a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:ga4684583ba9a66243fb5aec629d8b6461"><td class="mdescLeft"> </td><td class="mdescRight">Read the single EXIF APP1 segment before the first JPEG scan.  <br/></td></tr>
+<tr class="memitem:a909b615be92c6212fb24c2ab1d41c38e" id="r_a909b615be92c6212fb24c2ab1d41c38e"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a909b615be92c6212fb24c2ab1d41c38e">stream_fill</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream)</td></tr>
+<tr class="memdesc:a909b615be92c6212fb24c2ab1d41c38e"><td class="mdescLeft"> </td><td class="mdescRight">Refill only after buffered bytes have been consumed.  <br/></td></tr>
+<tr class="memitem:a2df1b7b673105cc47241893cc38b5f36" id="r_a2df1b7b673105cc47241893cc38b5f36"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2df1b7b673105cc47241893cc38b5f36">stream_byte</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream)</td></tr>
+<tr class="memdesc:a2df1b7b673105cc47241893cc38b5f36"><td class="mdescLeft"> </td><td class="mdescRight">Read a marker/header byte while preserving buffered cursor ownership.  <br/></td></tr>
+<tr class="memitem:acc53eeb4e6cee73aa32333c6d540df3c" id="r_acc53eeb4e6cee73aa32333c6d540df3c"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#acc53eeb4e6cee73aa32333c6d540df3c">stream_write</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream, const unsigned char *data, size_t <a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:acc53eeb4e6cee73aa32333c6d540df3c"><td class="mdescLeft"> </td><td class="mdescRight">Share byte emission between real rewrites and write-free validation.  <br/></td></tr>
+<tr class="memitem:a7829b97d9c88467f25e6b246bafaddc9" id="r_a7829b97d9c88467f25e6b246bafaddc9"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7829b97d9c88467f25e6b246bafaddc9">stream_put_byte</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream, int byte)</td></tr>
+<tr class="memdesc:a7829b97d9c88467f25e6b246bafaddc9"><td class="mdescLeft"> </td><td class="mdescRight">Emit one framing byte, or do nothing during preflight.  <br/></td></tr>
+<tr class="memitem:a2ebe3376dd4418d255f043847820fa27" id="r_a2ebe3376dd4418d255f043847820fa27"><td align="right" class="memItemLeft" valign="top">static off_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ebe3376dd4418d255f043847820fa27">stream_offset</a> (const struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream)</td></tr>
+<tr class="memdesc:a2ebe3376dd4418d255f043847820fa27"><td class="mdescLeft"> </td><td class="mdescRight">Recover the logical offset rather than the read-ahead descriptor offset.  <br/></td></tr>
+<tr class="memitem:aea70563dde38f950db50f2fbeae0b029" id="r_aea70563dde38f950db50f2fbeae0b029"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#aea70563dde38f950db50f2fbeae0b029">stream_copy</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream, size_t <a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>, bool emit)</td></tr>
+<tr class="memdesc:aea70563dde38f950db50f2fbeae0b029"><td class="mdescLeft"> </td><td class="mdescRight">Copy or discard exactly one declared span in bounded chunks.  <br/></td></tr>
+<tr class="memitem:a71aedc26885b49663d03e98ce5997de7" id="r_a71aedc26885b49663d03e98ce5997de7"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a71aedc26885b49663d03e98ce5997de7">marker_prefix</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream, size_t <a class="el" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>, int <a class="el" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a>)</td></tr>
+<tr class="memdesc:a71aedc26885b49663d03e98ce5997de7"><td class="mdescLeft"> </td><td class="mdescRight">Emit a marker together with its original fill-byte count.  <br/></td></tr>
+<tr class="memitem:abf86df6c5e8b24943c330c783110d6fc" id="r_abf86df6c5e8b24943c330c783110d6fc"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#abf86df6c5e8b24943c330c783110d6fc">stream_marker</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream, bool entropy, size_t *prefix, int *<a class="el" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a>)</td></tr>
+<tr class="memdesc:abf86df6c5e8b24943c330c783110d6fc"><td class="mdescLeft"> </td><td class="mdescRight">Find a structural marker, optionally copying preceding entropy bytes.  <br/></td></tr>
+<tr class="memitem:a795163792bc27673034e940f987787da" id="r_a795163792bc27673034e940f987787da"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a795163792bc27673034e940f987787da">frame_marker</a> (int <a class="el" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a>)</td></tr>
+<tr class="memdesc:a795163792bc27673034e940f987787da"><td class="mdescLeft"> </td><td class="mdescRight">Recognize SOF markers while excluding other codes in the same range.  <br/></td></tr>
+<tr class="memitem:a95d275c93551bf76c1790460fc69928e" id="r_a95d275c93551bf76c1790460fc69928e"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a95d275c93551bf76c1790460fc69928e">stream_read</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream, unsigned char *data, size_t <a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:a95d275c93551bf76c1790460fc69928e"><td class="mdescLeft"> </td><td class="mdescRight">Read a short fixed-size header across read-ahead buffer boundaries.  <br/></td></tr>
+<tr class="memitem:a6d6225cedfe5a66baaabc3717d0f5f11" id="r_a6d6225cedfe5a66baaabc3717d0f5f11"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d6225cedfe5a66baaabc3717d0f5f11">stream_frame_header</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream, size_t payload_size, unsigned char <a class="el" href="pose__log_8c.html#a2d5bf705d4e4df438762a5c261d6e530">header</a>[6])</td></tr>
+<tr class="memdesc:a6d6225cedfe5a66baaabc3717d0f5f11"><td class="mdescLeft"> </td><td class="mdescRight">Read and validate the common six-byte start-of-frame header.  <br/></td></tr>
+<tr class="memitem:a079a4375f174d4bd96ce4d8d22b84695" id="r_a079a4375f174d4bd96ce4d8d22b84695"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a079a4375f174d4bd96ce4d8d22b84695">stream_segment_header</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream, size_t prefix, int <a class="el" href="lwir__image_8c.html#a56de4403f4512c206057eb65760605c4">marker</a>, size_t payload_size)</td></tr>
+<tr class="memdesc:a079a4375f174d4bd96ce4d8d22b84695"><td class="mdescLeft"> </td><td class="mdescRight">Emit a segment prefix and its two-byte big-endian JPEG length.  <br/></td></tr>
+<tr class="memitem:ga7c1e08e21229f934d4e8541e96e60a53" id="r_ga7c1e08e21229f934d4e8541e96e60a53"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#ga7c1e08e21229f934d4e8541e96e60a53">exif_jpeg_dimensions</a> (FILE *input, uint32_t *width, uint32_t *height, unsigned *components)</td></tr>
+<tr class="memdesc:ga7c1e08e21229f934d4e8541e96e60a53"><td class="mdescLeft"> </td><td class="mdescRight">Inspect the frame header without allocating or decoding image pixels.  <br/></td></tr>
+<tr class="memitem:a08d4707d1c4e0c9353e828e04ba50fba" id="r_a08d4707d1c4e0c9353e828e04ba50fba"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a08d4707d1c4e0c9353e828e04ba50fba">rewrite_jpeg_stream</a> (struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *stream, const unsigned char *payload, size_t <a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:a08d4707d1c4e0c9353e828e04ba50fba"><td class="mdescLeft"> </td><td class="mdescRight">Rewrite JPEG framing using caller-owned streams and validated EXIF.  <br/></td></tr>
+<tr class="memitem:gaca109a67eb588a2b3aee6535e863e78c" id="r_gaca109a67eb588a2b3aee6535e863e78c"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#gaca109a67eb588a2b3aee6535e863e78c">exif_rewrite_jpeg</a> (FILE *input, FILE *<a class="el" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, const unsigned char *payload, size_t <a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:gaca109a67eb588a2b3aee6535e863e78c"><td class="mdescLeft"> </td><td class="mdescRight">Stream a JPEG with one new EXIF segment instead of its old EXIF records.  <br/></td></tr>
+<tr class="memitem:a1ec8e3477661e5779775ee56bbb32442" id="r_a1ec8e3477661e5779775ee56bbb32442"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1ec8e3477661e5779775ee56bbb32442">relocate_jpeg_range</a> (int <a class="el" href="chdk__pipe_8c.html#afbe0a70d4d8f0e3df77ec516d0926b23">descriptor</a>, off_t <a class="el" href="dipla__camera__backend_8c.html#a107573c5257745586d1172d7ee57389a">start</a>, off_t end, off_t displacement)</td></tr>
+<tr class="memdesc:a1ec8e3477661e5779775ee56bbb32442"><td class="mdescLeft"> </td><td class="mdescRight">Move one retained interval without overwriting its unread source bytes.  <br/></td></tr>
+<tr class="memitem:afb6f6c0c39ef122cffff56df343d2e2f" id="r_afb6f6c0c39ef122cffff56df343d2e2f"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#afb6f6c0c39ef122cffff56df343d2e2f">relocate_jpeg_spans</a> (int <a class="el" href="chdk__pipe_8c.html#afbe0a70d4d8f0e3df77ec516d0926b23">descriptor</a>, const struct <a class="el" href="structjpeg__edit__plan.html">jpeg_edit_plan</a> *plan, off_t original_size, off_t inserted_size, bool backwards)</td></tr>
+<tr class="memdesc:afb6f6c0c39ef122cffff56df343d2e2f"><td class="mdescLeft"> </td><td class="mdescRight">Move only the spans whose final positions differ from their originals.  <br/></td></tr>
+<tr class="memitem:gaf5d75131c5b759ad38db5f61105d81a0" id="r_gaf5d75131c5b759ad38db5f61105d81a0"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="group__exifite.html#gaf5d75131c5b759ad38db5f61105d81a0">exif_update_jpeg</a> (FILE *file, const unsigned char *payload, size_t <a class="el" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>)</td></tr>
+<tr class="memdesc:gaf5d75131c5b759ad38db5f61105d81a0"><td class="mdescLeft"> </td><td class="mdescRight">Replace EXIF in a regular JPEG file without a temporary file.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-var-members"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aec1aec9f455493558de498cc86fcb427" id="r_aec1aec9f455493558de498cc86fcb427"><td align="right" class="memItemLeft" valign="top">static const unsigned char </td><td class="memItemRight" valign="bottom"><a class="el" href="#aec1aec9f455493558de498cc86fcb427">exif_signature</a> [] = {'E', 'x', 'i', 'f', 0, 0}</td></tr>
+<tr class="memdesc:aec1aec9f455493558de498cc86fcb427"><td class="mdescLeft"> </td><td class="mdescRight">APP1 identifier; its terminators are part of the on-disk signature.  <br/></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>Allocation-free EXIF parsing, serialization and bounded JPEG streaming. </p>
+<p>The implementation keeps three jobs separate: validate borrowed TIFF bytes, collect caller-owned values, then stream JPEG markers around a serialized APP1 payload. That separation lets us check each boundary without allocating image-sized buffers or interpreting manufacturer-specific pointer structures. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="exifite_8h.html" title="Bounded C11 EXIF metadata and JPEG streaming interfaces.">exifite.h</a> for public contracts and storage ownership. </dd></dl>
+<p class="definition">Definition in file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div><a id="doc-define-members" name="doc-define-members"></a><h2 class="groupheader" id="header-doc-define-members">Macro Definition Documentation</h2>
+<a id="a113dae9a78a8b76dcc473e55df62dd82" name="a113dae9a78a8b76dcc473e55df62dd82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a113dae9a78a8b76dcc473e55df62dd82">◆ </a></span>EXIF_CAMERA_POINTER</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define EXIF_CAMERA_POINTER   0x8769U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Standard primary-IFD link to the camera/EXIF directory. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00038">38</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a97652825ee9e284ea62cdafe899046a8" name="a97652825ee9e284ea62cdafe899046a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97652825ee9e284ea62cdafe899046a8">◆ </a></span>EXIF_GPS_POINTER</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define EXIF_GPS_POINTER   0x8825U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Standard primary-IFD link to the GPS directory. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00040">40</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a87dd23271252e25e8dfc7f2b53c6a91e" name="a87dd23271252e25e8dfc7f2b53c6a91e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87dd23271252e25e8dfc7f2b53c6a91e">◆ </a></span>EXIF_MAX_INPUT_ENTRIES</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define EXIF_MAX_INPUT_ENTRIES   256U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Bounds validation work and its stack-based duplicate-tag table. </p>
+<p>Input may contain more fields than our writer, but cannot demand unbounded memory or quadratic validation work from the embedded board. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00044">44</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a7600541cd59ace6795beb6610ded6d34" name="a7600541cd59ace6795beb6610ded6d34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7600541cd59ace6795beb6610ded6d34">◆ </a></span>JPEG_MAX_HEADER_BYTES</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define JPEG_MAX_HEADER_BYTES   (4U * 1024U * 1024U)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Limit on ordinary JPEG header segment bytes inspected. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00059">59</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a3e80371b55820ae72624e09184ea1847" name="a3e80371b55820ae72624e09184ea1847"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e80371b55820ae72624e09184ea1847">◆ </a></span>JPEG_MAX_HEADER_SEGMENTS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define JPEG_MAX_HEADER_SEGMENTS   1024U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Limit on JPEG header segments inspected before reaching image data. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00057">57</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="aacede6c301c58c7443ab965adcdf6395" name="aacede6c301c58c7443ab965adcdf6395"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacede6c301c58c7443ab965adcdf6395">◆ </a></span>JPEG_STREAM_CAPACITY</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define JPEG_STREAM_CAPACITY   8192U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read-ahead capacity independent of image dimensions. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00061">61</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="ab3b618d9d62a8263429f3b0f69297c12" name="ab3b618d9d62a8263429f3b0f69297c12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3b618d9d62a8263429f3b0f69297c12">◆ </a></span>TIFF_DIRECTORY_COUNT_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TIFF_DIRECTORY_COUNT_SIZE   2U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Bytes occupied by a TIFF directory's entry count. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00053">53</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a69d59611a3bd1c3460c6ef6b54efdc94" name="a69d59611a3bd1c3460c6ef6b54efdc94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69d59611a3bd1c3460c6ef6b54efdc94">◆ </a></span>TIFF_DIRECTORY_NEXT_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TIFF_DIRECTORY_NEXT_SIZE   4U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Bytes occupied by the next-directory link after an entry table. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00055">55</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a6cf09359d43fc33a306153ef4a466315" name="a6cf09359d43fc33a306153ef4a466315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cf09359d43fc33a306153ef4a466315">◆ </a></span>TIFF_ENTRY_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TIFF_ENTRY_SIZE   12U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Bytes occupied by one TIFF directory entry. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00049">49</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="aa783462b6445302dc5b142936066b417" name="aa783462b6445302dc5b142936066b417"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa783462b6445302dc5b142936066b417">◆ </a></span>TIFF_HEADER_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TIFF_HEADER_SIZE   8U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Fixed TIFF layout widths, expressed separately from JPEG framing. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00047">47</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="ad950ba6c2d3808d311faa98f4dddde74" name="ad950ba6c2d3808d311faa98f4dddde74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad950ba6c2d3808d311faa98f4dddde74">◆ </a></span>TIFF_INLINE_SIZE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TIFF_INLINE_SIZE   4U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Maximum TIFF value length stored directly in a directory entry. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00051">51</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="aee78afeef628a80cfb86834fe120a3c0" name="aee78afeef628a80cfb86834fe120a3c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee78afeef628a80cfb86834fe120a3c0">◆ </a></span>entry_precedes()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool entry_precedes </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structexif__item.html">exif_item</a> *</td> <td class="paramname"><span class="paramname"><em>first</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structexif__item.html">exif_item</a> *</td> <td class="paramname"><span class="paramname"><em>second</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Compare the wire ordering of two directory-local fields. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>Candidate field. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">second</td><td>Field currently ahead of the candidate. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the candidate belongs before the existing field. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00730">730</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="ae4131befd1d4cddfb35547322ffacc47" name="ae4131befd1d4cddfb35547322ffacc47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4131befd1d4cddfb35547322ffacc47">◆ </a></span>entry_value()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool entry_value </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structexif__view.html">exif_view</a> *</td> <td class="paramname"><span class="paramname"><em>view</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>offset</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structexif__value.html">exif_value</a> *</td> <td class="paramname"><span class="paramname"><em>value</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Resolve one TIFF entry into checked, borrowed value bytes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">view</td><td>TIFF storage and declared byte order. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>TIFF-relative offset of the twelve-byte directory entry. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Field descriptor; use only when validation succeeds. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for a supported, fully accessible representation.</dd></dl>
+<p>TIFF stores values of at most four bytes directly in the entry; larger values use an offset relative to the TIFF header. Count validation precedes multiplication, so an untrusted component count cannot overflow. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00167">167</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a10486ee93efe9866d86ffa5c606e58cf" name="a10486ee93efe9866d86ffa5c606e58cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10486ee93efe9866d86ffa5c606e58cf">◆ </a></span>format_size()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">size_t format_size </td>
+<td>(</td>
+<td class="paramtype">uint16_t</td> <td class="paramname"><span class="paramname"><em>format</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Map TIFF's numbered representations to their component byte widths. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">format</td><td>On-disk TIFF type identifier. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Component width, or zero for an unsupported type.</dd></dl>
+<p>The table includes ordinary TIFF types beyond our named enum values so unknown but structurally valid input fields can be checked and then ignored. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00119">119</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a795163792bc27673034e940f987787da" name="a795163792bc27673034e940f987787da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a795163792bc27673034e940f987787da">◆ </a></span>frame_marker()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool frame_marker </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>marker</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Recognize SOF markers while excluding other codes in the same range. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">marker</td><td>JPEG marker code without its 0xff prefix. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for a start-of-frame marker.</dd></dl>
+<p>DHT, JPG and DAC share the 0xc0..0xcf range but do not carry dimensions. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01246">1246</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="ad6c4e193c6c46586e0226c734f91dc39" name="ad6c4e193c6c46586e0226c734f91dc39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6c4e193c6c46586e0226c734f91dc39">◆ </a></span>import_directory()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool import_directory </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structexif__document.html">exif_document</a> *</td> <td class="paramname"><span class="paramname"><em>document</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structexif__view.html">exif_view</a> *</td> <td class="paramname"><span class="paramname"><em>view</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a></td> <td class="paramname"><span class="paramname"><em>directory</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype"><a class="el" href="group__exifite.html#ga69343d15165a868928b74a4e3eb8809f">exif_tag_selector</a></td> <td class="paramname"><span class="paramname"><em>select</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>context</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Copy supported fields from one directory into writer storage. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">document</td><td>Initialized destination document. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">view</td><td>Source bytes and input byte order. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">directory</td><td>Directory whose fields should be imported. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">select</td><td>Optional caller selection for additional fields. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">context</td><td>Borrowed selection state. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on success, false when the caller must reset the partial import.</dd></dl>
+<p>Keeping rollback in the public wrapper makes this routine responsible only for traversal and byte-order conversion, not document lifecycle. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00619">619</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a8c21b9a2c454c782f8aae4f2a288e55c" name="a8c21b9a2c454c782f8aae4f2a288e55c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c21b9a2c454c782f8aae4f2a288e55c">◆ </a></span>invalid()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int invalid </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Use one predictable error for invalid arguments and malformed values. </p>
+<dl class="section return"><dt>Returns</dt><dd>Always -1, after setting errno to EINVAL. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00069">69</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a71aedc26885b49663d03e98ce5997de7" name="a71aedc26885b49663d03e98ce5997de7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71aedc26885b49663d03e98ce5997de7">◆ </a></span>marker_prefix()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool marker_prefix </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>count</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>marker</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Emit a marker together with its original fill-byte count. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>State containing a writable output stream. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">count</td><td>Number of leading 0xff bytes, including the marker prefix. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">marker</td><td>Marker code, or stuffed zero when copying scan data. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when all bytes were written.</dd></dl>
+<p>Retaining legal fill bytes avoids unnecessary changes to unrelated JPEG framing while replacement EXIF gets its own single-prefix marker. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01176">1176</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a50b1cf78a2a9af82e3c3e12daf92310a" name="a50b1cf78a2a9af82e3c3e12daf92310a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50b1cf78a2a9af82e3c3e12daf92310a">◆ </a></span>overlaps()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool overlaps </td>
+<td>(</td>
+<td class="paramtype">const void *</td> <td class="paramname"><span class="paramname"><em>first</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>first_size</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const void *</td> <td class="paramname"><span class="paramname"><em>second</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>second_size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Detect caller-buffer aliasing without adding lengths to addresses. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>First storage address. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">first_size</td><td>First storage length in bytes. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">second</td><td>Second storage address. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">second_size</td><td>Second storage length in bytes. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for overlapping nonempty spans.</dd></dl>
+<p>Address differences avoid wraparound at the end of an address space. This uses the flat uintptr_t address representation of our Linux targets. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00147">147</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="ae208d7773b764ff52127e9e76389e0bd" name="ae208d7773b764ff52127e9e76389e0bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae208d7773b764ff52127e9e76389e0bd">◆ </a></span>range()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool range </td>
+<td>(</td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>total</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>offset</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>length</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Check a byte span without forming a potentially overflowing end offset. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">total</td><td>Accessible bytes in the enclosing storage. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Proposed starting offset. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Proposed span length. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the entire span fits.</dd></dl>
+<p>Check the start first; only then is the subtraction safe. Keep this order when extending the parser with another field or pointer check. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00133">133</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a1e53405a513a5ec519f80079678cd488" name="a1e53405a513a5ec519f80079678cd488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e53405a513a5ec519f80079678cd488">◆ </a></span>read_exact()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool read_exact </td>
+<td>(</td>
+<td class="paramtype">FILE *</td> <td class="paramname"><span class="paramname"><em>input</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned char *</td> <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read an entire declared span or report truncation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">input</td><td>Readable stream at the span's first byte. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">buffer</td><td>Storage for at least <code class="param">size</code> bytes. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Exact byte count required. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True only when every requested byte was read. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00884">884</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a5ceea8a25c0fcab7bcdc98bcd56a760d" name="a5ceea8a25c0fcab7bcdc98bcd56a760d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ceea8a25c0fcab7bcdc98bcd56a760d">◆ </a></span>read_exif_stream()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int read_exif_stream </td>
+<td>(</td>
+<td class="paramtype">FILE *</td> <td class="paramname"><span class="paramname"><em>input</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned char *</td> <td class="paramname"><span class="paramname"><em>payload</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t *</td> <td class="paramname"><span class="paramname"><em>size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Extract the unique EXIF payload from a caller-owned JPEG stream. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">input</td><td>Readable stream at start-of-image; not closed here. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">payload</td><td>Destination for the selected APP1 payload. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>Writable payload capacity in bytes. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">size</td><td>Selected payload length; the public wrapper clears it on failure. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero on success, otherwise -1 with errno describing the parse failure.</dd></dl>
+<p>Ownership stays with the wrapper so every parse exit can be a plain return, while file closing and error preservation remain in one place. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00918">918</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a2138d60fc8a8d39f0777e55a6a0cc07e" name="a2138d60fc8a8d39f0777e55a6a0cc07e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2138d60fc8a8d39f0777e55a6a0cc07e">◆ </a></span>read_long()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint32_t read_long </td>
+<td>(</td>
+<td class="paramtype">const unsigned char *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>little</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read four checked bytes; casts precede shifts to avoid signed promotion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>At least four accessible bytes. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">little</td><td>Byte order declared by the input TIFF header. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Decoded unsigned 32-bit value. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00091">91</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a5c5c6da0b10a9a3a0a05495f7d18684a" name="a5c5c6da0b10a9a3a0a05495f7d18684a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c5c6da0b10a9a3a0a05495f7d18684a">◆ </a></span>read_short()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint16_t read_short </td>
+<td>(</td>
+<td class="paramtype">const unsigned char *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>little</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read two already-checked bytes without alignment or host-endian assumptions. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>At least two accessible bytes. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">little</td><td>True for little-endian TIFF, false for big-endian TIFF. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Decoded unsigned 16-bit value. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00080">80</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a1ec8e3477661e5779775ee56bbb32442" name="a1ec8e3477661e5779775ee56bbb32442"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ec8e3477661e5779775ee56bbb32442">◆ </a></span>relocate_jpeg_range()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int relocate_jpeg_range </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>descriptor</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">off_t</td> <td class="paramname"><span class="paramname"><em>start</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">off_t</td> <td class="paramname"><span class="paramname"><em>end</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">off_t</td> <td class="paramname"><span class="paramname"><em>displacement</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Move one retained interval without overwriting its unread source bytes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">descriptor</td><td>Open read/write regular file. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">start</td><td>Original interval start, inclusive. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">end</td><td>Original interval end, exclusive. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">displacement</td><td>Signed destination offset relative to the source. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero on success, otherwise -1 with errno set.</dd></dl>
+<p>Growth copies backward; shrinkage copies forward. Positional I/O avoids stream seeks per block. Short transfers and EINTR are handled without assuming that one system call completes the block. A zero-byte transfer is an I/O error. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01545">1545</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="afb6f6c0c39ef122cffff56df343d2e2f" name="afb6f6c0c39ef122cffff56df343d2e2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb6f6c0c39ef122cffff56df343d2e2f">◆ </a></span>relocate_jpeg_spans()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int relocate_jpeg_spans </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>descriptor</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structjpeg__edit__plan.html">jpeg_edit_plan</a> *</td> <td class="paramname"><span class="paramname"><em>plan</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">off_t</td> <td class="paramname"><span class="paramname"><em>original_size</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">off_t</td> <td class="paramname"><span class="paramname"><em>inserted_size</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>backwards</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Move only the spans whose final positions differ from their originals. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">descriptor</td><td>Open read/write regular file. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">plan</td><td>Validated ordered removal intervals and insertion location. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">original_size</td><td>Original file size, including bytes after EOI. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">inserted_size</td><td>Replacement segment size, including marker and length. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">backwards</td><td>True for right-shifted spans, false for left-shifted spans. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero on success, otherwise -1 with errno set.</dd></dl>
+<p>After the one insertion, displacement only decreases as old EXIF is removed. Right-shifted spans therefore precede left-shifted spans. Copying the former from the end and the latter from the start protects every unread span, even when EXIF occurs between progressive scans and displacement changes sign. Zero-displacement spans need no writes; this is the cheap repeated-update path. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01615">1615</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a08d4707d1c4e0c9353e828e04ba50fba" name="a08d4707d1c4e0c9353e828e04ba50fba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08d4707d1c4e0c9353e828e04ba50fba">◆ </a></span>rewrite_jpeg_stream()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool rewrite_jpeg_stream </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const unsigned char *</td> <td class="paramname"><span class="paramname"><em>payload</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Rewrite JPEG framing using caller-owned streams and validated EXIF. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>Buffered source and destination state. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">payload</td><td>Validated replacement APP1 bytes. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Replacement payload length. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True after a complete frame/scan/EOI stream, false on framing or I/O failure.</dd></dl>
+<p>This routine owns no resources. Early returns keep the scan-state transitions visible; the public wrapper supplies one error-classification path. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01378">1378</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a8e7659e00e642bee8af3f2632b474516" name="a8e7659e00e642bee8af3f2632b474516"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e7659e00e642bee8af3f2632b474516">◆ </a></span>signed_long()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double signed_long </td>
+<td>(</td>
+<td class="paramtype">uint32_t</td> <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Interpret a TIFF signed component without an implementation-defined cast. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Unsigned bit representation of a 32-bit signed integer. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Its signed mathematical value, exactly representable as a double.</dd></dl>
+<p>Subtracting 2^32 handles negative values, including INT32_MIN, without signed overflow. This keeps signed rational handling portable between compilers. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00378">378</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="afc5b9599640ec0a18a5725af2b240b37" name="afc5b9599640ec0a18a5725af2b240b37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc5b9599640ec0a18a5725af2b240b37">◆ </a></span>skip_exact()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool skip_exact </td>
+<td>(</td>
+<td class="paramtype">FILE *</td> <td class="paramname"><span class="paramname"><em>input</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Consume unwanted bytes without trusting a seek past end-of-file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">input</td><td>Readable stream positioned before the unwanted span. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Bytes that must actually exist. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True after consuming the span, false for a short read.</dd></dl>
+<p>A seek can succeed beyond EOF; reading bounded chunks makes a truncated JPEG segment fail instead of hiding the missing bytes from the header parser. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00896">896</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a2df1b7b673105cc47241893cc38b5f36" name="a2df1b7b673105cc47241893cc38b5f36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2df1b7b673105cc47241893cc38b5f36">◆ </a></span>stream_byte()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int stream_byte </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read a marker/header byte while preserving buffered cursor ownership. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>Read-ahead state. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Next unsigned byte as an int, or EOF when no byte is available. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01105">1105</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="aea70563dde38f950db50f2fbeae0b029" name="aea70563dde38f950db50f2fbeae0b029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea70563dde38f950db50f2fbeae0b029">◆ </a></span>stream_copy()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool stream_copy </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>emit</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Copy or discard exactly one declared span in bounded chunks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>Input cursor and optional writable output stream. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Bytes to consume; short input is an error. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">emit</td><td>True to write bytes, false to discard an old EXIF segment. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True after consuming the full span, false on read/write failure.</dd></dl>
+<p>Both paths consume existing read-ahead first, so changing from marker parsing to bulk copying never loses or reads the same bytes twice. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01149">1149</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a909b615be92c6212fb24c2ab1d41c38e" name="a909b615be92c6212fb24c2ab1d41c38e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a909b615be92c6212fb24c2ab1d41c38e">◆ </a></span>stream_fill()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool stream_fill </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Refill only after buffered bytes have been consumed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>Read-ahead state. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when at least one byte remains, false on EOF or read error.</dd></dl>
+<p>Callers distinguish EOF from I/O failure with ferror() where needed. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01090">1090</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a6d6225cedfe5a66baaabc3717d0f5f11" name="a6d6225cedfe5a66baaabc3717d0f5f11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d6225cedfe5a66baaabc3717d0f5f11">◆ </a></span>stream_frame_header()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool stream_frame_header </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>payload_size</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned char</td> <td class="paramname"><span class="paramname"><em>header</em></span>[6] )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read and validate the common six-byte start-of-frame header. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>Source cursor immediately after the segment length. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">payload_size</td><td>Full frame payload length, including component descriptors. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">header</td><td>Precision, height, width and component count bytes. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for the bounded frame representation supported by this module.</dd></dl>
+<p>Inspection and rewriting use the same checks so they cannot disagree about which dimensions or component counts are safe to publish. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01277">1277</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="abf86df6c5e8b24943c330c783110d6fc" name="abf86df6c5e8b24943c330c783110d6fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf86df6c5e8b24943c330c783110d6fc">◆ </a></span>stream_marker()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool stream_marker </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>entropy</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t *</td> <td class="paramname"><span class="paramname"><em>prefix</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int *</td> <td class="paramname"><span class="paramname"><em>marker</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Find a structural marker, optionally copying preceding entropy bytes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>Buffered cursor; entropy mode requires a writable output. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">entropy</td><td>True inside a scan, false between marker segments. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">prefix</td><td>Marker-prefix/fill count for the caller to retain or discard. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">marker</td><td>Structural marker code, not yet emitted. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on a marker, false on malformed framing or I/O failure.</dd></dl>
+<p>Inside scans, 0xff/0x00 is a stuffed data byte and restart markers do not end the scan. Handle these here so the rewrite loop sees only markers whose segments it must inspect. Prefix reads may cross buffer boundaries. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01199">1199</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a2ebe3376dd4418d255f043847820fa27" name="a2ebe3376dd4418d255f043847820fa27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ebe3376dd4418d255f043847820fa27">◆ </a></span>stream_offset()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">off_t stream_offset </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Recover the logical offset rather than the read-ahead descriptor offset. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">stream</td><td>Parser state for a seekable regular file. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Offset of the next unconsumed byte, or -1 on a positioning error. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01135">1135</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a7829b97d9c88467f25e6b246bafaddc9" name="a7829b97d9c88467f25e6b246bafaddc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7829b97d9c88467f25e6b246bafaddc9">◆ </a></span>stream_put_byte()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool stream_put_byte </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>byte</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Emit one framing byte, or do nothing during preflight. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>Parser state with optional output. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">byte</td><td>Byte value to emit. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on successful emission or validation-only traversal. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01126">1126</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a95d275c93551bf76c1790460fc69928e" name="a95d275c93551bf76c1790460fc69928e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95d275c93551bf76c1790460fc69928e">◆ </a></span>stream_read()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool stream_read </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned char *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Read a short fixed-size header across read-ahead buffer boundaries. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>Buffered source state. </td></tr>
+<tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Storage for at least the requested byte count. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Exact byte count to read. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the complete header was available. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01257">1257</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a079a4375f174d4bd96ce4d8d22b84695" name="a079a4375f174d4bd96ce4d8d22b84695"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a079a4375f174d4bd96ce4d8d22b84695">◆ </a></span>stream_segment_header()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool stream_segment_header </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>prefix</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>marker</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>payload_size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Emit a segment prefix and its two-byte big-endian JPEG length. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>State containing a writable output stream. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">prefix</td><td>Number of prefix/fill bytes to preserve. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">marker</td><td>Segment marker code. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">payload_size</td><td>Segment bytes excluding the two length bytes. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the complete framing was written. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>Payload length is already bounded by the JPEG segment limit. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01300">1300</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="acc53eeb4e6cee73aa32333c6d540df3c" name="acc53eeb4e6cee73aa32333c6d540df3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc53eeb4e6cee73aa32333c6d540df3c">◆ </a></span>stream_write()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool stream_write </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structjpeg__stream.html">jpeg_stream</a> *</td> <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const unsigned char *</td> <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Share byte emission between real rewrites and write-free validation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">stream</td><td>Parser state with optional output. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Bytes to emit only when an output exists. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Accessible byte count. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on complete emission or validation-only traversal. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l01116">1116</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="af48849b21f10f3f3c04ab9319a8871aa" name="af48849b21f10f3f3c04ab9319a8871aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af48849b21f10f3f3c04ab9319a8871aa">◆ </a></span>supported()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool supported </td>
+<td>(</td>
+<td class="paramtype">enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a></td> <td class="paramname"><span class="paramname"><em>directory</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint16_t</td> <td class="paramname"><span class="paramname"><em>tag</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Select standard fields retained by the default import policy. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">directory</td><td>Directory containing the field. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td>Directory-local tag identifier. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the field belongs in an imported writer document.</dd></dl>
+<p>Byte-for-byte copying is not enough for vendor records with private offsets. An explicit allowlist keeps imports small and avoids pretending to preserve structures we neither interpret nor need. Defaults are rebuilt separately. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00595">595</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a2fa6e11c98e8ffed310263c7ca8c1fb6" name="a2fa6e11c98e8ffed310263c7ca8c1fb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fa6e11c98e8ffed310263c7ca8c1fb6">◆ </a></span>valid_document_entry()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool valid_document_entry </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structexif__document.html">exif_document</a> *</td> <td class="paramname"><span class="paramname"><em>document</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structexif__item.html">exif_item</a> *</td> <td class="paramname"><span class="paramname"><em>entry</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Validate a writer field before calculating offsets or touching output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in]</td><td class="paramname">document</td><td>Source document whose storage has already been bounded. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">entry</td><td>Field descriptor to check against that storage. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True when the representation can be serialized safely. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00700">700</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="a22d3dfe99232cf6802e72f0d5c37d1f2" name="a22d3dfe99232cf6802e72f0d5c37d1f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22d3dfe99232cf6802e72f0d5c37d1f2">◆ </a></span>validate_directory()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool validate_directory </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structexif__view.html">exif_view</a> *</td> <td class="paramname"><span class="paramname"><em>view</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">enum <a class="el" href="group__exifite.html#ga3a69cea67d7cab0a11ada42980440036">exif_directory</a></td> <td class="paramname"><span class="paramname"><em>directory</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Validate one bounded IFD and discover the two supported child links. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramdir">[in,out]</td><td class="paramname">view</td><td>Candidate view; primary-directory links fill child offsets. </td></tr>
+<tr><td class="paramdir">[in]</td><td class="paramname">directory</td><td>Directory identity to validate. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for an absent directory or a valid directory table and its values.</dd></dl>
+<p>Duplicate tags are ambiguous, so reject them rather than let readers disagree over which value wins. A small bounded scan avoids heap-backed sets and does not assume that camera entries arrive sorted. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00213">213</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+<a id="doc-var-members" name="doc-var-members"></a><h2 class="groupheader" id="header-doc-var-members">Variable Documentation</h2>
+<a id="aec1aec9f455493558de498cc86fcb427" name="aec1aec9f455493558de498cc86fcb427"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec1aec9f455493558de498cc86fcb427">◆ </a></span>exif_signature</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const unsigned char exif_signature[] = {'E', 'x', 'i', 'f', 0, 0}</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>APP1 identifier; its terminators are part of the on-disk signature. </p>
+<p class="definition">Definition at line <a class="el" href="exifite_8c_source.html#l00064">64</a> of file <a class="el" href="exifite_8c_source.html">exifite.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

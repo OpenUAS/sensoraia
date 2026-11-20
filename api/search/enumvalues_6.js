@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['inference_5fauto_0',['INFERENCE_AUTO',['../inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa50beef50dd8ca104e043a33860d45af6',1,'inference_settings.h']]],
+  ['inference_5fcelsius_1',['INFERENCE_CELSIUS',['../inference__image_8h.html#a6933a1958bfabf95b5b27d648f790428ad6ba0ab87e3b01c0a846c1564ff9ac04',1,'inference_image.h']]],
+  ['inference_5ffake_2',['INFERENCE_FAKE',['../inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaadaf98fa660f2c4059e5e78d11bf1f2dc',1,'inference_settings.h']]],
+  ['inference_5fgray8_3',['INFERENCE_GRAY8',['../inference__image_8h.html#ac11345b0dd57784ba44549fb0ecaf50ea5205cc32114406afa3f393ccb94725eb',1,'inference_image.h']]],
+  ['inference_5fimage_4',['INFERENCE_IMAGE',['../inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaa719758e2910725a79b087c8d2b21922f',1,'inference_settings.h']]],
+  ['inference_5fimx500_5',['INFERENCE_IMX500',['../inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa78cff6fb349644b7d0c9185d5f688eee',1,'inference_settings.h']]],
+  ['inference_5fkelvin_6',['INFERENCE_KELVIN',['../inference__image_8h.html#a6933a1958bfabf95b5b27d648f790428a4525ea8633170f75811d28636320e0cf',1,'inference_image.h']]],
+  ['inference_5fkelvin64_7',['INFERENCE_KELVIN64',['../inference__image_8h.html#ac11345b0dd57784ba44549fb0ecaf50ea111182ac0a5ad714adc37e44899c6786',1,'inference_image.h']]],
+  ['inference_5flive_8',['INFERENCE_LIVE',['../inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaa7376acd8c0e2432a875b4c84cc40676f',1,'inference_settings.h']]],
+  ['inference_5fnative_9',['INFERENCE_NATIVE',['../inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa0725cf5f6d6090ee22666f287c8bca16',1,'inference_settings.h']]],
+  ['inference_5fnchw_10',['INFERENCE_NCHW',['../inference__image_8h.html#a21d8a731d7ed3d4be5b7c76ee58798eca541c458ced6f79269a93e9981345a17a',1,'inference_image.h']]],
+  ['inference_5fnhwc_11',['INFERENCE_NHWC',['../inference__image_8h.html#a21d8a731d7ed3d4be5b7c76ee58798eca26bd4488d796b40efeb3d4ce97a8d748',1,'inference_image.h']]],
+  ['inference_5fonnx_12',['INFERENCE_ONNX',['../inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa65fa95899b039f71954f4ef2e286a7b0',1,'inference_settings.h']]],
+  ['inference_5fpixel_13',['INFERENCE_PIXEL',['../inference__image_8h.html#a6933a1958bfabf95b5b27d648f790428a47659f70013834e43bccb36cc506fc7e',1,'inference_image.h']]],
+  ['inference_5fraw_5fkelvin64_14',['INFERENCE_RAW_KELVIN64',['../inference__image_8h.html#a6933a1958bfabf95b5b27d648f790428a8712b913d42aa56b157177d27cb2acf5',1,'inference_image.h']]],
+  ['inference_5frgb8_15',['INFERENCE_RGB8',['../inference__image_8h.html#ac11345b0dd57784ba44549fb0ecaf50ea191ac8992133fc44c43d1507f1c8ce55',1,'inference_image.h']]],
+  ['inference_5fyuv420_16',['INFERENCE_YUV420',['../inference__image_8h.html#ac11345b0dd57784ba44549fb0ecaf50ea7d21db8f20e2f7b5350adac77215e46d',1,'inference_image.h']]]
+];

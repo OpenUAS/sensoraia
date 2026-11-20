@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['test_5fapproach_5fstart_5fdb_0',['TEST_APPROACH_START_DB',['../earcam_8c.html#aaf4cd93c44a41f9d8b3345dd506b877f',1,'earcam.c']]],
+  ['test_5fcontrast_5fmax_5fdb_1',['TEST_CONTRAST_MAX_DB',['../earcam_8c.html#a274a80fb4e10aa0ba12de83fee16cc05',1,'earcam.c']]],
+  ['test_5fexpected_5fread_5fend_5fus_2',['TEST_EXPECTED_READ_END_US',['../earcam_8c.html#ab887207b03d0f475fa9f9ac316a0d350',1,'earcam.c']]],
+  ['test_5finterference_5famplitude_3',['TEST_INTERFERENCE_AMPLITUDE',['../earcam_8c.html#a532ef4836031ab5e20abbb33730f48a0',1,'earcam.c']]],
+  ['test_5finterference_5fhz_4',['TEST_INTERFERENCE_HZ',['../earcam_8c.html#a7b8466cf608ddc596ea759969f7c8b84',1,'earcam.c']]],
+  ['test_5frate_5fhz_5',['TEST_RATE_HZ',['../earcam_8c.html#af357717bdf264c4d97c6246bde01f3eb',1,'earcam.c']]],
+  ['test_5frecede_5fstart_5fdb_6',['TEST_RECEDE_START_DB',['../earcam_8c.html#a0f15575f7dd6322162c15621d577470b',1,'earcam.c']]],
+  ['test_5ftarget_5famplitude_7',['TEST_TARGET_AMPLITUDE',['../earcam_8c.html#acc5e09d535126e488925b8beb0693c34',1,'earcam.c']]],
+  ['test_5ftarget_5fhz_8',['TEST_TARGET_HZ',['../earcam_8c.html#a966b72b3a761931d21e379caef31e5b2',1,'earcam.c']]],
+  ['test_5ftimestamp_5fus_9',['TEST_TIMESTAMP_US',['../earcam_8c.html#a1c3f9b88bbbc3a24e6948cedd3355626',1,'earcam.c']]],
+  ['test_5ftone_5fmax_5fdb_10',['TEST_TONE_MAX_DB',['../earcam_8c.html#abbd8c2ab57360dc25f776b68aedeb5ce',1,'earcam.c']]],
+  ['test_5ftone_5fmin_5fdb_11',['TEST_TONE_MIN_DB',['../earcam_8c.html#a0acef3ea4e0ff618b32563c0a38c0569',1,'earcam.c']]],
+  ['test_5ftrend_5fstep_5fdb_12',['TEST_TREND_STEP_DB',['../earcam_8c.html#a4c88ac7d22b939beb42679f683d2280e',1,'earcam.c']]],
+  ['test_5ftrend_5fwindows_13',['TEST_TREND_WINDOWS',['../earcam_8c.html#af223f6f42c778403fa877d0ff16fd1bd',1,'earcam.c']]],
+  ['test_5funderflow_5ftimestamp_5fus_14',['TEST_UNDERFLOW_TIMESTAMP_US',['../earcam_8c.html#a8d33540c789472e4e0f93b8fdddbd7e9',1,'earcam.c']]],
+  ['test_5funread_5fframes_15',['TEST_UNREAD_FRAMES',['../earcam_8c.html#aa308017f7d8a9403f275737664fdead5',1,'earcam.c']]],
+  ['tiff_5fdirectory_5fcount_5fsize_16',['TIFF_DIRECTORY_COUNT_SIZE',['../exifite_8c.html#ab3b618d9d62a8263429f3b0f69297c12',1,'exifite.c']]],
+  ['tiff_5fdirectory_5fnext_5fsize_17',['TIFF_DIRECTORY_NEXT_SIZE',['../exifite_8c.html#a69d59611a3bd1c3460c6ef6b54efdc94',1,'exifite.c']]],
+  ['tiff_5fentry_5fsize_18',['TIFF_ENTRY_SIZE',['../exifite_8c.html#a6cf09359d43fc33a306153ef4a466315',1,'exifite.c']]],
+  ['tiff_5fheader_5fsize_19',['TIFF_HEADER_SIZE',['../exifite_8c.html#aa783462b6445302dc5b142936066b417',1,'exifite.c']]],
+  ['tiff_5finline_5fsize_20',['TIFF_INLINE_SIZE',['../exifite_8c.html#ad950ba6c2d3808d311faa98f4dddde74',1,'exifite.c']]],
+  ['tile_5fsize_21',['TILE_SIZE',['../ear__heatmap__overlay_8c.html#a62ecd70800687eb2d625af180c4210d7',1,'ear_heatmap_overlay.c']]],
+  ['tone_5fbin_5fcount_22',['TONE_BIN_COUNT',['../earcam_8c.html#a57d0b33a876876f5965486e3b6e5b3ac',1,'earcam.c']]],
+  ['tone_5fcontrast_5fthreshold_5fdb_23',['TONE_CONTRAST_THRESHOLD_DB',['../earcam_8c.html#a9b9afffe8b270d6445b341e62bdbfef5',1,'earcam.c']]],
+  ['trend_5fthreshold_5fdb_24',['TREND_THRESHOLD_DB',['../earcam_8c.html#a4b3454f76773167e50ba2e47e5c22029',1,'earcam.c']]]
+];

@@ -1,0 +1,4015 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/ear_cam/earcam.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('earcam_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">earcam.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>ALSA acoustic detector for motionSCOUT-style narrow-band alarm tones.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include "<a class="el" href="modules_2ear__cam_2version_8h_source.html">version.h</a>"</code><br/>
+<code>#include &lt;alsa/asoundlib.h&gt;</code><br/>
+<code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &lt;fcntl.h&gt;</code><br/>
+<code>#include &lt;math.h&gt;</code><br/>
+<code>#include &lt;poll.h&gt;</code><br/>
+<code>#include &lt;signal.h&gt;</code><br/>
+<code>#include &lt;stdbool.h&gt;</code><br/>
+<code>#include &lt;stddef.h&gt;</code><br/>
+<code>#include &lt;stdint.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;time.h&gt;</code><br/>
+<code>#include &lt;unistd.h&gt;</code><br/>
+<code>#include "<a class="el" href="ear__inference_8h_source.html">ear_inference.h</a>"</code><br/>
+<code>#include "<a class="el" href="inference__settings_8h_source.html">../../src/inference_settings.h</a>"</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for earcam.c:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="earcam_8c__incl.png" usemap="#amodules_2ear__cam_2earcam_8c"/></div>
+<map id="amodules_2ear__cam_2earcam_8c" name="amodules_2ear__cam_2earcam_8c">
+<area alt="" coords="883,24,877,18,858,13,830,9,794,6,754,5,714,6,678,9,650,13,631,18,625,24,631,30,650,35,678,39,714,42,754,43,794,42,830,39,858,35,877,30" shape="poly" title="ALSA acoustic detector for motionSCOUT-style narrow-band alarm tones."/>
+<area alt="" coords="110,121,108,115,100,110,89,106,74,103,58,102,42,103,27,106,15,110,8,115,5,121,8,127,15,132,27,136,42,139,58,140,74,139,89,136,100,132,108,127" href="modules_2ear__cam_2version_8h.html" shape="poly" title="Compile-time EARcam version and source-revision identity strings."/>
+<area alt="" coords="624,28,517,35,390,46,256,65,124,94,102,101,99,97,123,88,255,60,390,41,517,30,629,26" shape="poly" title=" "/>
+<area alt="" coords="298,121,294,115,283,110,264,106,242,103,217,102,191,103,169,106,151,110,139,115,135,121,139,127,151,132,169,136,191,139,217,140,242,139,264,136,283,132,294,127" shape="poly" title=" "/>
+<area alt="" coords="652,38,495,61,317,94,278,103,276,99,316,88,495,56,657,36" shape="poly" title=" "/>
+<area alt="" coords="321,304,319,298,313,293,303,289,291,286,278,285,264,286,252,289,243,293,237,298,235,304,237,310,243,315,252,319,264,322,278,323,291,322,303,319,313,315,319,310" shape="poly" title=" "/>
+<area alt="" coords="644,36,502,59,439,74,397,93,375,111,356,133,325,181,303,230,288,272,284,269,298,228,320,178,352,130,371,108,394,89,438,69,501,53,649,34" shape="poly" title=" "/>
+<area alt="" coords="426,304,424,298,419,293,410,289,398,286,386,285,373,286,362,289,353,293,347,298,345,304,347,310,353,315,362,319,373,322,386,323,398,322,410,319,419,315,424,310" shape="poly" title=" "/>
+<area alt="" coords="645,36,524,58,472,74,438,93,422,112,410,134,394,181,387,229,386,272,382,269,382,229,389,180,405,131,418,109,435,89,470,69,523,53,650,34" shape="poly" title=" "/>
+<area alt="" coords="537,304,535,298,529,293,519,289,507,286,494,285,480,286,468,289,459,293,453,298,451,304,453,310,459,315,468,319,480,322,494,323,507,322,519,319,529,315,535,310" shape="poly" title=" "/>
+<area alt="" coords="646,36,592,47,537,58,492,74,475,83,464,93,452,113,446,136,445,159,447,184,461,231,479,273,474,271,456,233,442,185,439,160,441,135,447,111,460,89,472,78,489,69,535,53,591,41,651,35" shape="poly" title=" "/>
+<area alt="" coords="548,121,546,115,541,110,533,106,523,103,511,102,500,103,489,106,481,110,476,115,474,121,476,127,481,132,489,136,500,139,511,140,523,139,533,136,541,132,546,127" shape="poly" title=" "/>
+<area alt="" coords="694,43,631,66,562,93,548,100,545,96,559,89,630,61,699,41" shape="poly" title=" "/>
+<area alt="" coords="666,121,664,115,657,110,647,106,634,103,619,102,605,103,592,106,581,110,575,115,572,121,575,127,581,132,592,136,605,139,619,140,634,139,647,136,657,132,664,127" shape="poly" title=" "/>
+<area alt="" coords="731,42,655,98,653,93,726,44" shape="poly" title=" "/>
+<area alt="" coords="1145,304,1143,298,1135,293,1123,289,1109,286,1093,285,1076,286,1062,289,1050,293,1043,298,1040,304,1043,310,1050,315,1062,319,1076,322,1093,323,1109,322,1123,319,1135,315,1143,310" shape="poly" title=" "/>
+<area alt="" coords="762,41,788,95,808,124,832,149,860,168,887,176,915,183,948,197,1010,236,1063,277,1058,276,1007,240,946,202,913,188,885,182,858,173,828,153,804,127,784,97,759,46" shape="poly" title=" "/>
+<area alt="" coords="1381,304,1379,298,1372,293,1361,289,1347,286,1333,285,1318,286,1304,289,1293,293,1287,298,1284,304,1287,310,1293,315,1304,319,1318,322,1333,323,1347,322,1361,319,1372,315,1379,310" shape="poly" title=" "/>
+<area alt="" coords="873,29,1005,37,1143,50,1257,67,1296,77,1318,89,1334,109,1344,132,1353,181,1351,230,1343,272,1340,268,1346,229,1347,181,1339,133,1329,112,1315,93,1294,82,1256,72,1142,56,1004,43,874,34" shape="poly" title=" "/>
+<area alt="" coords="1261,304,1258,298,1252,293,1242,289,1229,286,1215,285,1201,286,1188,289,1178,293,1172,298,1170,304,1172,310,1178,315,1188,319,1201,322,1215,323,1229,322,1242,319,1252,315,1258,310" shape="poly" title=" "/>
+<area alt="" coords="872,29,997,38,1127,51,1234,68,1270,78,1290,89,1304,112,1309,136,1307,161,1299,187,1273,236,1242,277,1239,272,1268,233,1294,185,1301,160,1304,136,1299,113,1287,93,1268,83,1233,73,1126,56,996,43,873,35" shape="poly" title=" "/>
+<area alt="" coords="927,121,925,115,919,110,910,106,898,103,885,102,871,103,859,106,850,110,844,115,842,121,844,127,850,132,859,136,871,139,885,140,898,139,910,136,919,132,925,127" shape="poly" title=" "/>
+<area alt="" coords="779,41,853,96,848,95,778,46" shape="poly" title=" "/>
+<area alt="" coords="651,304,648,298,642,293,632,289,620,286,606,285,592,286,580,289,570,293,563,298,561,304,563,310,570,315,580,319,592,322,606,323,620,322,632,319,642,315,648,310" shape="poly" title=" "/>
+<area alt="" coords="747,42,624,274,620,270,742,44" shape="poly" title=" "/>
+<area alt="" coords="766,304,764,298,757,293,747,289,735,286,721,285,707,286,694,289,684,293,677,298,675,304,677,310,684,315,694,319,707,322,721,323,735,322,747,319,757,315,764,310" shape="poly" title=" "/>
+<area alt="" coords="754,42,727,271,722,268,750,45" shape="poly" title=" "/>
+<area alt="" coords="1277,121,1275,115,1269,110,1260,106,1249,103,1237,102,1224,103,1213,106,1204,110,1198,115,1196,121,1198,127,1204,132,1213,136,1224,139,1237,140,1249,139,1260,136,1269,132,1275,127" shape="poly" title=" "/>
+<area alt="" coords="867,31,1017,51,1099,67,1179,89,1201,99,1196,99,1177,94,1098,72,1016,56,867,36" shape="poly" title=" "/>
+<area alt="" coords="1500,304,1498,298,1491,293,1481,289,1467,286,1453,285,1438,286,1425,289,1414,293,1407,298,1405,304,1407,310,1414,315,1425,319,1438,322,1453,323,1467,322,1481,319,1491,315,1498,310" shape="poly" title=" "/>
+<area alt="" coords="882,23,1010,27,1146,37,1268,57,1316,71,1351,89,1373,107,1391,129,1420,177,1439,227,1449,272,1445,269,1433,229,1415,180,1387,132,1369,111,1348,93,1314,76,1267,62,1146,42,1010,32,883,28" shape="poly" title=" "/>
+<area alt="" coords="1228,218,1224,212,1213,207,1196,203,1174,200,1150,199,1126,200,1104,203,1087,207,1076,212,1072,218,1076,224,1087,229,1104,233,1126,236,1150,237,1174,236,1196,233,1213,229,1224,224" href="ear__inference_8h.html" shape="poly" title="Bounded PCM classification without allowing model latency to stall ALSA capture."/>
+<area alt="" coords="875,28,952,36,1028,47,1093,65,1118,76,1136,89,1150,111,1157,136,1158,186,1153,182,1152,136,1145,113,1132,93,1115,81,1092,70,1027,53,951,41,875,34" shape="poly" title=" "/>
+<area alt="" coords="1122,121,1117,112,1105,103,1087,97,1063,93,1037,91,1010,93,987,97,968,103,956,112,951,121,956,131,968,139,987,146,1010,150,1037,151,1063,150,1087,146,1105,139,1117,131" href="inference__settings_8h.html" shape="poly" title="Shared application_settings.ini discovery with module-owned extra keys."/>
+<area alt="" coords="804,40,964,95,959,95,804,45" shape="poly" title=" "/>
+<area alt="" coords="1140,236,1115,275,1112,270,1135,238" shape="poly" title=" "/>
+<area alt="" coords="1186,233,1291,283,1286,282,1185,238" shape="poly" title=" "/>
+<area alt="" coords="1165,235,1195,275,1190,273,1163,240" shape="poly" title=" "/>
+<area alt="" coords="1106,137,1174,161,1209,178,1242,197,1283,233,1315,274,1310,272,1279,237,1239,202,1207,182,1172,166,1105,142" shape="poly" title=" "/>
+<area alt="" coords="1037,150,1043,194,1050,216,1061,235,1077,248,1103,261,1168,288,1162,287,1101,266,1075,253,1057,239,1045,218,1037,195,1033,154" shape="poly" title=" "/>
+<area alt="" coords="935,218,931,212,921,207,905,203,885,200,863,199,841,200,821,203,805,207,795,212,792,218,795,224,805,229,821,233,841,236,863,237,885,236,905,233,921,229,931,224" href="bounded__ini_8h.html" shape="poly" title="Allocation-free flat key=value mechanics; callers own schemas and storage."/>
+<area alt="" coords="994,147,907,196,905,191,988,148" shape="poly" title=" "/>
+<area alt="" coords="792,224,588,247,461,264,334,288,326,290,325,285,333,282,460,259,587,242,797,224" shape="poly" title=" "/>
+<area alt="" coords="800,226,633,250,536,267,439,288,432,289,431,284,437,283,535,262,633,245,795,226" shape="poly" title=" "/>
+<area alt="" coords="808,229,687,256,549,288,542,290,542,284,548,283,686,250,803,230" shape="poly" title=" "/>
+<area alt="" coords="904,232,1045,285,1040,284,903,237" shape="poly" title=" "/>
+<area alt="" coords="927,225,1085,247,1273,282,1284,287,1279,287,1272,288,1084,252,927,230" shape="poly" title=" "/>
+<area alt="" coords="919,228,1157,283,1168,288,1163,287,1156,288,918,233" shape="poly" title=" "/>
+<area alt="" coords="822,233,656,289,655,284,817,234" shape="poly" title=" "/>
+<area alt="" coords="837,235,760,283,758,278,832,237" shape="poly" title=" "/>
+<area alt="" coords="929,224,1174,251,1301,267,1393,282,1405,287,1399,287,1392,288,1300,273,1173,256,929,229" shape="poly" title=" "/>
+<area alt="" coords="881,304,878,298,872,293,862,289,849,286,835,285,821,286,808,289,798,293,792,298,790,304,792,310,798,315,808,319,821,322,835,323,849,322,862,319,872,315,878,310" shape="poly" title=" "/>
+<area alt="" coords="859,236,848,272,844,268,855,239" shape="poly" title=" "/>
+<area alt="" coords="1017,304,1014,298,1006,293,994,289,978,286,961,285,943,286,928,289,915,293,907,298,904,304,907,310,915,315,928,319,943,322,961,323,978,322,994,319,1006,315,1014,310" shape="poly" title=" "/>
+<area alt="" coords="884,234,932,277,927,275,882,239" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="earcam_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-nested-classes"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:options" id="r_options"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structoptions.html">options</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Validated capture and reporting policy, fixed before the sample loop.  <a href="structoptions.html#details">More...</a><br/></td></tr>
+<tr class="memitem:biquad" id="r_biquad"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structbiquad.html">biquad</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Normalized biquad coefficients and transposed-direct-form-II delay state.  <a href="structbiquad.html#details">More...</a><br/></td></tr>
+<tr class="memitem:tone_5Fbin" id="r_tone_5Fbin"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structtone__bin.html">tone_bin</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">One Goertzel recurrence; state resets at each analysis-window boundary.  <a href="structtone__bin.html#details">More...</a><br/></td></tr>
+<tr class="memitem:homing_5Fstate" id="r_homing_5Fstate"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structhoming__state.html">homing_state</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Peak hold and fast/slow averages; direction is guidance, not a bearing measurement.  <a href="structhoming__state.html#details">More...</a><br/></td></tr>
+<tr class="memitem:alsa_5Fobject_5Fstorage" id="r_alsa_5Fobject_5Fstorage"><td align="right" class="memItemLeft" valign="top">union  </td><td class="memItemRight" valign="bottom"><a class="el" href="unionalsa__object__storage.html">alsa_object_storage</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Aligned bounded storage for an opaque ALSA object after its sizeof guard succeeds.  <a href="unionalsa__object__storage.html#details">More...</a><br/></td></tr>
+<tr class="memitem:option_5Falias" id="r_option_5Falias"><td align="right" class="memItemLeft" valign="top">struct  </td><td class="memItemRight" valign="bottom"><a class="el" href="structoption__alias.html">option_alias</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft"> </td><td class="mdescRight">Long-to-short option mapping; borrowed values are passed to standard getopt.  <a href="structoption__alias.html#details">More...</a><br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-define-members"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a3024ccd4a9af5109d24e6c57565d74a1" id="r_a3024ccd4a9af5109d24e6c57565d74a1"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3024ccd4a9af5109d24e6c57565d74a1">_POSIX_C_SOURCE</a>   200809L</td></tr>
+<tr class="memitem:a84cb8bbda8042a324f49102bc200cc54" id="r_a84cb8bbda8042a324f49102bc200cc54"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a84cb8bbda8042a324f49102bc200cc54">DEFAULT_DEVICE</a>   "auto"</td></tr>
+<tr class="memitem:a5408790a0ccbf5fba6bd993d8c530b1d" id="r_a5408790a0ccbf5fba6bd993d8c530b1d"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5408790a0ccbf5fba6bd993d8c530b1d">AUTO_DEVICE_NAME_MAX</a>   64U</td></tr>
+<tr class="memitem:a7da73729979a7c914f172d20fbf15593" id="r_a7da73729979a7c914f172d20fbf15593"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7da73729979a7c914f172d20fbf15593">DEFAULT_RATE</a>   48000U</td></tr>
+<tr class="memitem:a568905b6785aeff928e1382b20782895" id="r_a568905b6785aeff928e1382b20782895"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a568905b6785aeff928e1382b20782895">DEFAULT_INTERVAL_MS</a>   50U</td></tr>
+<tr class="memitem:a69c7023e232ea4bbc1cd45af2d007a57" id="r_a69c7023e232ea4bbc1cd45af2d007a57"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a69c7023e232ea4bbc1cd45af2d007a57">MIN_RATE_HZ</a>   8000U</td></tr>
+<tr class="memitem:a7b3c0fdb0867b6482cd7c35974e45689" id="r_a7b3c0fdb0867b6482cd7c35974e45689"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b3c0fdb0867b6482cd7c35974e45689">MIN_INTERVAL_MS</a>   20U</td></tr>
+<tr class="memitem:ab27cc990aa79a9a1e682b0270752a6f2" id="r_ab27cc990aa79a9a1e682b0270752a6f2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab27cc990aa79a9a1e682b0270752a6f2">MAX_RATE</a>   384000U</td></tr>
+<tr class="memitem:ae2de515510d6f05f36d48af2d457f424" id="r_ae2de515510d6f05f36d48af2d457f424"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2de515510d6f05f36d48af2d457f424">MAX_INTERVAL_MS</a>   10000U</td></tr>
+<tr class="memitem:afc22ab01ad31ee9dfebcfcb61faaa63a" id="r_afc22ab01ad31ee9dfebcfcb61faaa63a"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#afc22ab01ad31ee9dfebcfcb61faaa63a">MILLISECONDS_PER_SECOND</a>   1000U</td></tr>
+<tr class="memitem:a8a708413d6171e7d86056793abe2cd1a" id="r_a8a708413d6171e7d86056793abe2cd1a"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a708413d6171e7d86056793abe2cd1a">MICROSECONDS_PER_SECOND</a>   1000000U</td></tr>
+<tr class="memitem:a5df38c677104658963501aa1e2a88e60" id="r_a5df38c677104658963501aa1e2a88e60"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5df38c677104658963501aa1e2a88e60">NANOSECONDS_PER_SECOND</a>   1000000000L</td></tr>
+<tr class="memitem:a969e0c6129a50134006fe4b380965cb2" id="r_a969e0c6129a50134006fe4b380965cb2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a969e0c6129a50134006fe4b380965cb2">NANOSECONDS_PER_MILLISECOND</a>   1000000U</td></tr>
+<tr class="memitem:a421193a3325b3a4633f55d4af2686e4e" id="r_a421193a3325b3a4633f55d4af2686e4e"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a421193a3325b3a4633f55d4af2686e4e">NANOSECONDS_PER_MICROSECOND</a>   1000U</td></tr>
+<tr class="memitem:a881a118d499990d7e378e17bedb6bd3b" id="r_a881a118d499990d7e378e17bedb6bd3b"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a881a118d499990d7e378e17bedb6bd3b">MILLISECONDS_PER_SECOND_F</a>   1000.0</td></tr>
+<tr class="memitem:ad9170ac4e973fc9513bb0758193bb160" id="r_ad9170ac4e973fc9513bb0758193bb160"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9170ac4e973fc9513bb0758193bb160">CAPTURE_PERIODS_PER_SECOND</a>   200U</td></tr>
+<tr class="memitem:a9cd89e01873065b753e8a66129bad808" id="r_a9cd89e01873065b753e8a66129bad808"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9cd89e01873065b753e8a66129bad808">CAPTURE_BUFFERS_PER_SECOND</a>   50U</td></tr>
+<tr class="memitem:a8434c97175dfbe02246780d4b4e0a2d3" id="r_a8434c97175dfbe02246780d4b4e0a2d3"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8434c97175dfbe02246780d4b4e0a2d3">CAPTURE_MONO_CHANNELS</a>   1U</td></tr>
+<tr class="memitem:ab2ba609052e68cf0bff67660ccd46a10" id="r_ab2ba609052e68cf0bff67660ccd46a10"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2ba609052e68cf0bff67660ccd46a10">CAPTURE_WAIT_MS</a>   100</td></tr>
+<tr class="memitem:abe08fb48314f64735b71dc6fa50c92cd" id="r_abe08fb48314f64735b71dc6fa50c92cd"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#abe08fb48314f64735b71dc6fa50c92cd">CAPTURE_STALL_TIMEOUT_MS</a>   2000U</td></tr>
+<tr class="memitem:a93f241e89d06b444ac0c17c1d1c03b48" id="r_a93f241e89d06b444ac0c17c1d1c03b48"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a93f241e89d06b444ac0c17c1d1c03b48">MAX_INTERVAL_FRAMES</a>   ((<a class="el" href="#ab27cc990aa79a9a1e682b0270752a6f2">MAX_RATE</a> * <a class="el" href="#ae2de515510d6f05f36d48af2d457f424">MAX_INTERVAL_MS</a>) / <a class="el" href="#afc22ab01ad31ee9dfebcfcb61faaa63a">MILLISECONDS_PER_SECOND</a>)</td></tr>
+<tr class="memitem:a6f3d6c7159026203aed64ae9f761bd17" id="r_a6f3d6c7159026203aed64ae9f761bd17"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f3d6c7159026203aed64ae9f761bd17">MAX_PERIOD_FRAMES</a>   (<a class="el" href="#ab27cc990aa79a9a1e682b0270752a6f2">MAX_RATE</a> / <a class="el" href="#a9cd89e01873065b753e8a66129bad808">CAPTURE_BUFFERS_PER_SECOND</a>)</td></tr>
+<tr class="memitem:ac354b53c3b8b273293f15ad20c2d5536" id="r_ac354b53c3b8b273293f15ad20c2d5536"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac354b53c3b8b273293f15ad20c2d5536">ALSA_OBJECT_CAPACITY</a>   4096U</td></tr>
+<tr class="memitem:ac2ddab921906ae8f95329cb706c947a2" id="r_ac2ddab921906ae8f95329cb706c947a2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac2ddab921906ae8f95329cb706c947a2">EARCAM_MAX_ARGUMENTS</a>   64</td></tr>
+<tr class="memitem:ab14a63e32aca17d1917a4e8ff82f3035" id="r_ab14a63e32aca17d1917a4e8ff82f3035"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab14a63e32aca17d1917a4e8ff82f3035">EARCAM_MAX_PARSED_ARGUMENTS</a>   (<a class="el" href="#ac2ddab921906ae8f95329cb706c947a2">EARCAM_MAX_ARGUMENTS</a> * 2 + 1)</td></tr>
+<tr class="memitem:a0ab14e5edf6e7ca18affdc8177edf3a9" id="r_a0ab14e5edf6e7ca18affdc8177edf3a9"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ab14e5edf6e7ca18affdc8177edf3a9">DEFAULT_LOW_CUT_HZ</a>   1800.0</td></tr>
+<tr class="memitem:a0d2caa7e05c1e97a5422d45161e7aa90" id="r_a0d2caa7e05c1e97a5422d45161e7aa90"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d2caa7e05c1e97a5422d45161e7aa90">DEFAULT_HIGH_CUT_HZ</a>   3200.0</td></tr>
+<tr class="memitem:ae16467a726942aa80edb7f400832cc5e" id="r_ae16467a726942aa80edb7f400832cc5e"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae16467a726942aa80edb7f400832cc5e">DEFAULT_MIN_LEVEL_DBFS</a>   (-90.0)</td></tr>
+<tr class="memitem:adb35a61fa7bf610beb3ef715984a187c" id="r_adb35a61fa7bf610beb3ef715984a187c"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#adb35a61fa7bf610beb3ef715984a187c">DB_FLOOR</a>   (-120.0)</td></tr>
+<tr class="memitem:a7f7d8733775641df7666e3378899a667" id="r_a7f7d8733775641df7666e3378899a667"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f7d8733775641df7666e3378899a667">METER_WIDTH</a>   50U</td></tr>
+<tr class="memitem:a57d0b33a876876f5965486e3b6e5b3ac" id="r_a57d0b33a876876f5965486e3b6e5b3ac"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a57d0b33a876876f5965486e3b6e5b3ac">TONE_BIN_COUNT</a>   57U</td></tr>
+<tr class="memitem:a9b9afffe8b270d6445b341e62bdbfef5" id="r_a9b9afffe8b270d6445b341e62bdbfef5"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b9afffe8b270d6445b341e62bdbfef5">TONE_CONTRAST_THRESHOLD_DB</a>   (-3.0)</td></tr>
+<tr class="memitem:a4b3454f76773167e50ba2e47e5c22029" id="r_a4b3454f76773167e50ba2e47e5c22029"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b3454f76773167e50ba2e47e5c22029">TREND_THRESHOLD_DB</a>   0.8</td></tr>
+<tr class="memitem:a28a09c9e894c4c71052a0f9198ac8684" id="r_a28a09c9e894c4c71052a0f9198ac8684"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a28a09c9e894c4c71052a0f9198ac8684">ENVELOPE_RELEASE_DB_PER_SECOND</a>   6.0</td></tr>
+<tr class="memitem:a071b637a75949e358a4d65b86017bce9" id="r_a071b637a75949e358a4d65b86017bce9"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a071b637a75949e358a4d65b86017bce9">SOURCE_LEVEL_DB_SPL</a>   95.0</td></tr>
+<tr class="memitem:add7437aa3fd7ca7052c2fea6038b2612" id="r_add7437aa3fd7ca7052c2fea6038b2612"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#add7437aa3fd7ca7052c2fea6038b2612">SOURCE_REFERENCE_METERS</a>   3.0</td></tr>
+<tr class="memitem:a6adbebcd0ddcf30f95dd7068fcbb8b1c" id="r_a6adbebcd0ddcf30f95dd7068fcbb8b1c"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6adbebcd0ddcf30f95dd7068fcbb8b1c">CLIP_THRESHOLD</a>   32700</td></tr>
+<tr class="memitem:a598a3330b3c21701223ee0ca14316eca" id="r_a598a3330b3c21701223ee0ca14316eca"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a598a3330b3c21701223ee0ca14316eca">PI</a>   3.14159265358979323846</td></tr>
+<tr class="memitem:a3547be6bd89c2c44cedb7ebeb3f45b52" id="r_a3547be6bd89c2c44cedb7ebeb3f45b52"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3547be6bd89c2c44cedb7ebeb3f45b52">MAX_CUTOFF_HZ</a>   190000.0</td></tr>
+<tr class="memitem:a99931d9c4a5cddc68cb39d098c6c92c3" id="r_a99931d9c4a5cddc68cb39d098c6c92c3"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a99931d9c4a5cddc68cb39d098c6c92c3">MIN_CALIBRATION_DB</a>   -300.0</td></tr>
+<tr class="memitem:ac3e2a0852c08c8102657d70f0e73540d" id="r_ac3e2a0852c08c8102657d70f0e73540d"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3e2a0852c08c8102657d70f0e73540d">MAX_CALIBRATION_DB</a>   300.0</td></tr>
+<tr class="memitem:a5cbbe831442d4b2c6f43a991f140bd95" id="r_a5cbbe831442d4b2c6f43a991f140bd95"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5cbbe831442d4b2c6f43a991f140bd95">CONTROL_DEVICE_NAME_CAPACITY</a>   32</td></tr>
+<tr class="memitem:aa10c12c114700e0da59547c1501cd45f" id="r_aa10c12c114700e0da59547c1501cd45f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa10c12c114700e0da59547c1501cd45f">SHORT_OPTION_STORAGE</a>   3</td></tr>
+<tr class="memitem:aad2eeec7f59caf1cfcefefb7617beab7" id="r_aad2eeec7f59caf1cfcefefb7617beab7"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aad2eeec7f59caf1cfcefefb7617beab7">SERVER_SAMPLE_LINE_CAPACITY</a>   384</td></tr>
+<tr class="memitem:a9118b1a9b26090a308933ecc1c738179" id="r_a9118b1a9b26090a308933ecc1c738179"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9118b1a9b26090a308933ecc1c738179">SERVER_COMMAND_CAPACITY</a>   64</td></tr>
+<tr class="memitem:af15637f9f20356c0e33f87bac0e1a185" id="r_af15637f9f20356c0e33f87bac0e1a185"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#af15637f9f20356c0e33f87bac0e1a185">SERVER_READ_CHUNK_CAPACITY</a>   64</td></tr>
+<tr class="memitem:a59fa82454e2e7ebcb0abdd3371e7c959" id="r_a59fa82454e2e7ebcb0abdd3371e7c959"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a59fa82454e2e7ebcb0abdd3371e7c959">BUTTERWORTH_Q</a>   0.7071067811865476</td></tr>
+<tr class="memitem:a2e3b8d28ed3beac73aa8c5c81bacf00d" id="r_a2e3b8d28ed3beac73aa8c5c81bacf00d"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e3b8d28ed3beac73aa8c5c81bacf00d">FILTER_SECTIONS_PER_EDGE</a>   2</td></tr>
+<tr class="memitem:a1a31ce124401ba3e65b74d480a1b6cc9" id="r_a1a31ce124401ba3e65b74d480a1b6cc9"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a31ce124401ba3e65b74d480a1b6cc9">PCM_S16_FULL_SCALE</a>   32768.0</td></tr>
+<tr class="memitem:ab97c399bcbb980cce4ea22c09311d8cb" id="r_ab97c399bcbb980cce4ea22c09311d8cb"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab97c399bcbb980cce4ea22c09311d8cb">AMPLITUDE_FLOOR</a>   0.000001</td></tr>
+<tr class="memitem:ae99263c72d5ac3e90cb7f9028c3c8b0f" id="r_ae99263c72d5ac3e90cb7f9028c3c8b0f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae99263c72d5ac3e90cb7f9028c3c8b0f">AMPLITUDE_DB_PER_DECADE</a>   20.0</td></tr>
+<tr class="memitem:a7dc554495d0b436ced6ac3e94592b107" id="r_a7dc554495d0b436ced6ac3e94592b107"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7dc554495d0b436ced6ac3e94592b107">DB_LOG_BASE</a>   10.0</td></tr>
+<tr class="memitem:ade42b6107020d1b733fc9ebada1de1d2" id="r_ade42b6107020d1b733fc9ebada1de1d2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ade42b6107020d1b733fc9ebada1de1d2">HANN_TONE_AMPLITUDE_SCALE</a>   4.0</td></tr>
+<tr class="memitem:a8c2b2381fff15f827d884b3b0e3b5371" id="r_a8c2b2381fff15f827d884b3b0e3b5371"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c2b2381fff15f827d884b3b0e3b5371">HOMING_FAST_TIME_CONSTANT_S</a>   0.20</td></tr>
+<tr class="memitem:a5a4918bcf16dc388b5ad3d72468fe612" id="r_a5a4918bcf16dc388b5ad3d72468fe612"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a4918bcf16dc388b5ad3d72468fe612">HOMING_SLOW_TIME_CONSTANT_S</a>   1.20</td></tr>
+<tr class="memitem:a00d6f309cfa0159bb2d8b4c3b03159db" id="r_a00d6f309cfa0159bb2d8b4c3b03159db"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a00d6f309cfa0159bb2d8b4c3b03159db">HOMING_ACQUISITION_WINDOWS</a>   4U</td></tr>
+<tr class="memitem:a1c3f9b88bbbc3a24e6948cedd3355626" id="r_a1c3f9b88bbbc3a24e6948cedd3355626"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c3f9b88bbbc3a24e6948cedd3355626">TEST_TIMESTAMP_US</a>   1000000</td></tr>
+<tr class="memitem:a8d33540c789472e4e0f93b8fdddbd7e9" id="r_a8d33540c789472e4e0f93b8fdddbd7e9"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d33540c789472e4e0f93b8fdddbd7e9">TEST_UNDERFLOW_TIMESTAMP_US</a>   100</td></tr>
+<tr class="memitem:aa308017f7d8a9403f275737664fdead5" id="r_aa308017f7d8a9403f275737664fdead5"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa308017f7d8a9403f275737664fdead5">TEST_UNREAD_FRAMES</a>   480</td></tr>
+<tr class="memitem:af357717bdf264c4d97c6246bde01f3eb" id="r_af357717bdf264c4d97c6246bde01f3eb"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#af357717bdf264c4d97c6246bde01f3eb">TEST_RATE_HZ</a>   48000</td></tr>
+<tr class="memitem:ab887207b03d0f475fa9f9ac316a0d350" id="r_ab887207b03d0f475fa9f9ac316a0d350"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab887207b03d0f475fa9f9ac316a0d350">TEST_EXPECTED_READ_END_US</a>   990000</td></tr>
+<tr class="memitem:a966b72b3a761931d21e379caef31e5b2" id="r_a966b72b3a761931d21e379caef31e5b2"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a966b72b3a761931d21e379caef31e5b2">TEST_TARGET_HZ</a>   2700.0</td></tr>
+<tr class="memitem:a7b8466cf608ddc596ea759969f7c8b84" id="r_a7b8466cf608ddc596ea759969f7c8b84"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b8466cf608ddc596ea759969f7c8b84">TEST_INTERFERENCE_HZ</a>   800.0</td></tr>
+<tr class="memitem:acc5e09d535126e488925b8beb0693c34" id="r_acc5e09d535126e488925b8beb0693c34"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#acc5e09d535126e488925b8beb0693c34">TEST_TARGET_AMPLITUDE</a>   0.02</td></tr>
+<tr class="memitem:a532ef4836031ab5e20abbb33730f48a0" id="r_a532ef4836031ab5e20abbb33730f48a0"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a532ef4836031ab5e20abbb33730f48a0">TEST_INTERFERENCE_AMPLITUDE</a>   0.20</td></tr>
+<tr class="memitem:a0acef3ea4e0ff618b32563c0a38c0569" id="r_a0acef3ea4e0ff618b32563c0a38c0569"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a0acef3ea4e0ff618b32563c0a38c0569">TEST_TONE_MIN_DB</a>   -36.0</td></tr>
+<tr class="memitem:abbd8c2ab57360dc25f776b68aedeb5ce" id="r_abbd8c2ab57360dc25f776b68aedeb5ce"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#abbd8c2ab57360dc25f776b68aedeb5ce">TEST_TONE_MAX_DB</a>   -32.0</td></tr>
+<tr class="memitem:a274a80fb4e10aa0ba12de83fee16cc05" id="r_a274a80fb4e10aa0ba12de83fee16cc05"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a274a80fb4e10aa0ba12de83fee16cc05">TEST_CONTRAST_MAX_DB</a>   -15.0</td></tr>
+<tr class="memitem:af223f6f42c778403fa877d0ff16fd1bd" id="r_af223f6f42c778403fa877d0ff16fd1bd"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#af223f6f42c778403fa877d0ff16fd1bd">TEST_TREND_WINDOWS</a>   40U</td></tr>
+<tr class="memitem:aaf4cd93c44a41f9d8b3345dd506b877f" id="r_aaf4cd93c44a41f9d8b3345dd506b877f"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf4cd93c44a41f9d8b3345dd506b877f">TEST_APPROACH_START_DB</a>   -65.0</td></tr>
+<tr class="memitem:a0f15575f7dd6322162c15621d577470b" id="r_a0f15575f7dd6322162c15621d577470b"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f15575f7dd6322162c15621d577470b">TEST_RECEDE_START_DB</a>   -45.0</td></tr>
+<tr class="memitem:a4c88ac7d22b939beb42679f683d2280e" id="r_a4c88ac7d22b939beb42679f683d2280e"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c88ac7d22b939beb42679f683d2280e">TEST_TREND_STEP_DB</a>   0.3</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a3417dabc54741b14448dc28b1e7d791b" id="r_a3417dabc54741b14448dc28b1e7d791b"><td align="right" class="memItemLeft" valign="top">static uint64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3417dabc54741b14448dc28b1e7d791b">audio_read_end_us</a> (uint64_t hardware_us, uint64_t unread_frames, unsigned int rate)</td></tr>
+<tr class="memdesc:a3417dabc54741b14448dc28b1e7d791b"><td class="mdescLeft"> </td><td class="mdescRight">Subtract unread PCM duration from a monotonic ALSA timestamp.  <br/></td></tr>
+<tr class="memitem:a38e9dda50e4758ead92c4761e5655446" id="r_a38e9dda50e4758ead92c4761e5655446"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a38e9dda50e4758ead92c4761e5655446">normalize_long_options</a> (int argc, char *const argv[], char *normalized[], size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, const struct <a class="el" href="structoption__alias.html">option_alias</a> aliases[], size_t alias_count)</td></tr>
+<tr class="memdesc:a38e9dda50e4758ead92c4761e5655446"><td class="mdescLeft"> </td><td class="mdescRight">Normalize –name value and –name=value into bounded getopt arguments.  <br/></td></tr>
+<tr class="memitem:afc9a87560b447d6b28fe487f192ac3fd" id="r_afc9a87560b447d6b28fe487f192ac3fd"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#afc9a87560b447d6b28fe487f192ac3fd">handle_signal</a> (int signal_number)</td></tr>
+<tr class="memdesc:afc9a87560b447d6b28fe487f192ac3fd"><td class="mdescLeft"> </td><td class="mdescRight">Request orderly capture-loop termination from a signal handler.  <br/></td></tr>
+<tr class="memitem:a9cd152f10e344623f059b1268ac3245e" id="r_a9cd152f10e344623f059b1268ac3245e"><td align="right" class="memItemLeft" valign="top">static uint64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9cd152f10e344623f059b1268ac3245e">monotonic_ms</a> (void)</td></tr>
+<tr class="memdesc:a9cd152f10e344623f059b1268ac3245e"><td class="mdescLeft"> </td><td class="mdescRight">Return monotonic milliseconds for correlating samples without wall-clock jumps.  <br/></td></tr>
+<tr class="memitem:aa70e80b828957e524733ac3473af0fb6" id="r_aa70e80b828957e524733ac3473af0fb6"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa70e80b828957e524733ac3473af0fb6">print_usage</a> (FILE *stream, const char *program)</td></tr>
+<tr class="memdesc:aa70e80b828957e524733ac3473af0fb6"><td class="mdescLeft"> </td><td class="mdescRight">Print command-line help or version-led usage text.  <br/></td></tr>
+<tr class="memitem:a3214e7018a314fc03dac2ed71ea06778" id="r_a3214e7018a314fc03dac2ed71ea06778"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3214e7018a314fc03dac2ed71ea06778">parse_unsigned</a> (const char *text, unsigned int minimum, unsigned int maximum, unsigned int *value)</td></tr>
+<tr class="memdesc:a3214e7018a314fc03dac2ed71ea06778"><td class="mdescLeft"> </td><td class="mdescRight">Parse a bounded unsigned command-line value.  <br/></td></tr>
+<tr class="memitem:a22741a24b874b4fd8237b3feb532673d" id="r_a22741a24b874b4fd8237b3feb532673d"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a22741a24b874b4fd8237b3feb532673d">find_usb_capture_device</a> (char *name, size_t name_size)</td></tr>
+<tr class="memdesc:a22741a24b874b4fd8237b3feb532673d"><td class="mdescLeft"> </td><td class="mdescRight">Discover the first USB ALSA card offering a capture PCM.  <br/></td></tr>
+<tr class="memitem:a840f7ebd535853b5fae9f3e97dee4700" id="r_a840f7ebd535853b5fae9f3e97dee4700"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a840f7ebd535853b5fae9f3e97dee4700">parse_double_value</a> (const char *text, double minimum, double maximum, double *value)</td></tr>
+<tr class="memdesc:a840f7ebd535853b5fae9f3e97dee4700"><td class="mdescLeft"> </td><td class="mdescRight">Parse a finite bounded floating-point command-line value.  <br/></td></tr>
+<tr class="memitem:a04a822ca8a0b5f51d15d8cfd6f754136" id="r_a04a822ca8a0b5f51d15d8cfd6f754136"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a04a822ca8a0b5f51d15d8cfd6f754136">parse_options</a> (int argc, char **argv, struct <a class="el" href="structoptions.html">options</a> *<a class="el" href="structoptions.html">options</a>)</td></tr>
+<tr class="memdesc:a04a822ca8a0b5f51d15d8cfd6f754136"><td class="mdescLeft"> </td><td class="mdescRight">Parse and cross-validate EARcam command-line configuration.  <br/></td></tr>
+<tr class="memitem:a738d666e17ea4e44affb352da1011101" id="r_a738d666e17ea4e44affb352da1011101"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a738d666e17ea4e44affb352da1011101">configure_biquad</a> (struct <a class="el" href="structbiquad.html">biquad</a> *filter, double cutoff_hz, unsigned int sample_rate, bool high_pass)</td></tr>
+<tr class="memdesc:a738d666e17ea4e44affb352da1011101"><td class="mdescLeft"> </td><td class="mdescRight">Configure a second-order Butterworth high- or low-pass section.  <br/></td></tr>
+<tr class="memitem:add87969284f93e1cba71974b4f78dc0c" id="r_add87969284f93e1cba71974b4f78dc0c"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#add87969284f93e1cba71974b4f78dc0c">apply_biquad</a> (struct <a class="el" href="structbiquad.html">biquad</a> *filter, double input)</td></tr>
+<tr class="memdesc:add87969284f93e1cba71974b4f78dc0c"><td class="mdescLeft"> </td><td class="mdescRight">Filter one PCM sample while retaining the section delay state.  <br/></td></tr>
+<tr class="memitem:ab1ca89a2b3cc21c9435ca3fafe6515d7" id="r_ab1ca89a2b3cc21c9435ca3fafe6515d7"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1ca89a2b3cc21c9435ca3fafe6515d7">amplitude_to_db</a> (double amplitude)</td></tr>
+<tr class="memdesc:ab1ca89a2b3cc21c9435ca3fafe6515d7"><td class="mdescLeft"> </td><td class="mdescRight">Convert a linear amplitude to bounded dBFS.  <br/></td></tr>
+<tr class="memitem:a58576540b54fcab4388e154074f9ec8d" id="r_a58576540b54fcab4388e154074f9ec8d"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a58576540b54fcab4388e154074f9ec8d">configure_tone_bins</a> (struct <a class="el" href="structtone__bin.html">tone_bin</a> *bins, const struct <a class="el" href="structoptions.html">options</a> *<a class="el" href="structoptions.html">options</a>)</td></tr>
+<tr class="memdesc:a58576540b54fcab4388e154074f9ec8d"><td class="mdescLeft"> </td><td class="mdescRight">Initialize evenly spaced Goertzel bins across the selected search band.  <br/></td></tr>
+<tr class="memitem:a1750fce79ca4cae4501b7977f34f363e" id="r_a1750fce79ca4cae4501b7977f34f363e"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1750fce79ca4cae4501b7977f34f363e">update_tone_bins</a> (struct <a class="el" href="structtone__bin.html">tone_bin</a> *bins, double sample, double window)</td></tr>
+<tr class="memdesc:a1750fce79ca4cae4501b7977f34f363e"><td class="mdescLeft"> </td><td class="mdescRight">Feed one windowed, band-passed sample into every Goertzel recurrence.  <br/></td></tr>
+<tr class="memitem:afc9dc4984c8f8e63e1b88574c23c92af" id="r_afc9dc4984c8f8e63e1b88574c23c92af"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#afc9dc4984c8f8e63e1b88574c23c92af">strongest_tone_db</a> (struct <a class="el" href="structtone__bin.html">tone_bin</a> *bins, uint64_t sample_count, double *frequency_hz)</td></tr>
+<tr class="memdesc:afc9dc4984c8f8e63e1b88574c23c92af"><td class="mdescLeft"> </td><td class="mdescRight">Extract and reset the strongest Goertzel-bin power estimate.  <br/></td></tr>
+<tr class="memitem:a5b82511619b603b0406f5f37c9471ed8" id="r_a5b82511619b603b0406f5f37c9471ed8"><td align="right" class="memItemLeft" valign="top">static const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b82511619b603b0406f5f37c9471ed8">update_homing_state</a> (struct <a class="el" href="structhoming__state.html">homing_state</a> *state, double tone_db, bool alarm_present, const struct <a class="el" href="structoptions.html">options</a> *<a class="el" href="structoptions.html">options</a>, double *trend_db)</td></tr>
+<tr class="memdesc:a5b82511619b603b0406f5f37c9471ed8"><td class="mdescLeft"> </td><td class="mdescRight">Update envelope and fast/slow trend estimates for operator guidance.  <br/></td></tr>
+<tr class="memitem:a9c083e8629d3e564f1d7e341cc7d7cfe" id="r_a9c083e8629d3e564f1d7e341cc7d7cfe"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c083e8629d3e564f1d7e341cc7d7cfe">analyze_test_window</a> (struct <a class="el" href="structtone__bin.html">tone_bin</a> *bins, const struct <a class="el" href="structoptions.html">options</a> *<a class="el" href="structoptions.html">options</a>, double target_amplitude, double interference_amplitude, double *tone_db, double *contrast_db)</td></tr>
+<tr class="memdesc:a9c083e8629d3e564f1d7e341cc7d7cfe"><td class="mdescLeft"> </td><td class="mdescRight">Analyze a deterministic synthetic tone mixture for self-test coverage.  <br/></td></tr>
+<tr class="memitem:aa5a3ff6e07ed515bed9703b774b7416d" id="r_aa5a3ff6e07ed515bed9703b774b7416d"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5a3ff6e07ed515bed9703b774b7416d">run_self_test</a> (const struct <a class="el" href="structoptions.html">options</a> *<a class="el" href="structoptions.html">options</a>)</td></tr>
+<tr class="memdesc:aa5a3ff6e07ed515bed9703b774b7416d"><td class="mdescLeft"> </td><td class="mdescRight">Verify selectivity and trend classification without ALSA hardware.  <br/></td></tr>
+<tr class="memitem:a50dd15287f839536d4d2bc3fbe2c4ffe" id="r_a50dd15287f839536d4d2bc3fbe2c4ffe"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a50dd15287f839536d4d2bc3fbe2c4ffe">display_homing</a> (double level_db, double frequency_hz, double contrast_db, bool alarm_present, const char *direction, double trend_db, const struct <a class="el" href="structhoming__state.html">homing_state</a> *state, const struct <a class="el" href="structoptions.html">options</a> *<a class="el" href="structoptions.html">options</a>)</td></tr>
+<tr class="memdesc:a50dd15287f839536d4d2bc3fbe2c4ffe"><td class="mdescLeft"> </td><td class="mdescRight">Render one human-facing measurement line for bench use.  <br/></td></tr>
+<tr class="memitem:add494cd50bdfd7e584e056b5e3b2ba50" id="r_add494cd50bdfd7e584e056b5e3b2ba50"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#add494cd50bdfd7e584e056b5e3b2ba50">configure_capture</a> (snd_pcm_t *pcm, unsigned int sample_rate)</td></tr>
+<tr class="memdesc:add494cd50bdfd7e584e056b5e3b2ba50"><td class="mdescLeft"> </td><td class="mdescRight">Configure mono signed-16 ALSA capture with low-latency period sizes.  <br/></td></tr>
+<tr class="memitem:a396347bc1502b123b50f27427a1fb18e" id="r_a396347bc1502b123b50f27427a1fb18e"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a396347bc1502b123b50f27427a1fb18e">emit_classifier_sample</a> (const struct <a class="el" href="structear__inference__result.html">ear_inference_result</a> *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>, const struct <a class="el" href="structoptions.html">options</a> *<a class="el" href="structoptions.html">options</a>)</td></tr>
+<tr class="memdesc:a396347bc1502b123b50f27427a1fb18e"><td class="mdescLeft"> </td><td class="mdescRight">Emit one classifier window to the server's nonblocking output.  <br/></td></tr>
+<tr class="memitem:a854c264fbe7456bf122988187817b9f6" id="r_a854c264fbe7456bf122988187817b9f6"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a854c264fbe7456bf122988187817b9f6">emit_server_sample</a> (uint64_t timestamp_ms, double level_db, double frequency_hz, double contrast_db, double trend_db, double envelope_db, bool alarm_present, bool clipped, const struct <a class="el" href="structoptions.html">options</a> *<a class="el" href="structoptions.html">options</a>, uint64_t begin_us, uint64_t end_us, uint64_t error_us, uint64_t sequence)</td></tr>
+<tr class="memdesc:a854c264fbe7456bf122988187817b9f6"><td class="mdescLeft"> </td><td class="mdescRight">Emit one self-describing USHER server sample without blocking capture.  <br/></td></tr>
+<tr class="memitem:aeaac52bd5d45284da2062e06acc68219" id="r_aeaac52bd5d45284da2062e06acc68219"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaac52bd5d45284da2062e06acc68219">poll_server_stdin</a> (void)</td></tr>
+<tr class="memdesc:aeaac52bd5d45284da2062e06acc68219"><td class="mdescLeft"> </td><td class="mdescRight">Consume non-blocking STOP/QUIT commands from USHER.  <br/></td></tr>
+<tr class="memitem:a09e4cf07d57e95e6660948e16b633b65" id="r_a09e4cf07d57e95e6660948e16b633b65"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a09e4cf07d57e95e6660948e16b633b65">run_meter</a> (snd_pcm_t *pcm, const struct <a class="el" href="structoptions.html">options</a> *<a class="el" href="structoptions.html">options</a>)</td></tr>
+<tr class="memdesc:a09e4cf07d57e95e6660948e16b633b65"><td class="mdescLeft"> </td><td class="mdescRight">Capture, filter, analyze, and report audio until stopped.  <br/></td></tr>
+<tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627" id="r_a3c04138a5bfe5d72780bb7e82a18e627"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
+<tr class="memdesc:a3c04138a5bfe5d72780bb7e82a18e627"><td class="mdescLeft"> </td><td class="mdescRight">Configure EARcam, optionally self-test it, then run the ALSA meter.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-var-members"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a69ed6cac8443e6accb95cd749c873604" id="r_a69ed6cac8443e6accb95cd749c873604"><td align="right" class="memItemLeft" valign="top">static volatile sig_atomic_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a69ed6cac8443e6accb95cd749c873604">keep_running</a> = 1</td></tr>
+<tr class="memitem:aadbf8b47d53fcaccddfb2da038b0d750" id="r_aadbf8b47d53fcaccddfb2da038b0d750"><td align="right" class="memItemLeft" valign="top">static union <a class="el" href="unionalsa__object__storage.html">alsa_object_storage</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#aadbf8b47d53fcaccddfb2da038b0d750">card_info_storage</a></td></tr>
+<tr class="memitem:ac0ecfa2c74ecd50244f1f0cc088ad9ad" id="r_ac0ecfa2c74ecd50244f1f0cc088ad9ad"><td align="right" class="memItemLeft" valign="top">static union <a class="el" href="unionalsa__object__storage.html">alsa_object_storage</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0ecfa2c74ecd50244f1f0cc088ad9ad">pcm_info_storage</a></td></tr>
+<tr class="memitem:af63ceff457c88540c517e5c20ee25926" id="r_af63ceff457c88540c517e5c20ee25926"><td align="right" class="memItemLeft" valign="top">static union <a class="el" href="unionalsa__object__storage.html">alsa_object_storage</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#af63ceff457c88540c517e5c20ee25926">hardware_params_storage</a></td></tr>
+<tr class="memitem:a209cbdd32eded2ec64bde6bcba0d9180" id="r_a209cbdd32eded2ec64bde6bcba0d9180"><td align="right" class="memItemLeft" valign="top">static union <a class="el" href="unionalsa__object__storage.html">alsa_object_storage</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#a209cbdd32eded2ec64bde6bcba0d9180">software_params_storage</a></td></tr>
+<tr class="memitem:ac05b45d4cb2a70d13cf1da290b486cb2" id="r_ac05b45d4cb2a70d13cf1da290b486cb2"><td align="right" class="memItemLeft" valign="top">static int16_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac05b45d4cb2a70d13cf1da290b486cb2">capture_samples</a> [<a class="el" href="#a6f3d6c7159026203aed64ae9f761bd17">MAX_PERIOD_FRAMES</a>]</td></tr>
+<tr class="memitem:a334ef5a6c82baa4be77379027c94aa61" id="r_a334ef5a6c82baa4be77379027c94aa61"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#a334ef5a6c82baa4be77379027c94aa61">analysis_window</a> [<a class="el" href="#a93f241e89d06b444ac0c17c1d1c03b48">MAX_INTERVAL_FRAMES</a>]</td></tr>
+<tr class="memitem:a948485ff759a9230187108969abb2b53" id="r_a948485ff759a9230187108969abb2b53"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a948485ff759a9230187108969abb2b53">capture_timestamps</a></td></tr>
+<tr class="memitem:a58a5212896e75ed5b99832b33691a56a" id="r_a58a5212896e75ed5b99832b33691a56a"><td align="right" class="memItemLeft" valign="top">static unsigned long </td><td class="memItemRight" valign="bottom"><a class="el" href="#a58a5212896e75ed5b99832b33691a56a">server_dropped_lines</a> = 0</td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>ALSA acoustic detector for motionSCOUT-style narrow-band alarm tones. </p>
+<p>EARcam captures mono PCM, isolates the configured frequency band with cascaded Butterworth biquads, measures a bank of Goertzel tone bins over short Hann windows, and emits either an operator display or machine-readable samples for USHER. The process remains independently useful for bench work and deliberately keeps the USHER server protocol simple: newline-delimited output plus STOP/QUIT input. </p>
+<p class="definition">Definition in file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div><a id="doc-define-members" name="doc-define-members"></a><h2 class="groupheader" id="header-doc-define-members">Macro Definition Documentation</h2>
+<a id="a3024ccd4a9af5109d24e6c57565d74a1" name="a3024ccd4a9af5109d24e6c57565d74a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3024ccd4a9af5109d24e6c57565d74a1">◆ </a></span>_POSIX_C_SOURCE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define _POSIX_C_SOURCE   200809L</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00018">18</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ac354b53c3b8b273293f15ad20c2d5536" name="ac354b53c3b8b273293f15ad20c2d5536"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac354b53c3b8b273293f15ad20c2d5536">◆ </a></span>ALSA_OBJECT_CAPACITY</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define ALSA_OBJECT_CAPACITY   4096U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Guard opaque ALSA ABI sizes at runtime rather than using direct EARcam heap storage. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00072">72</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ae99263c72d5ac3e90cb7f9028c3c8b0f" name="ae99263c72d5ac3e90cb7f9028c3c8b0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae99263c72d5ac3e90cb7f9028c3c8b0f">◆ </a></span>AMPLITUDE_DB_PER_DECADE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define AMPLITUDE_DB_PER_DECADE   20.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00106">106</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ab97c399bcbb980cce4ea22c09311d8cb" name="ab97c399bcbb980cce4ea22c09311d8cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab97c399bcbb980cce4ea22c09311d8cb">◆ </a></span>AMPLITUDE_FLOOR</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define AMPLITUDE_FLOOR   0.000001</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00105">105</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a5408790a0ccbf5fba6bd993d8c530b1d" name="a5408790a0ccbf5fba6bd993d8c530b1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5408790a0ccbf5fba6bd993d8c530b1d">◆ </a></span>AUTO_DEVICE_NAME_MAX</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define AUTO_DEVICE_NAME_MAX   64U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00050">50</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a59fa82454e2e7ebcb0abdd3371e7c959" name="a59fa82454e2e7ebcb0abdd3371e7c959"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59fa82454e2e7ebcb0abdd3371e7c959">◆ </a></span>BUTTERWORTH_Q</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define BUTTERWORTH_Q   0.7071067811865476</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>q = 1/sqrt(2) for each second-order Butterworth section; two sections per edge. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00102">102</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a9cd89e01873065b753e8a66129bad808" name="a9cd89e01873065b753e8a66129bad808"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cd89e01873065b753e8a66129bad808">◆ </a></span>CAPTURE_BUFFERS_PER_SECOND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAPTURE_BUFFERS_PER_SECOND   50U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00065">65</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a8434c97175dfbe02246780d4b4e0a2d3" name="a8434c97175dfbe02246780d4b4e0a2d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8434c97175dfbe02246780d4b4e0a2d3">◆ </a></span>CAPTURE_MONO_CHANNELS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAPTURE_MONO_CHANNELS   1U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00066">66</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ad9170ac4e973fc9513bb0758193bb160" name="ad9170ac4e973fc9513bb0758193bb160"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9170ac4e973fc9513bb0758193bb160">◆ </a></span>CAPTURE_PERIODS_PER_SECOND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAPTURE_PERIODS_PER_SECOND   200U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>ALSA asks for 5 ms periods and a 20 ms buffer; accepted periods remain bounded. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00064">64</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="abe08fb48314f64735b71dc6fa50c92cd" name="abe08fb48314f64735b71dc6fa50c92cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe08fb48314f64735b71dc6fa50c92cd">◆ </a></span>CAPTURE_STALL_TIMEOUT_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAPTURE_STALL_TIMEOUT_MS   2000U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00068">68</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ab2ba609052e68cf0bff67660ccd46a10" name="ab2ba609052e68cf0bff67660ccd46a10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2ba609052e68cf0bff67660ccd46a10">◆ </a></span>CAPTURE_WAIT_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CAPTURE_WAIT_MS   100</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00067">67</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a6adbebcd0ddcf30f95dd7068fcbb8b1c" name="a6adbebcd0ddcf30f95dd7068fcbb8b1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6adbebcd0ddcf30f95dd7068fcbb8b1c">◆ </a></span>CLIP_THRESHOLD</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CLIP_THRESHOLD   32700</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00089">89</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a5cbbe831442d4b2c6f43a991f140bd95" name="a5cbbe831442d4b2c6f43a991f140bd95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cbbe831442d4b2c6f43a991f140bd95">◆ </a></span>CONTROL_DEVICE_NAME_CAPACITY</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define CONTROL_DEVICE_NAME_CAPACITY   32</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00096">96</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="adb35a61fa7bf610beb3ef715984a187c" name="adb35a61fa7bf610beb3ef715984a187c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb35a61fa7bf610beb3ef715984a187c">◆ </a></span>DB_FLOOR</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define DB_FLOOR   (-120.0)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00079">79</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a7dc554495d0b436ced6ac3e94592b107" name="a7dc554495d0b436ced6ac3e94592b107"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dc554495d0b436ced6ac3e94592b107">◆ </a></span>DB_LOG_BASE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define DB_LOG_BASE   10.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00107">107</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a84cb8bbda8042a324f49102bc200cc54" name="a84cb8bbda8042a324f49102bc200cc54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84cb8bbda8042a324f49102bc200cc54">◆ </a></span>DEFAULT_DEVICE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define DEFAULT_DEVICE   "auto"</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00049">49</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a0d2caa7e05c1e97a5422d45161e7aa90" name="a0d2caa7e05c1e97a5422d45161e7aa90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d2caa7e05c1e97a5422d45161e7aa90">◆ </a></span>DEFAULT_HIGH_CUT_HZ</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define DEFAULT_HIGH_CUT_HZ   3200.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00076">76</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a568905b6785aeff928e1382b20782895" name="a568905b6785aeff928e1382b20782895"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a568905b6785aeff928e1382b20782895">◆ </a></span>DEFAULT_INTERVAL_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define DEFAULT_INTERVAL_MS   50U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00052">52</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a0ab14e5edf6e7ca18affdc8177edf3a9" name="a0ab14e5edf6e7ca18affdc8177edf3a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ab14e5edf6e7ca18affdc8177edf3a9">◆ </a></span>DEFAULT_LOW_CUT_HZ</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define DEFAULT_LOW_CUT_HZ   1800.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00075">75</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ae16467a726942aa80edb7f400832cc5e" name="ae16467a726942aa80edb7f400832cc5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae16467a726942aa80edb7f400832cc5e">◆ </a></span>DEFAULT_MIN_LEVEL_DBFS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define DEFAULT_MIN_LEVEL_DBFS   (-90.0)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Level and contrast gates operate before calibration; clipping is reported separately. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00078">78</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a7da73729979a7c914f172d20fbf15593" name="a7da73729979a7c914f172d20fbf15593"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7da73729979a7c914f172d20fbf15593">◆ </a></span>DEFAULT_RATE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define DEFAULT_RATE   48000U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00051">51</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ac2ddab921906ae8f95329cb706c947a2" name="ac2ddab921906ae8f95329cb706c947a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2ddab921906ae8f95329cb706c947a2">◆ </a></span>EARCAM_MAX_ARGUMENTS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define EARCAM_MAX_ARGUMENTS   64</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00073">73</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ab14a63e32aca17d1917a4e8ff82f3035" name="ab14a63e32aca17d1917a4e8ff82f3035"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab14a63e32aca17d1917a4e8ff82f3035">◆ </a></span>EARCAM_MAX_PARSED_ARGUMENTS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define EARCAM_MAX_PARSED_ARGUMENTS   (<a class="el" href="#ac2ddab921906ae8f95329cb706c947a2">EARCAM_MAX_ARGUMENTS</a> * 2 + 1)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00074">74</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a28a09c9e894c4c71052a0f9198ac8684" name="a28a09c9e894c4c71052a0f9198ac8684"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28a09c9e894c4c71052a0f9198ac8684">◆ </a></span>ENVELOPE_RELEASE_DB_PER_SECOND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define ENVELOPE_RELEASE_DB_PER_SECOND   6.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00084">84</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a2e3b8d28ed3beac73aa8c5c81bacf00d" name="a2e3b8d28ed3beac73aa8c5c81bacf00d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e3b8d28ed3beac73aa8c5c81bacf00d">◆ </a></span>FILTER_SECTIONS_PER_EDGE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define FILTER_SECTIONS_PER_EDGE   2</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00103">103</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ade42b6107020d1b733fc9ebada1de1d2" name="ade42b6107020d1b733fc9ebada1de1d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade42b6107020d1b733fc9ebada1de1d2">◆ </a></span>HANN_TONE_AMPLITUDE_SCALE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define HANN_TONE_AMPLITUDE_SCALE   4.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Hann coherent gain and sinusoid amplitude recovery combine to this factor. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00109">109</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a00d6f309cfa0159bb2d8b4c3b03159db" name="a00d6f309cfa0159bb2d8b4c3b03159db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00d6f309cfa0159bb2d8b4c3b03159db">◆ </a></span>HOMING_ACQUISITION_WINDOWS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define HOMING_ACQUISITION_WINDOWS   4U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00113">113</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a8c2b2381fff15f827d884b3b0e3b5371" name="a8c2b2381fff15f827d884b3b0e3b5371"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c2b2381fff15f827d884b3b0e3b5371">◆ </a></span>HOMING_FAST_TIME_CONSTANT_S</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define HOMING_FAST_TIME_CONSTANT_S   0.20</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Fast/slow peak-envelope smoothing in seconds; minimum alarm windows avoids early labels. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00111">111</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a5a4918bcf16dc388b5ad3d72468fe612" name="a5a4918bcf16dc388b5ad3d72468fe612"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a4918bcf16dc388b5ad3d72468fe612">◆ </a></span>HOMING_SLOW_TIME_CONSTANT_S</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define HOMING_SLOW_TIME_CONSTANT_S   1.20</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00112">112</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ac3e2a0852c08c8102657d70f0e73540d" name="ac3e2a0852c08c8102657d70f0e73540d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3e2a0852c08c8102657d70f0e73540d">◆ </a></span>MAX_CALIBRATION_DB</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MAX_CALIBRATION_DB   300.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00095">95</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a3547be6bd89c2c44cedb7ebeb3f45b52" name="a3547be6bd89c2c44cedb7ebeb3f45b52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3547be6bd89c2c44cedb7ebeb3f45b52">◆ </a></span>MAX_CUTOFF_HZ</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MAX_CUTOFF_HZ   190000.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Parsing bounds retain room below the maximum supported sample-rate Nyquist limit. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00093">93</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a93f241e89d06b444ac0c17c1d1c03b48" name="a93f241e89d06b444ac0c17c1d1c03b48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93f241e89d06b444ac0c17c1d1c03b48">◆ </a></span>MAX_INTERVAL_FRAMES</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MAX_INTERVAL_FRAMES   ((<a class="el" href="#ab27cc990aa79a9a1e682b0270752a6f2">MAX_RATE</a> * <a class="el" href="#ae2de515510d6f05f36d48af2d457f424">MAX_INTERVAL_MS</a>) / <a class="el" href="#afc22ab01ad31ee9dfebcfcb61faaa63a">MILLISECONDS_PER_SECOND</a>)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00069">69</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ae2de515510d6f05f36d48af2d457f424" name="ae2de515510d6f05f36d48af2d457f424"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2de515510d6f05f36d48af2d457f424">◆ </a></span>MAX_INTERVAL_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MAX_INTERVAL_MS   10000U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00056">56</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a6f3d6c7159026203aed64ae9f761bd17" name="a6f3d6c7159026203aed64ae9f761bd17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f3d6c7159026203aed64ae9f761bd17">◆ </a></span>MAX_PERIOD_FRAMES</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MAX_PERIOD_FRAMES   (<a class="el" href="#ab27cc990aa79a9a1e682b0270752a6f2">MAX_RATE</a> / <a class="el" href="#a9cd89e01873065b753e8a66129bad808">CAPTURE_BUFFERS_PER_SECOND</a>)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00070">70</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ab27cc990aa79a9a1e682b0270752a6f2" name="ab27cc990aa79a9a1e682b0270752a6f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab27cc990aa79a9a1e682b0270752a6f2">◆ </a></span>MAX_RATE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MAX_RATE   384000U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00055">55</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a7f7d8733775641df7666e3378899a667" name="a7f7d8733775641df7666e3378899a667"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f7d8733775641df7666e3378899a667">◆ </a></span>METER_WIDTH</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define METER_WIDTH   50U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00080">80</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a8a708413d6171e7d86056793abe2cd1a" name="a8a708413d6171e7d86056793abe2cd1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a708413d6171e7d86056793abe2cd1a">◆ </a></span>MICROSECONDS_PER_SECOND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MICROSECONDS_PER_SECOND   1000000U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00058">58</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="afc22ab01ad31ee9dfebcfcb61faaa63a" name="afc22ab01ad31ee9dfebcfcb61faaa63a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc22ab01ad31ee9dfebcfcb61faaa63a">◆ </a></span>MILLISECONDS_PER_SECOND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MILLISECONDS_PER_SECOND   1000U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00057">57</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a881a118d499990d7e378e17bedb6bd3b" name="a881a118d499990d7e378e17bedb6bd3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a881a118d499990d7e378e17bedb6bd3b">◆ </a></span>MILLISECONDS_PER_SECOND_F</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MILLISECONDS_PER_SECOND_F   1000.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00062">62</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a99931d9c4a5cddc68cb39d098c6c92c3" name="a99931d9c4a5cddc68cb39d098c6c92c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99931d9c4a5cddc68cb39d098c6c92c3">◆ </a></span>MIN_CALIBRATION_DB</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MIN_CALIBRATION_DB   -300.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00094">94</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a7b3c0fdb0867b6482cd7c35974e45689" name="a7b3c0fdb0867b6482cd7c35974e45689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b3c0fdb0867b6482cd7c35974e45689">◆ </a></span>MIN_INTERVAL_MS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MIN_INTERVAL_MS   20U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00054">54</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a69c7023e232ea4bbc1cd45af2d007a57" name="a69c7023e232ea4bbc1cd45af2d007a57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69c7023e232ea4bbc1cd45af2d007a57">◆ </a></span>MIN_RATE_HZ</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define MIN_RATE_HZ   8000U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00053">53</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a421193a3325b3a4633f55d4af2686e4e" name="a421193a3325b3a4633f55d4af2686e4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a421193a3325b3a4633f55d4af2686e4e">◆ </a></span>NANOSECONDS_PER_MICROSECOND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define NANOSECONDS_PER_MICROSECOND   1000U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00061">61</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a969e0c6129a50134006fe4b380965cb2" name="a969e0c6129a50134006fe4b380965cb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a969e0c6129a50134006fe4b380965cb2">◆ </a></span>NANOSECONDS_PER_MILLISECOND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define NANOSECONDS_PER_MILLISECOND   1000000U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00060">60</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a5df38c677104658963501aa1e2a88e60" name="a5df38c677104658963501aa1e2a88e60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5df38c677104658963501aa1e2a88e60">◆ </a></span>NANOSECONDS_PER_SECOND</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define NANOSECONDS_PER_SECOND   1000000000L</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00059">59</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a1a31ce124401ba3e65b74d480a1b6cc9" name="a1a31ce124401ba3e65b74d480a1b6cc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a31ce124401ba3e65b74d480a1b6cc9">◆ </a></span>PCM_S16_FULL_SCALE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define PCM_S16_FULL_SCALE   32768.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00104">104</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a598a3330b3c21701223ee0ca14316eca" name="a598a3330b3c21701223ee0ca14316eca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a598a3330b3c21701223ee0ca14316eca">◆ </a></span>PI</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define PI   3.14159265358979323846</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00090">90</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a9118b1a9b26090a308933ecc1c738179" name="a9118b1a9b26090a308933ecc1c738179"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9118b1a9b26090a308933ecc1c738179">◆ </a></span>SERVER_COMMAND_CAPACITY</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define SERVER_COMMAND_CAPACITY   64</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00099">99</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="af15637f9f20356c0e33f87bac0e1a185" name="af15637f9f20356c0e33f87bac0e1a185"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af15637f9f20356c0e33f87bac0e1a185">◆ </a></span>SERVER_READ_CHUNK_CAPACITY</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define SERVER_READ_CHUNK_CAPACITY   64</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00100">100</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="aad2eeec7f59caf1cfcefefb7617beab7" name="aad2eeec7f59caf1cfcefefb7617beab7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad2eeec7f59caf1cfcefefb7617beab7">◆ </a></span>SERVER_SAMPLE_LINE_CAPACITY</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define SERVER_SAMPLE_LINE_CAPACITY   384</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00098">98</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="aa10c12c114700e0da59547c1501cd45f" name="aa10c12c114700e0da59547c1501cd45f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa10c12c114700e0da59547c1501cd45f">◆ </a></span>SHORT_OPTION_STORAGE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define SHORT_OPTION_STORAGE   3</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00097">97</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a071b637a75949e358a4d65b86017bce9" name="a071b637a75949e358a4d65b86017bce9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a071b637a75949e358a4d65b86017bce9">◆ </a></span>SOURCE_LEVEL_DB_SPL</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define SOURCE_LEVEL_DB_SPL   95.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Bench distance display assumes this reference source and free-field attenuation, not a measured range. Use only with an independently calibrated microphone chain. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00087">87</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="add7437aa3fd7ca7052c2fea6038b2612" name="add7437aa3fd7ca7052c2fea6038b2612"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add7437aa3fd7ca7052c2fea6038b2612">◆ </a></span>SOURCE_REFERENCE_METERS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define SOURCE_REFERENCE_METERS   3.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00088">88</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="aaf4cd93c44a41f9d8b3345dd506b877f" name="aaf4cd93c44a41f9d8b3345dd506b877f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf4cd93c44a41f9d8b3345dd506b877f">◆ </a></span>TEST_APPROACH_START_DB</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_APPROACH_START_DB   -65.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00128">128</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a274a80fb4e10aa0ba12de83fee16cc05" name="a274a80fb4e10aa0ba12de83fee16cc05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a274a80fb4e10aa0ba12de83fee16cc05">◆ </a></span>TEST_CONTRAST_MAX_DB</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_CONTRAST_MAX_DB   -15.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00126">126</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ab887207b03d0f475fa9f9ac316a0d350" name="ab887207b03d0f475fa9f9ac316a0d350"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab887207b03d0f475fa9f9ac316a0d350">◆ </a></span>TEST_EXPECTED_READ_END_US</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_EXPECTED_READ_END_US   990000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00119">119</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a532ef4836031ab5e20abbb33730f48a0" name="a532ef4836031ab5e20abbb33730f48a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a532ef4836031ab5e20abbb33730f48a0">◆ </a></span>TEST_INTERFERENCE_AMPLITUDE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_INTERFERENCE_AMPLITUDE   0.20</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00123">123</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a7b8466cf608ddc596ea759969f7c8b84" name="a7b8466cf608ddc596ea759969f7c8b84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b8466cf608ddc596ea759969f7c8b84">◆ </a></span>TEST_INTERFERENCE_HZ</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_INTERFERENCE_HZ   800.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00121">121</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="af357717bdf264c4d97c6246bde01f3eb" name="af357717bdf264c4d97c6246bde01f3eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af357717bdf264c4d97c6246bde01f3eb">◆ </a></span>TEST_RATE_HZ</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_RATE_HZ   48000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00118">118</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a0f15575f7dd6322162c15621d577470b" name="a0f15575f7dd6322162c15621d577470b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f15575f7dd6322162c15621d577470b">◆ </a></span>TEST_RECEDE_START_DB</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_RECEDE_START_DB   -45.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00129">129</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="acc5e09d535126e488925b8beb0693c34" name="acc5e09d535126e488925b8beb0693c34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc5e09d535126e488925b8beb0693c34">◆ </a></span>TEST_TARGET_AMPLITUDE</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_TARGET_AMPLITUDE   0.02</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00122">122</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a966b72b3a761931d21e379caef31e5b2" name="a966b72b3a761931d21e379caef31e5b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a966b72b3a761931d21e379caef31e5b2">◆ </a></span>TEST_TARGET_HZ</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_TARGET_HZ   2700.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00120">120</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a1c3f9b88bbbc3a24e6948cedd3355626" name="a1c3f9b88bbbc3a24e6948cedd3355626"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c3f9b88bbbc3a24e6948cedd3355626">◆ </a></span>TEST_TIMESTAMP_US</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_TIMESTAMP_US   1000000</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Deterministic self-test fixtures, not live detector thresholds or measured calibration. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00115">115</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="abbd8c2ab57360dc25f776b68aedeb5ce" name="abbd8c2ab57360dc25f776b68aedeb5ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbd8c2ab57360dc25f776b68aedeb5ce">◆ </a></span>TEST_TONE_MAX_DB</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_TONE_MAX_DB   -32.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00125">125</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a0acef3ea4e0ff618b32563c0a38c0569" name="a0acef3ea4e0ff618b32563c0a38c0569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0acef3ea4e0ff618b32563c0a38c0569">◆ </a></span>TEST_TONE_MIN_DB</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_TONE_MIN_DB   -36.0</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00124">124</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a4c88ac7d22b939beb42679f683d2280e" name="a4c88ac7d22b939beb42679f683d2280e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c88ac7d22b939beb42679f683d2280e">◆ </a></span>TEST_TREND_STEP_DB</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_TREND_STEP_DB   0.3</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00130">130</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="af223f6f42c778403fa877d0ff16fd1bd" name="af223f6f42c778403fa877d0ff16fd1bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af223f6f42c778403fa877d0ff16fd1bd">◆ </a></span>TEST_TREND_WINDOWS</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_TREND_WINDOWS   40U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00127">127</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a8d33540c789472e4e0f93b8fdddbd7e9" name="a8d33540c789472e4e0f93b8fdddbd7e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d33540c789472e4e0f93b8fdddbd7e9">◆ </a></span>TEST_UNDERFLOW_TIMESTAMP_US</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_UNDERFLOW_TIMESTAMP_US   100</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00116">116</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="aa308017f7d8a9403f275737664fdead5" name="aa308017f7d8a9403f275737664fdead5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa308017f7d8a9403f275737664fdead5">◆ </a></span>TEST_UNREAD_FRAMES</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TEST_UNREAD_FRAMES   480</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00117">117</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a57d0b33a876876f5965486e3b6e5b3ac" name="a57d0b33a876876f5965486e3b6e5b3ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57d0b33a876876f5965486e3b6e5b3ac">◆ </a></span>TONE_BIN_COUNT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TONE_BIN_COUNT   57U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00081">81</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a9b9afffe8b270d6445b341e62bdbfef5" name="a9b9afffe8b270d6445b341e62bdbfef5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b9afffe8b270d6445b341e62bdbfef5">◆ </a></span>TONE_CONTRAST_THRESHOLD_DB</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TONE_CONTRAST_THRESHOLD_DB   (-3.0)</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00082">82</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a4b3454f76773167e50ba2e47e5c22029" name="a4b3454f76773167e50ba2e47e5c22029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b3454f76773167e50ba2e47e5c22029">◆ </a></span>TREND_THRESHOLD_DB</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define TREND_THRESHOLD_DB   0.8</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00083">83</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="ab1ca89a2b3cc21c9435ca3fafe6515d7" name="ab1ca89a2b3cc21c9435ca3fafe6515d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1ca89a2b3cc21c9435ca3fafe6515d7">◆ </a></span>amplitude_to_db()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double amplitude_to_db </td>
+<td>(</td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>amplitude</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Convert a linear amplitude to bounded dBFS. </p>
+<p>Flooring avoids negative infinity propagating into detector thresholds. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00606">606</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a9c083e8629d3e564f1d7e341cc7d7cfe" name="a9c083e8629d3e564f1d7e341cc7d7cfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c083e8629d3e564f1d7e341cc7d7cfe">◆ </a></span>analyze_test_window()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void analyze_test_window </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structtone__bin.html">tone_bin</a> *</td> <td class="paramname"><span class="paramname"><em>bins</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structoptions.html">options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>target_amplitude</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>interference_amplitude</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>tone_db</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>contrast_db</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Analyze a deterministic synthetic tone mixture for self-test coverage. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00726">726</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="add87969284f93e1cba71974b4f78dc0c" name="add87969284f93e1cba71974b4f78dc0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add87969284f93e1cba71974b4f78dc0c">◆ </a></span>apply_biquad()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double apply_biquad </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structbiquad.html">biquad</a> *</td> <td class="paramname"><span class="paramname"><em>filter</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>input</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Filter one PCM sample while retaining the section delay state. </p>
+<dl class="section return"><dt>Returns</dt><dd>Filtered sample, or <code class="param">input</code> when the section is disabled. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00591">591</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a3417dabc54741b14448dc28b1e7d791b" name="a3417dabc54741b14448dc28b1e7d791b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3417dabc54741b14448dc28b1e7d791b">◆ </a></span>audio_read_end_us()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint64_t audio_read_end_us </td>
+<td>(</td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>hardware_us</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>unread_frames</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned int</td> <td class="paramname"><span class="paramname"><em>rate</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Subtract unread PCM duration from a monotonic ALSA timestamp. </p>
+<dl class="section return"><dt>Returns</dt><dd>End of consumed audio in microseconds, or zero if the calculation is unusable.</dd></dl>
+<p>Arrival time alone includes buffered audio delay. This correction lets USHER associate a window with flight poses closer to its actual capture time. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00205">205</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a738d666e17ea4e44affb352da1011101" name="a738d666e17ea4e44affb352da1011101"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a738d666e17ea4e44affb352da1011101">◆ </a></span>configure_biquad()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void configure_biquad </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structbiquad.html">biquad</a> *</td> <td class="paramname"><span class="paramname"><em>filter</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>cutoff_hz</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned int</td> <td class="paramname"><span class="paramname"><em>sample_rate</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>high_pass</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Configure a second-order Butterworth high- or low-pass section. </p>
+<p>Two identical sections are cascaded to give useful out-of-band rejection before tone analysis without the latency and allocation cost of an FFT filter bank. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00554">554</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="add494cd50bdfd7e584e056b5e3b2ba50" name="add494cd50bdfd7e584e056b5e3b2ba50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add494cd50bdfd7e584e056b5e3b2ba50">◆ </a></span>configure_capture()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int configure_capture </td>
+<td>(</td>
+<td class="paramtype">snd_pcm_t *</td> <td class="paramname"><span class="paramname"><em>pcm</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned int</td> <td class="paramname"><span class="paramname"><em>sample_rate</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Configure mono signed-16 ALSA capture with low-latency period sizes. </p>
+<dl class="section return"><dt>Returns</dt><dd>ALSA status code.</dd></dl>
+<p>Periods target five milliseconds to keep USHER samples timely without forcing an excessively interrupt-heavy capture configuration. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00853">853</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a58576540b54fcab4388e154074f9ec8d" name="a58576540b54fcab4388e154074f9ec8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58576540b54fcab4388e154074f9ec8d">◆ </a></span>configure_tone_bins()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void configure_tone_bins </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structtone__bin.html">tone_bin</a> *</td> <td class="paramname"><span class="paramname"><em>bins</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structoptions.html">options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Initialize evenly spaced Goertzel bins across the selected search band. </p>
+<p>The small fixed bank is cheaper and more targeted than a broad FFT because mission alarms occupy a known band and only the strongest frequency is needed. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00617">617</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a50dd15287f839536d4d2bc3fbe2c4ffe" name="a50dd15287f839536d4d2bc3fbe2c4ffe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50dd15287f839536d4d2bc3fbe2c4ffe">◆ </a></span>display_homing()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void display_homing </td>
+<td>(</td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>level_db</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>frequency_hz</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>contrast_db</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>alarm_present</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>direction</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>trend_db</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structhoming__state.html">homing_state</a> *</td> <td class="paramname"><span class="paramname"><em>state</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structoptions.html">options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Render one human-facing measurement line for bench use. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00815">815</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a396347bc1502b123b50f27427a1fb18e" name="a396347bc1502b123b50f27427a1fb18e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a396347bc1502b123b50f27427a1fb18e">◆ </a></span>emit_classifier_sample()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void emit_classifier_sample </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structear__inference__result.html">ear_inference_result</a> *</td> <td class="paramname"><span class="paramname"><em>result</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structoptions.html">options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Emit one classifier window to the server's nonblocking output. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">result</td><td>Classification, clipping and monotonic window evidence. </td></tr>
+<tr><td class="paramname">options</td><td>Level calibration and its qualification flag.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Format and write the record as a unit. Count incomplete writes instead of letting parent backpressure stall audio acquisition. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00929">929</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a854c264fbe7456bf122988187817b9f6" name="a854c264fbe7456bf122988187817b9f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a854c264fbe7456bf122988187817b9f6">◆ </a></span>emit_server_sample()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void emit_server_sample </td>
+<td>(</td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>timestamp_ms</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>level_db</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>frequency_hz</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>contrast_db</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>trend_db</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>envelope_db</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>alarm_present</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>clipped</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structoptions.html">options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>begin_us</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>end_us</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>error_us</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>sequence</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Emit one self-describing USHER server sample without blocking capture. </p>
+<p>A slow parent loses a measurement rather than stalling ALSA; the drop count remains observable for diagnostics. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00948">948</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a22741a24b874b4fd8237b3feb532673d" name="a22741a24b874b4fd8237b3feb532673d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22741a24b874b4fd8237b3feb532673d">◆ </a></span>find_usb_capture_device()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int find_usb_capture_device </td>
+<td>(</td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>name_size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Discover the first USB ALSA card offering a capture PCM. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">name</td><td>Destination ALSA device name. </td></tr>
+<tr><td class="paramname">name_size</td><td>Capacity of <code class="param">name</code>. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 when a usable device is found, otherwise -1.</dd></dl>
+<p>USB-Audio matching prevents an arbitrary onboard sound device from silently becoming the payload sensor when <span class="tt">--device auto</span> is used. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00368">368</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="afc9a87560b447d6b28fe487f192ac3fd" name="afc9a87560b447d6b28fe487f192ac3fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc9a87560b447d6b28fe487f192ac3fd">◆ </a></span>handle_signal()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void handle_signal </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>signal_number</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Request orderly capture-loop termination from a signal handler. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">signal_number</td><td>Delivered signal, intentionally unused.</td></tr>
+</table>
+</dd>
+</dl>
+<p>sig_atomic_t is used because complex cleanup is unsafe in signal context. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00294">294</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a3c04138a5bfe5d72780bb7e82a18e627" name="a3c04138a5bfe5d72780bb7e82a18e627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c04138a5bfe5d72780bb7e82a18e627">◆ </a></span>main()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int main </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>argc</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char **</td> <td class="paramname"><span class="paramname"><em>argv</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Configure EARcam, optionally self-test it, then run the ALSA meter. </p>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS on normal termination, EXIT_FAILURE on configuration/capture errors. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l01215">1215</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a9cd152f10e344623f059b1268ac3245e" name="a9cd152f10e344623f059b1268ac3245e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cd152f10e344623f059b1268ac3245e">◆ </a></span>monotonic_ms()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint64_t monotonic_ms </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Return monotonic milliseconds for correlating samples without wall-clock jumps. </p>
+<dl class="section return"><dt>Returns</dt><dd>Monotonic timestamp in milliseconds. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00302">302</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a38e9dda50e4758ead92c4761e5655446" name="a38e9dda50e4758ead92c4761e5655446"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38e9dda50e4758ead92c4761e5655446">◆ </a></span>normalize_long_options()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int normalize_long_options </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>argc</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *const</td> <td class="paramname"><span class="paramname"><em>argv</em></span>[], </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>normalized</em></span>[], </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>capacity</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structoption__alias.html">option_alias</a></td> <td class="paramname"><span class="paramname"><em>aliases</em></span>[], </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>alias_count</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Normalize –name value and –name=value into bounded getopt arguments. </p>
+<dl class="section return"><dt>Returns</dt><dd>Argument count, or -1 for unknown options, missing values or capacity exhaustion.</dd></dl>
+<p>Pointers borrow argv/static alias strings; no copied argument payload or heap is needed. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00224">224</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a840f7ebd535853b5fae9f3e97dee4700" name="a840f7ebd535853b5fae9f3e97dee4700"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a840f7ebd535853b5fae9f3e97dee4700">◆ </a></span>parse_double_value()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int parse_double_value </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>text</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>minimum</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>maximum</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>value</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Parse a finite bounded floating-point command-line value. </p>
+<dl class="section return"><dt>Returns</dt><dd>0 on success or -1 for malformed, non-finite, or out-of-range input. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00417">417</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a04a822ca8a0b5f51d15d8cfd6f754136" name="a04a822ca8a0b5f51d15d8cfd6f754136"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04a822ca8a0b5f51d15d8cfd6f754136">◆ </a></span>parse_options()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int parse_options </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>argc</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char **</td> <td class="paramname"><span class="paramname"><em>argv</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">struct <a class="el" href="structoptions.html">options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Parse and cross-validate EARcam command-line configuration. </p>
+<dl class="section return"><dt>Returns</dt><dd>0 for a runnable configuration, 1 after help/version output, or -1 on error.</dd></dl>
+<p>Nyquist and band-order checks happen here rather than in the DSP loop so a misconfigured filter cannot produce misleading field measurements. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00437">437</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a3214e7018a314fc03dac2ed71ea06778" name="a3214e7018a314fc03dac2ed71ea06778"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3214e7018a314fc03dac2ed71ea06778">◆ </a></span>parse_unsigned()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int parse_unsigned </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>text</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned int</td> <td class="paramname"><span class="paramname"><em>minimum</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned int</td> <td class="paramname"><span class="paramname"><em>maximum</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned int *</td> <td class="paramname"><span class="paramname"><em>value</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Parse a bounded unsigned command-line value. </p>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, otherwise -1 without modifying the output value. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00344">344</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="aeaac52bd5d45284da2062e06acc68219" name="aeaac52bd5d45284da2062e06acc68219"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaac52bd5d45284da2062e06acc68219">◆ </a></span>poll_server_stdin()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int poll_server_stdin </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Consume non-blocking STOP/QUIT commands from USHER. </p>
+<dl class="section return"><dt>Returns</dt><dd>1 when capture should stop, otherwise 0.</dd></dl>
+<p>Chunked input accepts fragmented commands while avoiding one syscall per character and never delaying audio acquisition. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00991">991</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="aa70e80b828957e524733ac3473af0fb6" name="aa70e80b828957e524733ac3473af0fb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa70e80b828957e524733ac3473af0fb6">◆ </a></span>print_usage()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void print_usage </td>
+<td>(</td>
+<td class="paramtype">FILE *</td> <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>program</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Print command-line help or version-led usage text. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">stream</td><td>Destination stream. </td></tr>
+<tr><td class="paramname">program</td><td>Executable name shown in examples. </td></tr>
+</table>
+</dd>
+</dl>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00314">314</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a09e4cf07d57e95e6660948e16b633b65" name="a09e4cf07d57e95e6660948e16b633b65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09e4cf07d57e95e6660948e16b633b65">◆ </a></span>run_meter()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int run_meter </td>
+<td>(</td>
+<td class="paramtype">snd_pcm_t *</td> <td class="paramname"><span class="paramname"><em>pcm</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structoptions.html">options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Capture, filter, analyze, and report audio until stopped. </p>
+<dl class="section return"><dt>Returns</dt><dd>0 for orderly stop or -1 for unrecoverable ALSA or bounds failure.</dd></dl>
+<p>ALSA recovery handles transient overruns. Each reporting window produces band RMS, strongest tone, contrast, and homing trend. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l01030">1030</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="aa5a3ff6e07ed515bed9703b774b7416d" name="aa5a3ff6e07ed515bed9703b774b7416d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5a3ff6e07ed515bed9703b774b7416d">◆ </a></span>run_self_test()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int run_self_test </td>
+<td>(</td>
+<td class="paramtype">const struct <a class="el" href="structoptions.html">options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Verify selectivity and trend classification without ALSA hardware. </p>
+<dl class="section return"><dt>Returns</dt><dd>0 on expected detector behavior, otherwise -1. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00763">763</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="afc9dc4984c8f8e63e1b88574c23c92af" name="afc9dc4984c8f8e63e1b88574c23c92af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc9dc4984c8f8e63e1b88574c23c92af">◆ </a></span>strongest_tone_db()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double strongest_tone_db </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structtone__bin.html">tone_bin</a> *</td> <td class="paramname"><span class="paramname"><em>bins</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>sample_count</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>frequency_hz</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Extract and reset the strongest Goertzel-bin power estimate. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">bins</td><td>Goertzel states to inspect and reset for the next interval. </td></tr>
+<tr><td class="paramname">sample_count</td><td>Number of samples represented by the states. </td></tr>
+<tr><td class="paramname">frequency_hz</td><td>Receives the winning bin frequency. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Window-normalized tone level in dBFS. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00657">657</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a5b82511619b603b0406f5f37c9471ed8" name="a5b82511619b603b0406f5f37c9471ed8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b82511619b603b0406f5f37c9471ed8">◆ </a></span>update_homing_state()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const char * update_homing_state </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structhoming__state.html">homing_state</a> *</td> <td class="paramname"><span class="paramname"><em>state</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>tone_db</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool</td> <td class="paramname"><span class="paramname"><em>alarm_present</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const struct <a class="el" href="structoptions.html">options</a> *</td> <td class="paramname"><span class="paramname"><em>options</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>trend_db</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Update envelope and fast/slow trend estimates for operator guidance. </p>
+<dl class="section return"><dt>Returns</dt><dd>Stable direction label for the current acoustic evidence.</dd></dl>
+<p>The peak-hold envelope falls gradually while two exponential averages make direction less sensitive to individual noisy windows. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00682">682</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a1750fce79ca4cae4501b7977f34f363e" name="a1750fce79ca4cae4501b7977f34f363e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1750fce79ca4cae4501b7977f34f363e">◆ </a></span>update_tone_bins()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void update_tone_bins </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structtone__bin.html">tone_bin</a> *</td> <td class="paramname"><span class="paramname"><em>bins</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>sample</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>window</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Feed one windowed, band-passed sample into every Goertzel recurrence. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">bins</td><td>Persistent Goertzel states for the search frequencies. </td></tr>
+<tr><td class="paramname">sample</td><td>Current band-passed PCM value normalized to [-1, 1]. </td></tr>
+<tr><td class="paramname">window</td><td>Precomputed Hann weight for this sample's interval position.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Windowing reduces spectral leakage; precomputation keeps trigonometry out of the realtime sample loop. </p>
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00640">640</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="doc-var-members" name="doc-var-members"></a><h2 class="groupheader" id="header-doc-var-members">Variable Documentation</h2>
+<a id="a334ef5a6c82baa4be77379027c94aa61" name="a334ef5a6c82baa4be77379027c94aa61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a334ef5a6c82baa4be77379027c94aa61">◆ </a></span>analysis_window</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double analysis_window[<a class="el" href="#a93f241e89d06b444ac0c17c1d1c03b48">MAX_INTERVAL_FRAMES</a>]</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00196">196</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ac05b45d4cb2a70d13cf1da290b486cb2" name="ac05b45d4cb2a70d13cf1da290b486cb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac05b45d4cb2a70d13cf1da290b486cb2">◆ </a></span>capture_samples</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int16_t capture_samples[<a class="el" href="#a6f3d6c7159026203aed64ae9f761bd17">MAX_PERIOD_FRAMES</a>]</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00195">195</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a948485ff759a9230187108969abb2b53" name="a948485ff759a9230187108969abb2b53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a948485ff759a9230187108969abb2b53">◆ </a></span>capture_timestamps</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool capture_timestamps</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00197">197</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="aadbf8b47d53fcaccddfb2da038b0d750" name="aadbf8b47d53fcaccddfb2da038b0d750"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadbf8b47d53fcaccddfb2da038b0d750">◆ </a></span>card_info_storage</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">union <a class="el" href="unionalsa__object__storage.html">alsa_object_storage</a> card_info_storage</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00189">189</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="af63ceff457c88540c517e5c20ee25926" name="af63ceff457c88540c517e5c20ee25926"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af63ceff457c88540c517e5c20ee25926">◆ </a></span>hardware_params_storage</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">union <a class="el" href="unionalsa__object__storage.html">alsa_object_storage</a> hardware_params_storage</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00191">191</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a69ed6cac8443e6accb95cd749c873604" name="a69ed6cac8443e6accb95cd749c873604"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69ed6cac8443e6accb95cd749c873604">◆ </a></span>keep_running</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">volatile sig_atomic_t keep_running = 1</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00181">181</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="ac0ecfa2c74ecd50244f1f0cc088ad9ad" name="ac0ecfa2c74ecd50244f1f0cc088ad9ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0ecfa2c74ecd50244f1f0cc088ad9ad">◆ </a></span>pcm_info_storage</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">union <a class="el" href="unionalsa__object__storage.html">alsa_object_storage</a> pcm_info_storage</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00190">190</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a58a5212896e75ed5b99832b33691a56a" name="a58a5212896e75ed5b99832b33691a56a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58a5212896e75ed5b99832b33691a56a">◆ </a></span>server_dropped_lines</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">unsigned long server_dropped_lines = 0</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00922">922</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+<a id="a209cbdd32eded2ec64bde6bcba0d9180" name="a209cbdd32eded2ec64bde6bcba0d9180"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a209cbdd32eded2ec64bde6bcba0d9180">◆ </a></span>software_params_storage</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">union <a class="el" href="unionalsa__object__storage.html">alsa_object_storage</a> software_params_storage</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="earcam_8c_source.html#l00192">192</a> of file <a class="el" href="earcam_8c_source.html">earcam.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

@@ -1,0 +1,1885 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/capture_timing.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('capture__timing_8h_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">capture_timing.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="capture__timing_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifndef USHER_CAPTURE_TIMING_H</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#define USHER_CAPTURE_TIMING_H</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"></span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * @file capture_timing.h</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * @brief Sensor observation times, aligned poses, and optional frame-arrival evidence.</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * @details Timing is deliberately represented with monotonic clocks only; wall-clock</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * adjustments must never turn an otherwise valid capture into a negative duration.</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include "<a class="code" href="usher__protocol_8h.html">usher_protocol.h</a>"</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00032">
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbae">   32</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbae">capture_time_kind</a> {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea16f4069f055f17c17a7d234f7428e66c">   33</a></span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea16f4069f055f17c17a7d234f7428e66c">CAPTURE_TIME_UNKNOWN</a>,</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea844e4e5d53bbffa843d0cad6e4b8ac0a">   34</a></span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea844e4e5d53bbffa843d0cad6e4b8ac0a">CAPTURE_TIME_SENSOR_EXPOSURE</a>,</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaeac4ba9a52849eae70d95e626d8a9557ba">   35</a></span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaeac4ba9a52849eae70d95e626d8a9557ba">CAPTURE_TIME_CALIBRATED_EXPOSURE</a>,</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea7bc92b975ef007c1f96dc90036c70ba6">   36</a></span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea7bc92b975ef007c1f96dc90036c70ba6">CAPTURE_TIME_SHUTTER_WINDOW</a>,</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaead28f95c68f93e29da678adfae2579ce7">   37</a></span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaead28f95c68f93e29da678adfae2579ce7">CAPTURE_TIME_FRAME_ARRIVAL</a>,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea427a3cbf17ddfab82b7204ca29ae0c97">   38</a></span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea427a3cbf17ddfab82b7204ca29ae0c97">CAPTURE_TIME_AUDIO_WINDOW</a></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>};</div>
+</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00041">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structcapture__observation.html">   41</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcapture__observation.html">capture_observation</a> {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="structcapture__observation.html#a359e75ea79730ded1a2ada08ff34acf2">   42</a></span>  uint64_t <a class="code hl_variable" href="structcapture__observation.html#a359e75ea79730ded1a2ada08ff34acf2">earliest_us</a>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="structcapture__observation.html#a45c88317077d093a082d2fb87bee3f66">   43</a></span>  uint64_t <a class="code hl_variable" href="structcapture__observation.html#a45c88317077d093a082d2fb87bee3f66">latest_us</a>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="structcapture__observation.html#af41f98413f8fb416f04793aa8bdcd3b0">   44</a></span>  uint64_t <a class="code hl_variable" href="structcapture__observation.html#af41f98413f8fb416f04793aa8bdcd3b0">sequence</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="structcapture__observation.html#a49690c824145a07c2ee6a0a24a46f087">   45</a></span>  uint64_t <a class="code hl_variable" href="structcapture__observation.html#a49690c824145a07c2ee6a0a24a46f087">sensor_timestamp_ns</a>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="structcapture__observation.html#a99bc93bb7a9f51b9452263a4c93a5886">   46</a></span> <span class="keyword">enum</span> <a class="code hl_enumeration" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbae">capture_time_kind</a> <a class="code hl_variable" href="structcapture__observation.html#a99bc93bb7a9f51b9452263a4c93a5886">kind</a>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="structcapture__observation.html#aeedae189feda4ce9fae62e1b36c0a390">   47</a></span> <span class="keyword">union </span><a class="code hl_union" href="uniondc__shot__union.html">dc_shot_union</a> <a class="code hl_variable" href="structcapture__observation.html#aeedae189feda4ce9fae62e1b36c0a390">pose</a>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="structcapture__observation.html#a5bb0dbb5d7a16f4747878f96a29f6bef">   48</a></span> <span class="keywordtype">double</span> <a class="code hl_variable" href="structcapture__observation.html#a5bb0dbb5d7a16f4747878f96a29f6bef">pose_uncertainty_m</a>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="structcapture__observation.html#a09a70dee453c1cf002f474eb1fff3a69">   49</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structcapture__observation.html#a09a70dee453c1cf002f474eb1fff3a69">pose_valid</a>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="structcapture__observation.html#a74537ea27e6acce5f5d667461b550d96">   50</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structcapture__observation.html#a74537ea27e6acce5f5d667461b550d96">frame_bound</a>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="structcapture__observation.html#a617374a7f06dad05ab566e702c76dc06">   51</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structcapture__observation.html#a617374a7f06dad05ab566e702c76dc06">navigation_projected</a>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="structcapture__observation.html#ae3e1f73c1c3632292c9514d830526690">   52</a></span>  uint32_t <a class="code hl_variable" href="structcapture__observation.html#ae3e1f73c1c3632292c9514d830526690">navigation_age_ms</a>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>};</div>
+</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="comment"></span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="comment"> * @brief Check that an observation supplies a usable time interval.</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="comment"> * @param observation Nullable observation to check.</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="comment"> * @return True for a known timing kind with an ordered, nonzero-start interval</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="comment"> *         spanning no more than 20 seconds.</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="comment"> * @details Check endpoint order before subtracting unsigned timestamps. This</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="comment"> * validates the interval only, not its pose, sequence, or frame association.</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00063">
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#a21d697542177c19d596789e84708d0c7">   63</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="capture__timing_8h.html#a21d697542177c19d596789e84708d0c7">capture_observation_valid</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcapture__observation.html">capture_observation</a> *observation)</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>{</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> <span class="keywordflow">return</span> observation != 0 &amp;&amp; observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a99bc93bb7a9f51b9452263a4c93a5886">kind</a> &gt; <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea16f4069f055f17c17a7d234f7428e66c">CAPTURE_TIME_UNKNOWN</a></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>         &amp;&amp; observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a99bc93bb7a9f51b9452263a4c93a5886">kind</a> &lt;= <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea427a3cbf17ddfab82b7204ca29ae0c97">CAPTURE_TIME_AUDIO_WINDOW</a> &amp;&amp; observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a359e75ea79730ded1a2ada08ff34acf2">earliest_us</a> &gt; 0</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>         &amp;&amp; observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a45c88317077d093a082d2fb87bee3f66">latest_us</a> &gt;= observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a359e75ea79730ded1a2ada08ff34acf2">earliest_us</a></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>         &amp;&amp; observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a45c88317077d093a082d2fb87bee3f66">latest_us</a> - observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a359e75ea79730ded1a2ada08ff34acf2">earliest_us</a> &lt;= UINT64_C(20000000);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}</div>
+</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="comment"></span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="comment"> * @brief Distinguish exposure evidence from other valid observation times.</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment"> * @param observation Nullable observation to classify.</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment"> * @return True for a valid sensor, calibrated, or shutter-window interval.</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment"> * @details Downstream projection must not substitute frame delivery or audio</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="comment"> * timing for exposure, even if those intervals are structurally valid.</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00078">
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#ab42fea948036f2b50dd1108639e61417">   78</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="capture__timing_8h.html#ab42fea948036f2b50dd1108639e61417">capture_observation_exposure</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcapture__observation.html">capture_observation</a> *observation)</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>{</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> <span class="keywordflow">return</span> <a class="code hl_function" href="capture__timing_8h.html#a21d697542177c19d596789e84708d0c7">capture_observation_valid</a>(observation)</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>         &amp;&amp; observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a99bc93bb7a9f51b9452263a4c93a5886">kind</a> &gt;= <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea844e4e5d53bbffa843d0cad6e4b8ac0a">CAPTURE_TIME_SENSOR_EXPOSURE</a></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>         &amp;&amp; observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a99bc93bb7a9f51b9452263a4c93a5886">kind</a> &lt;= <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea7bc92b975ef007c1f96dc90036c70ba6">CAPTURE_TIME_SHUTTER_WINDOW</a>;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>}</div>
+</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="comment"></span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="comment"> * @brief Bound exposure time using calibrated frame delivery latency.</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="comment"> * @param[in,out] observation Record to update; existing pose validity is cleared.</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="comment"> * @param arrival_us Frame arrival in local monotonic microseconds.</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="comment"> * @param minimum_us Shortest calibrated exposure-to-arrival delay, in microseconds.</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="comment"> * @param maximum_us Longest calibrated exposure-to-arrival delay, in microseconds.</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="comment"> * @return True if the interval was written; false leaves the record unchanged.</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="comment"> * @details The longest delay gives the earliest plausible exposure. Reject bounds</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment"> * that would underflow or reach time zero, and require a fresh pose alignment after</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment"> * changing the interval.</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00096">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#a0aa551af4fc60076fd774c2973f6574a">   96</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="capture__timing_8h.html#a0aa551af4fc60076fd774c2973f6574a">capture_observation_latency</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structcapture__observation.html">capture_observation</a> *observation,</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    uint64_t arrival_us, uint64_t <a class="code hl_variable" href="usher_8c.html#ab9f6af78e36594df83dcbe10089beb34">minimum_us</a>, uint64_t <a class="code hl_variable" href="usher_8c.html#a65457b99e03c2783b64c8d5dd83c875e">maximum_us</a>)</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>{</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> <span class="keywordflow">if</span> (observation == 0 || <a class="code hl_variable" href="usher_8c.html#ab9f6af78e36594df83dcbe10089beb34">minimum_us</a> &gt; <a class="code hl_variable" href="usher_8c.html#a65457b99e03c2783b64c8d5dd83c875e">maximum_us</a> || <a class="code hl_variable" href="usher_8c.html#a65457b99e03c2783b64c8d5dd83c875e">maximum_us</a> &gt; UINT64_C(2000000)</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>      || arrival_us &lt;= <a class="code hl_variable" href="usher_8c.html#a65457b99e03c2783b64c8d5dd83c875e">maximum_us</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a359e75ea79730ded1a2ada08ff34acf2">earliest_us</a> = arrival_us - <a class="code hl_variable" href="usher_8c.html#a65457b99e03c2783b64c8d5dd83c875e">maximum_us</a>;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a45c88317077d093a082d2fb87bee3f66">latest_us</a> = arrival_us - <a class="code hl_variable" href="usher_8c.html#ab9f6af78e36594df83dcbe10089beb34">minimum_us</a>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a99bc93bb7a9f51b9452263a4c93a5886">kind</a> = <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaeac4ba9a52849eae70d95e626d8a9557ba">CAPTURE_TIME_CALIBRATED_EXPOSURE</a>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  observation-&gt;<a class="code hl_variable" href="structcapture__observation.html#a09a70dee453c1cf002f474eb1fff3a69">pose_valid</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>}</div>
+</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="comment"></span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="comment"> * @brief Get the text label used when recording observation timing.</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="comment"> * @param kind Source of the timing evidence.</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="comment"> * @return Borrowed static string, or @c unavailable for an unrecognized kind.</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="comment"> * @details Labels retain the distinction between an exposure estimate and frame</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="comment"> * delivery so that downstream log readers do not conflate the two.</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00115">
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#aa9fdfa9ebc3e9789a5e46bf354028ead">  115</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="capture__timing_8h.html#aa9fdfa9ebc3e9789a5e46bf354028ead">capture_time_name</a>(<span class="keyword">enum</span> <a class="code hl_enumeration" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbae">capture_time_kind</a> kind)</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>{</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> <span class="keywordflow">switch</span> (kind) {</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea844e4e5d53bbffa843d0cad6e4b8ac0a">CAPTURE_TIME_SENSOR_EXPOSURE</a>: <span class="keywordflow">return</span> <span class="stringliteral">"sensor_exposure_interval"</span>;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaeac4ba9a52849eae70d95e626d8a9557ba">CAPTURE_TIME_CALIBRATED_EXPOSURE</a>: <span class="keywordflow">return</span> <span class="stringliteral">"calibrated_exposure_interval"</span>;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea7bc92b975ef007c1f96dc90036c70ba6">CAPTURE_TIME_SHUTTER_WINDOW</a>: <span class="keywordflow">return</span> <span class="stringliteral">"command_to_download_interval"</span>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaead28f95c68f93e29da678adfae2579ce7">CAPTURE_TIME_FRAME_ARRIVAL</a>: <span class="keywordflow">return</span> <span class="stringliteral">"frame_arrival_not_exposure"</span>;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea427a3cbf17ddfab82b7204ca29ae0c97">CAPTURE_TIME_AUDIO_WINDOW</a>: <span class="keywordflow">return</span> <span class="stringliteral">"audio_window"</span>;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> <span class="keywordflow">default</span>: <span class="keywordflow">return</span> <span class="stringliteral">"unavailable"</span>;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>}</div>
+</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="comment"></span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="comment"> * @brief Shared observation evidence with optional LWIR request/frame-delivery timing.</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="comment"> * @details A non-callback capture has no callback sequence evidence. A callback-backed</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="comment"> * capture must provide a strictly later arrival timestamp and a nonzero sequence number,</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="comment"> * so consumers can distinguish a fresh frame from a stale parser result.</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00133">
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="structcapture__timing.html">  133</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcapture__timing.html">capture_timing</a> {<span class="comment"></span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="comment">  /** Server request acceptance in monotonic microseconds. */</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="structcapture__timing.html#a587283f712a4e4b6e5312540f9fe8715">  135</a></span>  uint64_t <a class="code hl_variable" href="structcapture__timing.html#a587283f712a4e4b6e5312540f9fe8715">request_monotonic_us</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="comment">  /** Monotonic microseconds when the selected frame arrived. */</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="structcapture__timing.html#a85ebd9dbaacae478ebcf4505fd81b52c">  137</a></span>  uint64_t <a class="code hl_variable" href="structcapture__timing.html#a85ebd9dbaacae478ebcf4505fd81b52c">arrival_monotonic_us</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="comment">  /** Producer sequence number for callback delivery; zero for polling delivery. */</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="structcapture__timing.html#ac77c2ff54b0a64ea2ad789ae0ad91f07">  139</a></span>  uint64_t <a class="code hl_variable" href="structcapture__timing.html#ac77c2ff54b0a64ea2ad789ae0ad91f07">callback_sequence</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="comment">  /** Callback frames dropped before this frame; must be lower than @c callback_sequence. */</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="structcapture__timing.html#a13738ca1d6a2955c7ac8beb13f47a678">  141</a></span>  uint64_t <a class="code hl_variable" href="structcapture__timing.html#a13738ca1d6a2955c7ac8beb13f47a678">callback_drops</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="comment">  /** True when arrival evidence originated from the asynchronous callback path. */</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="structcapture__timing.html#ac461c8e15b0c4ab4a24e2c7b73633989">  143</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structcapture__timing.html#ac461c8e15b0c4ab4a24e2c7b73633989">callback_arrival</a>;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="structcapture__timing.html#a514ad8fc537704542257a0067a79397d">  144</a></span> <span class="keyword">struct </span><a class="code hl_struct" href="structcapture__observation.html">capture_observation</a> <a class="code hl_variable" href="structcapture__timing.html#a514ad8fc537704542257a0067a79397d">observation</a>;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>};</div>
+</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="comment"></span> </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="comment"> * @brief Check whether timing evidence is internally consistent and recent.</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="comment"> * @param timing Evidence to inspect.</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="comment"> * @return True for a plausible request/arrival pair, false otherwise.</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="comment"> * @details The 20-second bound detects stale parser state without rejecting normal</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment"> * warmup/USB recovery behavior. Callback and polling modes have intentionally distinct</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="comment"> * sequence invariants, reflected in the final conditional.</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00155">
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="capture__timing_8h.html#a1297814535155071b7528617af192444">  155</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="capture__timing_8h.html#a1297814535155071b7528617af192444">capture_timing_valid</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structcapture__timing.html">capture_timing</a> *timing)</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>{</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> <span class="keywordflow">return</span> timing != 0 &amp;&amp; timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#a587283f712a4e4b6e5312540f9fe8715">request_monotonic_us</a> &gt; 0</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>         &amp;&amp; timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#a85ebd9dbaacae478ebcf4505fd81b52c">arrival_monotonic_us</a> &gt;= timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#a587283f712a4e4b6e5312540f9fe8715">request_monotonic_us</a></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>         &amp;&amp; timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#a85ebd9dbaacae478ebcf4505fd81b52c">arrival_monotonic_us</a> - timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#a587283f712a4e4b6e5312540f9fe8715">request_monotonic_us</a> &lt;= UINT64_C(20000000)</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>         &amp;&amp; (timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#ac461c8e15b0c4ab4a24e2c7b73633989">callback_arrival</a></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>             ? timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#ac77c2ff54b0a64ea2ad789ae0ad91f07">callback_sequence</a> &gt; 0 &amp;&amp; timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#a13738ca1d6a2955c7ac8beb13f47a678">callback_drops</a> &lt; timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#ac77c2ff54b0a64ea2ad789ae0ad91f07">callback_sequence</a></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>             &amp;&amp; timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#a85ebd9dbaacae478ebcf4505fd81b52c">arrival_monotonic_us</a> &gt; timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#a587283f712a4e4b6e5312540f9fe8715">request_monotonic_us</a></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>             : timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#ac77c2ff54b0a64ea2ad789ae0ad91f07">callback_sequence</a> == 0 &amp;&amp; timing-&gt;<a class="code hl_variable" href="structcapture__timing.html#a13738ca1d6a2955c7ac8beb13f47a678">callback_drops</a> == 0);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>}</div>
+</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="acapture__timing_8h_html_a0aa551af4fc60076fd774c2973f6574a"><div class="ttname"><a href="capture__timing_8h.html#a0aa551af4fc60076fd774c2973f6574a">capture_observation_latency</a></div><div class="ttdeci">static bool capture_observation_latency(struct capture_observation *observation, uint64_t arrival_us, uint64_t minimum_us, uint64_t maximum_us)</div><div class="ttdoc">Bound exposure time using calibrated frame delivery latency.</div><div class="ttdef"><b>Definition</b> <a href="#l00096">capture_timing.h:96</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_a1297814535155071b7528617af192444"><div class="ttname"><a href="capture__timing_8h.html#a1297814535155071b7528617af192444">capture_timing_valid</a></div><div class="ttdeci">static bool capture_timing_valid(const struct capture_timing *timing)</div><div class="ttdoc">Check whether timing evidence is internally consistent and recent.</div><div class="ttdef"><b>Definition</b> <a href="#l00155">capture_timing.h:155</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_a21d697542177c19d596789e84708d0c7"><div class="ttname"><a href="capture__timing_8h.html#a21d697542177c19d596789e84708d0c7">capture_observation_valid</a></div><div class="ttdeci">static bool capture_observation_valid(const struct capture_observation *observation)</div><div class="ttdoc">Check that an observation supplies a usable time interval.</div><div class="ttdef"><b>Definition</b> <a href="#l00063">capture_timing.h:63</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_aa859da995d2631b8841095124432dbae"><div class="ttname"><a href="capture__timing_8h.html#aa859da995d2631b8841095124432dbae">capture_time_kind</a></div><div class="ttdeci">capture_time_kind</div><div class="ttdef"><b>Definition</b> <a href="#l00032">capture_timing.h:32</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_aa859da995d2631b8841095124432dbaea16f4069f055f17c17a7d234f7428e66c"><div class="ttname"><a href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea16f4069f055f17c17a7d234f7428e66c">CAPTURE_TIME_UNKNOWN</a></div><div class="ttdeci">@ CAPTURE_TIME_UNKNOWN</div><div class="ttdef"><b>Definition</b> <a href="#l00033">capture_timing.h:33</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_aa859da995d2631b8841095124432dbaea427a3cbf17ddfab82b7204ca29ae0c97"><div class="ttname"><a href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea427a3cbf17ddfab82b7204ca29ae0c97">CAPTURE_TIME_AUDIO_WINDOW</a></div><div class="ttdeci">@ CAPTURE_TIME_AUDIO_WINDOW</div><div class="ttdef"><b>Definition</b> <a href="#l00038">capture_timing.h:38</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_aa859da995d2631b8841095124432dbaea7bc92b975ef007c1f96dc90036c70ba6"><div class="ttname"><a href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea7bc92b975ef007c1f96dc90036c70ba6">CAPTURE_TIME_SHUTTER_WINDOW</a></div><div class="ttdeci">@ CAPTURE_TIME_SHUTTER_WINDOW</div><div class="ttdef"><b>Definition</b> <a href="#l00036">capture_timing.h:36</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_aa859da995d2631b8841095124432dbaea844e4e5d53bbffa843d0cad6e4b8ac0a"><div class="ttname"><a href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaea844e4e5d53bbffa843d0cad6e4b8ac0a">CAPTURE_TIME_SENSOR_EXPOSURE</a></div><div class="ttdeci">@ CAPTURE_TIME_SENSOR_EXPOSURE</div><div class="ttdef"><b>Definition</b> <a href="#l00034">capture_timing.h:34</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_aa859da995d2631b8841095124432dbaeac4ba9a52849eae70d95e626d8a9557ba"><div class="ttname"><a href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaeac4ba9a52849eae70d95e626d8a9557ba">CAPTURE_TIME_CALIBRATED_EXPOSURE</a></div><div class="ttdeci">@ CAPTURE_TIME_CALIBRATED_EXPOSURE</div><div class="ttdef"><b>Definition</b> <a href="#l00035">capture_timing.h:35</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_aa859da995d2631b8841095124432dbaead28f95c68f93e29da678adfae2579ce7"><div class="ttname"><a href="capture__timing_8h.html#aa859da995d2631b8841095124432dbaead28f95c68f93e29da678adfae2579ce7">CAPTURE_TIME_FRAME_ARRIVAL</a></div><div class="ttdeci">@ CAPTURE_TIME_FRAME_ARRIVAL</div><div class="ttdef"><b>Definition</b> <a href="#l00037">capture_timing.h:37</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_aa9fdfa9ebc3e9789a5e46bf354028ead"><div class="ttname"><a href="capture__timing_8h.html#aa9fdfa9ebc3e9789a5e46bf354028ead">capture_time_name</a></div><div class="ttdeci">static const char * capture_time_name(enum capture_time_kind kind)</div><div class="ttdoc">Get the text label used when recording observation timing.</div><div class="ttdef"><b>Definition</b> <a href="#l00115">capture_timing.h:115</a></div></div>
+<div class="ttc" id="acapture__timing_8h_html_ab42fea948036f2b50dd1108639e61417"><div class="ttname"><a href="capture__timing_8h.html#ab42fea948036f2b50dd1108639e61417">capture_observation_exposure</a></div><div class="ttdeci">static bool capture_observation_exposure(const struct capture_observation *observation)</div><div class="ttdoc">Distinguish exposure evidence from other valid observation times.</div><div class="ttdef"><b>Definition</b> <a href="#l00078">capture_timing.h:78</a></div></div>
+<div class="ttc" id="astructcapture__observation_html"><div class="ttname"><a href="structcapture__observation.html">capture_observation</a></div><div class="ttdef"><b>Definition</b> <a href="#l00041">capture_timing.h:41</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_a09a70dee453c1cf002f474eb1fff3a69"><div class="ttname"><a href="structcapture__observation.html#a09a70dee453c1cf002f474eb1fff3a69">capture_observation::pose_valid</a></div><div class="ttdeci">bool pose_valid</div><div class="ttdef"><b>Definition</b> <a href="#l00049">capture_timing.h:49</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_a359e75ea79730ded1a2ada08ff34acf2"><div class="ttname"><a href="structcapture__observation.html#a359e75ea79730ded1a2ada08ff34acf2">capture_observation::earliest_us</a></div><div class="ttdeci">uint64_t earliest_us</div><div class="ttdef"><b>Definition</b> <a href="#l00042">capture_timing.h:42</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_a45c88317077d093a082d2fb87bee3f66"><div class="ttname"><a href="structcapture__observation.html#a45c88317077d093a082d2fb87bee3f66">capture_observation::latest_us</a></div><div class="ttdeci">uint64_t latest_us</div><div class="ttdef"><b>Definition</b> <a href="#l00043">capture_timing.h:43</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_a49690c824145a07c2ee6a0a24a46f087"><div class="ttname"><a href="structcapture__observation.html#a49690c824145a07c2ee6a0a24a46f087">capture_observation::sensor_timestamp_ns</a></div><div class="ttdeci">uint64_t sensor_timestamp_ns</div><div class="ttdef"><b>Definition</b> <a href="#l00045">capture_timing.h:45</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_a5bb0dbb5d7a16f4747878f96a29f6bef"><div class="ttname"><a href="structcapture__observation.html#a5bb0dbb5d7a16f4747878f96a29f6bef">capture_observation::pose_uncertainty_m</a></div><div class="ttdeci">double pose_uncertainty_m</div><div class="ttdef"><b>Definition</b> <a href="#l00048">capture_timing.h:48</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_a617374a7f06dad05ab566e702c76dc06"><div class="ttname"><a href="structcapture__observation.html#a617374a7f06dad05ab566e702c76dc06">capture_observation::navigation_projected</a></div><div class="ttdeci">bool navigation_projected</div><div class="ttdef"><b>Definition</b> <a href="#l00051">capture_timing.h:51</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_a74537ea27e6acce5f5d667461b550d96"><div class="ttname"><a href="structcapture__observation.html#a74537ea27e6acce5f5d667461b550d96">capture_observation::frame_bound</a></div><div class="ttdeci">bool frame_bound</div><div class="ttdef"><b>Definition</b> <a href="#l00050">capture_timing.h:50</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_a99bc93bb7a9f51b9452263a4c93a5886"><div class="ttname"><a href="structcapture__observation.html#a99bc93bb7a9f51b9452263a4c93a5886">capture_observation::kind</a></div><div class="ttdeci">enum capture_time_kind kind</div><div class="ttdef"><b>Definition</b> <a href="#l00046">capture_timing.h:46</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_ae3e1f73c1c3632292c9514d830526690"><div class="ttname"><a href="structcapture__observation.html#ae3e1f73c1c3632292c9514d830526690">capture_observation::navigation_age_ms</a></div><div class="ttdeci">uint32_t navigation_age_ms</div><div class="ttdef"><b>Definition</b> <a href="#l00052">capture_timing.h:52</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_aeedae189feda4ce9fae62e1b36c0a390"><div class="ttname"><a href="structcapture__observation.html#aeedae189feda4ce9fae62e1b36c0a390">capture_observation::pose</a></div><div class="ttdeci">union dc_shot_union pose</div><div class="ttdef"><b>Definition</b> <a href="#l00047">capture_timing.h:47</a></div></div>
+<div class="ttc" id="astructcapture__observation_html_af41f98413f8fb416f04793aa8bdcd3b0"><div class="ttname"><a href="structcapture__observation.html#af41f98413f8fb416f04793aa8bdcd3b0">capture_observation::sequence</a></div><div class="ttdeci">uint64_t sequence</div><div class="ttdef"><b>Definition</b> <a href="#l00044">capture_timing.h:44</a></div></div>
+<div class="ttc" id="astructcapture__timing_html"><div class="ttname"><a href="structcapture__timing.html">capture_timing</a></div><div class="ttdoc">Shared observation evidence with optional LWIR request/frame-delivery timing.</div><div class="ttdef"><b>Definition</b> <a href="#l00133">capture_timing.h:133</a></div></div>
+<div class="ttc" id="astructcapture__timing_html_a13738ca1d6a2955c7ac8beb13f47a678"><div class="ttname"><a href="structcapture__timing.html#a13738ca1d6a2955c7ac8beb13f47a678">capture_timing::callback_drops</a></div><div class="ttdeci">uint64_t callback_drops</div><div class="ttdef"><b>Definition</b> <a href="#l00141">capture_timing.h:141</a></div></div>
+<div class="ttc" id="astructcapture__timing_html_a514ad8fc537704542257a0067a79397d"><div class="ttname"><a href="structcapture__timing.html#a514ad8fc537704542257a0067a79397d">capture_timing::observation</a></div><div class="ttdeci">struct capture_observation observation</div><div class="ttdef"><b>Definition</b> <a href="#l00144">capture_timing.h:144</a></div></div>
+<div class="ttc" id="astructcapture__timing_html_a587283f712a4e4b6e5312540f9fe8715"><div class="ttname"><a href="structcapture__timing.html#a587283f712a4e4b6e5312540f9fe8715">capture_timing::request_monotonic_us</a></div><div class="ttdeci">uint64_t request_monotonic_us</div><div class="ttdef"><b>Definition</b> <a href="#l00135">capture_timing.h:135</a></div></div>
+<div class="ttc" id="astructcapture__timing_html_a85ebd9dbaacae478ebcf4505fd81b52c"><div class="ttname"><a href="structcapture__timing.html#a85ebd9dbaacae478ebcf4505fd81b52c">capture_timing::arrival_monotonic_us</a></div><div class="ttdeci">uint64_t arrival_monotonic_us</div><div class="ttdef"><b>Definition</b> <a href="#l00137">capture_timing.h:137</a></div></div>
+<div class="ttc" id="astructcapture__timing_html_ac461c8e15b0c4ab4a24e2c7b73633989"><div class="ttname"><a href="structcapture__timing.html#ac461c8e15b0c4ab4a24e2c7b73633989">capture_timing::callback_arrival</a></div><div class="ttdeci">bool callback_arrival</div><div class="ttdef"><b>Definition</b> <a href="#l00143">capture_timing.h:143</a></div></div>
+<div class="ttc" id="astructcapture__timing_html_ac77c2ff54b0a64ea2ad789ae0ad91f07"><div class="ttname"><a href="structcapture__timing.html#ac77c2ff54b0a64ea2ad789ae0ad91f07">capture_timing::callback_sequence</a></div><div class="ttdeci">uint64_t callback_sequence</div><div class="ttdef"><b>Definition</b> <a href="#l00139">capture_timing.h:139</a></div></div>
+<div class="ttc" id="auniondc__shot__union_html"><div class="ttname"><a href="uniondc__shot__union.html">dc_shot_union</a></div><div class="ttdef"><b>Definition</b> <a href="usher__protocol_8h_source.html#l00051">usher_protocol.h:51</a></div></div>
+<div class="ttc" id="ausher_8c_html_a65457b99e03c2783b64c8d5dd83c875e"><div class="ttname"><a href="usher_8c.html#a65457b99e03c2783b64c8d5dd83c875e">maximum_us</a></div><div class="ttdeci">uint64_t maximum_us</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00592">usher.c:592</a></div></div>
+<div class="ttc" id="ausher_8c_html_ab9f6af78e36594df83dcbe10089beb34"><div class="ttname"><a href="usher_8c.html#ab9f6af78e36594df83dcbe10089beb34">minimum_us</a></div><div class="ttdeci">uint64_t minimum_us</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00592">usher.c:592</a></div></div>
+<div class="ttc" id="ausher__protocol_8h_html"><div class="ttname"><a href="usher__protocol_8h.html">usher_protocol.h</a></div><div class="ttdoc">Shared FC/MORA byte-stream UART framing, messages and payload layouts.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

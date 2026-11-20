@@ -1,0 +1,1929 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: src/camera_control.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('camera__control_8h_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">camera_control.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="camera__control_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @file camera_control.h</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @brief Fixed-size camera-control wire codec and FC-side ticket state.</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * @details Control tickets are distinct from photo numbers and shot requests.</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Eight per-camera slots keep the flight-controller footprint bounded; a ticket</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * is consumed only after its complete UART frame is admitted. Commands are not</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * replayed after timeout because the camera may already have acted.</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#ifndef USHER_CAMERA_CONTROL_H</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#define USHER_CAMERA_CONTROL_H</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include "<a class="code" href="usher__protocol_8h.html">usher_protocol.h</a>"</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="camera__control_8h.html#aab3f2f4605e32d6191cb6053f3d6d785">   32</a></span><span class="preprocessor">#define USHER_CONTROL_TIMEOUT_US UINT32_C(70000000)</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="camera__control_8h.html#ae167d824853310e99f0914723ee1a6e4">   33</a></span><span class="preprocessor">#define USHER_CONTROL_LEASE_US UINT32_C(6000000)</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment"></span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment">/** @brief One addressed command request shared with the companion protocol. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00036">
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="structusher__control__request.html">   36</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structusher__control__request.html">usher_control_request</a> {<span class="comment"></span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">  /** @brief Nonzero negotiated companion session and request ticket. */</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="structusher__control__request.html#a8bae3884bd99c4fb30eb57f4397e4ca5">   38</a></span>  uint32_t <a class="code hl_variable" href="structusher__control__request.html#a41d9c188170f700da9ed8810ff5ea804">session</a>, <a class="code hl_variable" href="structusher__control__request.html#a8bae3884bd99c4fb30eb57f4397e4ca5">request_id</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment">  /** @brief Camera selection mask, command identifier, and command value. */</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="structusher__control__request.html#a9c31993f62cf5205d90fa66606534b2f">   40</a></span>  uint8_t <a class="code hl_variable" href="structusher__control__request.html#a9c31993f62cf5205d90fa66606534b2f">camera_mask</a>, <a class="code hl_variable" href="structusher__control__request.html#a2062fa9bd6fa4eab328317d911a5bc60">command</a>, <a class="code hl_variable" href="structusher__control__request.html#a7c9bc739d24f533f453cd15737729e84">value</a>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>};</div>
+</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="comment"></span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment">/** @brief Result evidence for one camera selected by a request mask. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00044">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="structusher__control__result.html">   44</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structusher__control__result.html">usher_control_result</a> {<span class="comment"></span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment">  /** @brief Correlated request identity; never substitute a shot number here. */</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="structusher__control__result.html#abe6044f74d99591ea5afb0ee68a499c2">   46</a></span> <span class="keyword">struct </span><a class="code hl_struct" href="structusher__control__request.html">usher_control_request</a> <a class="code hl_variable" href="structusher__control__result.html#abe6044f74d99591ea5afb0ee68a499c2">request</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment">  /** @brief One-based camera ID, terminal status, observed value, and evidence. */</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="structusher__control__result.html#a1235c7b9e220af958ab3a607402a5a8e">   48</a></span>  uint8_t <a class="code hl_variable" href="structusher__control__result.html#a1235c7b9e220af958ab3a607402a5a8e">camera_id</a>, <a class="code hl_variable" href="structusher__control__result.html#a06b7bd3032f2d0937357b1464188b73f">status</a>, <a class="code hl_variable" href="structusher__control__result.html#a09d1703f153e1fee0fdd9e313ad43ab0">observed</a>, <a class="code hl_variable" href="structusher__control__result.html#a36d245f79c10aca4ad9fa5d4974ca360">evidence</a>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>};</div>
+</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment"></span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="comment">/** @brief Fixed pending/result slot retained for one addressable camera. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00052">
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="structusher__control__slot.html">   52</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structusher__control__slot.html">usher_control_slot</a> {<span class="comment"></span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="comment">  /** @brief Request ticket and monotonic send timestamp in microseconds. */</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="structusher__control__slot.html#ac05351a16120d0bb767357ce9d0d9188">   54</a></span>  uint32_t <a class="code hl_variable" href="structusher__control__slot.html#ac05351a16120d0bb767357ce9d0d9188">request_id</a>, <a class="code hl_variable" href="structusher__control__slot.html#aa233a739413b44eee60b7331f8860349">sent_us</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="comment">  /** @brief Original command plus returned observation/status/evidence. */</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="structusher__control__slot.html#ac03250138441b07769610118ade516b8">   56</a></span>  uint8_t <a class="code hl_variable" href="structusher__control__slot.html#ac03250138441b07769610118ade516b8">camera_mask</a>, <a class="code hl_variable" href="structusher__control__slot.html#a6ad3e8710d7b975b74b851095c778fd5">command</a>, <a class="code hl_variable" href="structusher__control__slot.html#afd63f6b6f2cae7e19b11f61e180f40d5">value</a>, <a class="code hl_variable" href="structusher__control__slot.html#a405b12989a5a2fb11e62c92d78f21c08">observed</a>, <a class="code hl_variable" href="structusher__control__slot.html#a4fd976b2351cca60895178f893af4381">status</a>, <a class="code hl_variable" href="structusher__control__slot.html#acfa3fa6e693d6a771f99e454634398b5">evidence</a>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>};</div>
+</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="comment"></span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="comment"> * @brief Handshake, capability cache, and eight-camera ticket state.</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="comment"> * @details Contains no heap-owned data or background jobs. Keep the compile-time</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="comment"> * size limit: this object resides in flight-controller memory.</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00064">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="structusher__control__client.html">   64</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a> {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="structusher__control__client.html#a21a265fa5b822edbb4406bdad01f41a3">   65</a></span> <span class="keyword">struct </span><a class="code hl_struct" href="structusher__control__slot.html">usher_control_slot</a> <a class="code hl_variable" href="structusher__control__client.html#a21a265fa5b822edbb4406bdad01f41a3">slots</a>[8];</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="structusher__control__client.html#a314fca1ba47ea54b162c91bd9e1cd75b">   66</a></span>  uint32_t <a class="code hl_variable" href="structusher__control__client.html#a314fca1ba47ea54b162c91bd9e1cd75b">capabilities</a>[8];</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="structusher__control__client.html#a3fc4a0314501a108efda3d5cfc9c7706">   67</a></span>  uint32_t <a class="code hl_variable" href="structusher__control__client.html#a7896f391f55b0e17bb04c641239b9c9d">session</a>, <a class="code hl_variable" href="structusher__control__client.html#a2f417932a1ade25112888195b46f55c9">nonce</a>, <a class="code hl_variable" href="structusher__control__client.html#a7cde9127ac5dd888246b6e1886ab4744">next_request_id</a>, <a class="code hl_variable" href="structusher__control__client.html#a3fc4a0314501a108efda3d5cfc9c7706">hello_us</a>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="structusher__control__client.html#a47ed315add231072010fc1be678557c8">   68</a></span>  uint32_t <a class="code hl_variable" href="structusher__control__client.html#a47ed315add231072010fc1be678557c8">negotiating_session</a>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="structusher__control__client.html#ac00728aef13b2329ddad676abad583ad">   69</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structusher__control__client.html#ac00728aef13b2329ddad676abad583ad">confirmed</a>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="structusher__control__client.html#a71a89f0423ba06fcd8bd857a7a529c0e">   70</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structusher__control__client.html#a71a89f0423ba06fcd8bd857a7a529c0e">negotiating</a>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>};</div>
+</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="keyword">static_assert</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct </span><a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a>) &lt;= 256, <span class="stringliteral">"FC control state exceeds 256 bytes"</span>);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="keyword">extern</span> <span class="stringliteral">"C"</span> {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="keyword">_Static_assert</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct </span><a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a>) &lt;= 256, <span class="stringliteral">"FC control state exceeds 256 bytes"</span>);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="comment"></span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="comment">/** @brief Encode a 32-bit value as four little-endian protocol bytes.</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="comment"> * @param[out] bytes Destination payload buffer.</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="comment"> * @param[in] size Total buffer size.</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment"> * @param[in] offset Byte offset for the field.</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="comment"> * @param[in] value Value to encode.</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="comment"> * @return True if the field fits and the buffer is non-null.</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#a84c696a130fca94d9293639a85ff9053">usher_control_put_u32</a>(uint8_t *<a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>, <span class="keywordtype">size_t</span> offset, uint32_t value);<span class="comment"></span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="comment">/** @brief Decode a bounded four-byte little-endian protocol value.</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="comment"> * @param[in] bytes Source payload buffer.</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="comment"> * @param[in] size Total buffer size.</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="comment"> * @param[in] offset Byte offset for the field.</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="comment"> * @param[out] value Receives the decoded value.</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment"> * @return True if the field fits and both pointers are valid.</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#a8514ffb98aa8bce6d2acf9968dedfb90">usher_control_get_u32</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>, <span class="keywordtype">size_t</span> offset, uint32_t *value);<span class="comment"></span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="comment">/** @brief Encode one command payload with the fixed wire size and field order.</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment"> * @param[out] bytes Destination payload buffer.</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment"> * @param[in] size Payload size; must equal USHER_CONTROL_COMMAND_SIZE.</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="comment"> * @param[in] request Session, ticket, camera mask, command, and value.</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="comment"> * @return True only for valid required fields and exact payload size.</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#a121822bc3e69bdba58c02a222ab23870">usher_control_encode_request</a>(uint8_t *<a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__request.html">usher_control_request</a> *<a class="code hl_variable" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="comment">/** @brief Validate and decode one fixed-size command payload.</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="comment"> * @param[in] bytes Received payload.</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="comment"> * @param[in] size Payload size; must equal USHER_CONTROL_COMMAND_SIZE.</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="comment"> * @param[out] request Receives decoded fields on success.</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="comment"> * @return True only when version, mask, command, session, and ticket are valid.</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#ad9bac1c3c843bb60d7b1f0f2799bbf59">usher_control_decode_request</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>, <span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__request.html">usher_control_request</a> *<a class="code hl_variable" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="comment">/** @brief Encode one camera's correlated control result.</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="comment"> * @param[out] bytes Destination payload buffer.</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="comment"> * @param[in] size Payload size; must equal USHER_CONTROL_RESULT_SIZE.</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="comment"> * @param[in] result Result status and evidence for one camera.</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="comment"> * @return True only when camera, request, status, and evidence fields are valid.</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#a295598f43c22a2d944d4a2497401d759">usher_control_encode_result</a>(uint8_t *<a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__result.html">usher_control_result</a> *<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="comment">/** @brief Validate and decode one camera result payload.</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="comment"> * @param[in] bytes Received payload.</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="comment"> * @param[in] size Payload size; must equal USHER_CONTROL_RESULT_SIZE.</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="comment"> * @param[out] result Receives decoded fields on success.</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="comment"> * @return True only when version, identity, status, and evidence are valid.</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#a52fce25fd1cbd270ee67f4aaceda790a">usher_control_decode_result</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>, <span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__result.html">usher_control_result</a> *<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="comment">/** @brief Validate the command-specific legal value range.</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="comment"> * @param[in] command Control command ID.</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="comment"> * @param[in] value Command value.</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="comment"> * @return True for a supported value, false before any ticket is reserved otherwise.</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#a9f82d61c8da90865ea050017e2bb199b">usher_control_value_valid</a>(uint8_t command, uint8_t value);<span class="comment"></span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="comment">/** @brief Reset session state and invalidate outstanding tickets without replay.</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="comment"> * @param[in,out] client Client state to reset.</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="comment"> * @param[in] nonce New handshake nonce; zero is normalized to one.</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="keywordtype">void</span> <a class="code hl_function" href="camera__control_8h.html#a6ece9db83831fdb6db2327dd2709c96a">usher_control_client_reset</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a> *client, uint32_t <a class="code hl_variable" href="structusher__control__client.html#a2f417932a1ade25112888195b46f55c9">nonce</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="comment">/** @brief Accept only a HELLO matching the current nonce-bound negotiation.</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="comment"> * @param[in,out] client Handshake and capability state.</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="comment"> * @param[in] bytes HELLO payload.</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="comment"> * @param[in] size Payload size; must equal USHER_CONTROL_HELLO_SIZE.</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="comment"> * @param[in] now_us Current monotonic time in microseconds.</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="comment"> * @return True if the reply is structurally valid and belongs to this negotiation.</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#a0dfeeda57d73eb1e2f98fb7eeb8426db">usher_control_client_hello</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a> *client, <span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>, uint32_t now_us);<span class="comment"></span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="comment">/** @brief Check confirmed-session readiness and the bounded HELLO lease.</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="comment"> * @param[in] client Client state.</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="comment"> * @param[in] now_us Current monotonic time in microseconds.</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="comment"> * @return True only while the negotiated session is fresh and confirmed.</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#a258796dbff800b4d062a65e33c5f9206">usher_control_client_ready</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a> *client, uint32_t now_us);<span class="comment"></span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="comment">/** @brief Mark expired pending commands UNKNOWN; never resubmit them.</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="comment"> * @param[in,out] client Client state to update.</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="comment"> * @param[in] now_us Current monotonic time in microseconds.</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="keywordtype">void</span> <a class="code hl_function" href="camera__control_8h.html#a7ceb566f5f52bde39e69a2eb08080475">usher_control_client_expire</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a> *client, uint32_t now_us);<span class="comment"></span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="comment">/** @brief Prepare a request without consuming its ticket before UART admission.</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="comment"> * @param[in,out] client Session state and pending slots.</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="comment"> * @param[in] mask Eight-bit camera selection mask.</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="comment"> * @param[in] command Command identifier.</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="comment"> * @param[in] value Command-specific value.</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="comment"> * @param[in] now_us Current monotonic time in microseconds.</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="comment"> * @param[out] request Receives the tentative request on success.</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="comment"> * @return True only if the session is ready, values are legal, and selected slots are free.</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="comment"> * @note Call @ref usher_control_client_commit only after the complete frame is admitted.</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#ac3ca4b05e1d6c6332ff84ba14ab4f2a1">usher_control_client_prepare</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a> *client, uint8_t mask, uint8_t command,</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                                 uint8_t value, uint32_t now_us, <span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__request.html">usher_control_request</a> *<a class="code hl_variable" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="comment">/** @brief Commit a prepared request after full-frame UART admission.</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="comment"> * @param[in,out] client Client state whose ticket and selected slots are updated.</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="comment"> * @param[in] request Request previously returned by @ref usher_control_client_prepare.</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="comment"> * @param[in] now_us Monotonic send time in microseconds.</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="keywordtype">void</span> <a class="code hl_function" href="camera__control_8h.html#ab59f24207f918899e7807177415470a5">usher_control_client_commit</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a> *client, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__request.html">usher_control_request</a> *<a class="code hl_variable" href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a>,</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                                 uint32_t now_us);<span class="comment"></span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="comment">/** @brief Accept a result only when session, ticket, camera, and evidence correlate.</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="comment"> * @param[in,out] client Client state containing pending requests.</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="comment"> * @param[in] bytes Received result payload.</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="comment"> * @param[in] size Payload length.</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="comment"> * @param[in] now_us Current monotonic time in microseconds.</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="comment"> * @return True when the result belongs to a pending request and its evidence is valid.</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="keywordtype">bool</span> <a class="code hl_function" href="camera__control_8h.html#ac3de32dd4f34d1f39d5d73dbfde4b1b2">usher_control_client_receive</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a> *client, <span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>,</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                                  uint32_t now_us);<span class="comment"></span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="comment">/** @brief Aggregate per-camera results for one group ticket.</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="comment"> * @param[in] client Client result slots.</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="comment"> * @param[in] ticket Request ID; zero means NOT_SENT.</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="comment"> * @return UNKNOWN if evidence is missing, PENDING if any selected camera is pending,</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="comment"> * PARTIAL for mixed terminal outcomes, or the common terminal status.</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>uint8_t <a class="code hl_function" href="camera__control_8h.html#a152c9eac5d1613669fad7debec332b0e">usher_control_client_result</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a> *client, uint32_t ticket);<span class="comment"></span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="comment">/** @brief Read one camera's status for a group request.</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span><span class="comment"> * @param[in] client Client result slots.</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="comment"> * @param[in] ticket Request ID; zero means NOT_SENT.</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="comment"> * @param[in] camera_id One-based camera slot from 1 through 8.</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="comment"> * @return Matching result status, UNKNOWN for absent/replaced tickets, or NOT_SENT.</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>uint8_t <a class="code hl_function" href="camera__control_8h.html#a6ee1533bba5cb7e92c06f7eb70a37764">usher_control_client_camera_result</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structusher__control__client.html">usher_control_client</a> *client, uint32_t ticket, uint8_t camera_id);</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>}</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="acamera__control_8h_html_a0dfeeda57d73eb1e2f98fb7eeb8426db"><div class="ttname"><a href="camera__control_8h.html#a0dfeeda57d73eb1e2f98fb7eeb8426db">usher_control_client_hello</a></div><div class="ttdeci">bool usher_control_client_hello(struct usher_control_client *client, const uint8_t *bytes, size_t size, uint32_t now_us)</div><div class="ttdoc">Accept only a HELLO matching the current nonce-bound negotiation.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00115">camera_control.c:115</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a121822bc3e69bdba58c02a222ab23870"><div class="ttname"><a href="camera__control_8h.html#a121822bc3e69bdba58c02a222ab23870">usher_control_encode_request</a></div><div class="ttdeci">bool usher_control_encode_request(uint8_t *bytes, size_t size, const struct usher_control_request *request)</div><div class="ttdoc">Encode one command payload with the fixed wire size and field order.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00048">camera_control.c:48</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a152c9eac5d1613669fad7debec332b0e"><div class="ttname"><a href="camera__control_8h.html#a152c9eac5d1613669fad7debec332b0e">usher_control_client_result</a></div><div class="ttdeci">uint8_t usher_control_client_result(const struct usher_control_client *client, uint32_t ticket)</div><div class="ttdoc">Aggregate per-camera results for one group ticket.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00203">camera_control.c:203</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a258796dbff800b4d062a65e33c5f9206"><div class="ttname"><a href="camera__control_8h.html#a258796dbff800b4d062a65e33c5f9206">usher_control_client_ready</a></div><div class="ttdeci">bool usher_control_client_ready(const struct usher_control_client *client, uint32_t now_us)</div><div class="ttdoc">Check confirmed-session readiness and the bounded HELLO lease.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00133">camera_control.c:133</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a295598f43c22a2d944d4a2497401d759"><div class="ttname"><a href="camera__control_8h.html#a295598f43c22a2d944d4a2497401d759">usher_control_encode_result</a></div><div class="ttdeci">bool usher_control_encode_result(uint8_t *bytes, size_t size, const struct usher_control_result *result)</div><div class="ttdoc">Encode one camera's correlated control result.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00071">camera_control.c:71</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a52fce25fd1cbd270ee67f4aaceda790a"><div class="ttname"><a href="camera__control_8h.html#a52fce25fd1cbd270ee67f4aaceda790a">usher_control_decode_result</a></div><div class="ttdeci">bool usher_control_decode_result(const uint8_t *bytes, size_t size, struct usher_control_result *result)</div><div class="ttdoc">Validate and decode one camera result payload.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00088">camera_control.c:88</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a6ece9db83831fdb6db2327dd2709c96a"><div class="ttname"><a href="camera__control_8h.html#a6ece9db83831fdb6db2327dd2709c96a">usher_control_client_reset</a></div><div class="ttdeci">void usher_control_client_reset(struct usher_control_client *client, uint32_t nonce)</div><div class="ttdoc">Reset session state and invalidate outstanding tickets without replay.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00101">camera_control.c:101</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a6ee1533bba5cb7e92c06f7eb70a37764"><div class="ttname"><a href="camera__control_8h.html#a6ee1533bba5cb7e92c06f7eb70a37764">usher_control_client_camera_result</a></div><div class="ttdeci">uint8_t usher_control_client_camera_result(const struct usher_control_client *client, uint32_t ticket, uint8_t camera_id)</div><div class="ttdoc">Read one camera's status for a group request.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00196">camera_control.c:196</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a7ceb566f5f52bde39e69a2eb08080475"><div class="ttname"><a href="camera__control_8h.html#a7ceb566f5f52bde39e69a2eb08080475">usher_control_client_expire</a></div><div class="ttdeci">void usher_control_client_expire(struct usher_control_client *client, uint32_t now_us)</div><div class="ttdoc">Mark expired pending commands UNKNOWN; never resubmit them.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00138">camera_control.c:138</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a84c696a130fca94d9293639a85ff9053"><div class="ttname"><a href="camera__control_8h.html#a84c696a130fca94d9293639a85ff9053">usher_control_put_u32</a></div><div class="ttdeci">bool usher_control_put_u32(uint8_t *bytes, size_t size, size_t offset, uint32_t value)</div><div class="ttdoc">Encode a 32-bit value as four little-endian protocol bytes.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00027">camera_control.c:27</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a8514ffb98aa8bce6d2acf9968dedfb90"><div class="ttname"><a href="camera__control_8h.html#a8514ffb98aa8bce6d2acf9968dedfb90">usher_control_get_u32</a></div><div class="ttdeci">bool usher_control_get_u32(const uint8_t *bytes, size_t size, size_t offset, uint32_t *value)</div><div class="ttdoc">Decode a bounded four-byte little-endian protocol value.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00034">camera_control.c:34</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_a9f82d61c8da90865ea050017e2bb199b"><div class="ttname"><a href="camera__control_8h.html#a9f82d61c8da90865ea050017e2bb199b">usher_control_value_valid</a></div><div class="ttdeci">bool usher_control_value_valid(uint8_t command, uint8_t value)</div><div class="ttdoc">Validate the command-specific legal value range.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00042">camera_control.c:42</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_ab59f24207f918899e7807177415470a5"><div class="ttname"><a href="camera__control_8h.html#ab59f24207f918899e7807177415470a5">usher_control_client_commit</a></div><div class="ttdeci">void usher_control_client_commit(struct usher_control_client *client, const struct usher_control_request *request, uint32_t now_us)</div><div class="ttdoc">Commit a prepared request after full-frame UART admission.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00160">camera_control.c:160</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_ac3ca4b05e1d6c6332ff84ba14ab4f2a1"><div class="ttname"><a href="camera__control_8h.html#ac3ca4b05e1d6c6332ff84ba14ab4f2a1">usher_control_client_prepare</a></div><div class="ttdeci">bool usher_control_client_prepare(struct usher_control_client *client, uint8_t mask, uint8_t command, uint8_t value, uint32_t now_us, struct usher_control_request *request)</div><div class="ttdoc">Prepare a request without consuming its ticket before UART admission.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00147">camera_control.c:147</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_ac3de32dd4f34d1f39d5d73dbfde4b1b2"><div class="ttname"><a href="camera__control_8h.html#ac3de32dd4f34d1f39d5d73dbfde4b1b2">usher_control_client_receive</a></div><div class="ttdeci">bool usher_control_client_receive(struct usher_control_client *client, const uint8_t *bytes, size_t size, uint32_t now_us)</div><div class="ttdoc">Accept a result only when session, ticket, camera, and evidence correlate.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00173">camera_control.c:173</a></div></div>
+<div class="ttc" id="acamera__control_8h_html_ad9bac1c3c843bb60d7b1f0f2799bbf59"><div class="ttname"><a href="camera__control_8h.html#ad9bac1c3c843bb60d7b1f0f2799bbf59">usher_control_decode_request</a></div><div class="ttdeci">bool usher_control_decode_request(const uint8_t *bytes, size_t size, struct usher_control_request *request)</div><div class="ttdoc">Validate and decode one fixed-size command payload.</div><div class="ttdef"><b>Definition</b> <a href="camera__control_8c_source.html#l00061">camera_control.c:61</a></div></div>
+<div class="ttc" id="achdk__pipe_8c_html_a854352f53b148adc24983a58a1866d66"><div class="ttname"><a href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition</b> <a href="chdk__pipe_8c_source.html#l00143">chdk_pipe.c:143</a></div></div>
+<div class="ttc" id="achdk__pipe_8c_html_ab8e091aaa3bb9fdbbb23aac0ecc744d5"><div class="ttname"><a href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a></div><div class="ttdeci">uint8_t bytes[CHDK_CONTROL_REPLY_SIZE]</div><div class="ttdef"><b>Definition</b> <a href="chdk__pipe_8c_source.html#l00144">chdk_pipe.c:144</a></div></div>
+<div class="ttc" id="aear__cam__pipe_8c_html_a1707b71271bce950233a8c5b91ac5671"><div class="ttname"><a href="ear__cam__pipe_8c.html#a1707b71271bce950233a8c5b91ac5671">request</a></div><div class="ttdeci">union dc_shot_union request</div><div class="ttdef"><b>Definition</b> <a href="ear__cam__pipe_8c_source.html#l00211">ear_cam_pipe.c:211</a></div></div>
+<div class="ttc" id="astructusher__control__client_html"><div class="ttname"><a href="structusher__control__client.html">usher_control_client</a></div><div class="ttdoc">Handshake, capability cache, and eight-camera ticket state.</div><div class="ttdef"><b>Definition</b> <a href="#l00064">camera_control.h:64</a></div></div>
+<div class="ttc" id="astructusher__control__client_html_a21a265fa5b822edbb4406bdad01f41a3"><div class="ttname"><a href="structusher__control__client.html#a21a265fa5b822edbb4406bdad01f41a3">usher_control_client::slots</a></div><div class="ttdeci">struct usher_control_slot slots[8]</div><div class="ttdef"><b>Definition</b> <a href="#l00065">camera_control.h:65</a></div></div>
+<div class="ttc" id="astructusher__control__client_html_a2f417932a1ade25112888195b46f55c9"><div class="ttname"><a href="structusher__control__client.html#a2f417932a1ade25112888195b46f55c9">usher_control_client::nonce</a></div><div class="ttdeci">uint32_t nonce</div><div class="ttdef"><b>Definition</b> <a href="#l00067">camera_control.h:67</a></div></div>
+<div class="ttc" id="astructusher__control__client_html_a314fca1ba47ea54b162c91bd9e1cd75b"><div class="ttname"><a href="structusher__control__client.html#a314fca1ba47ea54b162c91bd9e1cd75b">usher_control_client::capabilities</a></div><div class="ttdeci">uint32_t capabilities[8]</div><div class="ttdef"><b>Definition</b> <a href="#l00066">camera_control.h:66</a></div></div>
+<div class="ttc" id="astructusher__control__client_html_a3fc4a0314501a108efda3d5cfc9c7706"><div class="ttname"><a href="structusher__control__client.html#a3fc4a0314501a108efda3d5cfc9c7706">usher_control_client::hello_us</a></div><div class="ttdeci">uint32_t hello_us</div><div class="ttdef"><b>Definition</b> <a href="#l00067">camera_control.h:67</a></div></div>
+<div class="ttc" id="astructusher__control__client_html_a47ed315add231072010fc1be678557c8"><div class="ttname"><a href="structusher__control__client.html#a47ed315add231072010fc1be678557c8">usher_control_client::negotiating_session</a></div><div class="ttdeci">uint32_t negotiating_session</div><div class="ttdef"><b>Definition</b> <a href="#l00068">camera_control.h:68</a></div></div>
+<div class="ttc" id="astructusher__control__client_html_a71a89f0423ba06fcd8bd857a7a529c0e"><div class="ttname"><a href="structusher__control__client.html#a71a89f0423ba06fcd8bd857a7a529c0e">usher_control_client::negotiating</a></div><div class="ttdeci">bool negotiating</div><div class="ttdef"><b>Definition</b> <a href="#l00070">camera_control.h:70</a></div></div>
+<div class="ttc" id="astructusher__control__client_html_a7896f391f55b0e17bb04c641239b9c9d"><div class="ttname"><a href="structusher__control__client.html#a7896f391f55b0e17bb04c641239b9c9d">usher_control_client::session</a></div><div class="ttdeci">uint32_t session</div><div class="ttdef"><b>Definition</b> <a href="#l00067">camera_control.h:67</a></div></div>
+<div class="ttc" id="astructusher__control__client_html_a7cde9127ac5dd888246b6e1886ab4744"><div class="ttname"><a href="structusher__control__client.html#a7cde9127ac5dd888246b6e1886ab4744">usher_control_client::next_request_id</a></div><div class="ttdeci">uint32_t next_request_id</div><div class="ttdef"><b>Definition</b> <a href="#l00067">camera_control.h:67</a></div></div>
+<div class="ttc" id="astructusher__control__client_html_ac00728aef13b2329ddad676abad583ad"><div class="ttname"><a href="structusher__control__client.html#ac00728aef13b2329ddad676abad583ad">usher_control_client::confirmed</a></div><div class="ttdeci">bool confirmed</div><div class="ttdef"><b>Definition</b> <a href="#l00069">camera_control.h:69</a></div></div>
+<div class="ttc" id="astructusher__control__request_html"><div class="ttname"><a href="structusher__control__request.html">usher_control_request</a></div><div class="ttdoc">One addressed command request shared with the companion protocol.</div><div class="ttdef"><b>Definition</b> <a href="#l00036">camera_control.h:36</a></div></div>
+<div class="ttc" id="astructusher__control__request_html_a2062fa9bd6fa4eab328317d911a5bc60"><div class="ttname"><a href="structusher__control__request.html#a2062fa9bd6fa4eab328317d911a5bc60">usher_control_request::command</a></div><div class="ttdeci">uint8_t command</div><div class="ttdef"><b>Definition</b> <a href="#l00040">camera_control.h:40</a></div></div>
+<div class="ttc" id="astructusher__control__request_html_a41d9c188170f700da9ed8810ff5ea804"><div class="ttname"><a href="structusher__control__request.html#a41d9c188170f700da9ed8810ff5ea804">usher_control_request::session</a></div><div class="ttdeci">uint32_t session</div><div class="ttdoc">Nonzero negotiated companion session and request ticket.</div><div class="ttdef"><b>Definition</b> <a href="#l00038">camera_control.h:38</a></div></div>
+<div class="ttc" id="astructusher__control__request_html_a7c9bc739d24f533f453cd15737729e84"><div class="ttname"><a href="structusher__control__request.html#a7c9bc739d24f533f453cd15737729e84">usher_control_request::value</a></div><div class="ttdeci">uint8_t value</div><div class="ttdef"><b>Definition</b> <a href="#l00040">camera_control.h:40</a></div></div>
+<div class="ttc" id="astructusher__control__request_html_a8bae3884bd99c4fb30eb57f4397e4ca5"><div class="ttname"><a href="structusher__control__request.html#a8bae3884bd99c4fb30eb57f4397e4ca5">usher_control_request::request_id</a></div><div class="ttdeci">uint32_t request_id</div><div class="ttdef"><b>Definition</b> <a href="#l00038">camera_control.h:38</a></div></div>
+<div class="ttc" id="astructusher__control__request_html_a9c31993f62cf5205d90fa66606534b2f"><div class="ttname"><a href="structusher__control__request.html#a9c31993f62cf5205d90fa66606534b2f">usher_control_request::camera_mask</a></div><div class="ttdeci">uint8_t camera_mask</div><div class="ttdoc">Camera selection mask, command identifier, and command value.</div><div class="ttdef"><b>Definition</b> <a href="#l00040">camera_control.h:40</a></div></div>
+<div class="ttc" id="astructusher__control__result_html"><div class="ttname"><a href="structusher__control__result.html">usher_control_result</a></div><div class="ttdoc">Result evidence for one camera selected by a request mask.</div><div class="ttdef"><b>Definition</b> <a href="#l00044">camera_control.h:44</a></div></div>
+<div class="ttc" id="astructusher__control__result_html_a06b7bd3032f2d0937357b1464188b73f"><div class="ttname"><a href="structusher__control__result.html#a06b7bd3032f2d0937357b1464188b73f">usher_control_result::status</a></div><div class="ttdeci">uint8_t status</div><div class="ttdef"><b>Definition</b> <a href="#l00048">camera_control.h:48</a></div></div>
+<div class="ttc" id="astructusher__control__result_html_a09d1703f153e1fee0fdd9e313ad43ab0"><div class="ttname"><a href="structusher__control__result.html#a09d1703f153e1fee0fdd9e313ad43ab0">usher_control_result::observed</a></div><div class="ttdeci">uint8_t observed</div><div class="ttdef"><b>Definition</b> <a href="#l00048">camera_control.h:48</a></div></div>
+<div class="ttc" id="astructusher__control__result_html_a1235c7b9e220af958ab3a607402a5a8e"><div class="ttname"><a href="structusher__control__result.html#a1235c7b9e220af958ab3a607402a5a8e">usher_control_result::camera_id</a></div><div class="ttdeci">uint8_t camera_id</div><div class="ttdoc">One-based camera ID, terminal status, observed value, and evidence.</div><div class="ttdef"><b>Definition</b> <a href="#l00048">camera_control.h:48</a></div></div>
+<div class="ttc" id="astructusher__control__result_html_a36d245f79c10aca4ad9fa5d4974ca360"><div class="ttname"><a href="structusher__control__result.html#a36d245f79c10aca4ad9fa5d4974ca360">usher_control_result::evidence</a></div><div class="ttdeci">uint8_t evidence</div><div class="ttdef"><b>Definition</b> <a href="#l00048">camera_control.h:48</a></div></div>
+<div class="ttc" id="astructusher__control__result_html_abe6044f74d99591ea5afb0ee68a499c2"><div class="ttname"><a href="structusher__control__result.html#abe6044f74d99591ea5afb0ee68a499c2">usher_control_result::request</a></div><div class="ttdeci">struct usher_control_request request</div><div class="ttdoc">Correlated request identity; never substitute a shot number here.</div><div class="ttdef"><b>Definition</b> <a href="#l00046">camera_control.h:46</a></div></div>
+<div class="ttc" id="astructusher__control__slot_html"><div class="ttname"><a href="structusher__control__slot.html">usher_control_slot</a></div><div class="ttdoc">Fixed pending/result slot retained for one addressable camera.</div><div class="ttdef"><b>Definition</b> <a href="#l00052">camera_control.h:52</a></div></div>
+<div class="ttc" id="astructusher__control__slot_html_a405b12989a5a2fb11e62c92d78f21c08"><div class="ttname"><a href="structusher__control__slot.html#a405b12989a5a2fb11e62c92d78f21c08">usher_control_slot::observed</a></div><div class="ttdeci">uint8_t observed</div><div class="ttdef"><b>Definition</b> <a href="#l00056">camera_control.h:56</a></div></div>
+<div class="ttc" id="astructusher__control__slot_html_a4fd976b2351cca60895178f893af4381"><div class="ttname"><a href="structusher__control__slot.html#a4fd976b2351cca60895178f893af4381">usher_control_slot::status</a></div><div class="ttdeci">uint8_t status</div><div class="ttdef"><b>Definition</b> <a href="#l00056">camera_control.h:56</a></div></div>
+<div class="ttc" id="astructusher__control__slot_html_a6ad3e8710d7b975b74b851095c778fd5"><div class="ttname"><a href="structusher__control__slot.html#a6ad3e8710d7b975b74b851095c778fd5">usher_control_slot::command</a></div><div class="ttdeci">uint8_t command</div><div class="ttdef"><b>Definition</b> <a href="#l00056">camera_control.h:56</a></div></div>
+<div class="ttc" id="astructusher__control__slot_html_aa233a739413b44eee60b7331f8860349"><div class="ttname"><a href="structusher__control__slot.html#aa233a739413b44eee60b7331f8860349">usher_control_slot::sent_us</a></div><div class="ttdeci">uint32_t sent_us</div><div class="ttdef"><b>Definition</b> <a href="#l00054">camera_control.h:54</a></div></div>
+<div class="ttc" id="astructusher__control__slot_html_ac03250138441b07769610118ade516b8"><div class="ttname"><a href="structusher__control__slot.html#ac03250138441b07769610118ade516b8">usher_control_slot::camera_mask</a></div><div class="ttdeci">uint8_t camera_mask</div><div class="ttdoc">Original command plus returned observation/status/evidence.</div><div class="ttdef"><b>Definition</b> <a href="#l00056">camera_control.h:56</a></div></div>
+<div class="ttc" id="astructusher__control__slot_html_ac05351a16120d0bb767357ce9d0d9188"><div class="ttname"><a href="structusher__control__slot.html#ac05351a16120d0bb767357ce9d0d9188">usher_control_slot::request_id</a></div><div class="ttdeci">uint32_t request_id</div><div class="ttdoc">Request ticket and monotonic send timestamp in microseconds.</div><div class="ttdef"><b>Definition</b> <a href="#l00054">camera_control.h:54</a></div></div>
+<div class="ttc" id="astructusher__control__slot_html_acfa3fa6e693d6a771f99e454634398b5"><div class="ttname"><a href="structusher__control__slot.html#acfa3fa6e693d6a771f99e454634398b5">usher_control_slot::evidence</a></div><div class="ttdeci">uint8_t evidence</div><div class="ttdef"><b>Definition</b> <a href="#l00056">camera_control.h:56</a></div></div>
+<div class="ttc" id="astructusher__control__slot_html_afd63f6b6f2cae7e19b11f61e180f40d5"><div class="ttname"><a href="structusher__control__slot.html#afd63f6b6f2cae7e19b11f61e180f40d5">usher_control_slot::value</a></div><div class="ttdeci">uint8_t value</div><div class="ttdef"><b>Definition</b> <a href="#l00056">camera_control.h:56</a></div></div>
+<div class="ttc" id="ausher_8c_html_a349e1179d2a6ecbcc88c95eb2751e226"><div class="ttname"><a href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a></div><div class="ttdeci">struct usher_control_result result</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00377">usher.c:377</a></div></div>
+<div class="ttc" id="ausher__protocol_8h_html"><div class="ttname"><a href="usher__protocol_8h.html">usher_protocol.h</a></div><div class="ttdoc">Shared FC/MORA byte-stream UART framing, messages and payload layouts.</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

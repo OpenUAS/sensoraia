@@ -1,0 +1,3392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Diplacam: c-cmaes/src/cmaes.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="../../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('cmaes_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">cmaes.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;math.h&gt;</code><br/>
+<code>#include &lt;stddef.h&gt;</code><br/>
+<code>#include &lt;stdlib.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include "<a class="el" href="cmaes__interface_8h_source.html">cmaes_interface.h</a>"</code><br/>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:af3eedaf22885251848f39e52950f5112" id="r_af3eedaf22885251848f39e52950f5112"><td align="right" class="memItemLeft" valign="top">long </td><td class="memItemRight" valign="bottom"><a class="el" href="#af3eedaf22885251848f39e52950f5112">cmaes_random_init</a> (<a class="el" href="structcmaes__random__t.html">cmaes_random_t</a> *, long unsigned seed)</td></tr>
+<tr class="memitem:aeb5ef71cc947b1ed8c513455ea87ae67" id="r_aeb5ef71cc947b1ed8c513455ea87ae67"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb5ef71cc947b1ed8c513455ea87ae67">cmaes_random_exit</a> (<a class="el" href="structcmaes__random__t.html">cmaes_random_t</a> *)</td></tr>
+<tr class="memitem:aedbc8b9e6f637511c5e6b89a923cc4c6" id="r_aedbc8b9e6f637511c5e6b89a923cc4c6"><td align="right" class="memItemLeft" valign="top">double </td><td class="memItemRight" valign="bottom"><a class="el" href="#aedbc8b9e6f637511c5e6b89a923cc4c6">cmaes_random_Gauss</a> (<a class="el" href="structcmaes__random__t.html">cmaes_random_t</a> *)</td></tr>
+<tr class="memitem:aa2e93499c451391c75d73d62760c78b8" id="r_aa2e93499c451391c75d73d62760c78b8"><td align="right" class="memItemLeft" valign="top">double </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2e93499c451391c75d73d62760c78b8">cmaes_random_Uniform</a> (<a class="el" href="structcmaes__random__t.html">cmaes_random_t</a> *)</td></tr>
+<tr class="memitem:a54a7da897223ac296a99a05b9b25259e" id="r_a54a7da897223ac296a99a05b9b25259e"><td align="right" class="memItemLeft" valign="top">long </td><td class="memItemRight" valign="bottom"><a class="el" href="#a54a7da897223ac296a99a05b9b25259e">cmaes_random_Start</a> (<a class="el" href="structcmaes__random__t.html">cmaes_random_t</a> *, long unsigned seed)</td></tr>
+<tr class="memitem:aff1039eb5fcdb29c5e71eccf30c0a820" id="r_aff1039eb5fcdb29c5e71eccf30c0a820"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#aff1039eb5fcdb29c5e71eccf30c0a820">cmaes_timings_init</a> (<a class="el" href="structcmaes__timings__t.html">cmaes_timings_t</a> *timing)</td></tr>
+<tr class="memitem:a0b3ea0a0c1d98bcabd833edeeb88530c" id="r_a0b3ea0a0c1d98bcabd833edeeb88530c"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b3ea0a0c1d98bcabd833edeeb88530c">cmaes_timings_start</a> (<a class="el" href="structcmaes__timings__t.html">cmaes_timings_t</a> *timing)</td></tr>
+<tr class="memitem:aa5c9ee1948885d4188079ec2feffffe7" id="r_aa5c9ee1948885d4188079ec2feffffe7"><td align="right" class="memItemLeft" valign="top">double </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5c9ee1948885d4188079ec2feffffe7">cmaes_timings_update</a> (<a class="el" href="structcmaes__timings__t.html">cmaes_timings_t</a> *timing)</td></tr>
+<tr class="memitem:a7a9b465f9d83f78e3b8b04e9bf851f79" id="r_a7a9b465f9d83f78e3b8b04e9bf851f79"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a9b465f9d83f78e3b8b04e9bf851f79">cmaes_timings_tic</a> (<a class="el" href="structcmaes__timings__t.html">cmaes_timings_t</a> *timing)</td></tr>
+<tr class="memitem:ac18c40a831f4f298ad2ec501ff163acf" id="r_ac18c40a831f4f298ad2ec501ff163acf"><td align="right" class="memItemLeft" valign="top">double </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac18c40a831f4f298ad2ec501ff163acf">cmaes_timings_toc</a> (<a class="el" href="structcmaes__timings__t.html">cmaes_timings_t</a> *timing)</td></tr>
+<tr class="memitem:a534ce73f0756d20a170b525eb5916f5c" id="r_a534ce73f0756d20a170b525eb5916f5c"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a534ce73f0756d20a170b525eb5916f5c">cmaes_readpara_init</a> (<a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *, int dim, const double *xstart, const double *sigma, int seed, int lambda, const char *filename)</td></tr>
+<tr class="memitem:a7435f269bf969929b9408355dfb541a5" id="r_a7435f269bf969929b9408355dfb541a5"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7435f269bf969929b9408355dfb541a5">cmaes_readpara_exit</a> (<a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *)</td></tr>
+<tr class="memitem:a247d50451aab176f167233848b7e3986" id="r_a247d50451aab176f167233848b7e3986"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a247d50451aab176f167233848b7e3986">cmaes_readpara_ReadFromFile</a> (<a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *, const char *szFileName)</td></tr>
+<tr class="memitem:a624db202e2ef05884a02aed74b0b7bda" id="r_a624db202e2ef05884a02aed74b0b7bda"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a624db202e2ef05884a02aed74b0b7bda">cmaes_readpara_SupplementDefaults</a> (<a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *)</td></tr>
+<tr class="memitem:a6e31692538859594486e3ced1bdb4478" id="r_a6e31692538859594486e3ced1bdb4478"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e31692538859594486e3ced1bdb4478">cmaes_readpara_SetWeights</a> (<a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *, const char *mode)</td></tr>
+<tr class="memitem:a5fcc1c142c32ecdb52eebc3462f564eb" id="r_a5fcc1c142c32ecdb52eebc3462f564eb"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fcc1c142c32ecdb52eebc3462f564eb">cmaes_readpara_WriteToFile</a> (<a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *, const char *filenamedest)</td></tr>
+<tr class="memitem:a026e281143563d0b17b79b0bc3d8268b" id="r_a026e281143563d0b17b79b0bc3d8268b"><td align="right" class="memItemLeft" valign="top">const double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a026e281143563d0b17b79b0bc3d8268b">cmaes_Optimize</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *, double(*pFun)(double const *, int dim), long iterations)</td></tr>
+<tr class="memitem:a5970bf09ab2d177538ade28bb6ca200a" id="r_a5970bf09ab2d177538ade28bb6ca200a"><td align="right" class="memItemLeft" valign="top">double const * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5970bf09ab2d177538ade28bb6ca200a">cmaes_SetMean</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *, const double *xmean)</td></tr>
+<tr class="memitem:a6108b2c4779e63bc395cd6bb039250c6" id="r_a6108b2c4779e63bc395cd6bb039250c6"><td align="right" class="memItemLeft" valign="top">double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6108b2c4779e63bc395cd6bb039250c6">cmaes_PerturbSolutionInto</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, double *xout, double const *xin, double eps)</td></tr>
+<tr class="memitem:a72ed76520a71297bdc6c97a567a73394" id="r_a72ed76520a71297bdc6c97a567a73394"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a72ed76520a71297bdc6c97a567a73394">cmaes_WriteToFile</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *, const char *key, const char *name)</td></tr>
+<tr class="memitem:ad6fadf6bb91fa5d53b9b04295af95c19" id="r_ad6fadf6bb91fa5d53b9b04295af95c19"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6fadf6bb91fa5d53b9b04295af95c19">cmaes_WriteToFileAW</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, const char *key, const char *name, const char *append)</td></tr>
+<tr class="memitem:abebb795f2cdf22d30733f3f88fc7f8b6" id="r_abebb795f2cdf22d30733f3f88fc7f8b6"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#abebb795f2cdf22d30733f3f88fc7f8b6">cmaes_WriteToFilePtr</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *, const char *key, FILE *fp)</td></tr>
+<tr class="memitem:a83d9bb367bd0f97c414ba059850fe174" id="r_a83d9bb367bd0f97c414ba059850fe174"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a83d9bb367bd0f97c414ba059850fe174">cmaes_ReadFromFilePtr</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *, FILE *fp)</td></tr>
+<tr class="memitem:ac03d52e1a4343282a19412069e535917" id="r_ac03d52e1a4343282a19412069e535917"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac03d52e1a4343282a19412069e535917">cmaes_FATAL</a> (char const *s1, char const *s2, char const *s3, char const *s4)</td></tr>
+<tr class="memitem:adc33447bf50e2cf5fd1d4feeb00d730b" id="r_adc33447bf50e2cf5fd1d4feeb00d730b"><td align="right" class="memItemLeft" valign="top">static char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#adc33447bf50e2cf5fd1d4feeb00d730b">getTimeStr</a> (void)</td></tr>
+<tr class="memitem:ae154c6d2020b421b2e2d7e801d36161f" id="r_ae154c6d2020b421b2e2d7e801d36161f"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae154c6d2020b421b2e2d7e801d36161f">TestMinStdDevs</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *)</td></tr>
+<tr class="memitem:ad8315444adf119f97b0ffe82e789a3c1" id="r_ad8315444adf119f97b0ffe82e789a3c1"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8315444adf119f97b0ffe82e789a3c1">Eigen</a> (int N, double **C, double *diag, double **Q, double *rgtmp)</td></tr>
+<tr class="memitem:a1432e4352d56012638b1b6783e12add5" id="r_a1432e4352d56012638b1b6783e12add5"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1432e4352d56012638b1b6783e12add5">Check_Eigen</a> (int N, double **C, double *diag, double **Q)</td></tr>
+<tr class="memitem:ade89c1d4cd7facedb9209352695a5922" id="r_ade89c1d4cd7facedb9209352695a5922"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ade89c1d4cd7facedb9209352695a5922">QLalgo2</a> (int n, double *d, double *e, double **V)</td></tr>
+<tr class="memitem:a4e9673c41736bee81a0586046a62bf7f" id="r_a4e9673c41736bee81a0586046a62bf7f"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e9673c41736bee81a0586046a62bf7f">Householder2</a> (int n, double **V, double *d, double *e)</td></tr>
+<tr class="memitem:a495632246a964b3ae4e1148fc851b363" id="r_a495632246a964b3ae4e1148fc851b363"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a495632246a964b3ae4e1148fc851b363">Adapt_C2</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, int hsig)</td></tr>
+<tr class="memitem:aaafc8a58454baf0f37a74e9f899cd1fd" id="r_aaafc8a58454baf0f37a74e9f899cd1fd"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#aaafc8a58454baf0f37a74e9f899cd1fd">FATAL</a> (char const *sz1, char const *s2, char const *s3, char const *s4)</td></tr>
+<tr class="memitem:a5ca7794658d94665bb76ad89c4812e83" id="r_a5ca7794658d94665bb76ad89c4812e83"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ca7794658d94665bb76ad89c4812e83">ERRORMESSAGE</a> (char const *sz1, char const *s2, char const *s3, char const *s4)</td></tr>
+<tr class="memitem:aba86475ca858d1036381d0bb26f30db8" id="r_aba86475ca858d1036381d0bb26f30db8"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#aba86475ca858d1036381d0bb26f30db8">isNoneStr</a> (const char *filename)</td></tr>
+<tr class="memitem:a4c9ea7720b83b46fff245afcaf15d8cc" id="r_a4c9ea7720b83b46fff245afcaf15d8cc"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c9ea7720b83b46fff245afcaf15d8cc">Sorted_index</a> (const double *rgFunVal, int *index, int n)</td></tr>
+<tr class="memitem:a3932ed78b6fca51e305a353f0b4f8aa3" id="r_a3932ed78b6fca51e305a353f0b4f8aa3"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3932ed78b6fca51e305a353f0b4f8aa3">SignOfDiff</a> (const void *d1, const void *d2)</td></tr>
+<tr class="memitem:a7fb005edb474b94724fe1b0fb862cfc2" id="r_a7fb005edb474b94724fe1b0fb862cfc2"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fb005edb474b94724fe1b0fb862cfc2">douSquare</a> (double)</td></tr>
+<tr class="memitem:afd808cb6018b131a97ccc30b1d23ee11" id="r_afd808cb6018b131a97ccc30b1d23ee11"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#afd808cb6018b131a97ccc30b1d23ee11">rgdouMax</a> (const double *rgd, int len)</td></tr>
+<tr class="memitem:ac6b913a3be7c1c60b5386e35776618d7" id="r_ac6b913a3be7c1c60b5386e35776618d7"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6b913a3be7c1c60b5386e35776618d7">rgdouMin</a> (const double *rgd, int len)</td></tr>
+<tr class="memitem:a869db4e2288049d140f64065104e27ff" id="r_a869db4e2288049d140f64065104e27ff"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#a869db4e2288049d140f64065104e27ff">douMax</a> (double d1, double d2)</td></tr>
+<tr class="memitem:abd49ada2ce6a19e3a29754e5ba0badb7" id="r_abd49ada2ce6a19e3a29754e5ba0badb7"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#abd49ada2ce6a19e3a29754e5ba0badb7">douMin</a> (double d1, double d2)</td></tr>
+<tr class="memitem:a4e1bab116f384d6350e698528751459d" id="r_a4e1bab116f384d6350e698528751459d"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e1bab116f384d6350e698528751459d">MaxIdx</a> (const double *rgd, int len)</td></tr>
+<tr class="memitem:a1cf9c82f3b530d5eb1126acae5c43c3a" id="r_a1cf9c82f3b530d5eb1126acae5c43c3a"><td align="right" class="memItemLeft" valign="top">static int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1cf9c82f3b530d5eb1126acae5c43c3a">MinIdx</a> (const double *rgd, int len)</td></tr>
+<tr class="memitem:a6d2413113203ab5d76d6ca5b481dafff" id="r_a6d2413113203ab5d76d6ca5b481dafff"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d2413113203ab5d76d6ca5b481dafff">myhypot</a> (double a, double b)</td></tr>
+<tr class="memitem:af0d5f801126ac3c0146524ec75a15a6c" id="r_af0d5f801126ac3c0146524ec75a15a6c"><td align="right" class="memItemLeft" valign="top">static double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#af0d5f801126ac3c0146524ec75a15a6c">new_double</a> (int n)</td></tr>
+<tr class="memitem:a810bdd25483f45a0adc8e8c95e1806bd" id="r_a810bdd25483f45a0adc8e8c95e1806bd"><td align="right" class="memItemLeft" valign="top">static void * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a810bdd25483f45a0adc8e8c95e1806bd">new_void</a> (int n, size_t size)</td></tr>
+<tr class="memitem:a1301ed8fa6dc19fe14b534615a8f1533" id="r_a1301ed8fa6dc19fe14b534615a8f1533"><td align="right" class="memItemLeft" valign="top">static char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1301ed8fa6dc19fe14b534615a8f1533">new_string</a> (const char *)</td></tr>
+<tr class="memitem:a8a684019b469de17bc89542639520ad7" id="r_a8a684019b469de17bc89542639520ad7"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a684019b469de17bc89542639520ad7">assign_string</a> (char **, const char *)</td></tr>
+<tr class="memitem:a1644957ded7ce64bc9b967d6e80e1367" id="r_a1644957ded7ce64bc9b967d6e80e1367"><td align="right" class="memItemLeft" valign="top">char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a1644957ded7ce64bc9b967d6e80e1367">cmaes_SayHello</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t)</td></tr>
+<tr class="memitem:ad9a5c6e42e03daca9e7125a0535681e3" id="r_ad9a5c6e42e03daca9e7125a0535681e3"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9a5c6e42e03daca9e7125a0535681e3">cmaes_init_para</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, int dimension, double *inxstart, double *inrgstddev, long int inseed, int lambda, const char *input_parameter_filename)</td></tr>
+<tr class="memitem:ab92662b25a737de2e6f252ea150e8f04" id="r_ab92662b25a737de2e6f252ea150e8f04"><td align="right" class="memItemLeft" valign="top">double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab92662b25a737de2e6f252ea150e8f04">cmaes_init_final</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t)</td></tr>
+<tr class="memitem:ab987c1bef91b1929a863aa358c911f5d" id="r_ab987c1bef91b1929a863aa358c911f5d"><td align="right" class="memItemLeft" valign="top">double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab987c1bef91b1929a863aa358c911f5d">cmaes_init</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, int dimension, double *inxstart, double *inrgstddev, long int inseed, int lambda, const char *input_parameter_filename)</td></tr>
+<tr class="memitem:a222fde7e55a09810d1900b0b0f575ddf" id="r_a222fde7e55a09810d1900b0b0f575ddf"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a222fde7e55a09810d1900b0b0f575ddf">cmaes_resume_distribution</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, char *filename)</td></tr>
+<tr class="memitem:af25e97d36f78d77cea56d3a63de1f14f" id="r_af25e97d36f78d77cea56d3a63de1f14f"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#af25e97d36f78d77cea56d3a63de1f14f">cmaes_exit</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t)</td></tr>
+<tr class="memitem:a8482e719986e5dcc54dcf3b3f1d51257" id="r_a8482e719986e5dcc54dcf3b3f1d51257"><td align="right" class="memItemLeft" valign="top">double *const * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8482e719986e5dcc54dcf3b3f1d51257">cmaes_SamplePopulation</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t)</td></tr>
+<tr class="memitem:ac71592efc6486344b1d7d6e35d986772" id="r_ac71592efc6486344b1d7d6e35d986772"><td align="right" class="memItemLeft" valign="top">double const * </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac71592efc6486344b1d7d6e35d986772">cmaes_ReSampleSingle_old</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, double *rgx)</td></tr>
+<tr class="memitem:a0bffa06918962994cd8de674edce6771" id="r_a0bffa06918962994cd8de674edce6771"><td align="right" class="memItemLeft" valign="top">double *const * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bffa06918962994cd8de674edce6771">cmaes_ReSampleSingle</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, int iindex)</td></tr>
+<tr class="memitem:a6632030c2fecb6e9857e3f3bc0bd146d" id="r_a6632030c2fecb6e9857e3f3bc0bd146d"><td align="right" class="memItemLeft" valign="top">double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6632030c2fecb6e9857e3f3bc0bd146d">cmaes_SampleSingleInto</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, double *rgx)</td></tr>
+<tr class="memitem:a068e1a7a5c77383cdcb844627a99d105" id="r_a068e1a7a5c77383cdcb844627a99d105"><td align="right" class="memItemLeft" valign="top">double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a068e1a7a5c77383cdcb844627a99d105">cmaes_UpdateDistribution</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, const double *rgFunVal)</td></tr>
+<tr class="memitem:aae13d70ce251315a3e00d423fd6a3a69" id="r_aae13d70ce251315a3e00d423fd6a3a69"><td align="right" class="memItemLeft" valign="top">double </td><td class="memItemRight" valign="bottom"><a class="el" href="#aae13d70ce251315a3e00d423fd6a3a69">cmaes_Get</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, char const *s)</td></tr>
+<tr class="memitem:aa9a5932eff13bdfa0db9b4eb20ff5bef" id="r_aa9a5932eff13bdfa0db9b4eb20ff5bef"><td align="right" class="memItemLeft" valign="top">double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9a5932eff13bdfa0db9b4eb20ff5bef">cmaes_GetInto</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, char const *s, double *res)</td></tr>
+<tr class="memitem:a9871598959cb30877d581b5849547ce8" id="r_a9871598959cb30877d581b5849547ce8"><td align="right" class="memItemLeft" valign="top">double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9871598959cb30877d581b5849547ce8">cmaes_GetNew</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, char const *s)</td></tr>
+<tr class="memitem:afc7e653a2102ace4e407a4f4d540710e" id="r_afc7e653a2102ace4e407a4f4d540710e"><td align="right" class="memItemLeft" valign="top">const double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#afc7e653a2102ace4e407a4f4d540710e">cmaes_GetPtr</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, char const *s)</td></tr>
+<tr class="memitem:af310ada49ea4b708164ad4ecbb1d2450" id="r_af310ada49ea4b708164ad4ecbb1d2450"><td align="right" class="memItemLeft" valign="top">const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#af310ada49ea4b708164ad4ecbb1d2450">cmaes_TestForTermination</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t)</td></tr>
+<tr class="memitem:a232f94a5625daf881cc045ee97363366" id="r_a232f94a5625daf881cc045ee97363366"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a232f94a5625daf881cc045ee97363366">cmaes_ReadSignals</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, char const *filename)</td></tr>
+<tr class="memitem:aefe967b4f73288801f6f0521dfcafff7" id="r_aefe967b4f73288801f6f0521dfcafff7"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#aefe967b4f73288801f6f0521dfcafff7">cmaes_UpdateEigensystem</a> (<a class="el" href="structcmaes__t.html">cmaes_t</a> *t, int flgforce)</td></tr>
+<tr class="memitem:ab35df6fbd668745a163fac5aafd78bd7" id="r_ab35df6fbd668745a163fac5aafd78bd7"><td align="right" class="memItemLeft" valign="top">static void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ab35df6fbd668745a163fac5aafd78bd7">printErrorStrings</a> (FILE *fd, char const *s1, char const *s2, char const *s3, char const *s4)</td></tr>
+<tr class="memitem:a64e9f8d5a77532eaf15468a6d7a32211" id="r_a64e9f8d5a77532eaf15468a6d7a32211"><td align="right" class="memItemLeft" valign="top">double * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a64e9f8d5a77532eaf15468a6d7a32211">cmaes_NewDouble</a> (int n)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-var-members"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:abf35200fa5dfa2b6141d11ef61ba8644" id="r_abf35200fa5dfa2b6141d11ef61ba8644"><td align="right" class="memItemLeft" valign="top">static const char * </td><td class="memItemRight" valign="bottom"><a class="el" href="#abf35200fa5dfa2b6141d11ef61ba8644">c_cmaes_version</a> = "3.20.00.beta"</td></tr>
+</table>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="a495632246a964b3ae4e1148fc851b363" name="a495632246a964b3ae4e1148fc851b363"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a495632246a964b3ae4e1148fc851b363">◆ </a></span>Adapt_C2()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void Adapt_C2 </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>hsig</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a8a684019b469de17bc89542639520ad7" name="a8a684019b469de17bc89542639520ad7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a684019b469de17bc89542639520ad7">◆ </a></span>assign_string()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void assign_string </td>
+<td>(</td>
+<td class="paramtype">char **</td> <td class="paramname"><span class="paramname"><em>pdests</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>ins</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a1432e4352d56012638b1b6783e12add5" name="a1432e4352d56012638b1b6783e12add5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1432e4352d56012638b1b6783e12add5">◆ </a></span>Check_Eigen()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int Check_Eigen </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>N</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double **</td> <td class="paramname"><span class="paramname"><em>C</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>diag</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double **</td> <td class="paramname"><span class="paramname"><em>Q</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="af25e97d36f78d77cea56d3a63de1f14f" name="af25e97d36f78d77cea56d3a63de1f14f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af25e97d36f78d77cea56d3a63de1f14f">◆ </a></span>cmaes_exit()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_exit </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ac03d52e1a4343282a19412069e535917" name="ac03d52e1a4343282a19412069e535917"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac03d52e1a4343282a19412069e535917">◆ </a></span>cmaes_FATAL()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_FATAL </td>
+<td>(</td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s1</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s2</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s3</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s4</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aae13d70ce251315a3e00d423fd6a3a69" name="aae13d70ce251315a3e00d423fd6a3a69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae13d70ce251315a3e00d423fd6a3a69">◆ </a></span>cmaes_Get()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double cmaes_Get </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aa9a5932eff13bdfa0db9b4eb20ff5bef" name="aa9a5932eff13bdfa0db9b4eb20ff5bef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9a5932eff13bdfa0db9b4eb20ff5bef">◆ </a></span>cmaes_GetInto()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double * cmaes_GetInto </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>res</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a9871598959cb30877d581b5849547ce8" name="a9871598959cb30877d581b5849547ce8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9871598959cb30877d581b5849547ce8">◆ </a></span>cmaes_GetNew()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double * cmaes_GetNew </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="afc7e653a2102ace4e407a4f4d540710e" name="afc7e653a2102ace4e407a4f4d540710e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc7e653a2102ace4e407a4f4d540710e">◆ </a></span>cmaes_GetPtr()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">const double * cmaes_GetPtr </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ab987c1bef91b1929a863aa358c911f5d" name="ab987c1bef91b1929a863aa358c911f5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab987c1bef91b1929a863aa358c911f5d">◆ </a></span>cmaes_init()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double * cmaes_init </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>dimension</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>inxstart</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>inrgstddev</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">long int</td> <td class="paramname"><span class="paramname"><em>inseed</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>lambda</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>input_parameter_filename</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ab92662b25a737de2e6f252ea150e8f04" name="ab92662b25a737de2e6f252ea150e8f04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab92662b25a737de2e6f252ea150e8f04">◆ </a></span>cmaes_init_final()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double * cmaes_init_final </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ad9a5c6e42e03daca9e7125a0535681e3" name="ad9a5c6e42e03daca9e7125a0535681e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9a5c6e42e03daca9e7125a0535681e3">◆ </a></span>cmaes_init_para()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_init_para </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>dimension</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>inxstart</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>inrgstddev</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">long int</td> <td class="paramname"><span class="paramname"><em>inseed</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>lambda</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>input_parameter_filename</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a64e9f8d5a77532eaf15468a6d7a32211" name="a64e9f8d5a77532eaf15468a6d7a32211"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64e9f8d5a77532eaf15468a6d7a32211">◆ </a></span>cmaes_NewDouble()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double * cmaes_NewDouble </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a026e281143563d0b17b79b0bc3d8268b" name="a026e281143563d0b17b79b0bc3d8268b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a026e281143563d0b17b79b0bc3d8268b">◆ </a></span>cmaes_Optimize()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">const double * cmaes_Optimize </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>evo</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double(*</td> <td class="paramname"><span class="paramname"><em>pFun </em></span>)(double const *, int dim), </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">long</td> <td class="paramname"><span class="paramname"><em>iterations</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a6108b2c4779e63bc395cd6bb039250c6" name="a6108b2c4779e63bc395cd6bb039250c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6108b2c4779e63bc395cd6bb039250c6">◆ </a></span>cmaes_PerturbSolutionInto()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double * cmaes_PerturbSolutionInto </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>xout</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double const *</td> <td class="paramname"><span class="paramname"><em>xin</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>eps</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aeb5ef71cc947b1ed8c513455ea87ae67" name="aeb5ef71cc947b1ed8c513455ea87ae67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb5ef71cc947b1ed8c513455ea87ae67">◆ </a></span>cmaes_random_exit()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_random_exit </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__random__t.html">cmaes_random_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aedbc8b9e6f637511c5e6b89a923cc4c6" name="aedbc8b9e6f637511c5e6b89a923cc4c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedbc8b9e6f637511c5e6b89a923cc4c6">◆ </a></span>cmaes_random_Gauss()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double cmaes_random_Gauss </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__random__t.html">cmaes_random_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="af3eedaf22885251848f39e52950f5112" name="af3eedaf22885251848f39e52950f5112"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3eedaf22885251848f39e52950f5112">◆ </a></span>cmaes_random_init()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">long cmaes_random_init </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__random__t.html">cmaes_random_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">long unsigned</td> <td class="paramname"><span class="paramname"><em>seed</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a54a7da897223ac296a99a05b9b25259e" name="a54a7da897223ac296a99a05b9b25259e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54a7da897223ac296a99a05b9b25259e">◆ </a></span>cmaes_random_Start()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">long cmaes_random_Start </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__random__t.html">cmaes_random_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">long unsigned</td> <td class="paramname"><span class="paramname"><em>seed</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aa2e93499c451391c75d73d62760c78b8" name="aa2e93499c451391c75d73d62760c78b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2e93499c451391c75d73d62760c78b8">◆ </a></span>cmaes_random_Uniform()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double cmaes_random_Uniform </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__random__t.html">cmaes_random_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a83d9bb367bd0f97c414ba059850fe174" name="a83d9bb367bd0f97c414ba059850fe174"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83d9bb367bd0f97c414ba059850fe174">◆ </a></span>cmaes_ReadFromFilePtr()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_ReadFromFilePtr </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">FILE *</td> <td class="paramname"><span class="paramname"><em>fp</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a7435f269bf969929b9408355dfb541a5" name="a7435f269bf969929b9408355dfb541a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7435f269bf969929b9408355dfb541a5">◆ </a></span>cmaes_readpara_exit()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_readpara_exit </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a534ce73f0756d20a170b525eb5916f5c" name="a534ce73f0756d20a170b525eb5916f5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a534ce73f0756d20a170b525eb5916f5c">◆ </a></span>cmaes_readpara_init()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_readpara_init </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>dim</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const double *</td> <td class="paramname"><span class="paramname"><em>xstart</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const double *</td> <td class="paramname"><span class="paramname"><em>sigma</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>seed</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>lambda</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a247d50451aab176f167233848b7e3986" name="a247d50451aab176f167233848b7e3986"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a247d50451aab176f167233848b7e3986">◆ </a></span>cmaes_readpara_ReadFromFile()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_readpara_ReadFromFile </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>szFileName</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a6e31692538859594486e3ced1bdb4478" name="a6e31692538859594486e3ced1bdb4478"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e31692538859594486e3ced1bdb4478">◆ </a></span>cmaes_readpara_SetWeights()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_readpara_SetWeights </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>mode</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a624db202e2ef05884a02aed74b0b7bda" name="a624db202e2ef05884a02aed74b0b7bda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a624db202e2ef05884a02aed74b0b7bda">◆ </a></span>cmaes_readpara_SupplementDefaults()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_readpara_SupplementDefaults </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a5fcc1c142c32ecdb52eebc3462f564eb" name="a5fcc1c142c32ecdb52eebc3462f564eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fcc1c142c32ecdb52eebc3462f564eb">◆ </a></span>cmaes_readpara_WriteToFile()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_readpara_WriteToFile </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__readpara__t.html">cmaes_readpara_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filenamedest</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a232f94a5625daf881cc045ee97363366" name="a232f94a5625daf881cc045ee97363366"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a232f94a5625daf881cc045ee97363366">◆ </a></span>cmaes_ReadSignals()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_ReadSignals </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>filename</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a0bffa06918962994cd8de674edce6771" name="a0bffa06918962994cd8de674edce6771"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bffa06918962994cd8de674edce6771">◆ </a></span>cmaes_ReSampleSingle()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double *const  * cmaes_ReSampleSingle </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>iindex</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ac71592efc6486344b1d7d6e35d986772" name="ac71592efc6486344b1d7d6e35d986772"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac71592efc6486344b1d7d6e35d986772">◆ </a></span>cmaes_ReSampleSingle_old()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double const  * cmaes_ReSampleSingle_old </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>rgx</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a222fde7e55a09810d1900b0b0f575ddf" name="a222fde7e55a09810d1900b0b0f575ddf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a222fde7e55a09810d1900b0b0f575ddf">◆ </a></span>cmaes_resume_distribution()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_resume_distribution </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a8482e719986e5dcc54dcf3b3f1d51257" name="a8482e719986e5dcc54dcf3b3f1d51257"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8482e719986e5dcc54dcf3b3f1d51257">◆ </a></span>cmaes_SamplePopulation()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double *const  * cmaes_SamplePopulation </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a6632030c2fecb6e9857e3f3bc0bd146d" name="a6632030c2fecb6e9857e3f3bc0bd146d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6632030c2fecb6e9857e3f3bc0bd146d">◆ </a></span>cmaes_SampleSingleInto()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double * cmaes_SampleSingleInto </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>rgx</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a1644957ded7ce64bc9b967d6e80e1367" name="a1644957ded7ce64bc9b967d6e80e1367"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1644957ded7ce64bc9b967d6e80e1367">◆ </a></span>cmaes_SayHello()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">char * cmaes_SayHello </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a5970bf09ab2d177538ade28bb6ca200a" name="a5970bf09ab2d177538ade28bb6ca200a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5970bf09ab2d177538ade28bb6ca200a">◆ </a></span>cmaes_SetMean()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double const  * cmaes_SetMean </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const double *</td> <td class="paramname"><span class="paramname"><em>xmean</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="af310ada49ea4b708164ad4ecbb1d2450" name="af310ada49ea4b708164ad4ecbb1d2450"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af310ada49ea4b708164ad4ecbb1d2450">◆ </a></span>cmaes_TestForTermination()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">const char * cmaes_TestForTermination </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aff1039eb5fcdb29c5e71eccf30c0a820" name="aff1039eb5fcdb29c5e71eccf30c0a820"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff1039eb5fcdb29c5e71eccf30c0a820">◆ </a></span>cmaes_timings_init()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_timings_init </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__timings__t.html">cmaes_timings_t</a> *</td> <td class="paramname"><span class="paramname"><em>timing</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a0b3ea0a0c1d98bcabd833edeeb88530c" name="a0b3ea0a0c1d98bcabd833edeeb88530c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b3ea0a0c1d98bcabd833edeeb88530c">◆ </a></span>cmaes_timings_start()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_timings_start </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__timings__t.html">cmaes_timings_t</a> *</td> <td class="paramname"><span class="paramname"><em>timing</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a7a9b465f9d83f78e3b8b04e9bf851f79" name="a7a9b465f9d83f78e3b8b04e9bf851f79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a9b465f9d83f78e3b8b04e9bf851f79">◆ </a></span>cmaes_timings_tic()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_timings_tic </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__timings__t.html">cmaes_timings_t</a> *</td> <td class="paramname"><span class="paramname"><em>timing</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ac18c40a831f4f298ad2ec501ff163acf" name="ac18c40a831f4f298ad2ec501ff163acf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac18c40a831f4f298ad2ec501ff163acf">◆ </a></span>cmaes_timings_toc()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double cmaes_timings_toc </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__timings__t.html">cmaes_timings_t</a> *</td> <td class="paramname"><span class="paramname"><em>timing</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aa5c9ee1948885d4188079ec2feffffe7" name="aa5c9ee1948885d4188079ec2feffffe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5c9ee1948885d4188079ec2feffffe7">◆ </a></span>cmaes_timings_update()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double cmaes_timings_update </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__timings__t.html">cmaes_timings_t</a> *</td> <td class="paramname"><span class="paramname"><em>timing</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a068e1a7a5c77383cdcb844627a99d105" name="a068e1a7a5c77383cdcb844627a99d105"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a068e1a7a5c77383cdcb844627a99d105">◆ </a></span>cmaes_UpdateDistribution()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">double * cmaes_UpdateDistribution </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const double *</td> <td class="paramname"><span class="paramname"><em>rgFunVal</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aefe967b4f73288801f6f0521dfcafff7" name="aefe967b4f73288801f6f0521dfcafff7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefe967b4f73288801f6f0521dfcafff7">◆ </a></span>cmaes_UpdateEigensystem()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_UpdateEigensystem </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>flgforce</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a72ed76520a71297bdc6c97a567a73394" name="a72ed76520a71297bdc6c97a567a73394"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72ed76520a71297bdc6c97a567a73394">◆ </a></span>cmaes_WriteToFile()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_WriteToFile </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>name</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ad6fadf6bb91fa5d53b9b04295af95c19" name="ad6fadf6bb91fa5d53b9b04295af95c19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6fadf6bb91fa5d53b9b04295af95c19">◆ </a></span>cmaes_WriteToFileAW()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_WriteToFileAW </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>append</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="abebb795f2cdf22d30733f3f88fc7f8b6" name="abebb795f2cdf22d30733f3f88fc7f8b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abebb795f2cdf22d30733f3f88fc7f8b6">◆ </a></span>cmaes_WriteToFilePtr()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void cmaes_WriteToFilePtr </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">FILE *</td> <td class="paramname"><span class="paramname"><em>fp</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a869db4e2288049d140f64065104e27ff" name="a869db4e2288049d140f64065104e27ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a869db4e2288049d140f64065104e27ff">◆ </a></span>douMax()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double douMax </td>
+<td>(</td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>d1</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>d2</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="abd49ada2ce6a19e3a29754e5ba0badb7" name="abd49ada2ce6a19e3a29754e5ba0badb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd49ada2ce6a19e3a29754e5ba0badb7">◆ </a></span>douMin()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double douMin </td>
+<td>(</td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>d1</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>d2</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a7fb005edb474b94724fe1b0fb862cfc2" name="a7fb005edb474b94724fe1b0fb862cfc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fb005edb474b94724fe1b0fb862cfc2">◆ </a></span>douSquare()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double douSquare </td>
+<td>(</td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>d</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ad8315444adf119f97b0ffe82e789a3c1" name="ad8315444adf119f97b0ffe82e789a3c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8315444adf119f97b0ffe82e789a3c1">◆ </a></span>Eigen()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void Eigen </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>N</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double **</td> <td class="paramname"><span class="paramname"><em>C</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>diag</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double **</td> <td class="paramname"><span class="paramname"><em>Q</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>rgtmp</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a5ca7794658d94665bb76ad89c4812e83" name="a5ca7794658d94665bb76ad89c4812e83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ca7794658d94665bb76ad89c4812e83">◆ </a></span>ERRORMESSAGE()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void ERRORMESSAGE </td>
+<td>(</td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>sz1</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s2</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s3</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s4</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aaafc8a58454baf0f37a74e9f899cd1fd" name="aaafc8a58454baf0f37a74e9f899cd1fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaafc8a58454baf0f37a74e9f899cd1fd">◆ </a></span>FATAL()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void FATAL </td>
+<td>(</td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>sz1</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s2</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s3</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s4</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="adc33447bf50e2cf5fd1d4feeb00d730b" name="adc33447bf50e2cf5fd1d4feeb00d730b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc33447bf50e2cf5fd1d4feeb00d730b">◆ </a></span>getTimeStr()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">char * getTimeStr </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a4e9673c41736bee81a0586046a62bf7f" name="a4e9673c41736bee81a0586046a62bf7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e9673c41736bee81a0586046a62bf7f">◆ </a></span>Householder2()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void Householder2 </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>n</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double **</td> <td class="paramname"><span class="paramname"><em>V</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>d</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>e</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="aba86475ca858d1036381d0bb26f30db8" name="aba86475ca858d1036381d0bb26f30db8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba86475ca858d1036381d0bb26f30db8">◆ </a></span>isNoneStr()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int isNoneStr </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a4e1bab116f384d6350e698528751459d" name="a4e1bab116f384d6350e698528751459d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e1bab116f384d6350e698528751459d">◆ </a></span>MaxIdx()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int MaxIdx </td>
+<td>(</td>
+<td class="paramtype">const double *</td> <td class="paramname"><span class="paramname"><em>rgd</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>len</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a1cf9c82f3b530d5eb1126acae5c43c3a" name="a1cf9c82f3b530d5eb1126acae5c43c3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cf9c82f3b530d5eb1126acae5c43c3a">◆ </a></span>MinIdx()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int MinIdx </td>
+<td>(</td>
+<td class="paramtype">const double *</td> <td class="paramname"><span class="paramname"><em>rgd</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>len</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a6d2413113203ab5d76d6ca5b481dafff" name="a6d2413113203ab5d76d6ca5b481dafff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d2413113203ab5d76d6ca5b481dafff">◆ </a></span>myhypot()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double myhypot </td>
+<td>(</td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double</td> <td class="paramname"><span class="paramname"><em>b</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="af0d5f801126ac3c0146524ec75a15a6c" name="af0d5f801126ac3c0146524ec75a15a6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0d5f801126ac3c0146524ec75a15a6c">◆ </a></span>new_double()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double * new_double </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a1301ed8fa6dc19fe14b534615a8f1533" name="a1301ed8fa6dc19fe14b534615a8f1533"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1301ed8fa6dc19fe14b534615a8f1533">◆ </a></span>new_string()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">char * new_string </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>ins</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a810bdd25483f45a0adc8e8c95e1806bd" name="a810bdd25483f45a0adc8e8c95e1806bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a810bdd25483f45a0adc8e8c95e1806bd">◆ </a></span>new_void()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void * new_void </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>n</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>size</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ab35df6fbd668745a163fac5aafd78bd7" name="ab35df6fbd668745a163fac5aafd78bd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab35df6fbd668745a163fac5aafd78bd7">◆ </a></span>printErrorStrings()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void printErrorStrings </td>
+<td>(</td>
+<td class="paramtype">FILE *</td> <td class="paramname"><span class="paramname"><em>fd</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s1</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s2</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s3</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char const *</td> <td class="paramname"><span class="paramname"><em>s4</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ade89c1d4cd7facedb9209352695a5922" name="ade89c1d4cd7facedb9209352695a5922"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade89c1d4cd7facedb9209352695a5922">◆ </a></span>QLalgo2()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void QLalgo2 </td>
+<td>(</td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>n</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>d</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double *</td> <td class="paramname"><span class="paramname"><em>e</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">double **</td> <td class="paramname"><span class="paramname"><em>V</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="afd808cb6018b131a97ccc30b1d23ee11" name="afd808cb6018b131a97ccc30b1d23ee11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd808cb6018b131a97ccc30b1d23ee11">◆ </a></span>rgdouMax()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double rgdouMax </td>
+<td>(</td>
+<td class="paramtype">const double *</td> <td class="paramname"><span class="paramname"><em>rgd</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>len</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ac6b913a3be7c1c60b5386e35776618d7" name="ac6b913a3be7c1c60b5386e35776618d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6b913a3be7c1c60b5386e35776618d7">◆ </a></span>rgdouMin()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double rgdouMin </td>
+<td>(</td>
+<td class="paramtype">const double *</td> <td class="paramname"><span class="paramname"><em>rgd</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>len</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a3932ed78b6fca51e305a353f0b4f8aa3" name="a3932ed78b6fca51e305a353f0b4f8aa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3932ed78b6fca51e305a353f0b4f8aa3">◆ </a></span>SignOfDiff()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int SignOfDiff </td>
+<td>(</td>
+<td class="paramtype">const void *</td> <td class="paramname"><span class="paramname"><em>d1</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const void *</td> <td class="paramname"><span class="paramname"><em>d2</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="a4c9ea7720b83b46fff245afcaf15d8cc" name="a4c9ea7720b83b46fff245afcaf15d8cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c9ea7720b83b46fff245afcaf15d8cc">◆ </a></span>Sorted_index()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void Sorted_index </td>
+<td>(</td>
+<td class="paramtype">const double *</td> <td class="paramname"><span class="paramname"><em>rgFunVal</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int *</td> <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">int</td> <td class="paramname"><span class="paramname"><em>n</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="ae154c6d2020b421b2e2d7e801d36161f" name="ae154c6d2020b421b2e2d7e801d36161f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae154c6d2020b421b2e2d7e801d36161f">◆ </a></span>TestMinStdDevs()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void TestMinStdDevs </td>
+<td>(</td>
+<td class="paramtype"><a class="el" href="structcmaes__t.html">cmaes_t</a> *</td> <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+<a id="doc-var-members" name="doc-var-members"></a><h2 class="groupheader" id="header-doc-var-members">Variable Documentation</h2>
+<a id="abf35200fa5dfa2b6141d11ef61ba8644" name="abf35200fa5dfa2b6141d11ef61ba8644"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf35200fa5dfa2b6141d11ef61ba8644">◆ </a></span>c_cmaes_version</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">const char* c_cmaes_version = "3.20.00.beta"</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/material/offline-search.js"></script>
+<script src="../../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

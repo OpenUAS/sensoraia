@@ -1,0 +1,1865 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/loom_cam/loom_features.c Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('loom__features_8c_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">loom_features.c</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="loom__features_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/** @file loom_features.c</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @brief Bounded LOOM feature validation and exact binary EXIF transport.</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @details The capture owner supplies immutable same-exposure buffers; this</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * core neither acquires a camera nor decides whether a navigation match exists. */</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#include "<a class="code" href="loom__features_8h.html">loom_features.h</a>"</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#include "<a class="code" href="imx500__tensor_8h.html">imx500_tensor.h</a>"</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &lt;float.h&gt;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"></span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">/** @brief Read four checked little-endian bytes without an unaligned cast.</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment"> * @param data At least four bytes inside validated tensor metadata.</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment"> * @return Unsigned component value in host representation. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00031">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">   31</a></span><span class="keyword">static</span> uint32_t <a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(<span class="keyword">const</span> uint8_t *data)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>{</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> <span class="keywordflow">return</span> (uint32_t)data[0] | (uint32_t)data[1] &lt;&lt; 8</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>         | (uint32_t)data[2] &lt;&lt; 16 | (uint32_t)data[3] &lt;&lt; 24;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>}</div>
+</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment"></span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">/** @brief Read a bounded shape extent from one driver tensor record.</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment"> * @param record Full accessible tensor-info record.</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment"> * @param dimension Validated zero-based dimension below the rank limit.</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment"> * @return The little-endian unsigned 16-bit extent, widened for checked arithmetic. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00041">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="loom__features_8c.html#ab455a6b2b575c9792767b13b7806eff3">   41</a></span><span class="keyword">static</span> uint32_t <a class="code hl_function" href="loom__features_8c.html#ab455a6b2b575c9792767b13b7806eff3">feature_extent</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>, uint32_t dimension)</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>{</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> offset = <a class="code hl_define" href="imx500__tensor_8h.html#a60799def402d09f4116a80d05dae519d">IMX500_TENSOR_DIMENSIONS_OFFSET</a> + dimension * <a class="code hl_define" href="imx500__tensor_8h.html#a3086cb4702fe4746b5fe5ef92f1daf29">IMX500_TENSOR_DIMENSION_BYTES</a>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> <span class="keywordflow">return</span> (uint32_t)<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>[offset] | (uint32_t)<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>[offset + 1] &lt;&lt; 8;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>}</div>
+</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00047">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="loom__features_8c.html#a661178dea479f32a5e9b242d619f7b58">   47</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="loom__features_8c.html#a661178dea479f32a5e9b242d619f7b58">loom_features_valid</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *values, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> <span class="keyword">const</span> uint8_t *information, <span class="keywordtype">size_t</span> information_size)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>{</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> <span class="keywordflow">if</span> (!values || !information || information_size &lt; <a class="code hl_define" href="imx500__tensor_8h.html#a7df8a82f752d538e5a015f818d7e2b5e">IMX500_TENSOR_INFO_BYTES</a></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>      || <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> == 0 || <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &gt; <a class="code hl_define" href="imx500__tensor_8h.html#a748e051686fc087f9c6c735301de43c3">IMX500_TENSOR_ELEMENT_LIMIT</a>) {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  }</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> <span class="keyword">const</span> uint32_t tensors = <a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(information + <a class="code hl_define" href="imx500__tensor_8h.html#a6c20d8343cab503bc4c27c987e54b81f">IMX500_TENSOR_COUNT_OFFSET</a>);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> <span class="keywordflow">if</span> (tensors == 0 || tensors &gt; <a class="code hl_define" href="imx500__tensor_8h.html#aa28c8ce8fa56a34784be570260afbb36">IMX500_TENSOR_MAX_COUNT</a>) {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  }</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> <span class="keywordtype">size_t</span> total = 0;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> <span class="keywordflow">for</span> (uint32_t index = 0; index &lt; tensors; ++index) {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> <span class="keyword">const</span> uint8_t *<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> = information + <a class="code hl_define" href="imx500__tensor_8h.html#a9e1c0212f3efd1e76cdcf6fd2505454d">IMX500_TENSOR_FIRST_RECORD_OFFSET</a></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                           + index * <a class="code hl_define" href="imx500__tensor_8h.html#af1c36cb2b7c415e2dc3432f309abe0ca">IMX500_TENSOR_RECORD_BYTES</a>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> <span class="keyword">const</span> uint32_t length = <a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + <a class="code hl_define" href="imx500__tensor_8h.html#adae83c8d4705a0fe441d6ebbf2113e2d">IMX500_TENSOR_LENGTH_OFFSET</a>);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> <span class="keyword">const</span> uint32_t rank = <a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + <a class="code hl_define" href="imx500__tensor_8h.html#a2914eb62163f94cd0b670545b73a74f6">IMX500_TENSOR_RANK_OFFSET</a>);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> <span class="keywordflow">if</span> (length == 0 || length &gt; <a class="code hl_define" href="imx500__tensor_8h.html#a748e051686fc087f9c6c735301de43c3">IMX500_TENSOR_ELEMENT_LIMIT</a></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        || rank == 0 || rank &gt; <a class="code hl_define" href="imx500__tensor_8h.html#addf970a897dece17c5b99eec4303da97">IMX500_TENSOR_MAX_RANK</a>) {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    uint32_t product = 1;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> <span class="comment">/* Shape metadata is untrusted. Check with division before multiplication,</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="comment">     * and check the cumulative budget before adding another tensor's elements. */</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> <span class="keywordflow">for</span> (uint32_t dimension = 0; dimension &lt; rank; ++dimension) {</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> <span class="keyword">const</span> uint32_t extent = <a class="code hl_function" href="loom__features_8c.html#ab455a6b2b575c9792767b13b7806eff3">feature_extent</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>, dimension);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> <span class="keywordflow">if</span> (extent == 0 || product &gt; <a class="code hl_define" href="imx500__tensor_8h.html#a748e051686fc087f9c6c735301de43c3">IMX500_TENSOR_ELEMENT_LIMIT</a> / extent) {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>      }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>      product *= extent;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> <span class="keywordflow">if</span> (product != length || total &gt; <a class="code hl_define" href="imx500__tensor_8h.html#a748e051686fc087f9c6c735301de43c3">IMX500_TENSOR_ELEMENT_LIMIT</a> - length) {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    }</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    total += length;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  }</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> <span class="keywordflow">if</span> (total != <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>) {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  }</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>; ++index) {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> <span class="comment">/* NaN/infinity cannot be valid feature evidence or a useful input</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="comment">     * to future similarity/geometric checks. Transport validity is still not a match. */</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> <span class="keywordflow">if</span> (!isfinite(values[index])) {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    }</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  }</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>}</div>
+</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="keyword">_Static_assert</span>(<span class="keyword">sizeof</span>(float) == 4 &amp;&amp; FLT_RADIX == 2 &amp;&amp; FLT_MANT_DIG == 24 &amp;&amp; FLT_MAX_EXP == 128,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> <span class="stringliteral">"LOOM evidence requires IEEE binary32"</span>);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00100">
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="loom__features_8c.html#a26f6c9799f050f4c81a570df58b77377">  100</a></span><span class="keywordtype">size_t</span> <a class="code hl_function" href="loom__features_8c.html#a26f6c9799f050f4c81a570df58b77377">loom_features_size</a>(<span class="keywordtype">size_t</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>)</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>{</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> <span class="keywordflow">return</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &amp;&amp; <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> &lt;= <a class="code hl_define" href="imx500__tensor_8h.html#a748e051686fc087f9c6c735301de43c3">IMX500_TENSOR_ELEMENT_LIMIT</a> ? 32 + <a class="code hl_define" href="imx500__tensor_8h.html#a7df8a82f752d538e5a015f818d7e2b5e">IMX500_TENSOR_INFO_BYTES</a> + <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> * 4 : 0;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>}</div>
+</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="comment"></span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="comment">/** @brief Encode one little-endian field in a LOOM evidence record.</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="comment"> * @param[out] data Storage validated by the caller for @p bytes octets.</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span><span class="comment"> * @param value Unsigned bits to write.</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="comment"> * @param bytes Field width, at most eight.</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="comment"> * @details Pack explicit bytes so persisted data does not depend on host</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="comment"> * byte order or alignment. */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00111">
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="loom__features_8c.html#a495681cc9d66bb073e155425232c026e">  111</a></span><span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="loom__features_8c.html#a495681cc9d66bb073e155425232c026e">feature_put</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *data, uint64_t value, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>)</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>{</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>; ++index) data[index] = (<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>)(value &gt;&gt; (8 * index));</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>}</div>
+</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00116">
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="loom__features_8c.html#a11fe6816fc3d92e0c58b0f5a0ca9ad49">  116</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="loom__features_8c.html#a11fe6816fc3d92e0c58b0f5a0ca9ad49">loom_features_pack</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>, <span class="keyword">const</span> <span class="keywordtype">float</span> *values, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>,</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> <span class="keyword">const</span> uint8_t *information, <span class="keywordtype">size_t</span> information_size,</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                        uint64_t sequence, uint64_t sensor_timestamp_ns)</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>{</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a> = <a class="code hl_function" href="loom__features_8c.html#a26f6c9799f050f4c81a570df58b77377">loom_features_size</a>(<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> || !<a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a> || <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a> &lt; <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a> || !<a class="code hl_function" href="loom__features_8c.html#a661178dea479f32a5e9b242d619f7b58">loom_features_valid</a>(values, <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>, information, information_size)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> <span class="keyword">const</span> <span class="keywordtype">char</span> magic[] = <span class="stringliteral">"LOOMNN02"</span>;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; 8; ++index) <a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>[index] = (<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>)magic[index];</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> <a class="code hl_function" href="loom__features_8c.html#a495681cc9d66bb073e155425232c026e">feature_put</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 8, sequence, 8);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> <a class="code hl_function" href="loom__features_8c.html#a495681cc9d66bb073e155425232c026e">feature_put</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 16, sensor_timestamp_ns, 8);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> <a class="code hl_function" href="loom__features_8c.html#a495681cc9d66bb073e155425232c026e">feature_put</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 24, <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>, 4);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> <a class="code hl_function" href="loom__features_8c.html#a495681cc9d66bb073e155425232c026e">feature_put</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 28, <a class="code hl_define" href="imx500__tensor_8h.html#a7df8a82f752d538e5a015f818d7e2b5e">IMX500_TENSOR_INFO_BYTES</a>, 4);</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; <a class="code hl_define" href="imx500__tensor_8h.html#a7df8a82f752d538e5a015f818d7e2b5e">IMX500_TENSOR_INFO_BYTES</a>; ++index) <a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>[32 + index] = information[index];</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; <a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>; ++index) {</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> <span class="keyword">union </span>{ <span class="keywordtype">float</span> floating; uint32_t bits; } value = {.floating = values[index]};</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> <a class="code hl_function" href="loom__features_8c.html#a495681cc9d66bb073e155425232c026e">feature_put</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 32 + <a class="code hl_define" href="imx500__tensor_8h.html#a7df8a82f752d538e5a015f818d7e2b5e">IMX500_TENSOR_INFO_BYTES</a> + index * 4, value.bits, 4);</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  }</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>}</div>
+</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00136">
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="loom__features_8c.html#a72c3651b6706705b28459a37ab3f5a88">  136</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="loom__features_8c.html#a72c3651b6706705b28459a37ab3f5a88">loom_features_unpack</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a>, <span class="keywordtype">float</span> *values, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>,</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                          uint8_t *information, <span class="keywordtype">size_t</span> information_size, <span class="keywordtype">size_t</span> *<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>,</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                          uint64_t *sequence, uint64_t *sensor_timestamp_ns)</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>{</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>) *<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = 0;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> || <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a> &lt; 32 || !values || !information || !<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> || !sequence || !sensor_timestamp_ns</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>      || information_size &lt; <a class="code hl_define" href="imx500__tensor_8h.html#a7df8a82f752d538e5a015f818d7e2b5e">IMX500_TENSOR_INFO_BYTES</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> <span class="keyword">const</span> <span class="keywordtype">char</span> magic[] = <span class="stringliteral">"LOOMNN02"</span>;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; 8; ++index) <span class="keywordflow">if</span> (<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>[index] != (<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>)magic[index]) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> total = <a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 24);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="loom__features_8c.html#a26f6c9799f050f4c81a570df58b77377">loom_features_size</a>(total) || <a class="code hl_variable" href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a> != <a class="code hl_function" href="loom__features_8c.html#a26f6c9799f050f4c81a570df58b77377">loom_features_size</a>(total) || total &gt; <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>      || <a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 28) != <a class="code hl_define" href="imx500__tensor_8h.html#a7df8a82f752d538e5a015f818d7e2b5e">IMX500_TENSOR_INFO_BYTES</a>) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; <a class="code hl_define" href="imx500__tensor_8h.html#a7df8a82f752d538e5a015f818d7e2b5e">IMX500_TENSOR_INFO_BYTES</a>; ++index) information[index] = <a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a>[32 + index];</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> index = 0; index &lt; total; ++index) {</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> <span class="keyword">union </span>{ uint32_t bits; <span class="keywordtype">float</span> floating; } value = {.bits = <a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 32 + <a class="code hl_define" href="imx500__tensor_8h.html#a7df8a82f752d538e5a015f818d7e2b5e">IMX500_TENSOR_INFO_BYTES</a> + index * 4)};</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    values[index] = value.floating;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  }</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="loom__features_8c.html#a661178dea479f32a5e9b242d619f7b58">loom_features_valid</a>(values, total, information, information_size)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>  *<a class="code hl_variable" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a> = total;</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  *sequence = (uint64_t)<a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 8) | (uint64_t)<a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 12) &lt;&lt; 32;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  *sensor_timestamp_ns = (uint64_t)<a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 16) | (uint64_t)<a class="code hl_function" href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a>(<a class="code hl_function" href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a> + 20) &lt;&lt; 32;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>}</div>
+</div>
+<div class="ttc" id="acapture__arbiter_8c_html_a6d68504c09ee186ab8deb6b756b4bd66"><div class="ttname"><a href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a></div><div class="ttdeci">static unsigned capacity[COVERAGE_CAMERAS]</div><div class="ttdef"><b>Definition</b> <a href="capture__arbiter_8c_source.html#l00075">capture_arbiter.c:75</a></div></div>
+<div class="ttc" id="achdk__pipe_8c_html_a854352f53b148adc24983a58a1866d66"><div class="ttname"><a href="chdk__pipe_8c.html#a854352f53b148adc24983a58a1866d66">size</a></div><div class="ttdeci">size_t size</div><div class="ttdef"><b>Definition</b> <a href="chdk__pipe_8c_source.html#l00143">chdk_pipe.c:143</a></div></div>
+<div class="ttc" id="achdk__pipe_8c_html_ab8e091aaa3bb9fdbbb23aac0ecc744d5"><div class="ttname"><a href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a></div><div class="ttdeci">uint8_t bytes[CHDK_CONTROL_REPLY_SIZE]</div><div class="ttdef"><b>Definition</b> <a href="chdk__pipe_8c_source.html#l00144">chdk_pipe.c:144</a></div></div>
+<div class="ttc" id="adipla__camera__backend_8c_html_ac395aa5127c49db063effce9818917f3"><div class="ttname"><a href="dipla__camera__backend_8c.html#ac395aa5127c49db063effce9818917f3">record</a></div><div class="ttdeci">static int record(const union dc_shot_union *shot)</div><div class="ttdoc">Retrieve a point and admit a new observation only when its credit is free.</div><div class="ttdef"><b>Definition</b> <a href="dipla__camera__backend_8c_source.html#l00206">dipla_camera_backend.c:206</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html"><div class="ttname"><a href="imx500__tensor_8h.html">imx500_tensor.h</a></div><div class="ttdoc">Shared IMX500 tensor-info wire layout and bounded decoding policy.</div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_a2914eb62163f94cd0b670545b73a74f6"><div class="ttname"><a href="imx500__tensor_8h.html#a2914eb62163f94cd0b670545b73a74f6">IMX500_TENSOR_RANK_OFFSET</a></div><div class="ttdeci">#define IMX500_TENSOR_RANK_OFFSET</div><div class="ttdoc">Shape rank offset within a record.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00039">imx500_tensor.h:39</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_a3086cb4702fe4746b5fe5ef92f1daf29"><div class="ttname"><a href="imx500__tensor_8h.html#a3086cb4702fe4746b5fe5ef92f1daf29">IMX500_TENSOR_DIMENSION_BYTES</a></div><div class="ttdeci">#define IMX500_TENSOR_DIMENSION_BYTES</div><div class="ttdoc">Each extent is a little-endian unsigned 16-bit value.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00043">imx500_tensor.h:43</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_a60799def402d09f4116a80d05dae519d"><div class="ttname"><a href="imx500__tensor_8h.html#a60799def402d09f4116a80d05dae519d">IMX500_TENSOR_DIMENSIONS_OFFSET</a></div><div class="ttdeci">#define IMX500_TENSOR_DIMENSIONS_OFFSET</div><div class="ttdoc">First shape extent follows the two 32-bit fields.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00041">imx500_tensor.h:41</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_a6c20d8343cab503bc4c27c987e54b81f"><div class="ttname"><a href="imx500__tensor_8h.html#a6c20d8343cab503bc4c27c987e54b81f">IMX500_TENSOR_COUNT_OFFSET</a></div><div class="ttdeci">#define IMX500_TENSOR_COUNT_OFFSET</div><div class="ttdoc">Little-endian 32-bit tensor count starts after the fixed header.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00031">imx500_tensor.h:31</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_a748e051686fc087f9c6c735301de43c3"><div class="ttname"><a href="imx500__tensor_8h.html#a748e051686fc087f9c6c735301de43c3">IMX500_TENSOR_ELEMENT_LIMIT</a></div><div class="ttdeci">#define IMX500_TENSOR_ELEMENT_LIMIT</div><div class="ttdoc">Sensoraia's accepted element budget, not a claim about every RPK model.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00052">imx500_tensor.h:52</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_a7df8a82f752d538e5a015f818d7e2b5e"><div class="ttname"><a href="imx500__tensor_8h.html#a7df8a82f752d538e5a015f818d7e2b5e">IMX500_TENSOR_INFO_BYTES</a></div><div class="ttdeci">#define IMX500_TENSOR_INFO_BYTES</div><div class="ttdoc">Full accessible metadata required before following record offsets.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00049">imx500_tensor.h:49</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_a9e1c0212f3efd1e76cdcf6fd2505454d"><div class="ttname"><a href="imx500__tensor_8h.html#a9e1c0212f3efd1e76cdcf6fd2505454d">IMX500_TENSOR_FIRST_RECORD_OFFSET</a></div><div class="ttdeci">#define IMX500_TENSOR_FIRST_RECORD_OFFSET</div><div class="ttdoc">First record starts after the count, keeping offset arithmetic in one place.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00033">imx500_tensor.h:33</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_aa28c8ce8fa56a34784be570260afbb36"><div class="ttname"><a href="imx500__tensor_8h.html#aa28c8ce8fa56a34784be570260afbb36">IMX500_TENSOR_MAX_COUNT</a></div><div class="ttdeci">#define IMX500_TENSOR_MAX_COUNT</div><div class="ttdoc">Metadata reserves sixteen records even when a model uses fewer outputs.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00047">imx500_tensor.h:47</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_adae83c8d4705a0fe441d6ebbf2113e2d"><div class="ttname"><a href="imx500__tensor_8h.html#adae83c8d4705a0fe441d6ebbf2113e2d">IMX500_TENSOR_LENGTH_OFFSET</a></div><div class="ttdeci">#define IMX500_TENSOR_LENGTH_OFFSET</div><div class="ttdoc">Element count offset within a record, distinct from its byte length.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00037">imx500_tensor.h:37</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_addf970a897dece17c5b99eec4303da97"><div class="ttname"><a href="imx500__tensor_8h.html#addf970a897dece17c5b99eec4303da97">IMX500_TENSOR_MAX_RANK</a></div><div class="ttdeci">#define IMX500_TENSOR_MAX_RANK</div><div class="ttdoc">Fixed shape capacity in the driver ABI; reject greater ranks before indexing.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00045">imx500_tensor.h:45</a></div></div>
+<div class="ttc" id="aimx500__tensor_8h_html_af1c36cb2b7c415e2dc3432f309abe0ca"><div class="ttname"><a href="imx500__tensor_8h.html#af1c36cb2b7c415e2dc3432f309abe0ca">IMX500_TENSOR_RECORD_BYTES</a></div><div class="ttdeci">#define IMX500_TENSOR_RECORD_BYTES</div><div class="ttdoc">One record contains length, rank and sixteen 16-bit shape extents.</div><div class="ttdef"><b>Definition</b> <a href="imx500__tensor_8h_source.html#l00035">imx500_tensor.h:35</a></div></div>
+<div class="ttc" id="aloom__features_8c_html_a11fe6816fc3d92e0c58b0f5a0ca9ad49"><div class="ttname"><a href="loom__features_8c.html#a11fe6816fc3d92e0c58b0f5a0ca9ad49">loom_features_pack</a></div><div class="ttdeci">bool loom_features_pack(unsigned char *record, size_t capacity, const float *values, size_t count, const uint8_t *information, size_t information_size, uint64_t sequence, uint64_t sensor_timestamp_ns)</div><div class="ttdoc">Pack validated same-exposure shapes, exact uint64 identities and float bits.</div><div class="ttdef"><b>Definition</b> <a href="#l00116">loom_features.c:116</a></div></div>
+<div class="ttc" id="aloom__features_8c_html_a26f6c9799f050f4c81a570df58b77377"><div class="ttname"><a href="loom__features_8c.html#a26f6c9799f050f4c81a570df58b77377">loom_features_size</a></div><div class="ttdeci">size_t loom_features_size(size_t count)</div><div class="ttdoc">Required bytes for 1..4096 floats, or zero for unsupported counts.</div><div class="ttdef"><b>Definition</b> <a href="#l00100">loom_features.c:100</a></div></div>
+<div class="ttc" id="aloom__features_8c_html_a27a1d04a3121ca02014f366136077187"><div class="ttname"><a href="loom__features_8c.html#a27a1d04a3121ca02014f366136077187">feature_u32</a></div><div class="ttdeci">static uint32_t feature_u32(const uint8_t *data)</div><div class="ttdoc">Read four checked little-endian bytes without an unaligned cast.</div><div class="ttdef"><b>Definition</b> <a href="#l00031">loom_features.c:31</a></div></div>
+<div class="ttc" id="aloom__features_8c_html_a495681cc9d66bb073e155425232c026e"><div class="ttname"><a href="loom__features_8c.html#a495681cc9d66bb073e155425232c026e">feature_put</a></div><div class="ttdeci">static void feature_put(unsigned char *data, uint64_t value, size_t bytes)</div><div class="ttdoc">Encode one little-endian field in a LOOM evidence record.</div><div class="ttdef"><b>Definition</b> <a href="#l00111">loom_features.c:111</a></div></div>
+<div class="ttc" id="aloom__features_8c_html_a661178dea479f32a5e9b242d619f7b58"><div class="ttname"><a href="loom__features_8c.html#a661178dea479f32a5e9b242d619f7b58">loom_features_valid</a></div><div class="ttdeci">bool loom_features_valid(const float *values, size_t count, const uint8_t *information, size_t information_size)</div><div class="ttdoc">Validate finite features against the shared IMX500 shape metadata.</div><div class="ttdef"><b>Definition</b> <a href="#l00047">loom_features.c:47</a></div></div>
+<div class="ttc" id="aloom__features_8c_html_a72c3651b6706705b28459a37ab3f5a88"><div class="ttname"><a href="loom__features_8c.html#a72c3651b6706705b28459a37ab3f5a88">loom_features_unpack</a></div><div class="ttdeci">bool loom_features_unpack(const unsigned char *record, size_t size, float *values, size_t capacity, uint8_t *information, size_t information_size, size_t *count, uint64_t *sequence, uint64_t *sensor_timestamp_ns)</div><div class="ttdoc">Validate and decode an exact-sized binary record into bounded output.</div><div class="ttdef"><b>Definition</b> <a href="#l00136">loom_features.c:136</a></div></div>
+<div class="ttc" id="aloom__features_8c_html_ab455a6b2b575c9792767b13b7806eff3"><div class="ttname"><a href="loom__features_8c.html#ab455a6b2b575c9792767b13b7806eff3">feature_extent</a></div><div class="ttdeci">static uint32_t feature_extent(const uint8_t *record, uint32_t dimension)</div><div class="ttdoc">Read a bounded shape extent from one driver tensor record.</div><div class="ttdef"><b>Definition</b> <a href="#l00041">loom_features.c:41</a></div></div>
+<div class="ttc" id="aloom__features_8h_html"><div class="ttname"><a href="loom__features_8h.html">loom_features.h</a></div><div class="ttdoc">LOOM-owned bounded feature validation and evidence serialization.</div></div>
+<div class="ttc" id="apose__log_8c_html_a76d971a3c552bc58ba9f0d5fceae9806"><div class="ttname"><a href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a></div><div class="ttdeci">static size_t count</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00079">pose_log.c:79</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

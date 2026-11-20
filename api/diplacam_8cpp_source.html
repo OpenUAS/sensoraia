@@ -1,0 +1,2180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/dipla_cam/diplacam.cpp Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('diplacam_8cpp_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">diplacam.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="diplacam_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"> * @file diplacam.cpp</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * @brief Command-line and worker-process entry point for Diplacam.</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * @details</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Keep application policy here and numerical work in its owning modules. This</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * entry point resolves settings, selects one planner, and chooses one lifetime:</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * a single standalone observation/route, or a long-lived IPC service whose</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * planner thread retains survey state across route chunks.</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Model settings are discovered relative to the executable, not the launcher's</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * working directory. Explicit CLI model/metadata paths override their defaults,</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment"> * but do not turn off an existing INI's runtime, descriptor, or comparison policy.</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment"> * The distinction matters when launching from a service, a shell, or a package.</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment"> * @par Planner selection is not error recovery</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment"> * cmaes=true explicitly selects the native comparison planner. It bypasses ONNX</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment"> * initialization rather than trying diffusion first and quietly changing the</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment"> * experiment on failure. An invalid selected planner reports an error.</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment"> * @par Output contract</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment"> * Standalone stdout is one eight-point XY CSV, with diagnostics on stderr.</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment"> * Model-predicted Z is retained inside the sampler for numerical parity, but</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment"> * is not an altitude command. Both planner choices share flight-margin preparation.</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="comment"> * @see dipla_planner.hpp Survey, inference, and publication-preparation boundaries.</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="comment"> * @see dipla_worker.hpp Persistent IPC service and descriptor ownership.</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include "<a class="code" href="dipla__planner_8hpp.html">dipla_planner.hpp</a>"</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#include "<a class="code" href="dipla__worker_8hpp.html">dipla_worker.hpp</a>"</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#include "<a class="code" href="compat_8hpp.html">aigenlib/compat.hpp</a>"</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#include "<a class="code" href="bounded__ini_8h.html">../../src/bounded_ini.h</a>"</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#include "<a class="code" href="inference__settings_8h.html">../../src/inference_settings.h</a>"</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#include "<a class="code" href="inference__model_8h.html">../../src/inference_model.h</a>"</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#include "<a class="code" href="src_2version_8h.html">../../src/version.h</a>"</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#include &lt;charconv&gt;</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#include &lt;random&gt;</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keyword">namespace </span>{<span class="comment"></span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="comment"> * @brief Parsed application settings before CLI overrides and mode dispatch.</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="comment"> * @details Optional values preserve the difference between absent and explicitly</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="comment"> * supplied settings. In particular, an explicitly false cmaes must still count</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="comment"> * as present when detecting duplicate keys; false is not a missing-value marker.</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">struct </span>ModelFiles {<span class="comment"></span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="comment">    /** @var ModelFiles::model</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="comment">     * @brief Graph path resolved by the shared inference-settings reader. */</span><span class="comment"></span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="comment">    /** @var ModelFiles::metadata</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment">     * @brief Diplacam deployment JSON path, rebased locally against the selected INI. */</span><span class="comment"></span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment">    /** Optional runtime directory resolved by the shared settings reader, not a library filename. */</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    std::string model, metadata, onnx_lib_path, conditioning_cache;<span class="comment"></span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="comment">    /** Shared backend, source, descriptor, thread, and deadline policy; not a second INI dialect. */</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    inference_settings inference{};<span class="comment"></span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="comment">    /** Optional explicit comparison-planner selector. */</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    std::optional&lt;bool&gt; cmaes;<span class="comment"></span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="comment">    /** Validated startup comparison policy; omitted keys retain its defaults. */</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    dipla::CmaesOptions comparison;<span class="comment"></span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="comment">    /** Startup-only experiment snapshot passed identically to standalone and worker modes. */</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    dipla::ExperimentOptions experiment;<span class="comment"></span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="comment">    /** Presence mask for application-specific keys, including explicitly false values. */</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    std::uint32_t seen = 0;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>};</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="comment"></span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="comment"> * @brief Parse one bounded integer setting without accepting partial numbers.</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="comment"> * @details `from_chars` avoids locale-dependent parsing; checking the final</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="comment"> * pointer rejects suffixes such as `100ms`, while the closed interval protects</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="comment"> * downstream work and integer conversions from unreasonable configuration.</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment"> * @param[in,out] destination Field populated only after complete validation.</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment"> * @param[in] text NUL-terminated decimal integer from the bounded parser.</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="comment"> * @param[in] minimum Inclusive lower bound.</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="comment"> * @param[in] maximum Inclusive upper bound.</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment"> * @return True only when the value is fully parsed and in range.</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment"> * @post On failure, destination is unchanged; a malformed value cannot partially apply.</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="keywordtype">bool</span> integer_setting(<span class="keywordtype">int</span>&amp; destination, <span class="keyword">const</span> <span class="keywordtype">char</span>* text, <span class="keywordtype">int</span> minimum, <span class="keywordtype">int</span> maximum) {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> <span class="keyword">const</span> std::string value(text);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> <span class="keywordtype">int</span> parsed = 0;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a> = std::from_chars(value.data(), value.data() + value.size(), parsed);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>.ec != std::errc{} || <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>.ptr != value.data() + value.size() || parsed &lt; minimum || parsed &gt; maximum)</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    destination = parsed;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>}</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="comment"></span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="comment"> * @brief Validate and store one key/value pair from the flat application INI.</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="comment"> * @details The shared inference-settings reader handles its common keys and</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="comment"> * delegates application-specific entries here. Keep descriptor/runtime/backend</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="comment"> * parsing there; copying it here would let two consumers disagree about one INI.</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="comment"> * Returning false rejects unknown or duplicate application settings rather than</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="comment"> * silently making behavior depend on file order.</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="comment"> * @param[in,out] context Pointer to the live ModelFiles being populated.</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="comment"> * @param[in] key Application setting name, NUL-terminated.</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="comment"> * @param[in] value Setting value, NUL-terminated and nonempty after common parsing.</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="comment"> * @return True when the key is recognized and its value is valid.</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="comment"> * @pre context points to ModelFiles for the duration of the synchronous read.</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="keywordtype">bool</span> <a class="code hl_function" href="ear__inference_8c.html#a86df3b68d8740d5f66b58bcdef74ee36">model_setting</a>(<span class="keywordtype">void</span>* context, <span class="keyword">const</span> <span class="keywordtype">char</span>* key, <span class="keyword">const</span> <span class="keywordtype">char</span>* value) {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> <span class="keyword">auto</span>&amp; files = *<span class="keyword">static_cast&lt;</span>ModelFiles*<span class="keyword">&gt;</span>(context);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* keys[] = {</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> <span class="stringliteral">"cmaes"</span>, <span class="stringliteral">"metadata"</span>, <span class="stringliteral">"cmaes_budget_ms"</span>, <span class="stringliteral">"cmaes_maxfevals"</span>, <span class="stringliteral">"cmaes_seed"</span>,</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> <span class="stringliteral">"diffusion_seed"</span>, <span class="stringliteral">"sensor_noise_seed"</span>, <span class="stringliteral">"flight_margin_cells"</span>, <span class="stringliteral">"gp_prior_mean"</span>,</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> <span class="stringliteral">"gp_kernel_variance"</span>, <span class="stringliteral">"gp_lengthscale_m"</span>, <span class="stringliteral">"sensor_fov_deg"</span>, <span class="stringliteral">"sensor_noise_variance"</span>,</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> <span class="stringliteral">"cmaes_utility_threshold"</span>, <span class="stringliteral">"cmaes_confidence_beta"</span>, <span class="stringliteral">"cmaes_step_xy_m"</span>, <span class="stringliteral">"conditioning_cache"</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    };</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> <span class="keyword">static_assert</span>(std::size(keys) &lt;= std::numeric_limits&lt;<span class="keyword">decltype</span>(files.seen)&gt;::digits);</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    std::size_t index = 0;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> <span class="keywordflow">while</span> (index &lt; std::size(keys) &amp;&amp; std::string_view(key) != keys[index]) ++index;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> <span class="keywordflow">if</span> (index == std::size(keys) || (files.seen &amp; (1U &lt;&lt; index))) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    files.seen |= 1U &lt;&lt; index;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> <span class="keywordflow">if</span> (std::string(key) == <span class="stringliteral">"cmaes"</span>) {</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> <span class="comment">// Accept one spelling for each boolean. A typo must not quietly select</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> <span class="comment">// another planner, and an earlier explicit false still forbids a duplicate.</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> <span class="keywordflow">if</span> (files.cmaes.has_value()) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> <span class="keywordflow">if</span> (std::string(value) == <span class="stringliteral">"true"</span>) files.cmaes = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::string(value) == <span class="stringliteral">"false"</span>) files.cmaes = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> <span class="keywordflow">else</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> <span class="keywordflow">if</span> (std::string_view(key) == <span class="stringliteral">"cmaes_budget_ms"</span>)</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> <span class="keywordflow">return</span> integer_setting(files.comparison.budget_ms, value, 1, <a class="code hl_variable" href="structdipla_1_1CmaesOptions.html#ac8694b9fec845b025d3fa28910f983a5">dipla::CmaesOptions::max_budget_ms</a>);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> <span class="keywordflow">if</span> (std::string_view(key) == <span class="stringliteral">"cmaes_maxfevals"</span>)</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> <span class="keywordflow">return</span> integer_setting(files.comparison.maxfevals, value, <a class="code hl_variable" href="structdipla_1_1CmaesOptions.html#ad029bd8f04ae95ed7ccf4f2e823f5e44">dipla::CmaesOptions::population_size</a>,</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> <a class="code hl_variable" href="structdipla_1_1CmaesOptions.html#a5998bfbbb3e076d65c6ba3b2dcb0b18d">dipla::CmaesOptions::max_evaluations</a>);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> <span class="keywordflow">if</span> (std::string_view(key) == <span class="stringliteral">"cmaes_seed"</span>)</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> <span class="keywordflow">return</span> integer_setting(files.comparison.seed, value, 1, std::numeric_limits&lt;int&gt;::max());</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> <span class="keywordflow">if</span> (std::string_view(key) == <span class="stringliteral">"diffusion_seed"</span>) <span class="keywordflow">return</span> <a class="code hl_function" href="bounded__ini_8h.html#a299282fea0cf096980cda7766370abdf">ini_uint</a>(value, &amp;files.experiment.diffusion_seed);</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> <span class="keywordflow">if</span> (std::string_view(key) == <span class="stringliteral">"sensor_noise_seed"</span>) <span class="keywordflow">return</span> <a class="code hl_function" href="bounded__ini_8h.html#a299282fea0cf096980cda7766370abdf">ini_uint</a>(value, &amp;files.experiment.sensor_noise_seed);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> <span class="keywordflow">if</span> (std::string_view(key) == <span class="stringliteral">"flight_margin_cells"</span>) {</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        uint64_t margin = 0;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="bounded__ini_8h.html#a299282fea0cf096980cda7766370abdf">ini_uint</a>(value, &amp;margin) || margin &gt;= (<a class="code hl_define" href="dipla__contract_8h.html#a904360608b42c1abbfeb10b58ee51867">DIPLA_GRID_SIDE</a> - 1U) / 2U) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        files.experiment.flight_margin_cells = <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span><span class="keyword">&gt;</span>(margin);</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    }</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> <span class="keyword">struct </span>RealSetting { <span class="keyword">const</span> <span class="keywordtype">char</span>* name; <span class="keywordtype">double</span>* destination; };</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> <span class="keyword">const</span> RealSetting real_settings[] = {</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        {<span class="stringliteral">"gp_prior_mean"</span>, &amp;files.experiment.gp_prior_mean},</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        {<span class="stringliteral">"gp_kernel_variance"</span>, &amp;files.experiment.gp_kernel_variance},</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        {<span class="stringliteral">"gp_lengthscale_m"</span>, &amp;files.experiment.gp_lengthscale_m},</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        {<span class="stringliteral">"sensor_fov_deg"</span>, &amp;files.experiment.sensor_fov_deg},</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        {<span class="stringliteral">"sensor_noise_variance"</span>, &amp;files.experiment.sensor_noise_variance},</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        {<span class="stringliteral">"cmaes_utility_threshold"</span>, &amp;files.comparison.utility_threshold},</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        {<span class="stringliteral">"cmaes_confidence_beta"</span>, &amp;files.comparison.confidence_beta},</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        {<span class="stringliteral">"cmaes_step_xy_m"</span>, &amp;files.comparison.step_xy_m}</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    };</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; setting : real_settings)</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> <span class="keywordflow">if</span> (std::string_view(key) == setting.name) <span class="keywordflow">return</span> <a class="code hl_function" href="bounded__ini_8h.html#a306c63222d2040978e7069ac2aaa34c2">ini_real</a>(value, setting.destination);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> <span class="comment">// Metadata belongs to Diplacam's DDIM adapter, not the generic inference</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> <span class="comment">// schema. Store its raw path now; the owning reader resolves its INI base.</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    std::string* destination = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> <span class="keywordflow">if</span> (std::string(key) == <span class="stringliteral">"metadata"</span>) destination = &amp;files.metadata;</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> <span class="keywordflow">if</span> (std::string(key) == <span class="stringliteral">"conditioning_cache"</span>) destination = &amp;files.conditioning_cache;</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> <span class="keywordflow">if</span> (!destination || !destination-&gt;empty()) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    *destination = value;</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>}</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="comment"></span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="comment"> * @brief Read, validate, and resolve application settings.</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="comment"> * @details Reads at most 8 KiB through the bounded INI parser.</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="comment"> * Model, metadata, and runtime-directory paths are resolved against the INI</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="comment"> * location so invocation from an unrelated working directory is reproducible.</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="comment"> * Comparison mode may omit model files because it does not construct ONNX.</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="comment"> * @param[in] filename Selected settings file.</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span><span class="comment"> * @param[in] require_model_files Whether missing CLI paths need diffusion defaults.</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="comment"> * @return Validated values, including empty fields for omitted optional settings.</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="comment"> * @throws std::runtime_error If the file is oversized, malformed, duplicated,</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="comment"> * contains an unknown key, or lacks required diffusion paths.</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="comment"> * @note Reading settings does not load the runtime or graph. Help/version and</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="comment"> * comparison-only execution must not acquire those resources as a side effect.</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="comment"> * @see model_setting Application-specific extension to the common INI grammar.</span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>ModelFiles read_model_settings(<span class="keyword">const</span> std::filesystem::path&amp; filename, <span class="keywordtype">bool</span> require_model_files) {</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    ModelFiles files;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> <span class="comment">// Diplacam is a diffusion consumer unless comparison is explicitly selected.</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> <span class="comment">// Do not let generic backend discovery invent a different experiment.</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> <a class="code hl_function" href="inference__settings_8c.html#ae0687100ad960ada0e3ca8725aaf1f64">inference_settings_init</a>(&amp;files.inference, <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa65fa95899b039f71954f4ef2e286a7b0">INFERENCE_ONNX</a>);</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    std::array&lt;char, 1024&gt; <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>{};</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> <span class="keywordflow">if</span> (!<a class="code hl_function" href="inference__settings_8c.html#ad4bf3aade46aa9534eef050f08909649">inference_settings_read</a>(&amp;files.inference, filename.c_str(), <a class="code hl_function" href="ear__inference_8c.html#a86df3b68d8740d5f66b58bcdef74ee36">model_setting</a>, &amp;files,</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>.data(), <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>.size()))</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Invalid model settings: "</span> + filename.string());</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    files.model = files.inference.<a class="code hl_variable" href="structinference__settings.html#a93a5c227ffaca6f436357d3e5ecbed32">model</a>;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    files.onnx_lib_path = files.inference.<a class="code hl_variable" href="structinference__settings.html#af95de132d4b6b44ca315eba6462b346e">library_directory</a>;</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        files.experiment.<a class="code hl_function" href="structdipla_1_1ExperimentOptions.html#a3eb81e53ef1eaa5da8d65c128b090526">validate</a>();</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        files.comparison.<a class="code hl_function" href="structdipla_1_1CmaesOptions.html#a32d40aa968f153eba13f31d1c61219df">validate</a>();</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error&amp; <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>) {</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Invalid model settings: "</span> + filename.string() + <span class="stringliteral">": "</span> + <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>.what());</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    }</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> <span class="comment">// The native backend is meaningful here only for explicit CMA-ES. LIVE is</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> <span class="comment">// the supported source selector; it does not turn the synthetic GP field</span></div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> <span class="comment">// into a physical camera driver or promise real-world observation accuracy.</span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> <span class="keywordflow">if</span> ((files.inference.<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> != <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa65fa95899b039f71954f4ef2e286a7b0">INFERENCE_ONNX</a> &amp;&amp;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>         !(files.inference.<a class="code hl_variable" href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">backend</a> == <a class="code hl_enumvalue" href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa0725cf5f6d6090ee22666f287c8bca16">INFERENCE_NATIVE</a> &amp;&amp; files.cmaes.value_or(<span class="keyword">false</span>))) ||</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        files.inference.<a class="code hl_variable" href="structinference__settings.html#a9d6fb148e77c773c1c1f966fca21c623">source</a> != <a class="code hl_enumvalue" href="inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaa7376acd8c0e2432a875b4c84cc40676f">INFERENCE_LIVE</a> ||</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        (require_model_files &amp;&amp; !files.cmaes.value_or(<span class="keyword">false</span>) &amp;&amp;</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>         (files.model.empty() || files.metadata.empty())))</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Invalid model settings: "</span> + filename.string());</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> <span class="comment">// Common paths were already resolved by inference_settings_read. Rebase</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> <span class="comment">// only the adapter-specific metadata path; rebasing a resolved path again</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> <span class="comment">// would make launch-directory changes surprisingly educational.</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> <span class="keyword">const</span> <span class="keyword">auto</span> directory = std::filesystem::absolute(filename).parent_path();</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> <span class="keywordflow">if</span> (!files.metadata.empty()) files.metadata = (directory / files.metadata).lexically_normal().string();</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> <span class="keywordflow">if</span> (!files.conditioning_cache.empty()) files.conditioning_cache = (directory / files.conditioning_cache).lexically_normal().string();</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> <span class="keywordflow">return</span> files;</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>}</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>}</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><span class="comment"></span> </div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="comment"> * @brief Parse CLI options and run standalone planning or the IPC worker.</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="comment"> * @details Defaults are discovered relative to the executable rather than the</span></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="comment"> * process working directory. Explicit CLI paths override model settings, while</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="comment"> * an existing INI is still read for runtime lookup and comparison controls.</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span><span class="comment"> * Standalone mode emits the eight XY points as CSV and keeps diagnostics on</span></div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span><span class="comment"> * stderr; the fixed 2 m survey footprint is separate from model-predicted Z.</span></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span><span class="comment"> * @param[in] argc Number of command-line arguments, including the executable name.</span></div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span><span class="comment"> * @param[in] argv Process-owned, NUL-terminated argument strings.</span></div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span><span class="comment"> * @retval 0 Standalone output, information request, or orderly IPC service completion.</span></div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span><span class="comment"> * @retval 1 A standard exception was reported on stderr, or the IPC service failed.</span></div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span><span class="comment"> * @note Information options return when encountered, before reading settings or</span></div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span><span class="comment"> * initializing inference. Earlier malformed arguments can still report errors.</span></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span><span class="comment"> * @warning The standalone command produces one route, not a simulated flight</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span><span class="comment"> * or a live waypoint publisher. The persistent owner uses serve() instead.</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="comment"> */</span></div>
+<div class="foldopen" data-end="}" data-start="{" id="foldopen00250">
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno"><a class="line" href="diplacam_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">  250</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="diplacam_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> <span class="comment">// Resolve the real executable rather than argv[0], which may be a PATH</span></div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> <span class="comment">// lookup or symlink. An adjacent INI wins over the source-tree layout,</span></div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> <span class="comment">// then the installed share layout is the final default. A present but</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> <span class="comment">// invalid selected INI is an error, not permission to try another one.</span></div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> <span class="keyword">const</span> <span class="keyword">auto</span> executable = std::filesystem::canonical(<span class="stringliteral">"/proc/self/exe"</span>);</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> <span class="keyword">const</span> <span class="keyword">auto</span> local = executable.parent_path() / <span class="stringliteral">"../modules/dipla_cam"</span>;</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> <span class="keyword">const</span> <span class="keyword">auto</span> directory = std::filesystem::exists(executable.parent_path() / <span class="stringliteral">"diplacam_settings.ini"</span>) ?</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>                       executable.parent_path() : std::filesystem::exists(local / <span class="stringliteral">"diplacam_settings.ini"</span>) ?</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>                       local : executable.parent_path() / <span class="stringliteral">"../share/diplacam"</span>;</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        std::string settings = (directory / <span class="stringliteral">"diplacam_settings.ini"</span>).<span class="keywordtype">string</span>();</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        std::string model, metadata;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        std::string field;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        std::string configuration;</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        std::optional&lt;std::string&gt; conditioning_cache;</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="chdk__pipe_8c.html#afbe0a70d4d8f0e3df77ec516d0926b23">descriptor</a> = -1;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> <span class="comment">// Start inside the two-cell horizontal margin. Height stays at the</span></div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> <span class="comment">// declared 2 m experiment; model-predicted Z must not replace this input.</span></div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        std::array&lt;double, 3&gt; position{{4, 4, <a class="code hl_define" href="dipla__contract_8h.html#a8dc42bd9cdffee43e04891f0b7e9530d">DIPLA_DEMO_HEIGHT_MM</a> / <a class="code hl_define" href="dipla__contract_8h.html#a68ca5bddbf57f6a17793280fad8c3334">DIPLA_MM_PER_M</a>}};</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> <span class="keywordtype">bool</span> show_config = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> <span class="keywordflow">for</span> (<span class="keywordtype">int</span> argument = 1; argument &lt; argc; ++argument) {</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> <span class="keyword">const</span> std::string option = argv[argument];</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--show-config"</span>) { show_config = <span class="keyword">true</span>; <span class="keywordflow">continue</span>; }</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> <span class="comment">// Information requests are model-free so broken deployments can</span></div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> <span class="comment">// still identify their binary/backend and show usable diagnostics.</span></div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--version"</span> || option == <span class="stringliteral">"-V"</span>) {</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                std::cout &lt;&lt; <a class="code hl_define" href="src_2version_8h.html#a68ca4d55bd2877fb646ee3fa71c38f6b">DIPLACAM_BUILD_VERSION</a> &lt;&lt; <span class="charliteral">'\n'</span>;</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>            }</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--build-info"</span>) {</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>                std::cout &lt;&lt; <a class="code hl_variable" href="namespaceaipp_1_1math.html#a392cab0a2fa00637ee477848ae97305b">aipp::math::build_info</a> &lt;&lt; <span class="charliteral">'\n'</span>;</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>            }</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--help"</span> || option == <span class="stringliteral">"-h"</span>) {</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                std::cout &lt;&lt; <a class="code hl_define" href="src_2version_8h.html#a68ca4d55bd2877fb646ee3fa71c38f6b">DIPLACAM_BUILD_VERSION</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                          &lt;&lt; <span class="stringliteral">"Usage: diplacam --field FIELD.csv [OPTIONS]\n"</span></div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> <span class="stringliteral">"       diplacam --config CONFIG.ini --ipc-fd FD [OPTIONS]\n\n"</span></div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> <span class="stringliteral">"Standalone planning:\n"</span></div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> <span class="stringliteral">"  --field FILE     Required field CSV; emits eight XY slots as CSV.\n"</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> <span class="stringliteral">"  --east M         Initial east coordinate in meters (default: 4).\n"</span></div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> <span class="stringliteral">"  --north M        Initial north coordinate in meters (default: 4).\n"</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> <span class="stringliteral">"                   Demonstration altitude is fixed at 2 m.\n\n"</span></div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> <span class="stringliteral">"IPC worker (normally started by USHER):\n"</span></div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> <span class="stringliteral">"  --config FILE    Worker INI: field, cadence_ms, planning_pose_max_age_ms.\n"</span></div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> <span class="stringliteral">"  --ipc-fd FD      Inherited IPC descriptor; requires --config, not --field.\n\n"</span></div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> <span class="stringliteral">"Model selection (both modes):\n"</span></div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> <span class="stringliteral">"  --settings FILE  Model-settings INI (default: executable-relative\n"</span></div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> <span class="stringliteral">"                   diplacam_settings.ini in the app, module or share directory).\n"</span></div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> <span class="stringliteral">"  --model FILE     Override the ONNX model from settings.\n"</span></div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> <span class="stringliteral">"  --metadata FILE  Override the deployment JSON from settings.\n"</span></div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> <span class="stringliteral">"  --conditioning-cache DIR  Opt-in verified encoder/denoiser bundle.\n"</span></div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> <span class="stringliteral">"                   INI paths are relative to the INI; CLI paths use cwd.\n"</span></div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> <span class="stringliteral">"                   Set onnx_lib_path in settings for a runtime directory.\n"</span></div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span> <span class="stringliteral">"                   cmaes=true selects comparison-only planning without ONNX.\n"</span></div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> <span class="stringliteral">"                   Comparison settings: cmaes_budget_ms (1..4000),\n"</span></div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> <span class="stringliteral">"                   cmaes_maxfevals (12..3000), cmaes_seed (positive int32).\n\n"</span></div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> <span class="stringliteral">"Information (no model or runtime required):\n"</span></div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> <span class="stringliteral">"  --version, -V    Show application version and build Git revision.\n"</span></div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span> <span class="stringliteral">"  --build-info     Show the compiled numerical backend.\n"</span></div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> <span class="stringliteral">"  --help, -h       Show this help.\n"</span>;</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                std::cout &lt;&lt; <span class="stringliteral">"  --show-config    Print effective settings without loading the model or field.\n"</span>;</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>            }</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span> <span class="comment">// Remaining options consume exactly one value. Check availability</span></div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span> <span class="comment">// before advancing argv, and reject partially parsed numeric values.</span></div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> <span class="keywordflow">if</span> (argument + 1 == argc) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Missing argument for "</span> + option);</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> <span class="keyword">const</span> std::string value = argv[++argument];</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--field"</span>) field = value;</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--settings"</span>) settings = value;</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--config"</span>) configuration = value;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--ipc-fd"</span>) {</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>                std::size_t used = 0;</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> <a class="code hl_variable" href="chdk__pipe_8c.html#afbe0a70d4d8f0e3df77ec516d0926b23">descriptor</a> = std::stoi(value, &amp;used);</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> <span class="keywordflow">if</span> (used != value.size() || <a class="code hl_variable" href="chdk__pipe_8c.html#afbe0a70d4d8f0e3df77ec516d0926b23">descriptor</a> &lt; 0) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Invalid IPC descriptor"</span>);</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>            }</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--model"</span>) model = value;</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--metadata"</span>) metadata = value;</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--conditioning-cache"</span>) conditioning_cache = value;</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> <span class="keywordflow">else</span> <span class="keywordflow">if</span> (option == <span class="stringliteral">"--east"</span> || option == <span class="stringliteral">"--north"</span>) {</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>                std::size_t used = 0;</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span> <span class="keyword">const</span> <span class="keywordtype">double</span> number = std::stod(value, &amp;used);</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span> <span class="keywordflow">if</span> (used != value.size() || !std::isfinite(number)) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Invalid coordinate"</span>);</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> <span class="comment">// Finite parsing belongs here; the selected survey/planner owns</span></div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> <span class="comment">// field bounds. Keep east as X and north as Y at every boundary.</span></div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>                position[option == <span class="stringliteral">"--east"</span> ? 0 : 1] = number;</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>            } <span class="keywordflow">else</span> <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"Unknown option: "</span> + option);</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>        }</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>        std::string onnx_lib_path;</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span> <span class="keywordtype">bool</span> cmaes = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span> <a class="code hl_struct" href="structdipla_1_1CmaesOptions.html">dipla::CmaesOptions</a> comparison;</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span> <a class="code hl_struct" href="structdipla_1_1ExperimentOptions.html">dipla::ExperimentOptions</a> experiment;</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span> <a class="code hl_struct" href="structdipla_1_1NetworkOptions.html">dipla::NetworkOptions</a> network_options;</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> <span class="comment">// Read an existing INI even with both CLI model paths: it still chooses</span></div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span> <span class="comment">// runtime search, descriptor, resource limits, and comparison mode.</span></div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span> <span class="comment">// Only two explicit paths AND an absent INI bypass settings altogether.</span></div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span> <span class="keywordflow">if</span> (model.empty() || metadata.empty() || std::filesystem::exists(settings)) {</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span> <span class="keyword">const</span> <span class="keyword">auto</span> files = read_model_settings(settings, !show_config &amp;&amp; (model.empty() || metadata.empty()));</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span> <span class="keywordflow">if</span> (model.empty()) model = files.model;</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span> <span class="keywordflow">if</span> (metadata.empty()) metadata = files.metadata;</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>            onnx_lib_path = files.onnx_lib_path;</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span> <span class="comment">// A CLI graph override does not disable the settings descriptor.</span></div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span> <span class="comment">// If it names another export, the planner's integrity checks should</span></div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span> <span class="comment">// reject that mismatch rather than silently weaken the model contract.</span></div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>            network_options.<a class="code hl_variable" href="structdipla_1_1NetworkOptions.html#a9695f2777513a65df4706466a6891307">descriptor</a> = files.inference.<a class="code hl_variable" href="structinference__settings.html#ab7862d7d6da31147c5a1510d3e54d2c1">descriptor</a>;</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>            network_options.<a class="code hl_variable" href="structdipla_1_1NetworkOptions.html#ad71efc0aca6fc4ef834ca0cd0dce7af1">threads</a> = files.inference.<a class="code hl_variable" href="structinference__settings.html#ad0b2c0f90a20d1bde32e41240c0fe4bd">threads</a>;</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>            network_options.<a class="code hl_variable" href="structdipla_1_1NetworkOptions.html#ab4fdb974b09a49ed55c9fc4d41300d39">timeout_ms</a> = files.inference.<a class="code hl_variable" href="structinference__settings.html#aeca49c44248b334e9653478d2373cd8e">timeout_ms</a>;</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>            network_options.<a class="code hl_variable" href="structdipla_1_1NetworkOptions.html#a37615ad2b3f8b9d2200552e039f6f99f">conditioning_cache</a> = files.conditioning_cache;</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>            cmaes = files.cmaes.value_or(<span class="keyword">false</span>);</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>            comparison = files.comparison;</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>            experiment = files.experiment;</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>        }</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span> <span class="keywordflow">if</span> (conditioning_cache) network_options.<a class="code hl_variable" href="structdipla_1_1NetworkOptions.html#a37615ad2b3f8b9d2200552e039f6f99f">conditioning_cache</a> = *conditioning_cache;</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> <span class="keywordflow">if</span> (show_config) {</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>            std::cout &lt;&lt; std::setprecision(std::numeric_limits&lt;double&gt;::max_digits10)</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>                      &lt;&lt; <span class="stringliteral">"model="</span> &lt;&lt; model &lt;&lt; <span class="charliteral">'\n'</span> &lt;&lt; <span class="stringliteral">"metadata="</span> &lt;&lt; metadata &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>                      &lt;&lt; <span class="stringliteral">"model_descriptor="</span> &lt;&lt; network_options.<a class="code hl_variable" href="structdipla_1_1NetworkOptions.html#a9695f2777513a65df4706466a6891307">descriptor</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>                      &lt;&lt; <span class="stringliteral">"onnx_lib_path="</span> &lt;&lt; onnx_lib_path &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>                      &lt;&lt; <span class="stringliteral">"onnx_threads="</span> &lt;&lt; network_options.<a class="code hl_variable" href="structdipla_1_1NetworkOptions.html#ad71efc0aca6fc4ef834ca0cd0dce7af1">threads</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>                      &lt;&lt; <span class="stringliteral">"inference_timeout_ms="</span> &lt;&lt; network_options.<a class="code hl_variable" href="structdipla_1_1NetworkOptions.html#ab4fdb974b09a49ed55c9fc4d41300d39">timeout_ms</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>                      &lt;&lt; <span class="stringliteral">"conditioning_cache="</span> &lt;&lt; network_options.<a class="code hl_variable" href="structdipla_1_1NetworkOptions.html#a37615ad2b3f8b9d2200552e039f6f99f">conditioning_cache</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>                      &lt;&lt; <span class="stringliteral">"cmaes="</span> &lt;&lt; (cmaes ? <span class="stringliteral">"true"</span> : <span class="stringliteral">"false"</span>) &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>                      &lt;&lt; <span class="stringliteral">"cmaes_budget_ms="</span> &lt;&lt; comparison.<a class="code hl_variable" href="structdipla_1_1CmaesOptions.html#ae4b52ed8eb015c17db679174eba785b9">budget_ms</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>                      &lt;&lt; <span class="stringliteral">"cmaes_maxfevals="</span> &lt;&lt; comparison.<a class="code hl_variable" href="structdipla_1_1CmaesOptions.html#a066fec254f6be65913ddfcf9974f294c">maxfevals</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>                      &lt;&lt; <span class="stringliteral">"cmaes_seed="</span> &lt;&lt; comparison.<a class="code hl_variable" href="structdipla_1_1CmaesOptions.html#a91cf75c341c1a306cff94524e037e2d4">seed</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>                      &lt;&lt; <span class="stringliteral">"cmaes_utility_threshold="</span> &lt;&lt; comparison.<a class="code hl_variable" href="structdipla_1_1CmaesOptions.html#aa294bae4c1c2485ba704f15368bc7301">utility_threshold</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>                      &lt;&lt; <span class="stringliteral">"cmaes_confidence_beta="</span> &lt;&lt; comparison.<a class="code hl_variable" href="structdipla_1_1CmaesOptions.html#acf9b895404febd6baebf1f9079cac5b3">confidence_beta</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>                      &lt;&lt; <span class="stringliteral">"cmaes_step_xy_m="</span> &lt;&lt; comparison.<a class="code hl_variable" href="structdipla_1_1CmaesOptions.html#a29c7d12bb95057051e42c7699c9191e3">step_xy_m</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>                      &lt;&lt; <span class="stringliteral">"diffusion_seed="</span> &lt;&lt; experiment.<a class="code hl_variable" href="structdipla_1_1ExperimentOptions.html#ab4b1f7de217eb50dda8473ba2c2e9083">diffusion_seed</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>                      &lt;&lt; <span class="stringliteral">"sensor_noise_seed="</span> &lt;&lt; experiment.<a class="code hl_variable" href="structdipla_1_1ExperimentOptions.html#a811256717b1ec7aab895510f26ea3809">sensor_noise_seed</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>                      &lt;&lt; <span class="stringliteral">"flight_margin_cells="</span> &lt;&lt; experiment.<a class="code hl_variable" href="structdipla_1_1ExperimentOptions.html#a1e45b4d7d2449c857c0ddb6f8db7b3fd">flight_margin_cells</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>                      &lt;&lt; <span class="stringliteral">"gp_prior_mean="</span> &lt;&lt; experiment.<a class="code hl_variable" href="structdipla_1_1ExperimentOptions.html#ab4dd6dd43a24a0f3cb1941e118ad0572">gp_prior_mean</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>                      &lt;&lt; <span class="stringliteral">"gp_kernel_variance="</span> &lt;&lt; experiment.<a class="code hl_variable" href="structdipla_1_1ExperimentOptions.html#a24611cae543ec72996a920aed3625683">gp_kernel_variance</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>                      &lt;&lt; <span class="stringliteral">"gp_lengthscale_m="</span> &lt;&lt; experiment.<a class="code hl_variable" href="structdipla_1_1ExperimentOptions.html#a6be22a0c002b40ff55a2f1d9c1d5eb76">gp_lengthscale_m</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>                      &lt;&lt; <span class="stringliteral">"sensor_fov_deg="</span> &lt;&lt; experiment.<a class="code hl_variable" href="structdipla_1_1ExperimentOptions.html#a3ac72a9f735125d8523fdbf36060a1ef">sensor_fov_deg</a> &lt;&lt; <span class="charliteral">'\n'</span></div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>                      &lt;&lt; <span class="stringliteral">"sensor_noise_variance="</span> &lt;&lt; experiment.<a class="code hl_variable" href="structdipla_1_1ExperimentOptions.html#ab996afb7999b34528ed9a17326618363">sensor_noise_variance</a> &lt;&lt; <span class="charliteral">'\n'</span>;</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>        }</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span> <span class="comment">// The descriptor, not --config by itself, selects persistent IPC mode.</span></div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span> <span class="comment">// Forbid a second field source so the worker's config has one clear owner.</span></div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span> <span class="comment">// Runtime selection must precede creation of the planner's ONNX session.</span></div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="chdk__pipe_8c.html#afbe0a70d4d8f0e3df77ec516d0926b23">descriptor</a> &gt;= 0) {</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span> <span class="keywordflow">if</span> (configuration.empty() || !field.empty()) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"IPC mode requires only --config"</span>);</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span> <span class="keywordflow">if</span> (!cmaes) <a class="code hl_function" href="namespacedipla.html#a7ea36465fec98bd2fcb3ad71fe93e026">dipla::initialize_runtime</a>(onnx_lib_path);</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span> <span class="keywordflow">return</span> <a class="code hl_function" href="namespacedipla.html#a7db998d4aa20bbe1b06b495b1b37bd85">dipla::serve</a>(<a class="code hl_variable" href="chdk__pipe_8c.html#afbe0a70d4d8f0e3df77ec516d0926b23">descriptor</a>, configuration, model, metadata, cmaes, comparison, network_options, experiment);</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>        }</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span> <span class="keywordflow">if</span> (!configuration.empty()) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"--config requires --ipc-fd"</span>);</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span> <span class="keywordflow">if</span> (field.empty()) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"An explicit --field CSV is required"</span>);</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span> <span class="keywordflow">if</span> (!cmaes) <a class="code hl_function" href="namespacedipla.html#a7ea36465fec98bd2fcb3ad71fe93e026">dipla::initialize_runtime</a>(onnx_lib_path);</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> <span class="comment">// Standalone means a fresh experiment: one initial noisy observation,</span></div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span> <span class="comment">// then one route from that posterior. Do not feed private full-field truth</span></div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span> <span class="comment">// to the network or quietly plan from an entirely unobserved prior.</span></div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span> <a class="code hl_class" href="classdipla_1_1Survey.html">dipla::Survey</a> survey(field, experiment);</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>        survey.<a class="code hl_function" href="classdipla_1_1Survey.html#a8342974e2ef79efd0591549d2bc976c6">observe</a>(position[0], position[1], 1);</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span> <a class="code hl_typedef" href="namespacedipla.html#a949a30b6fd90e1de06f0b758648f3ada">dipla::Waypoints</a> route{};</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span> <span class="keywordflow">if</span> (cmaes) {</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span> <span class="keyword">const</span> <span class="keyword">auto</span> <a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a> = survey.<a class="code hl_function" href="classdipla_1_1Survey.html#ab90664dd26728a2986d3d3cc59af4d4c">compare</a>(position, comparison);</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span> <span class="comment">// Never print half a route as a successful eight-point result.</span></div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span> <span class="keywordflow">if</span> (!<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">"CMA-ES comparison budget expired before a complete route"</span>);</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>            route = *<a class="code hl_variable" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>;</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span> <a class="code hl_class" href="classdipla_1_1Network.html">dipla::Network</a> <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>(model, metadata, network_options);</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span> <a class="code hl_typedef" href="namespacedipla.html#a7f21fdc035b0c9399fef074a793c7a05">dipla::Noise</a> noise{};</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> <span class="comment">// Repeatable diffusion noise, independent of Survey's sensor RNG.</span></div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span> <span class="comment">// The sampler expects axis-major X/Y/Z blocks. Matching this seed</span></div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span> <span class="comment">// alone does not reproduce NumPy's different random-number stream.</span></div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>            std::mt19937_64 generator(experiment.<a class="code hl_variable" href="structdipla_1_1ExperimentOptions.html#ab4b1f7de217eb50dda8473ba2c2e9083">diffusion_seed</a>);</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>            std::normal_distribution&lt;double&gt; normal;</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span> <span class="keywordflow">for</span> (<span class="keywordtype">double</span>&amp; value : noise) value = normal(generator);</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>            route = <a class="code hl_variable" href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a>.sample(survey.<a class="code hl_function" href="classdipla_1_1Survey.html#a172a7747228de8e85fa453a2fe7b90cb">belief</a>(), position, noise);</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>        }</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span> <span class="comment">// Apply flight preparation once, regardless of which planner produced</span></div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span> <span class="comment">// the route. Keeping padding outside sample() preserves raw model parity.</span></div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span> <a class="code hl_function" href="namespacedipla.html#a412a294d2bf9224860e49f41cc970711">dipla::apply_flight_margin</a>(route, experiment.<a class="code hl_variable" href="structdipla_1_1ExperimentOptions.html#a1e45b4d7d2449c857c0ddb6f8db7b3fd">flight_margin_cells</a>);</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>        std::cerr &lt;&lt; <span class="stringliteral">"diplacam planner="</span> &lt;&lt; (cmaes ? <span class="stringliteral">"cmaes comparison_only=true onnx=false"</span> : <span class="stringliteral">"diffusion onnx=true"</span>) &lt;&lt; <span class="charliteral">'\n'</span>;</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>        std::cerr &lt;&lt; <span class="stringliteral">"diplacam field_fnv1a="</span> &lt;&lt; survey.<a class="code hl_function" href="classdipla_1_1Survey.html#a654b33cbf0573470997af112329113be">field_digest</a>() &lt;&lt; <span class="stringliteral">" total_variance="</span> &lt;&lt; survey.<a class="code hl_function" href="classdipla_1_1Survey.html#a5937411bcec15352d09cdea95aa3fdc3">total_variance</a>()</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>                  &lt;&lt; <span class="stringliteral">" actual_agl_m=2 predicted_z_discarded=true\n"</span>;</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span> <span class="comment">// stdout is a machine-readable contract: no banners, diagnostics, or Z</span></div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span> <span class="comment">// column mixed into a valid standalone result. Internal slots 0..7 map</span></div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span> <span class="comment">// to P1..P8 at publication, not to eight automatic navigation commands.</span></div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>        std::cout &lt;&lt; <span class="stringliteral">"slot,east_m,north_m\n"</span> &lt;&lt; std::setprecision(12);</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span> <span class="keywordflow">for</span> (std::size_t slot = 0; slot &lt; route.size(); ++slot)</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>            std::cout &lt;&lt; slot &lt;&lt; <span class="charliteral">','</span> &lt;&lt; route[slot][0] &lt;&lt; <span class="charliteral">','</span> &lt;&lt; route[slot][1] &lt;&lt; <span class="charliteral">'\n'</span>;</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span> <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>) {</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span> <span class="comment">// One process-level error boundary keeps diagnostics on stderr and</span></div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span> <span class="comment">// ensures invalid setup or planning is never reported as a successful CSV.</span></div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>        std::cerr &lt;&lt; <span class="stringliteral">"diplacam: "</span> &lt;&lt; <a class="code hl_variable" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>.what() &lt;&lt; <span class="charliteral">'\n'</span>;</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span> <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>    }</div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>}</div>
+</div>
+<div class="ttc" id="abounded__ini_8h_html"><div class="ttname"><a href="bounded__ini_8h.html">bounded_ini.h</a></div><div class="ttdoc">Allocation-free flat key=value mechanics; callers own schemas and storage.</div></div>
+<div class="ttc" id="abounded__ini_8h_html_a299282fea0cf096980cda7766370abdf"><div class="ttname"><a href="bounded__ini_8h.html#a299282fea0cf096980cda7766370abdf">ini_uint</a></div><div class="ttdeci">static bool ini_uint(const char *text, uint64_t *number)</div><div class="ttdoc">Parse digits-only uint64; overflow and signs are rejected.</div><div class="ttdef"><b>Definition</b> <a href="bounded__ini_8h_source.html#l00052">bounded_ini.h:52</a></div></div>
+<div class="ttc" id="abounded__ini_8h_html_a306c63222d2040978e7069ac2aaa34c2"><div class="ttname"><a href="bounded__ini_8h.html#a306c63222d2040978e7069ac2aaa34c2">ini_real</a></div><div class="ttdeci">static bool ini_real(const char *text, double *number)</div><div class="ttdoc">Parse finite decimal/exponent notation, rejecting range errors and suffixes.</div><div class="ttdef"><b>Definition</b> <a href="bounded__ini_8h_source.html#l00067">bounded_ini.h:67</a></div></div>
+<div class="ttc" id="achdk__pipe_8c_html_afbe0a70d4d8f0e3df77ec516d0926b23"><div class="ttname"><a href="chdk__pipe_8c.html#afbe0a70d4d8f0e3df77ec516d0926b23">descriptor</a></div><div class="ttdeci">int descriptor</div><div class="ttdef"><b>Definition</b> <a href="chdk__pipe_8c_source.html#l00142">chdk_pipe.c:142</a></div></div>
+<div class="ttc" id="aclassdipla_1_1Network_html"><div class="ttname"><a href="classdipla_1_1Network.html">dipla::Network</a></div><div class="ttdoc">Owns an ONNX session and samples eight metre-valued control points.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00159">dipla_planner.hpp:159</a></div></div>
+<div class="ttc" id="aclassdipla_1_1Survey_html"><div class="ttname"><a href="classdipla_1_1Survey.html">dipla::Survey</a></div><div class="ttdoc">Maintains a synthetic field, GP posterior, and planning comparisons.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00207">dipla_planner.hpp:207</a></div></div>
+<div class="ttc" id="aclassdipla_1_1Survey_html_a172a7747228de8e85fa453a2fe7b90cb"><div class="ttname"><a href="classdipla_1_1Survey.html#a172a7747228de8e85fa453a2fe7b90cb">dipla::Survey::belief</a></div><div class="ttdeci">Belief belief() const</div><div class="ttdoc">Copy the current GP marginal mean and variance into fixed-size storage.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8cpp_source.html#l00808">dipla_planner.cpp:808</a></div></div>
+<div class="ttc" id="aclassdipla_1_1Survey_html_a5937411bcec15352d09cdea95aa3fdc3"><div class="ttname"><a href="classdipla_1_1Survey.html#a5937411bcec15352d09cdea95aa3fdc3">dipla::Survey::total_variance</a></div><div class="ttdeci">double total_variance() const</div><div class="ttdoc">Return the sum of posterior marginal variances.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8cpp_source.html#l00825">dipla_planner.cpp:825</a></div></div>
+<div class="ttc" id="aclassdipla_1_1Survey_html_a654b33cbf0573470997af112329113be"><div class="ttname"><a href="classdipla_1_1Survey.html#a654b33cbf0573470997af112329113be">dipla::Survey::field_digest</a></div><div class="ttdeci">std::uint64_t field_digest() const</div><div class="ttdoc">Return the FNV-1a digest of the input CSV bytes.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8cpp_source.html#l00832">dipla_planner.cpp:832</a></div></div>
+<div class="ttc" id="aclassdipla_1_1Survey_html_a8342974e2ef79efd0591549d2bc976c6"><div class="ttname"><a href="classdipla_1_1Survey.html#a8342974e2ef79efd0591549d2bc976c6">dipla::Survey::observe</a></div><div class="ttdeci">bool observe(double east, double north, std::uint32_t number, double height=DIPLA_DEMO_HEIGHT_MM/DIPLA_MM_PER_M)</div><div class="ttdoc">Assimilate one synthetic observation at a local pose.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8cpp_source.html#l00715">dipla_planner.cpp:715</a></div></div>
+<div class="ttc" id="aclassdipla_1_1Survey_html_ab90664dd26728a2986d3d3cc59af4d4c"><div class="ttname"><a href="classdipla_1_1Survey.html#ab90664dd26728a2986d3d3cc59af4d4c">dipla::Survey::compare</a></div><div class="ttdeci">std::optional&lt; Waypoints &gt; compare(const std::array&lt; double, 3 &gt; &amp;position, const CmaesOptions &amp;options={}, const std::function&lt; bool()&gt; &amp;cancelled={}) const</div><div class="ttdoc">Run the explicitly requested native CMA-ES comparison planner.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8cpp_source.html#l00758">dipla_planner.cpp:758</a></div></div>
+<div class="ttc" id="acompat_8hpp_html"><div class="ttname"><a href="compat_8hpp.html">compat.hpp</a></div><div class="ttdoc">Eigen-style Aigen values and build-selected planner aliases.</div></div>
+<div class="ttc" id="adipla__contract_8h_html_a68ca5bddbf57f6a17793280fad8c3334"><div class="ttname"><a href="dipla__contract_8h.html#a68ca5bddbf57f6a17793280fad8c3334">DIPLA_MM_PER_M</a></div><div class="ttdeci">#define DIPLA_MM_PER_M</div><div class="ttdef"><b>Definition</b> <a href="dipla__contract_8h_source.html#l00049">dipla_contract.h:49</a></div></div>
+<div class="ttc" id="adipla__contract_8h_html_a8dc42bd9cdffee43e04891f0b7e9530d"><div class="ttname"><a href="dipla__contract_8h.html#a8dc42bd9cdffee43e04891f0b7e9530d">DIPLA_DEMO_HEIGHT_MM</a></div><div class="ttdeci">#define DIPLA_DEMO_HEIGHT_MM</div><div class="ttdef"><b>Definition</b> <a href="dipla__contract_8h_source.html#l00043">dipla_contract.h:43</a></div></div>
+<div class="ttc" id="adipla__contract_8h_html_a904360608b42c1abbfeb10b58ee51867"><div class="ttname"><a href="dipla__contract_8h.html#a904360608b42c1abbfeb10b58ee51867">DIPLA_GRID_SIDE</a></div><div class="ttdeci">#define DIPLA_GRID_SIDE</div><div class="ttdef"><b>Definition</b> <a href="dipla__contract_8h_source.html#l00025">dipla_contract.h:25</a></div></div>
+<div class="ttc" id="adipla__planner_8hpp_html"><div class="ttname"><a href="dipla__planner_8hpp.html">dipla_planner.hpp</a></div><div class="ttdoc">Public planning, synthetic-survey, and comparison APIs for Diplacam.</div></div>
+<div class="ttc" id="adipla__worker_8hpp_html"><div class="ttname"><a href="dipla__worker_8hpp.html">dipla_worker.hpp</a></div><div class="ttdoc">Public entry point for Diplacam's bounded local IPC worker.</div></div>
+<div class="ttc" id="adiplacam_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="diplacam_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdoc">Parse CLI options and run standalone planning or the IPC worker.</div><div class="ttdef"><b>Definition</b> <a href="#l00250">diplacam.cpp:250</a></div></div>
+<div class="ttc" id="aear__inference_8c_html_a86df3b68d8740d5f66b58bcdef74ee36"><div class="ttname"><a href="ear__inference_8c.html#a86df3b68d8740d5f66b58bcdef74ee36">model_setting</a></div><div class="ttdeci">static bool model_setting(void *unused, const char *key, const char *value)</div><div class="ttdoc">Keep class/threshold selection module-owned rather than assigning acoustic semantics to the common pa...</div><div class="ttdef"><b>Definition</b> <a href="ear__inference_8c_source.html#l00050">ear_inference.c:50</a></div></div>
+<div class="ttc" id="aear__inference_8c_html_a9d7475c1fcdbe454f3c09344c794b6b0"><div class="ttname"><a href="ear__inference_8c.html#a9d7475c1fcdbe454f3c09344c794b6b0">network</a></div><div class="ttdeci">static struct inference_context network</div><div class="ttdef"><b>Definition</b> <a href="ear__inference_8c_source.html#l00034">ear_inference.c:34</a></div></div>
+<div class="ttc" id="ainference__model_8h_html"><div class="ttname"><a href="inference__model_8h.html">inference_model.h</a></div><div class="ttdoc">Integrity-checked model contracts and independently owned tensor workspaces.</div></div>
+<div class="ttc" id="ainference__settings_8c_html_ad4bf3aade46aa9534eef050f08909649"><div class="ttname"><a href="inference__settings_8c.html#ad4bf3aade46aa9534eef050f08909649">inference_settings_read</a></div><div class="ttdeci">bool inference_settings_read(struct inference_settings *settings, const char *filename, ini_field_handler extra, void *context, char *error, size_t capacity)</div><div class="ttdoc">Parse one flat INI, delegate application keys and resolve paths against the selected file.</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8c_source.html#l00158">inference_settings.c:158</a></div></div>
+<div class="ttc" id="ainference__settings_8c_html_ae0687100ad960ada0e3ca8725aaf1f64"><div class="ttname"><a href="inference__settings_8c.html#ae0687100ad960ada0e3ca8725aaf1f64">inference_settings_init</a></div><div class="ttdeci">void inference_settings_init(struct inference_settings *settings, enum inference_backend backend)</div><div class="ttdoc">Reset storage and select conservative thread/timeout defaults.</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8c_source.html#l00028">inference_settings.c:28</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html"><div class="ttname"><a href="inference__settings_8h.html">inference_settings.h</a></div><div class="ttdoc">Shared application_settings.ini discovery with module-owned extra keys.</div></div>
+<div class="ttc" id="ainference__settings_8h_html_a978ba079e8d31aa8214d06682913b1eaa7376acd8c0e2432a875b4c84cc40676f"><div class="ttname"><a href="inference__settings_8h.html#a978ba079e8d31aa8214d06682913b1eaa7376acd8c0e2432a875b4c84cc40676f">INFERENCE_LIVE</a></div><div class="ttdeci">@ INFERENCE_LIVE</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00036">inference_settings.h:36</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_aadc188775e8328e4b24e0fd77d64830aa0725cf5f6d6090ee22666f287c8bca16"><div class="ttname"><a href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa0725cf5f6d6090ee22666f287c8bca16">INFERENCE_NATIVE</a></div><div class="ttdeci">@ INFERENCE_NATIVE</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00034">inference_settings.h:34</a></div></div>
+<div class="ttc" id="ainference__settings_8h_html_aadc188775e8328e4b24e0fd77d64830aa65fa95899b039f71954f4ef2e286a7b0"><div class="ttname"><a href="inference__settings_8h.html#aadc188775e8328e4b24e0fd77d64830aa65fa95899b039f71954f4ef2e286a7b0">INFERENCE_ONNX</a></div><div class="ttdeci">@ INFERENCE_ONNX</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00034">inference_settings.h:34</a></div></div>
+<div class="ttc" id="alwir__image_8c_html_aded4335c2df32c709945a69dfe77220d"><div class="ttname"><a href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a></div><div class="ttdeci">struct jpeg_error_mgr error</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00060">lwir_image.c:60</a></div></div>
+<div class="ttc" id="anamespaceaipp_1_1math_html_a392cab0a2fa00637ee477848ae97305b"><div class="ttname"><a href="namespaceaipp_1_1math.html#a392cab0a2fa00637ee477848ae97305b">aipp::math::build_info</a></div><div class="ttdeci">constexpr const char * build_info</div><div class="ttdef"><b>Definition</b> <a href="compat_8hpp_source.html#l00272">compat.hpp:272</a></div></div>
+<div class="ttc" id="anamespacedipla_html_a412a294d2bf9224860e49f41cc970711"><div class="ttname"><a href="namespacedipla.html#a412a294d2bf9224860e49f41cc970711">dipla::apply_flight_margin</a></div><div class="ttdeci">void apply_flight_margin(Waypoints &amp;route, unsigned margin_cells)</div><div class="ttdoc">Apply the configured horizontal flight margin.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8cpp_source.html#l00599">dipla_planner.cpp:599</a></div></div>
+<div class="ttc" id="anamespacedipla_html_a7db998d4aa20bbe1b06b495b1b37bd85"><div class="ttname"><a href="namespacedipla.html#a7db998d4aa20bbe1b06b495b1b37bd85">dipla::serve</a></div><div class="ttdeci">int serve(int descriptor, const std::string &amp;config_path, const std::string &amp;model, const std::string &amp;metadata, bool cmaes, const CmaesOptions &amp;comparison, const NetworkOptions &amp;network_options, const ExperimentOptions &amp;experiment)</div><div class="ttdoc">Serve a Diplacam session over an already-connected IPC descriptor.</div><div class="ttdef"><b>Definition</b> <a href="dipla__worker_8cpp_source.html#l00491">dipla_worker.cpp:491</a></div></div>
+<div class="ttc" id="anamespacedipla_html_a7ea36465fec98bd2fcb3ad71fe93e026"><div class="ttname"><a href="namespacedipla.html#a7ea36465fec98bd2fcb3ad71fe93e026">dipla::initialize_runtime</a></div><div class="ttdeci">void initialize_runtime(const std::string &amp;onnx_lib_path)</div><div class="ttdoc">Load the ONNX Runtime C API before constructing an inference session.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8cpp_source.html#l00075">dipla_planner.cpp:75</a></div></div>
+<div class="ttc" id="anamespacedipla_html_a7f21fdc035b0c9399fef074a793c7a05"><div class="ttname"><a href="namespacedipla.html#a7f21fdc035b0c9399fef074a793c7a05">dipla::Noise</a></div><div class="ttdeci">std::array&lt; double, DIPLA_COORDINATE_COUNT *points &gt; Noise</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00048">dipla_planner.hpp:48</a></div></div>
+<div class="ttc" id="anamespacedipla_html_a949a30b6fd90e1de06f0b758648f3ada"><div class="ttname"><a href="namespacedipla.html#a949a30b6fd90e1de06f0b758648f3ada">dipla::Waypoints</a></div><div class="ttdeci">std::array&lt; std::array&lt; double, DIPLA_COORDINATE_COUNT &gt;, points &gt; Waypoints</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00050">dipla_planner.hpp:50</a></div></div>
+<div class="ttc" id="asrc_2version_8h_html"><div class="ttname"><a href="src_2version_8h.html">version.h</a></div><div class="ttdoc">Compile-time build identity strings for USHER executables.</div></div>
+<div class="ttc" id="asrc_2version_8h_html_a68ca4d55bd2877fb646ee3fa71c38f6b"><div class="ttname"><a href="src_2version_8h.html#a68ca4d55bd2877fb646ee3fa71c38f6b">DIPLACAM_BUILD_VERSION</a></div><div class="ttdeci">#define DIPLACAM_BUILD_VERSION</div><div class="ttdef"><b>Definition</b> <a href="src_2version_8h_source.html#l00079">version.h:79</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html">dipla::CmaesOptions</a></div><div class="ttdoc">Bounded parameters for the comparison-only CMA-ES planner.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00117">dipla_planner.hpp:117</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html_a066fec254f6be65913ddfcf9974f294c"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html#a066fec254f6be65913ddfcf9974f294c">dipla::CmaesOptions::maxfevals</a></div><div class="ttdeci">int maxfevals</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00127">dipla_planner.hpp:127</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html_a29c7d12bb95057051e42c7699c9191e3"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html#a29c7d12bb95057051e42c7699c9191e3">dipla::CmaesOptions::step_xy_m</a></div><div class="ttdeci">double step_xy_m</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00135">dipla_planner.hpp:135</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html_a32d40aa968f153eba13f31d1c61219df"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html#a32d40aa968f153eba13f31d1c61219df">dipla::CmaesOptions::validate</a></div><div class="ttdeci">void validate() const</div><div class="ttdoc">Validate the complete comparison policy before planning.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8cpp_source.html#l00585">dipla_planner.cpp:585</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html_a5998bfbbb3e076d65c6ba3b2dcb0b18d"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html#a5998bfbbb3e076d65c6ba3b2dcb0b18d">dipla::CmaesOptions::max_evaluations</a></div><div class="ttdeci">static constexpr int max_evaluations</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00123">dipla_planner.hpp:123</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html_a91cf75c341c1a306cff94524e037e2d4"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html#a91cf75c341c1a306cff94524e037e2d4">dipla::CmaesOptions::seed</a></div><div class="ttdeci">int seed</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00129">dipla_planner.hpp:129</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html_aa294bae4c1c2485ba704f15368bc7301"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html#aa294bae4c1c2485ba704f15368bc7301">dipla::CmaesOptions::utility_threshold</a></div><div class="ttdeci">double utility_threshold</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00131">dipla_planner.hpp:131</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html_ac8694b9fec845b025d3fa28910f983a5"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html#ac8694b9fec845b025d3fa28910f983a5">dipla::CmaesOptions::max_budget_ms</a></div><div class="ttdeci">static constexpr int max_budget_ms</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00121">dipla_planner.hpp:121</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html_acf9b895404febd6baebf1f9079cac5b3"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html#acf9b895404febd6baebf1f9079cac5b3">dipla::CmaesOptions::confidence_beta</a></div><div class="ttdeci">double confidence_beta</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00133">dipla_planner.hpp:133</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html_ad029bd8f04ae95ed7ccf4f2e823f5e44"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html#ad029bd8f04ae95ed7ccf4f2e823f5e44">dipla::CmaesOptions::population_size</a></div><div class="ttdeci">static constexpr int population_size</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00119">dipla_planner.hpp:119</a></div></div>
+<div class="ttc" id="astructdipla_1_1CmaesOptions_html_ae4b52ed8eb015c17db679174eba785b9"><div class="ttname"><a href="structdipla_1_1CmaesOptions.html#ae4b52ed8eb015c17db679174eba785b9">dipla::CmaesOptions::budget_ms</a></div><div class="ttdeci">int budget_ms</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00125">dipla_planner.hpp:125</a></div></div>
+<div class="ttc" id="astructdipla_1_1ExperimentOptions_html"><div class="ttname"><a href="structdipla_1_1ExperimentOptions.html">dipla::ExperimentOptions</a></div><div class="ttdoc">Startup-only synthetic experiment settings shared by both planners.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00053">dipla_planner.hpp:53</a></div></div>
+<div class="ttc" id="astructdipla_1_1ExperimentOptions_html_a1e45b4d7d2449c857c0ddb6f8db7b3fd"><div class="ttname"><a href="structdipla_1_1ExperimentOptions.html#a1e45b4d7d2449c857c0ddb6f8db7b3fd">dipla::ExperimentOptions::flight_margin_cells</a></div><div class="ttdeci">unsigned flight_margin_cells</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00061">dipla_planner.hpp:61</a></div></div>
+<div class="ttc" id="astructdipla_1_1ExperimentOptions_html_a24611cae543ec72996a920aed3625683"><div class="ttname"><a href="structdipla_1_1ExperimentOptions.html#a24611cae543ec72996a920aed3625683">dipla::ExperimentOptions::gp_kernel_variance</a></div><div class="ttdeci">double gp_kernel_variance</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00065">dipla_planner.hpp:65</a></div></div>
+<div class="ttc" id="astructdipla_1_1ExperimentOptions_html_a3ac72a9f735125d8523fdbf36060a1ef"><div class="ttname"><a href="structdipla_1_1ExperimentOptions.html#a3ac72a9f735125d8523fdbf36060a1ef">dipla::ExperimentOptions::sensor_fov_deg</a></div><div class="ttdeci">double sensor_fov_deg</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00069">dipla_planner.hpp:69</a></div></div>
+<div class="ttc" id="astructdipla_1_1ExperimentOptions_html_a3eb81e53ef1eaa5da8d65c128b090526"><div class="ttname"><a href="structdipla_1_1ExperimentOptions.html#a3eb81e53ef1eaa5da8d65c128b090526">dipla::ExperimentOptions::validate</a></div><div class="ttdeci">void validate() const</div><div class="ttdoc">Reject nonfinite values and incompatible margins before allocation.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8cpp_source.html#l00576">dipla_planner.cpp:576</a></div></div>
+<div class="ttc" id="astructdipla_1_1ExperimentOptions_html_a6be22a0c002b40ff55a2f1d9c1d5eb76"><div class="ttname"><a href="structdipla_1_1ExperimentOptions.html#a6be22a0c002b40ff55a2f1d9c1d5eb76">dipla::ExperimentOptions::gp_lengthscale_m</a></div><div class="ttdeci">double gp_lengthscale_m</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00067">dipla_planner.hpp:67</a></div></div>
+<div class="ttc" id="astructdipla_1_1ExperimentOptions_html_a811256717b1ec7aab895510f26ea3809"><div class="ttname"><a href="structdipla_1_1ExperimentOptions.html#a811256717b1ec7aab895510f26ea3809">dipla::ExperimentOptions::sensor_noise_seed</a></div><div class="ttdeci">std::uint64_t sensor_noise_seed</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00057">dipla_planner.hpp:57</a></div></div>
+<div class="ttc" id="astructdipla_1_1ExperimentOptions_html_ab4b1f7de217eb50dda8473ba2c2e9083"><div class="ttname"><a href="structdipla_1_1ExperimentOptions.html#ab4b1f7de217eb50dda8473ba2c2e9083">dipla::ExperimentOptions::diffusion_seed</a></div><div class="ttdeci">std::uint64_t diffusion_seed</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00055">dipla_planner.hpp:55</a></div></div>
+<div class="ttc" id="astructdipla_1_1ExperimentOptions_html_ab4dd6dd43a24a0f3cb1941e118ad0572"><div class="ttname"><a href="structdipla_1_1ExperimentOptions.html#ab4dd6dd43a24a0f3cb1941e118ad0572">dipla::ExperimentOptions::gp_prior_mean</a></div><div class="ttdeci">double gp_prior_mean</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00063">dipla_planner.hpp:63</a></div></div>
+<div class="ttc" id="astructdipla_1_1ExperimentOptions_html_ab996afb7999b34528ed9a17326618363"><div class="ttname"><a href="structdipla_1_1ExperimentOptions.html#ab996afb7999b34528ed9a17326618363">dipla::ExperimentOptions::sensor_noise_variance</a></div><div class="ttdeci">double sensor_noise_variance</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00071">dipla_planner.hpp:71</a></div></div>
+<div class="ttc" id="astructdipla_1_1NetworkOptions_html"><div class="ttname"><a href="structdipla_1_1NetworkOptions.html">dipla::NetworkOptions</a></div><div class="ttdoc">Model identity and execution limits for a diffusion network.</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00144">dipla_planner.hpp:144</a></div></div>
+<div class="ttc" id="astructdipla_1_1NetworkOptions_html_a37615ad2b3f8b9d2200552e039f6f99f"><div class="ttname"><a href="structdipla_1_1NetworkOptions.html#a37615ad2b3f8b9d2200552e039f6f99f">dipla::NetworkOptions::conditioning_cache</a></div><div class="ttdeci">std::string conditioning_cache</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00152">dipla_planner.hpp:152</a></div></div>
+<div class="ttc" id="astructdipla_1_1NetworkOptions_html_a9695f2777513a65df4706466a6891307"><div class="ttname"><a href="structdipla_1_1NetworkOptions.html#a9695f2777513a65df4706466a6891307">dipla::NetworkOptions::descriptor</a></div><div class="ttdeci">std::string descriptor</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00146">dipla_planner.hpp:146</a></div></div>
+<div class="ttc" id="astructdipla_1_1NetworkOptions_html_ab4fdb974b09a49ed55c9fc4d41300d39"><div class="ttname"><a href="structdipla_1_1NetworkOptions.html#ab4fdb974b09a49ed55c9fc4d41300d39">dipla::NetworkOptions::timeout_ms</a></div><div class="ttdeci">unsigned timeout_ms</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00150">dipla_planner.hpp:150</a></div></div>
+<div class="ttc" id="astructdipla_1_1NetworkOptions_html_ad71efc0aca6fc4ef834ca0cd0dce7af1"><div class="ttname"><a href="structdipla_1_1NetworkOptions.html#ad71efc0aca6fc4ef834ca0cd0dce7af1">dipla::NetworkOptions::threads</a></div><div class="ttdeci">unsigned threads</div><div class="ttdef"><b>Definition</b> <a href="dipla__planner_8hpp_source.html#l00148">dipla_planner.hpp:148</a></div></div>
+<div class="ttc" id="astructinference__settings_html_a6be373cf4122e9e0df7a170864b03a7c"><div class="ttname"><a href="structinference__settings.html#a6be373cf4122e9e0df7a170864b03a7c">inference_settings::backend</a></div><div class="ttdeci">enum inference_backend backend</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00040">inference_settings.h:40</a></div></div>
+<div class="ttc" id="astructinference__settings_html_a93a5c227ffaca6f436357d3e5ecbed32"><div class="ttname"><a href="structinference__settings.html#a93a5c227ffaca6f436357d3e5ecbed32">inference_settings::model</a></div><div class="ttdeci">char model[INFERENCE_PATH_CAPACITY]</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00042">inference_settings.h:42</a></div></div>
+<div class="ttc" id="astructinference__settings_html_a9d6fb148e77c773c1c1f966fca21c623"><div class="ttname"><a href="structinference__settings.html#a9d6fb148e77c773c1c1f966fca21c623">inference_settings::source</a></div><div class="ttdeci">enum inference_source source</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00041">inference_settings.h:41</a></div></div>
+<div class="ttc" id="astructinference__settings_html_ab7862d7d6da31147c5a1510d3e54d2c1"><div class="ttname"><a href="structinference__settings.html#ab7862d7d6da31147c5a1510d3e54d2c1">inference_settings::descriptor</a></div><div class="ttdeci">char descriptor[INFERENCE_PATH_CAPACITY]</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00043">inference_settings.h:43</a></div></div>
+<div class="ttc" id="astructinference__settings_html_ad0b2c0f90a20d1bde32e41240c0fe4bd"><div class="ttname"><a href="structinference__settings.html#ad0b2c0f90a20d1bde32e41240c0fe4bd">inference_settings::threads</a></div><div class="ttdeci">unsigned threads</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00046">inference_settings.h:46</a></div></div>
+<div class="ttc" id="astructinference__settings_html_aeca49c44248b334e9653478d2373cd8e"><div class="ttname"><a href="structinference__settings.html#aeca49c44248b334e9653478d2373cd8e">inference_settings::timeout_ms</a></div><div class="ttdeci">unsigned timeout_ms</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00046">inference_settings.h:46</a></div></div>
+<div class="ttc" id="astructinference__settings_html_af95de132d4b6b44ca315eba6462b346e"><div class="ttname"><a href="structinference__settings.html#af95de132d4b6b44ca315eba6462b346e">inference_settings::library_directory</a></div><div class="ttdeci">char library_directory[INFERENCE_PATH_CAPACITY]</div><div class="ttdef"><b>Definition</b> <a href="inference__settings_8h_source.html#l00044">inference_settings.h:44</a></div></div>
+<div class="ttc" id="ausher_8c_html_a349e1179d2a6ecbcc88c95eb2751e226"><div class="ttname"><a href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a></div><div class="ttdeci">struct usher_control_result result</div><div class="ttdef"><b>Definition</b> <a href="usher_8c_source.html#l00377">usher.c:377</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

@@ -1,0 +1,1944 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/lwir_cam/lwir_render.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('lwir__render_8h_source.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">lwir_render.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="lwir__render_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * Copyright 2026 OpenUAS</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * SPDX-License-Identifier: Apache-2.0</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Licensed under the Apache License, Version 2.0 (the "License");</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * you may not use this file except in compliance with the License.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * You may obtain a copy of the License at</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> *     http://www.apache.org/licenses/LICENSE-2.0</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * Unless required by applicable law or agreed to in writing, software</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * distributed under the License is distributed on an "AS IS" BASIS,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * See the License for the specific language governing permissions and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> * limitations under the License.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifndef LWIR_RENDER_H</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#define LWIR_RENDER_H</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"></span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">/** @file</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * @brief Display rendering of Tiny1-C frames into JPEG-ready Y/Cb/Cr scanlines.</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * @details Rendering is strictly a display concern: it reads an immutable combined frame</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * (see lwir_frame.h) and never reorders, rewrites or calibrates the stored raw thermal</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * bytes, so measurements and saved data stay in native coordinates.</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Workflow per frame: lwir_render_prepare() validates options and resolves one display</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * window (struct lwir_render_range); lwir_render_dimensions() gives the oriented size;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment"> * lwir_render_row() is then called once per display row to fill a caller-owned buffer</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment"> * of `display_width * 3` bytes, so no full RGB or rotated frame is ever materialized.</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment"> * Views: LWIR_SENSOR passes the camera's own YUYV image through; LWIR_FIXED maps an</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment"> * operator raw window; LWIR_PERCENTILE derives the window from the frame's histogram.</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment"> * Thermal views map the window through a palette, flag below/above/invalid samples with</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment"> * distinct colours, and may draw a legend strip. An optional measured correction profile</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment"> * applies scale/offset, a support range and bad-pixel replacement for display only.</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment"> * Orientation is applied as clockwise rotation, then mirror, then flip; rows are produced</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment"> * by one inverse transform per scanline and a signed native stride.</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="comment"> * SIMD: NEON (ARM64) and SSSE3 (x86-64, runtime-detected) accelerate +/-1-stride rows and</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="comment"> * produce the same bytes as the scalar code, which handles every remaining case.</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#include "<a class="code" href="lwir__frame_8h.html">lwir_frame.h</a>"</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">extern</span> <span class="stringliteral">"C"</span> {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="comment"></span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment">/** @brief Source of display intensity. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00051">
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49">   51</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49">lwir_view</a> {</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49aabda6ff1012b40d460141545df97ff32">   52</a></span> <a class="code hl_enumvalue" href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49aabda6ff1012b40d460141545df97ff32">LWIR_SENSOR</a>,     <span class="comment">/**&lt; Camera's own YUYV image; no thermal window, profile or denoise. */</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49a900d86db18abfb455ed9d22217cef529">   53</a></span> <a class="code hl_enumvalue" href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49a900d86db18abfb455ed9d22217cef529">LWIR_FIXED</a>,      <span class="comment">/**&lt; Fixed raw Kelvin*64 window from lwir_render_options low/high. */</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49ac7fed295f9a3d41a78bc11700ad4116b">   54</a></span> <a class="code hl_enumvalue" href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49ac7fed295f9a3d41a78bc11700ad4116b">LWIR_PERCENTILE</a> <span class="comment">/**&lt; Window from per-frame low/high percentiles of valid samples. */</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>};<span class="comment"></span></div>
+</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="comment">/** @brief Thermal palette; ignored by LWIR_SENSOR. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00057">
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517d">   57</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517d">lwir_palette</a> {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da5dad1a871e129d1888f157e0bdfa7fa0">   58</a></span> <a class="code hl_enumvalue" href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da5dad1a871e129d1888f157e0bdfa7fa0">LWIR_WHITE_HOT</a>,  <span class="comment">/**&lt; Greyscale, warmer is brighter. */</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da2782ae14dd3e7b3f03f61052b7a7cca3">   59</a></span> <a class="code hl_enumvalue" href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da2782ae14dd3e7b3f03f61052b7a7cca3">LWIR_BLACK_HOT</a>,  <span class="comment">/**&lt; Greyscale, warmer is darker. */</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da25e06b2b1fe9f0d237ce333137322c19">   60</a></span> <a class="code hl_enumvalue" href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da25e06b2b1fe9f0d237ce333137322c19">LWIR_IRON</a> <span class="comment">/**&lt; Six-anchor black-purple-red-orange-yellow ramp (scalar path only). */</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>};</div>
+</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="comment"></span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="comment">/** @brief Capacity of the sorted bad-pixel list in struct lwir_profile. */</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="lwir__render_8h.html#ac17f090e8481d72461f93ede08687cb9">   64</a></span><span class="preprocessor">#define LWIR_MAX_BAD_PIXELS 128U</span><span class="comment"></span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="comment">/** @brief Measured display-correction profile for one camera, gain label and geometry.</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="comment"> * @details Applied only when rendering; raw frames and measurements are unaffected.</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="comment"> * Corrected value = round(raw * scale_ppm / 1e6) + offset_mk * 64 / 1000 (truncated),</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="comment"> * in the same Kelvin*64 units as raw samples.</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="comment"> */</span><span class="preprocessor"></span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00070">
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="structlwir__profile.html">   70</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structlwir__profile.html">lwir_profile</a> {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="structlwir__profile.html#ae4f31bf58e95792fe06b51541268ec57">   71</a></span> <span class="keywordtype">char</span> <a class="code hl_variable" href="structlwir__profile.html#ae4f31bf58e95792fe06b51541268ec57">serial</a>[64];      <span class="comment">/**&lt; Device serial (or explicit replay identity) the profile applies to. */</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="structlwir__profile.html#aed686e6c6fab4636a8aecad9090522a9">   72</a></span> <span class="keywordtype">char</span> <a class="code hl_variable" href="structlwir__profile.html#aed686e6c6fab4636a8aecad9090522a9">gain</a>[32];        <span class="comment">/**&lt; Operator gain label the profile was measured with. */</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="structlwir__profile.html#a3b99a7ee337f816ea8885a55d1961fce">   73</a></span> <span class="keywordtype">char</span> <a class="code hl_variable" href="structlwir__profile.html#a3b99a7ee337f816ea8885a55d1961fce">sha256</a>[65];      <span class="comment">/**&lt; Hex digest text identifying the profile source (63 chars + NUL). */</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="structlwir__profile.html#acccabd528aef0a766c954554ba7d3cc6">   74</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__profile.html#acccabd528aef0a766c954554ba7d3cc6">width</a>;       <span class="comment">/**&lt; Native width the bad-pixel indices refer to. */</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="structlwir__profile.html#a484766b7a9af7b9ee202c58d649d41a6">   75</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__profile.html#a484766b7a9af7b9ee202c58d649d41a6">height</a>;      <span class="comment">/**&lt; Native height the bad-pixel indices refer to. */</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="structlwir__profile.html#a51040cca7c8f28379e9a3fecdc563543">   76</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__profile.html#a51040cca7c8f28379e9a3fecdc563543">scale_ppm</a>;   <span class="comment">/**&lt; Gain in parts per million; renderer accepts 500000..1500000. */</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="structlwir__profile.html#a7ad248047825f70d8c80863b7596e988">   77</a></span> <span class="keywordtype">int</span> <a class="code hl_variable" href="structlwir__profile.html#a7ad248047825f70d8c80863b7596e988">offset_mk</a>;        <span class="comment">/**&lt; Offset in millikelvin; renderer accepts -50000..50000. */</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="structlwir__profile.html#ad977bec56808011d4ac8a382bb6520d7">   78</a></span>    uint16_t <a class="code hl_variable" href="structlwir__profile.html#ad977bec56808011d4ac8a382bb6520d7">range_min</a>;   <span class="comment">/**&lt; Lowest supported raw code (non-zero); smaller samples render invalid. */</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="structlwir__profile.html#a906d2b9ba2b50662590d37893bf0b2e6">   79</a></span>    uint16_t <a class="code hl_variable" href="structlwir__profile.html#a906d2b9ba2b50662590d37893bf0b2e6">range_max</a>;   <span class="comment">/**&lt; Highest supported raw code (&lt; 65535); larger samples render invalid. */</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="structlwir__profile.html#a6383fcf1163aa9cac5b27009005e7b33">   80</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__profile.html#a6383fcf1163aa9cac5b27009005e7b33">bad_count</a>;   <span class="comment">/**&lt; Used entries of bad_pixels. */</span><span class="comment"></span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="comment">    /** Native raster indices (row * width + column), strictly ascending for binary search. */</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="structlwir__profile.html#a1c76bcd12226eb581fc1b258f1f111a1">   82</a></span>    uint32_t <a class="code hl_variable" href="structlwir__profile.html#a1c76bcd12226eb581fc1b258f1f111a1">bad_pixels</a>[<a class="code hl_define" href="lwir__render_8h.html#ac17f090e8481d72461f93ede08687cb9">LWIR_MAX_BAD_PIXELS</a>];</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>};</div>
+</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="comment"></span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="comment">/** @brief Load bounded measured display corrections, never vendor factory tables.</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="comment"> * @param path Strict profile file.</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="comment"> * @param profile Caller-owned output, valid on success only.</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="comment"> * @return True for a valid profile; physical support still requires measurement.</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__render_8h.html#a0aa32ba9681d2d66dd988a9c0de3e730">lwir_profile_load</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *path, <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__profile.html">lwir_profile</a> *<a class="code hl_variable" href="lwir__spotter_8c.html#a7eacaa28ccbc865eda4e0a28db29fb02">profile</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="comment">/** @brief Require native geometry, serial and operator gain-label agreement.</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="comment"> * @param profile Measured corrections.</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="comment"> * @param serial Device identity or explicit replay identity.</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="comment"> * @param gain Operator gain label, not an exposure-atomic gain measurement.</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment"> * @return True for exact support matching; no silently broadened calibration.</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__render_8h.html#a3334fa512964fb15199bd087dc16eaec">lwir_profile_matches</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__profile.html">lwir_profile</a> *<a class="code hl_variable" href="lwir__spotter_8c.html#a7eacaa28ccbc865eda4e0a28db29fb02">profile</a>, <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height,</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *serial, <span class="keyword">const</span> <span class="keywordtype">char</span> *gain);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="comment"></span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="comment">/** @brief Display policy for one rendering request; never affects stored samples. */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00103">
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="structlwir__render__options.html">  103</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structlwir__render__options.html">lwir_render_options</a> {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#a6d5d177567ec5b54a89b46d0f6acfb4a">  104</a></span> <span class="keyword">enum</span> <a class="code hl_enumeration" href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49">lwir_view</a> <a class="code hl_variable" href="structlwir__render__options.html#a6d5d177567ec5b54a89b46d0f6acfb4a">view</a>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#abac778d524e127fcef5dbf90920f413e">  105</a></span> <span class="keyword">enum</span> <a class="code hl_enumeration" href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517d">lwir_palette</a> <a class="code hl_variable" href="structlwir__render__options.html#abac778d524e127fcef5dbf90920f413e">palette</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="comment">    /** LWIR_FIXED window in corrected Kelvin*64 units; requires 0 &lt;= low &lt; high &lt;= 65535. */</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#a10bb516f782dd80cf2616db446246346">  107</a></span>    int32_t <a class="code hl_variable" href="structlwir__render__options.html#a10bb516f782dd80cf2616db446246346">low</a>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#a106eb1d2b86ec654a49756b00cc77279">  108</a></span>    int32_t <a class="code hl_variable" href="structlwir__render__options.html#a106eb1d2b86ec654a49756b00cc77279">high</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="comment">    /** LWIR_PERCENTILE bounds, 0..100 with low_percentile &lt; high_percentile. */</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#a744a1394accf8b7e8129956f03164f09">  110</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__render__options.html#a744a1394accf8b7e8129956f03164f09">low_percentile</a>;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#a6a98b2e165261ad302b637545b341328">  111</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__render__options.html#a6a98b2e165261ad302b637545b341328">high_percentile</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="comment">    /** Draw a 16-row gradient and degC label strip; thermal views, display &gt;= 112x24 only. */</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#a5a74846fd222f0849680004f167555a5">  113</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structlwir__render__options.html#a5a74846fd222f0849680004f167555a5">legend</a>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> <span class="comment">/* Display only: clockwise rotation, then left/right mirror, then up/down flip. */</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#ac9b7f285b3fd5d9b4694d4af7badf41a">  115</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__render__options.html#ac9b7f285b3fd5d9b4694d4af7badf41a">rotation</a>;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#a79e56dfffca5c98e4fe9c77aab335dba">  116</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structlwir__render__options.html#a79e56dfffca5c98e4fe9c77aab335dba">mirror</a>;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#aa9dedde13abfb37eaef2c60339aba5a8">  117</a></span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structlwir__render__options.html#aa9dedde13abfb37eaef2c60339aba5a8">flip</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="comment">    /** Edge-preserving 3x3 mean threshold in raw units (0 disables, max 640 = 10 K). */</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#a5018db78a6ef1a77f48662f362e25e65">  119</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__render__options.html#a5018db78a6ef1a77f48662f362e25e65">denoise_raw</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="comment">    /** JPEG quality 1..100; zero preserves the library's quality-100 default. */</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#a3388fd5abdc18e3a63dc54a5ada87c3e">  121</a></span> <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="structlwir__render__options.html#a3388fd5abdc18e3a63dc54a5ada87c3e">jpeg_quality</a>;<span class="comment"></span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="comment">    /** Optional measured correction, borrowed; must match the native geometry. */</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="structlwir__render__options.html#a479710de6e17fa98bb999b80287f686a">  123</a></span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code hl_struct" href="structlwir__profile.html">lwir_profile</a> *<a class="code hl_variable" href="structlwir__render__options.html#a479710de6e17fa98bb999b80287f686a">profile</a>;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>};</div>
+</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="comment"></span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="comment">/** @brief Resolved display window and diagnostic counts from lwir_render_prepare(). */</span></div>
+<div class="foldopen" data-end="};" data-start="{" id="foldopen00127">
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="structlwir__render__range.html">  127</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structlwir__render__range.html">lwir_render_range</a> {</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="structlwir__render__range.html#a3725a4630cefeeadd33cf28f01eccfae">  128</a></span>    int32_t <a class="code hl_variable" href="structlwir__render__range.html#a3725a4630cefeeadd33cf28f01eccfae">low</a>;     <span class="comment">/**&lt; Window start in corrected Kelvin*64 units (0 for LWIR_SENSOR). */</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="structlwir__render__range.html#a5ce26d689bbedc60ce14afdedcbe21df">  129</a></span>    int32_t <a class="code hl_variable" href="structlwir__render__range.html#a5ce26d689bbedc60ce14afdedcbe21df">high</a>;    <span class="comment">/**&lt; Window end, always &gt; low (255 for LWIR_SENSOR). */</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="structlwir__render__range.html#adace8a69081b07d0a3dc487b22fc9fb2">  130</a></span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structlwir__render__range.html#adace8a69081b07d0a3dc487b22fc9fb2">below</a>;    <span class="comment">/**&lt; Valid samples below the window (rendered as the below flag colour). */</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="structlwir__render__range.html#a1bc48a58d68f38cad193fd756c66b124">  131</a></span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structlwir__render__range.html#a1bc48a58d68f38cad193fd756c66b124">above</a>;    <span class="comment">/**&lt; Valid samples above the window (rendered as the above flag colour). */</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="structlwir__render__range.html#ac7d3bcea1d6778a9e5103d0e82b7bf73">  132</a></span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structlwir__render__range.html#ac7d3bcea1d6778a9e5103d0e82b7bf73">invalid</a>;  <span class="comment">/**&lt; Endpoint, bad-without-neighbours or out-of-profile-support samples. */</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>};</div>
+</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="comment"></span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="comment">/** @brief Resolve one deterministic display window while retaining original samples.</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="comment"> * @details LWIR_SENSOR returns {0, 255} without reading samples. LWIR_FIXED copies the</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="comment"> * requested window. LWIR_PERCENTILE ranks valid display samples in a 65536-bin histogram.</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="comment"> * All thermal views then count invalid/below/above samples for diagnostics.</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="comment"> * @param frame Immutable combined frame, or image-only YUYV for LWIR_SENSOR.</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="comment"> * @param bytes Exact size.</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="comment"> * @param options Display-only policy.</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="comment"> * @param range Resolved bounds/clipping counts, valid only on success.</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="comment"> * @return True for a supported rendering request. On failure errno is EINVAL for invalid</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="comment"> * arguments/options/profile/legend geometry, or ENODATA when a percentile view finds no</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="comment"> * valid sample.</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="comment"> * @warning Uses a static histogram: not re-entrant or thread-safe; call serially.</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__render_8h.html#a4d972d29fa360674e263e0a76c405e28">lwir_render_prepare</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height,</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__render__options.html">lwir_render_options</a> *<a class="code hl_struct" href="structoptions.html">options</a>, <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__render__range.html">lwir_render_range</a> *<a class="code hl_function" href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a>);<span class="comment"></span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment">/** @brief Derive display dimensions; quarter-turns do not change thermal geometry.</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="comment"> * @param options Rotation/mirror/flip policy.</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="comment"> * @param display_width Output width.</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="comment"> * @param display_height Output height.</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="comment"> * @return True for supported native geometry and orientation.</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__render_8h.html#a2304ed13934596bf7471cf9a2d0bb1e5">lwir_render_dimensions</a>(<span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__render__options.html">lwir_render_options</a> *<a class="code hl_struct" href="structoptions.html">options</a>,</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> <span class="keywordtype">unsigned</span> *display_width, <span class="keywordtype">unsigned</span> *display_height);<span class="comment"></span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="comment">/** @brief Invert display orientation before accessing calibration or native samples.</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="comment"> * @param options Rotate, then mirror, then flip policy.</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="comment"> * @param display_x Display column.</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="comment"> * @param display_y Display row.</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="comment"> * @param native_x Native column, written on success.</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="comment"> * @param native_y Native row, written on success.</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="comment"> * @return True when both coordinate spaces are in bounds.</span></div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__render_8h.html#a1d35dbd6337d2925804fd8c807e75001">lwir_render_native_coordinate</a>(<span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__render__options.html">lwir_render_options</a> *<a class="code hl_struct" href="structoptions.html">options</a>,</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> <span class="keywordtype">unsigned</span> display_x, <span class="keywordtype">unsigned</span> display_y, <span class="keywordtype">unsigned</span> *native_x, <span class="keywordtype">unsigned</span> *native_y);<span class="comment"></span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="comment">/** @brief Emit one bounded Y/Cb/Cr scanline, without a full RGB or rotated frame.</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="comment"> * @param frame Immutable combined frame, or image-only YUYV for LWIR_SENSOR.</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="comment"> * @param bytes Exact size.</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="comment"> * @param width Native width.</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="comment"> * @param height Native height.</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="comment"> * @param row Display row.</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="comment"> * @param options Display policy.</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="comment"> * @param range Window resolved by lwir_render_prepare.</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="comment"> * @param output Caller-owned interleaved Y/Cb/Cr row.</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="comment"> * @param capacity Available bytes, at least display width * 3.</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="comment"> * @return True on success; scalar and SIMD paths preserve the same mapping. On failure</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="comment"> * errno is EINVAL (invalid arguments, row, capacity, range, profile or legend geometry)</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="comment"> * and the output is unspecified.</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="keywordtype">bool</span> <a class="code hl_function" href="lwir__render_8h.html#acdccdc2d4671995a7e3508ca33894268">lwir_render_row</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a>, <span class="keywordtype">unsigned</span> width, <span class="keywordtype">unsigned</span> height, <span class="keywordtype">unsigned</span> <a class="code hl_variable" href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a>,</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__render__options.html">lwir_render_options</a> *<a class="code hl_struct" href="structoptions.html">options</a>, <span class="keyword">const</span> <span class="keyword">struct</span> <a class="code hl_struct" href="structlwir__render__range.html">lwir_render_range</a> *<a class="code hl_function" href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a>,</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                       uint8_t *<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>, <span class="keywordtype">size_t</span> <a class="code hl_variable" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>);</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="preprocessor">#if defined(__x86_64__)</span><span class="comment"></span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="comment">/** @brief SSSE3 helper for LWIR_SENSOR rows; internal to lwir_render.c, defined in lwir_ssse3.c.</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="comment"> * @param frame Image plane start.</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="comment"> * @param first Native pixel index of display column 0.</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="comment"> * @param step +1 or -1 native stride.</span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="comment"> * @param width Display row width.</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="comment"> * @param output Y/Cb/Cr destination of at least width * 3 bytes.</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="comment"> * @return Columns written (multiple of 8); the caller finishes the tail.</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="comment"> * @warning Call only after confirming SSSE3 support at runtime.</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="comment"> */</span><span class="preprocessor"></span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="keywordtype">unsigned</span> <a class="code hl_function" href="lwir__ssse3_8c.html#a21ad6b15b0bde8d01ca4c406efb298c3">lwir_sensor_ssse3</a>(<span class="keyword">const</span> uint8_t *<a class="code hl_variable" href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a>, ptrdiff_t first, ptrdiff_t step,</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> <span class="keywordtype">unsigned</span> width, uint8_t *<a class="code hl_variable" href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a>);</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>}</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="acapture__arbiter_8c_html_a6d68504c09ee186ab8deb6b756b4bd66"><div class="ttname"><a href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a></div><div class="ttdeci">static unsigned capacity[COVERAGE_CAMERAS]</div><div class="ttdef"><b>Definition</b> <a href="capture__arbiter_8c_source.html#l00075">capture_arbiter.c:75</a></div></div>
+<div class="ttc" id="achdk__pipe_8c_html_ab8e091aaa3bb9fdbbb23aac0ecc744d5"><div class="ttname"><a href="chdk__pipe_8c.html#ab8e091aaa3bb9fdbbb23aac0ecc744d5">bytes</a></div><div class="ttdeci">uint8_t bytes[CHDK_CONTROL_REPLY_SIZE]</div><div class="ttdef"><b>Definition</b> <a href="chdk__pipe_8c_source.html#l00144">chdk_pipe.c:144</a></div></div>
+<div class="ttc" id="aexifite_8c_html_ae208d7773b764ff52127e9e76389e0bd"><div class="ttname"><a href="exifite_8c.html#ae208d7773b764ff52127e9e76389e0bd">range</a></div><div class="ttdeci">static bool range(size_t total, size_t offset, size_t length)</div><div class="ttdoc">Check a byte span without forming a potentially overflowing end offset.</div><div class="ttdef"><b>Definition</b> <a href="exifite_8c_source.html#l00133">exifite.c:133</a></div></div>
+<div class="ttc" id="alwir__frame_8h_html"><div class="ttname"><a href="lwir__frame_8h.html">lwir_frame.h</a></div><div class="ttdoc">Native frame arithmetic and camera measurements; no codec or flight dependencies.</div></div>
+<div class="ttc" id="alwir__image_8c_html_a78fcdd2741e62c29ec72a8053a5bd79b"><div class="ttname"><a href="lwir__image_8c.html#a78fcdd2741e62c29ec72a8053a5bd79b">row</a></div><div class="ttdeci">uint8_t row[LWIR_MAX_WIDTH *3U]</div><div class="ttdef"><b>Definition</b> <a href="lwir__image_8c_source.html#l00063">lwir_image.c:63</a></div></div>
+<div class="ttc" id="alwir__mock_8c_html_ace5fb39a154fc61f43993d0b435a27e5"><div class="ttname"><a href="lwir__mock_8c.html#ace5fb39a154fc61f43993d0b435a27e5">frame</a></div><div class="ttdeci">uint8_t frame[LWIR_MAX_FRAME_BYTES]</div><div class="ttdef"><b>Definition</b> <a href="lwir__mock_8c_source.html#l00058">lwir_mock.c:58</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_a0aa32ba9681d2d66dd988a9c0de3e730"><div class="ttname"><a href="lwir__render_8h.html#a0aa32ba9681d2d66dd988a9c0de3e730">lwir_profile_load</a></div><div class="ttdeci">bool lwir_profile_load(const char *path, struct lwir_profile *profile)</div><div class="ttdoc">Load bounded measured display corrections, never vendor factory tables.</div><div class="ttdef"><b>Definition</b> <a href="lwir__profile_8c_source.html#l00137">lwir_profile.c:137</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_a1d35dbd6337d2925804fd8c807e75001"><div class="ttname"><a href="lwir__render_8h.html#a1d35dbd6337d2925804fd8c807e75001">lwir_render_native_coordinate</a></div><div class="ttdeci">bool lwir_render_native_coordinate(unsigned width, unsigned height, const struct lwir_render_options *options, unsigned display_x, unsigned display_y, unsigned *native_x, unsigned *native_y)</div><div class="ttdoc">Invert display orientation before accessing calibration or native samples.</div><div class="ttdef"><b>Definition</b> <a href="lwir__render_8c_source.html#l00191">lwir_render.c:191</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_a2304ed13934596bf7471cf9a2d0bb1e5"><div class="ttname"><a href="lwir__render_8h.html#a2304ed13934596bf7471cf9a2d0bb1e5">lwir_render_dimensions</a></div><div class="ttdeci">bool lwir_render_dimensions(unsigned width, unsigned height, const struct lwir_render_options *options, unsigned *display_width, unsigned *display_height)</div><div class="ttdoc">Derive display dimensions; quarter-turns do not change thermal geometry.</div><div class="ttdef"><b>Definition</b> <a href="lwir__render_8c_source.html#l00136">lwir_render.c:136</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_a3334fa512964fb15199bd087dc16eaec"><div class="ttname"><a href="lwir__render_8h.html#a3334fa512964fb15199bd087dc16eaec">lwir_profile_matches</a></div><div class="ttdeci">bool lwir_profile_matches(const struct lwir_profile *profile, unsigned width, unsigned height, const char *serial, const char *gain)</div><div class="ttdoc">Require native geometry, serial and operator gain-label agreement.</div><div class="ttdef"><b>Definition</b> <a href="lwir__profile_8c_source.html#l00178">lwir_profile.c:178</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_a4d972d29fa360674e263e0a76c405e28"><div class="ttname"><a href="lwir__render_8h.html#a4d972d29fa360674e263e0a76c405e28">lwir_render_prepare</a></div><div class="ttdeci">bool lwir_render_prepare(const uint8_t *frame, size_t bytes, unsigned width, unsigned height, const struct lwir_render_options *options, struct lwir_render_range *range)</div><div class="ttdoc">Resolve one deterministic display window while retaining original samples.</div><div class="ttdef"><b>Definition</b> <a href="lwir__render_8c_source.html#l00418">lwir_render.c:418</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_aa17b3232393b27d2be55d8519226517d"><div class="ttname"><a href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517d">lwir_palette</a></div><div class="ttdeci">lwir_palette</div><div class="ttdoc">Thermal palette; ignored by LWIR_SENSOR.</div><div class="ttdef"><b>Definition</b> <a href="#l00057">lwir_render.h:57</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_aa17b3232393b27d2be55d8519226517da25e06b2b1fe9f0d237ce333137322c19"><div class="ttname"><a href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da25e06b2b1fe9f0d237ce333137322c19">LWIR_IRON</a></div><div class="ttdeci">@ LWIR_IRON</div><div class="ttdef"><b>Definition</b> <a href="#l00060">lwir_render.h:60</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_aa17b3232393b27d2be55d8519226517da2782ae14dd3e7b3f03f61052b7a7cca3"><div class="ttname"><a href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da2782ae14dd3e7b3f03f61052b7a7cca3">LWIR_BLACK_HOT</a></div><div class="ttdeci">@ LWIR_BLACK_HOT</div><div class="ttdef"><b>Definition</b> <a href="#l00059">lwir_render.h:59</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_aa17b3232393b27d2be55d8519226517da5dad1a871e129d1888f157e0bdfa7fa0"><div class="ttname"><a href="lwir__render_8h.html#aa17b3232393b27d2be55d8519226517da5dad1a871e129d1888f157e0bdfa7fa0">LWIR_WHITE_HOT</a></div><div class="ttdeci">@ LWIR_WHITE_HOT</div><div class="ttdef"><b>Definition</b> <a href="#l00058">lwir_render.h:58</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_ac17f090e8481d72461f93ede08687cb9"><div class="ttname"><a href="lwir__render_8h.html#ac17f090e8481d72461f93ede08687cb9">LWIR_MAX_BAD_PIXELS</a></div><div class="ttdeci">#define LWIR_MAX_BAD_PIXELS</div><div class="ttdoc">Capacity of the sorted bad-pixel list in struct lwir_profile.</div><div class="ttdef"><b>Definition</b> <a href="#l00064">lwir_render.h:64</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_acdccdc2d4671995a7e3508ca33894268"><div class="ttname"><a href="lwir__render_8h.html#acdccdc2d4671995a7e3508ca33894268">lwir_render_row</a></div><div class="ttdeci">bool lwir_render_row(const uint8_t *frame, size_t bytes, unsigned width, unsigned height, unsigned row, const struct lwir_render_options *options, const struct lwir_render_range *range, uint8_t *output, size_t capacity)</div><div class="ttdoc">Emit one bounded Y/Cb/Cr scanline, without a full RGB or rotated frame.</div><div class="ttdef"><b>Definition</b> <a href="lwir__render_8c_source.html#l00665">lwir_render.c:665</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_aeeb8b23ae3a096b836b61cf029f5aa49"><div class="ttname"><a href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49">lwir_view</a></div><div class="ttdeci">lwir_view</div><div class="ttdoc">Source of display intensity.</div><div class="ttdef"><b>Definition</b> <a href="#l00051">lwir_render.h:51</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_aeeb8b23ae3a096b836b61cf029f5aa49a900d86db18abfb455ed9d22217cef529"><div class="ttname"><a href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49a900d86db18abfb455ed9d22217cef529">LWIR_FIXED</a></div><div class="ttdeci">@ LWIR_FIXED</div><div class="ttdef"><b>Definition</b> <a href="#l00053">lwir_render.h:53</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_aeeb8b23ae3a096b836b61cf029f5aa49aabda6ff1012b40d460141545df97ff32"><div class="ttname"><a href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49aabda6ff1012b40d460141545df97ff32">LWIR_SENSOR</a></div><div class="ttdeci">@ LWIR_SENSOR</div><div class="ttdef"><b>Definition</b> <a href="#l00052">lwir_render.h:52</a></div></div>
+<div class="ttc" id="alwir__render_8h_html_aeeb8b23ae3a096b836b61cf029f5aa49ac7fed295f9a3d41a78bc11700ad4116b"><div class="ttname"><a href="lwir__render_8h.html#aeeb8b23ae3a096b836b61cf029f5aa49ac7fed295f9a3d41a78bc11700ad4116b">LWIR_PERCENTILE</a></div><div class="ttdeci">@ LWIR_PERCENTILE</div><div class="ttdef"><b>Definition</b> <a href="#l00054">lwir_render.h:54</a></div></div>
+<div class="ttc" id="alwir__spotter_8c_html_a7eacaa28ccbc865eda4e0a28db29fb02"><div class="ttname"><a href="lwir__spotter_8c.html#a7eacaa28ccbc865eda4e0a28db29fb02">profile</a></div><div class="ttdeci">static struct usher_camera_profile profile</div><div class="ttdef"><b>Definition</b> <a href="lwir__spotter_8c_source.html#l00048">lwir_spotter.c:48</a></div></div>
+<div class="ttc" id="alwir__ssse3_8c_html_a21ad6b15b0bde8d01ca4c406efb298c3"><div class="ttname"><a href="lwir__ssse3_8c.html#a21ad6b15b0bde8d01ca4c406efb298c3">lwir_sensor_ssse3</a></div><div class="ttdeci">unsigned lwir_sensor_ssse3(const uint8_t *frame, ptrdiff_t first, ptrdiff_t step, unsigned width, uint8_t *output)</div><div class="ttdoc">Expand eight YUYV pixels per iteration into interleaved Y/Cb/Cr, forwards or reversed.</div><div class="ttdef"><b>Definition</b> <a href="lwir__ssse3_8c_source.html#l00058">lwir_ssse3.c:58</a></div></div>
+<div class="ttc" id="apose__log_8c_html_ab41bf19330e50c3c7bf3544c53f30971"><div class="ttname"><a href="pose__log_8c.html#ab41bf19330e50c3c7bf3544c53f30971">output</a></div><div class="ttdeci">static FILE * output</div><div class="ttdef"><b>Definition</b> <a href="pose__log_8c_source.html#l00077">pose_log.c:77</a></div></div>
+<div class="ttc" id="astructlwir__profile_html"><div class="ttname"><a href="structlwir__profile.html">lwir_profile</a></div><div class="ttdoc">Measured display-correction profile for one camera, gain label and geometry.</div><div class="ttdef"><b>Definition</b> <a href="#l00070">lwir_render.h:70</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_a1c76bcd12226eb581fc1b258f1f111a1"><div class="ttname"><a href="structlwir__profile.html#a1c76bcd12226eb581fc1b258f1f111a1">lwir_profile::bad_pixels</a></div><div class="ttdeci">uint32_t bad_pixels[LWIR_MAX_BAD_PIXELS]</div><div class="ttdef"><b>Definition</b> <a href="#l00082">lwir_render.h:82</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_a3b99a7ee337f816ea8885a55d1961fce"><div class="ttname"><a href="structlwir__profile.html#a3b99a7ee337f816ea8885a55d1961fce">lwir_profile::sha256</a></div><div class="ttdeci">char sha256[65]</div><div class="ttdef"><b>Definition</b> <a href="#l00073">lwir_render.h:73</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_a484766b7a9af7b9ee202c58d649d41a6"><div class="ttname"><a href="structlwir__profile.html#a484766b7a9af7b9ee202c58d649d41a6">lwir_profile::height</a></div><div class="ttdeci">unsigned height</div><div class="ttdef"><b>Definition</b> <a href="#l00075">lwir_render.h:75</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_a51040cca7c8f28379e9a3fecdc563543"><div class="ttname"><a href="structlwir__profile.html#a51040cca7c8f28379e9a3fecdc563543">lwir_profile::scale_ppm</a></div><div class="ttdeci">unsigned scale_ppm</div><div class="ttdef"><b>Definition</b> <a href="#l00076">lwir_render.h:76</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_a6383fcf1163aa9cac5b27009005e7b33"><div class="ttname"><a href="structlwir__profile.html#a6383fcf1163aa9cac5b27009005e7b33">lwir_profile::bad_count</a></div><div class="ttdeci">unsigned bad_count</div><div class="ttdef"><b>Definition</b> <a href="#l00080">lwir_render.h:80</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_a7ad248047825f70d8c80863b7596e988"><div class="ttname"><a href="structlwir__profile.html#a7ad248047825f70d8c80863b7596e988">lwir_profile::offset_mk</a></div><div class="ttdeci">int offset_mk</div><div class="ttdef"><b>Definition</b> <a href="#l00077">lwir_render.h:77</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_a906d2b9ba2b50662590d37893bf0b2e6"><div class="ttname"><a href="structlwir__profile.html#a906d2b9ba2b50662590d37893bf0b2e6">lwir_profile::range_max</a></div><div class="ttdeci">uint16_t range_max</div><div class="ttdef"><b>Definition</b> <a href="#l00079">lwir_render.h:79</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_acccabd528aef0a766c954554ba7d3cc6"><div class="ttname"><a href="structlwir__profile.html#acccabd528aef0a766c954554ba7d3cc6">lwir_profile::width</a></div><div class="ttdeci">unsigned width</div><div class="ttdef"><b>Definition</b> <a href="#l00074">lwir_render.h:74</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_ad977bec56808011d4ac8a382bb6520d7"><div class="ttname"><a href="structlwir__profile.html#ad977bec56808011d4ac8a382bb6520d7">lwir_profile::range_min</a></div><div class="ttdeci">uint16_t range_min</div><div class="ttdef"><b>Definition</b> <a href="#l00078">lwir_render.h:78</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_ae4f31bf58e95792fe06b51541268ec57"><div class="ttname"><a href="structlwir__profile.html#ae4f31bf58e95792fe06b51541268ec57">lwir_profile::serial</a></div><div class="ttdeci">char serial[64]</div><div class="ttdef"><b>Definition</b> <a href="#l00071">lwir_render.h:71</a></div></div>
+<div class="ttc" id="astructlwir__profile_html_aed686e6c6fab4636a8aecad9090522a9"><div class="ttname"><a href="structlwir__profile.html#aed686e6c6fab4636a8aecad9090522a9">lwir_profile::gain</a></div><div class="ttdeci">char gain[32]</div><div class="ttdef"><b>Definition</b> <a href="#l00072">lwir_render.h:72</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html"><div class="ttname"><a href="structlwir__render__options.html">lwir_render_options</a></div><div class="ttdoc">Display policy for one rendering request; never affects stored samples.</div><div class="ttdef"><b>Definition</b> <a href="#l00103">lwir_render.h:103</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_a106eb1d2b86ec654a49756b00cc77279"><div class="ttname"><a href="structlwir__render__options.html#a106eb1d2b86ec654a49756b00cc77279">lwir_render_options::high</a></div><div class="ttdeci">int32_t high</div><div class="ttdef"><b>Definition</b> <a href="#l00108">lwir_render.h:108</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_a10bb516f782dd80cf2616db446246346"><div class="ttname"><a href="structlwir__render__options.html#a10bb516f782dd80cf2616db446246346">lwir_render_options::low</a></div><div class="ttdeci">int32_t low</div><div class="ttdef"><b>Definition</b> <a href="#l00107">lwir_render.h:107</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_a3388fd5abdc18e3a63dc54a5ada87c3e"><div class="ttname"><a href="structlwir__render__options.html#a3388fd5abdc18e3a63dc54a5ada87c3e">lwir_render_options::jpeg_quality</a></div><div class="ttdeci">unsigned jpeg_quality</div><div class="ttdef"><b>Definition</b> <a href="#l00121">lwir_render.h:121</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_a479710de6e17fa98bb999b80287f686a"><div class="ttname"><a href="structlwir__render__options.html#a479710de6e17fa98bb999b80287f686a">lwir_render_options::profile</a></div><div class="ttdeci">const struct lwir_profile * profile</div><div class="ttdef"><b>Definition</b> <a href="#l00123">lwir_render.h:123</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_a5018db78a6ef1a77f48662f362e25e65"><div class="ttname"><a href="structlwir__render__options.html#a5018db78a6ef1a77f48662f362e25e65">lwir_render_options::denoise_raw</a></div><div class="ttdeci">unsigned denoise_raw</div><div class="ttdef"><b>Definition</b> <a href="#l00119">lwir_render.h:119</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_a5a74846fd222f0849680004f167555a5"><div class="ttname"><a href="structlwir__render__options.html#a5a74846fd222f0849680004f167555a5">lwir_render_options::legend</a></div><div class="ttdeci">bool legend</div><div class="ttdef"><b>Definition</b> <a href="#l00113">lwir_render.h:113</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_a6a98b2e165261ad302b637545b341328"><div class="ttname"><a href="structlwir__render__options.html#a6a98b2e165261ad302b637545b341328">lwir_render_options::high_percentile</a></div><div class="ttdeci">unsigned high_percentile</div><div class="ttdef"><b>Definition</b> <a href="#l00111">lwir_render.h:111</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_a6d5d177567ec5b54a89b46d0f6acfb4a"><div class="ttname"><a href="structlwir__render__options.html#a6d5d177567ec5b54a89b46d0f6acfb4a">lwir_render_options::view</a></div><div class="ttdeci">enum lwir_view view</div><div class="ttdef"><b>Definition</b> <a href="#l00104">lwir_render.h:104</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_a744a1394accf8b7e8129956f03164f09"><div class="ttname"><a href="structlwir__render__options.html#a744a1394accf8b7e8129956f03164f09">lwir_render_options::low_percentile</a></div><div class="ttdeci">unsigned low_percentile</div><div class="ttdef"><b>Definition</b> <a href="#l00110">lwir_render.h:110</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_a79e56dfffca5c98e4fe9c77aab335dba"><div class="ttname"><a href="structlwir__render__options.html#a79e56dfffca5c98e4fe9c77aab335dba">lwir_render_options::mirror</a></div><div class="ttdeci">bool mirror</div><div class="ttdef"><b>Definition</b> <a href="#l00116">lwir_render.h:116</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_aa9dedde13abfb37eaef2c60339aba5a8"><div class="ttname"><a href="structlwir__render__options.html#aa9dedde13abfb37eaef2c60339aba5a8">lwir_render_options::flip</a></div><div class="ttdeci">bool flip</div><div class="ttdef"><b>Definition</b> <a href="#l00117">lwir_render.h:117</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_abac778d524e127fcef5dbf90920f413e"><div class="ttname"><a href="structlwir__render__options.html#abac778d524e127fcef5dbf90920f413e">lwir_render_options::palette</a></div><div class="ttdeci">enum lwir_palette palette</div><div class="ttdef"><b>Definition</b> <a href="#l00105">lwir_render.h:105</a></div></div>
+<div class="ttc" id="astructlwir__render__options_html_ac9b7f285b3fd5d9b4694d4af7badf41a"><div class="ttname"><a href="structlwir__render__options.html#ac9b7f285b3fd5d9b4694d4af7badf41a">lwir_render_options::rotation</a></div><div class="ttdeci">unsigned rotation</div><div class="ttdef"><b>Definition</b> <a href="#l00115">lwir_render.h:115</a></div></div>
+<div class="ttc" id="astructlwir__render__range_html"><div class="ttname"><a href="structlwir__render__range.html">lwir_render_range</a></div><div class="ttdoc">Resolved display window and diagnostic counts from lwir_render_prepare().</div><div class="ttdef"><b>Definition</b> <a href="#l00127">lwir_render.h:127</a></div></div>
+<div class="ttc" id="astructlwir__render__range_html_a1bc48a58d68f38cad193fd756c66b124"><div class="ttname"><a href="structlwir__render__range.html#a1bc48a58d68f38cad193fd756c66b124">lwir_render_range::above</a></div><div class="ttdeci">size_t above</div><div class="ttdef"><b>Definition</b> <a href="#l00131">lwir_render.h:131</a></div></div>
+<div class="ttc" id="astructlwir__render__range_html_a3725a4630cefeeadd33cf28f01eccfae"><div class="ttname"><a href="structlwir__render__range.html#a3725a4630cefeeadd33cf28f01eccfae">lwir_render_range::low</a></div><div class="ttdeci">int32_t low</div><div class="ttdef"><b>Definition</b> <a href="#l00128">lwir_render.h:128</a></div></div>
+<div class="ttc" id="astructlwir__render__range_html_a5ce26d689bbedc60ce14afdedcbe21df"><div class="ttname"><a href="structlwir__render__range.html#a5ce26d689bbedc60ce14afdedcbe21df">lwir_render_range::high</a></div><div class="ttdeci">int32_t high</div><div class="ttdef"><b>Definition</b> <a href="#l00129">lwir_render.h:129</a></div></div>
+<div class="ttc" id="astructlwir__render__range_html_ac7d3bcea1d6778a9e5103d0e82b7bf73"><div class="ttname"><a href="structlwir__render__range.html#ac7d3bcea1d6778a9e5103d0e82b7bf73">lwir_render_range::invalid</a></div><div class="ttdeci">size_t invalid</div><div class="ttdef"><b>Definition</b> <a href="#l00132">lwir_render.h:132</a></div></div>
+<div class="ttc" id="astructlwir__render__range_html_adace8a69081b07d0a3dc487b22fc9fb2"><div class="ttname"><a href="structlwir__render__range.html#adace8a69081b07d0a3dc487b22fc9fb2">lwir_render_range::below</a></div><div class="ttdeci">size_t below</div><div class="ttdef"><b>Definition</b> <a href="#l00130">lwir_render.h:130</a></div></div>
+<div class="ttc" id="astructoptions_html"><div class="ttname"><a href="structoptions.html">options</a></div><div class="ttdoc">Validated capture and reporting policy, fixed before the sample loop.</div><div class="ttdef"><b>Definition</b> <a href="earcam_8c_source.html#l00137">earcam.c:137</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div></main><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

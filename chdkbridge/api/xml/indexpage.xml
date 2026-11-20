@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.15.0" xml:lang="en-US">
+  <compounddef id="indexpage" kind="page">
+    <compoundname>index</compoundname>
+    <title>Use A Canon Camera With CHDKbridge</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><anchor id="index_1md_docs_2chdkbridge"/></para>
+<para>CHDKbridge lets USHER request photographs and supported controls from a Canon camera over USB. <bold>CHDK runs inside the camera; CHDKbridge runs on MORA or your PC.</bold> You need both—CHDK loaded on the camera&apos;s SD card and CHDKbridge on the host—for this camera path.</para>
+<para><ulink url="../../../docs/glossary.md#chdkbridge">Canon-camera terms</ulink> | <ulink url="../../../docs/usher-camera-pipeline.md#choose-a-camera">Capture with USHER</ulink></para>
+<para><image type="html" name="images/chdk-mora-connection.svg" alt="FC connected by UART to MORA, then USB to a Canon camera running CHDK." inline="yes"></image>
+</para>
+<sect1 id="index_1autotoc_md1">
+<title>Prepare The Camera</title><para><image type="html" name="images/camera-canon-sx730hs-01.jpg" alt="Example Canon PowerShot SX730 HS." inline="yes"></image>
+</para>
+<para>Obtain a stable, non-beta CHDK v1.6 build matching the exact camera model and Canon firmware revision. Sensoraia does not install CHDK, prepare the SD card or replace the camera&apos;s firmware for you.</para>
+<para><itemizedlist>
+<listitem><para><ulink url="https://chdk.fandom.com/wiki/Supported_Cameras">Supported cameras</ulink></para>
+</listitem><listitem><para><ulink url="https://chdk.fandom.com/wiki/Downloads">Downloads and build selection</ulink></para>
+</listitem><listitem><para><ulink url="https://chdk.fandom.com/wiki/CHDK_1.6_User_Manual">CHDK 1.6 manual</ulink></para>
+</listitem><listitem><para><ulink url="https://chdk.fandom.com/wiki/Prepare_your_SD_card">Prepare an SD card</ulink></para>
+</listitem></itemizedlist>
+</para>
+<para>Verify that CHDK loads after a power cycle and that the camera can save a normal JPEG. Leave CHDK&apos;s USB Remote shutter-switch feature disabled; it is different from USB/PTP control.</para>
+<para><itemizedlist>
+<listitem><para><ulink url="https://mighty-hoernsche.de/">Firmware</ulink></para>
+</listitem><listitem><para><ulink url="https://www.emsi.me/libptp">Interesting other library</ulink></para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+<sect1 id="index_1autotoc_md2">
+<title>Take Your First Photo</title><para>Build on the development PC. Stop USHER and other camera owners before a standalone bench capture, connect a USB data cable and provide reliable power.</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">make<sp/>-j32<sp/>chdkbridge</highlight></codeline>
+<codeline><highlight class="normal">bin/chdkbridge<sp/>--list</highlight></codeline>
+<codeline><highlight class="normal">bin/chdkbridge<sp/>--info</highlight></codeline>
+<codeline><highlight class="normal">bin/chdkbridge<sp/>photo-001.jpg</highlight></codeline>
+</programlisting></para>
+<para>Use a new filename in a writable directory. Open the saved JPEG and check focus and exposure. Ordinary capture saves the original on the camera&apos;s SD card and downloads it. Existing destination files are not overwritten.</para>
+<para>On MORA, deployment installs <computeroutput>99-chdkbridge.rules</computeroutput>, which gives the <computeroutput>plugdev</computeroutput> group (and so the USHER service) access to Canon cameras in PTP mode. If a desktop has mounted the camera, CHDKbridge releases that mount when it starts.</para>
+<para>If several cameras are connected, use the port printed by <computeroutput>--list</computeroutput>:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">bin/chdkbridge<sp/>--port<sp/>1-3<sp/>photo-002.jpg</highlight></codeline>
+</programlisting></para>
+<para>The example port is not universal. USB bus/device addresses can change after reconnecting; verify the selected device each time.</para>
+</sect1>
+<sect1 id="index_1autotoc_md3">
+<title>Choose Settings Deliberately</title><para>Unspecified standalone settings are left unchanged. Set only the options your camera supports, and inspect a real photo after changing them:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">bin/chdkbridge<sp/>--iso-mode<sp/>400<sp/>--flash<sp/>2<sp/>--resolution<sp/>0<sp/>--quality<sp/>0<sp/>photo-003.jpg</highlight></codeline>
+</programlisting></para>
+<para><table rows="7" cols="2"><row>
+<entry thead="yes"><para>Option  </para>
+</entry><entry thead="yes"><para>Meaning  </para>
+</entry></row>
+<row>
+<entry thead="no"><para><computeroutput>--iso-mode</computeroutput>  </para>
+</entry><entry thead="no"><para>Camera ISO-mode property; supported values depend on the model  </para>
+</entry></row>
+<row>
+<entry thead="no"><para><computeroutput>--flash 2</computeroutput>  </para>
+</entry><entry thead="no"><para>Flash off  </para>
+</entry></row>
+<row>
+<entry thead="no"><para><computeroutput>--resolution 0</computeroutput>  </para>
+</entry><entry thead="no"><para>Usually the largest image; confirm your camera&apos;s mapping  </para>
+</entry></row>
+<row>
+<entry thead="no"><para><computeroutput>--quality 0</computeroutput>  </para>
+</entry><entry thead="no"><para>Requested superfine JPEG quality where supported  </para>
+</entry></row>
+<row>
+<entry thead="no"><para><computeroutput>--date-stamp 0</computeroutput>  </para>
+</entry><entry thead="no"><para>Date stamp off  </para>
+</entry></row>
+<row>
+<entry thead="no"><para><computeroutput>--configure</computeroutput>  </para>
+</entry><entry thead="no"><para>Apply supplied settings without taking a photo  </para>
+</entry></row>
+</table>
+</para>
+<para>Readback errors can leave earlier settings changed. Check the camera before retrying rather than assuming the whole operation was rolled back.</para>
+</sect1>
+<sect1 id="index_1autotoc_md4">
+<title>Focus And Exposure</title><para>Start with autofocus and verify sharpness. For a camera that supports the requested mode, examples include:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">bin/chdkbridge<sp/>--focus-mode<sp/>af<sp/>photo-af.jpg</highlight></codeline>
+<codeline><highlight class="normal">bin/chdkbridge<sp/>--focus-mode<sp/>manual<sp/>--focus-distance<sp/>inf<sp/>photo-infinity.jpg</highlight></codeline>
+<codeline><highlight class="normal">bin/chdkbridge<sp/>--shutter<sp/>1/1000<sp/>--iso-real<sp/>400<sp/>photo-exposure.jpg</highlight></codeline>
+</programlisting></para>
+<para>Manual/infinity focus, adjustable aperture and ND-filter controls depend on the camera. A successful distance/property readback does not establish image sharpness or actual exposure quality. Do not choose infinity merely because the aircraft will fly; measure the useful focus for your optics and scene.</para>
+<para><computeroutput>--iso-mode</computeroutput> is not the same as a real-sensitivity override. Use <computeroutput>--help</computeroutput> for supported alternatives and ranges rather than combining conflicting exposure options. Save comparison photographs before choosing a mission setup.</para>
+</sect1>
+<sect1 id="index_1autotoc_md5">
+<title>Zoom</title><para><programlisting filename=".sh"><codeline><highlight class="normal">bin/chdkbridge<sp/>zoom<sp/>0</highlight></codeline>
+<codeline><highlight class="normal">bin/chdkbridge<sp/>zoom<sp/>128</highlight></codeline>
+<codeline><highlight class="normal">bin/chdkbridge<sp/>zoom<sp/>255</highlight></codeline>
+</programlisting></para>
+<para>These are separate commands. Zero is the wide end and 255 the tele end of the normalized optical range. The middle value is not a guaranteed 2x ratio. Zoom does not take a photo, and changing it can require a fresh focus check.</para>
+</sect1>
+<sect1 id="index_1autotoc_md6">
+<title>Powered Lens Retraction</title><para><programlisting filename=".sh"><codeline><highlight class="normal">bin/chdkbridge<sp/>--retract-lens</highlight></codeline>
+</programlisting></para>
+<para>This requests playback mode without powering the camera off. To request prompt retraction on cameras offering the setting, select <bold>Lens Retraction: 0 sec</bold> in Canon&apos;s menu. Confirm the physical lens has retracted: playback confirmation alone does not measure its position. A later capture can extend it again.</para>
+</sect1>
+<sect1 id="index_1autotoc_md7">
+<title>Keep The Camera Awake</title><para><programlisting filename=".sh"><codeline><highlight class="normal">bin/chdkbridge<sp/>--configure<sp/>--keep-awake<sp/>1</highlight></codeline>
+</programlisting></para>
+<para>This changes CHDK&apos;s idle-shutdown policy to Always; <computeroutput>--keep-awake 0</computeroutput> selects Never, not restoration of an earlier intermediate setting. It consumes power and cannot prevent low-battery shutdown or wake an already powered-off camera. Omitting the option leaves the setting unchanged.</para>
+<para>Check the result without changing anything. This reads CHDK&apos;s setting and, when the firmware reports them, battery voltage and temperatures:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">bin/chdkbridge<sp/>--power-status</highlight></codeline>
+<codeline><highlight class="normal">#<sp/>idle_shutdown_policy=3;<sp/>keep_awake=1;<sp/>battery_mv=3987;<sp/>optics_c=30;<sp/>...</highlight></codeline>
+</programlisting></para>
+<para>It exits with an error unless the policy is Always, so it suits a pre-flight check. The bridge never powers the camera off or restarts it, and it never resets the USB device when a command ends.</para>
+<para>When the camera exposes them, the same read-only report includes <computeroutput>zoom_step</computeroutput>, <computeroutput>focus_mm</computeroutput>, <computeroutput><ref refid="chdkbridge_8c_1a74e407438d0281cafd8da07ef9d29647" kindref="member">focus_mode</ref></computeroutput> and <computeroutput>af_lock</computeroutput>. Focus mode 0 is autofocus and 1 is manual in the bridge&apos;s supported property convention. A focus-distance readback alone does not establish sharpness.</para>
+<para>USHER applies <computeroutput>--keep-awake 1</computeroutput> on every shot by default (see below), so the policy is re-asserted before each exposure and a camera that lost its saved setting is corrected on the next shot. Before flight, charge the battery and run <computeroutput>--power-status</computeroutput>: no software setting can prevent shutdown from an empty battery or a camera fault.</para>
+</sect1>
+<sect1 id="index_1autotoc_md8">
+<title>Retrieve A Camera Crash Log</title><para>After an unexpected camera shutdown, switch it on without taking another photo. In CHDK&apos;s Miscellaneous menu, enable <bold>Enable Lua Native Calls?</bold> and confirm its prompt. Stop other camera owners before retrieving the log:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">bin/chdkbridge<sp/>--timeout<sp/>60<sp/>--usb-timeout<sp/>5000<sp/>--romlog<sp/>camera-crash.log</highlight></codeline>
+</programlisting></para>
+<para>This exports Canon&apos;s stored ROM crash log to <computeroutput>A/ROMLOG.LOG</computeroutput> on the camera&apos;s SD card and downloads it to a new local file, limited to 64 KiB. It does not enter record mode, shoot, zoom or power off the camera. The native-call permission must be enabled on the camera; the bridge does not change it. Disable that permission again after the diagnostic when it is no longer needed.</para>
+<para>Read the log&apos;s timestamp, assertion or exception, and task name before repeating the failed capture. A stored log can describe an earlier failure; compare it with the host&apos;s USB and capture logs. For manual export instead, use CHDK&apos;s <bold>Miscellaneous &gt; Debug parameters &gt; Save ROM crash log</bold> command.</para>
+</sect1>
+<sect1 id="index_1autotoc_md9">
+<title>Optional Direct USB Capture</title><para><computeroutput>--direct-download</computeroutput> requests direct JPEG transfer rather than an SD-saved JPEG. Support depends on the actual CHDK camera port. If unavailable, resolve compatibility or use ordinary capture; do not assume a failed direct request can be replayed without another exposure.</para>
+<para>The bridge reports <computeroutput>direct JPEG unsupported; USB <ref refid="chdkbridge_8c_1abdea21baad0b7731a6a6be091339f0fd" kindref="member">capture</ref> mask=N</computeroutput> when the camera port lacks it. The mask is a bit set: 1 JPEG, 2 RAW, 4 YUV. A Canon SX730 HS (CHDK PTP 2.9) reports mask 6, so only RAW and YUV transfers exist and direct JPEG capture is not available on that camera.</para>
+</sect1>
+<sect1 id="index_1autotoc_md10">
+<title>Use With USHER</title><para>To select CHDKbridge as MORA&apos;s active camera service, set <computeroutput>CAMERA = chdk</computeroutput> in <computeroutput>camera.conf</computeroutput> at the Sensoraia root or pass <computeroutput>CAMERA=chdk</computeroutput> when deploying:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">make<sp/>mora-deploy<sp/>CAMERA=chdk<sp/>MORA_SSH_TARGET=air@theatre.local</highlight></codeline>
+</programlisting></para>
+<para>See the <ulink url="../../../docs/README.md#deploy-to-mora">deployment guide</ulink> for full MORA verification steps.</para>
+<sect2 id="index_1autotoc_md11">
+<title>Choose USHER&apos;s Capture Profile</title><para>USHER supplies its own capture profile on each shot. A setting left by a standalone command is not necessarily what USHER will use. For example, select the Canon ISO-mode request while packaging on the PC:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">make<sp/>-j32<sp/>mora-package<sp/>USHER_CHDK_ISO_MODE=400</highlight></codeline>
+</programlisting></para>
+<para>Keep this choice consistent when rebuilding. The default ISO request is 1600 and the default JPEG quality is 2 (normal). Related settings include <computeroutput>USHER_CHDK_FLASH</computeroutput> and <computeroutput>USHER_CHDK_QUALITY</computeroutput>. Confirm supported values and actual photos on your camera; the mode number alone is not measured exposure. Packaging does not activate the service.</para>
+<para>The ISO request is applied only when the camera&apos;s mode dial is in <bold>P, Tv, Av or M</bold>. In AUTO and scene modes Canon chooses ISO itself and does not accept a user value; forcing one there made the SX730 HS exposure driver assert (<computeroutput>DegeenGain.c</computeroutput> in its crash log) and power off when shooting zoomed in dim light. CHDKbridge therefore leaves ISO to the camera in those modes and still applies the other settings. Set the dial to <bold>P</bold> if you want the configured ISO. On the SX730 HS, ISO 3200 at a zoomed position also powered the camera off, so check any value above 1600 on your own camera.</para>
+</sect2>
+<sect2 id="index_1autotoc_md12">
+<title>Increase The Shot Rate</title><para>For the SX730 HS, start with <bold>Canon Image Review: Off</bold>, flash off and CHDK RAW saving off. Disable continuous/servo AF when using a focus lock. Image review is a camera-menu setting here, not an option applied by CHDKbridge. These settings remove avoidable camera work; their timing benefit has not been measured on this setup.</para>
+<para>The largest measured improvement is JPEG compression, without changing resolution, which is why USHER uses quality 2 (normal) by default. In standalone SX730 captures on MORA, resolution 0 with quality 0 (superfine) produced roughly 8.4<ndash/>10.5 MB files in 4.85<ndash/>5.3 s once warm; quality 2 produced roughly 2.8<ndash/>3.9 MB files in 2.7<ndash/>3.1 s at the wide end and about 1.9 MB in 3.4<ndash/>3.5 s zoomed to <computeroutput>zoom 128</computeroutput> indoors. These are scene-dependent capture-and-download times, not a guaranteed flight cadence. Normal quality loses some fine detail through stronger compression; inspect small features before relying on it for mapping or detection. To keep superfine JPEGs instead:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">make<sp/>-j32<sp/>mora-package<sp/>USHER_CHDK_QUALITY=0</highlight></codeline>
+</programlisting></para>
+<para>Packaging alone does not deploy it. Keep the setting on subsequent builds. Do not probe other resolution codes: the SX730 HS uses 0 (L), 2 (M1), 3 (M2) and 5 (S), and an unsupported code ended in a USB disconnect.</para>
+<para>To compare fixed focus, with no other camera owner:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">bin/chdkbridge<sp/>--usb-timeout<sp/>5000<sp/>--focus-mode<sp/>auto<sp/>--focus-distance<sp/>inf<sp/>photo-focus.jpg</highlight></codeline>
+</programlisting></para>
+<para>Here <computeroutput>auto</computeroutput> selects the CHDK port&apos;s supported manual-focus or AF-lock distance mechanism; it does not request autofocus. Unsupported modes or rejected distance readback fail explicitly. Check sharpness at the intended zoom and subject distance. If the comparison succeeds, carry it into USHER using <computeroutput>USHER_CHDK_FOCUS_MODE=auto USHER_CHDK_FOCUS_DISTANCE=inf</computeroutput> on the packaging command. Recheck after zoom changes; fixed infinity focus measured about 0.2 s faster per wide-angle shot on the bench but has not been checked zoomed.</para>
+<para>M or Tv mode and a suitable short shutter time can limit exposure time and motion blur, but do not eliminate all camera processing. Lower ISO is not inherently faster: in dim light it may require a longer exposure. Select daylight white balance for consistent color when appropriate; no measured speed gain is established here. The existing <computeroutput>--shutter</computeroutput> and ISO overrides are available for comparison, but should not replace a correctly exposed photo with a dark one merely to shorten capture time.</para>
+<para>USHER overlaps CHDK metadata writing with the next capture. The camera/USB capture lane is still single-flight, so triggers faster than capture and download can finish are not guaranteed to produce photos. Direct JPEG USB capture is unavailable on this SX730 port; it is not a speed option here.</para>
+<para>On a camera whose CHDK port supports direct JPEG capture, USHER can ask the bridge for it instead of saving to the SD card first:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">make<sp/>-j32<sp/>mora-package<sp/>USHER_CHDK_DIRECT=1</highlight></codeline>
+</programlisting></para>
+<para>The default is 0 (SD-saved capture). USHER does not fall back to the other mode when direct capture fails, because that would expose twice.</para>
+<para>Every shot also carries <computeroutput>--keep-awake 1</computeroutput> (CHDK &quot;Always&quot; idle-shutdown prevention). Select <computeroutput>USHER_CHDK_KEEP_AWAKE=0</computeroutput> to request Never, or <computeroutput>USHER_CHDK_KEEP_AWAKE=</computeroutput> (empty) to leave the camera&apos;s own setting alone.</para>
+<para>With no other camera owner, a separately managed bench session uses:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">./usher<sp/>--chdk<sp/>--debug</highlight></codeline>
+</programlisting></para>
+<para>Do not run standalone CHDKbridge commands while USHER owns the camera. For mission controls use the <ulink url="../../../docs/camera-control.md#before-you-start">camera-control guide</ulink>.</para>
+</sect2>
+</sect1>
+<sect1 id="index_1autotoc_md13">
+<title>Troubleshooting</title><para><table rows="7" cols="2"><row>
+<entry thead="yes"><para>Symptom  </para>
+</entry><entry thead="yes"><para>Check  </para>
+</entry></row>
+<row>
+<entry thead="no"><para>No camera  </para>
+</entry><entry thead="no"><para>Power, USB data cable and the selected port  </para>
+</entry></row>
+<row>
+<entry thead="no"><para>Camera busy  </para>
+</entry><entry thead="no"><para>Desktop photo importers or another camera owner  </para>
+</entry></row>
+<row>
+<entry thead="no"><para>CHDK/protocol rejected  </para>
+</entry><entry thead="no"><para>Exact camera firmware and stable CHDK build  </para>
+</entry></row>
+<row>
+<entry thead="no"><para>Setting rejected  </para>
+</entry><entry thead="no"><para>Your camera&apos;s supported values and current state  </para>
+</entry></row>
+<row>
+<entry thead="no"><para>Timeout after capture  </para>
+</entry><entry thead="no"><para>Inspect the camera and destination before deciding whether to request another photo  </para>
+</entry></row>
+<row>
+<entry thead="no"><para>Blurred JPEG  </para>
+</entry><entry thead="no"><para>Focus, zoom, exposure duration, vibration and real scene detail  </para>
+</entry></row>
+</table>
+</para>
+<para>When an earlier run was interrupted (stopped, timed out or unplugged), the camera can still hold that run&apos;s PTP session or unsent data. CHDKbridge then prints <computeroutput>Recovering camera PTP state left by an earlier run</computeroutput>, sends the still-image class reset once and opens a fresh session; it never resets the USB port. Likewise it waits for a camera script left running by an interrupted run instead of killing it. USHER removes partial <computeroutput>cNNNNNN.jpg.part.*</computeroutput> downloads left in the photo directory by a forcibly stopped controller. A camera that has powered off still needs to be switched on again.</para>
+<para>Keep usable originals and the diagnostic. A successful build or USB reply does not replace a bench check of the actual camera configuration.</para>
+<sect2 id="index_1autotoc_md14">
+<title>Recover Before Requesting Another Photo</title><para>A timeout after triggering can mean the exposure succeeded but transfer or confirmation failed. Check the camera&apos;s SD card and output directory before repeating it. If you know the saved camera path, download the existing JPEG without another exposure:</para>
+<para><programlisting filename=".sh"><codeline><highlight class="normal">bin/chdkbridge<sp/>--download<sp/>A/DCIM/100CANON/IMG_0042.JPG<sp/>recovered.jpg</highlight></codeline>
+</programlisting></para>
+<para>Use the actual camera filename and a new local destination, with <computeroutput>--port</computeroutput> when needed. Do not delete originals or kill an unrelated camera script to force recovery. Once the camera is idle and the connection healthy, a new independent capture can be requested. </para>
+</sect2>
+</sect1>
+    </detaileddescription>
+    <location file="docs/chdkbridge.md"/>
+  </compounddef>
+</doxygen>

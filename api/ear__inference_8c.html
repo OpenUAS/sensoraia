@@ -1,0 +1,2524 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; connect-src 'self'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; manifest-src 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/>
+<meta content="no-referrer" name="referrer"/>
+<meta content="text/xhtml;charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=11" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sensoraia API: modules/ear_cam/ear_inference.c File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="dynsections.js" type="text/javascript"></script>
+<script src="clipboard.js" type="text/javascript"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script src="navtreedata.js" type="text/javascript"></script>
+<script src="navtree.js" type="text/javascript"></script>
+<script src="cookie.js" type="text/javascript"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script src="search/searchdata.js" type="text/javascript"></script>
+<script src="search/search.js" type="text/javascript"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-theme.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/material/doxygen-shell.css" rel="stylesheet"/></head>
+<body class="sensoraia-api-page" data-md-component="container">
+<div id="top"><div class="js" data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-header"><input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/><input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/><label class="md-overlay" for="__drawer"></label><div data-md-component="announce">
+</div><header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Sensoraia" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Sensoraia
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">API</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header><div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div><div class="md-container"><nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../index.html">
+          
+  
+  
+  About Sensoraia
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../getting-started.html">
+          
+  
+  
+  Get Going
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../raspberry-pi-ai-camera.html">
+          
+  
+  
+  Use Your Sensors
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../autopilot-integration.html">
+          
+  
+  
+  Simulation &amp; Mapping
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../camera-control.html">
+          
+  
+  
+  Reference
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../api/index.html">
+          
+  
+  
+  API
+
+        </a>
+</li>
+</ul>
+</div>
+</nav><section aria-labelledby="ou-title" class="ou-stage">
+<picture>
+<source media="(max-width: 1100px)" srcset="../assets/source/docs/images/doxygen-source-illustration-mobile.png"/>
+<img alt="Illustrated C/C++ source sheets, symbol index, API relationship graph, compiler console and debug trace" class="ou-stage__image" fetchpriority="high" height="1000" src="../assets/source/docs/images/doxygen-source-illustration.png" width="3200"/>
+</picture>
+<div class="ou-stage__content">
+<p class="ou-eyebrow">LIVE AI / FLEXIBLE SENSING / FLIGHT CONTEXT</p>
+<h1 id="ou-title">Sensoraia API</h1>
+<p class="ou-stage__intro">Live AI and sensing, connected to the flight.<br/>See, listen, inspect and return supported results while airborne.</p>
+</div>
+</section><div class="md-grid"><div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sensoraia" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="Sensoraia">
+<img alt="Sensoraia" class="ou-brand__logo" height="264" src="../assets/source/docs/images/sensoraia-logo-on-dark.png" width="400"/>
+</a>
+    Sensoraia
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    About Sensoraia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.html">
+<span class="md-ellipsis">
+    
+  
+    About Sensoraia
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Get Going
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Going
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link" href="../getting-started.html">
+<span class="md-ellipsis">
+    
+  
+    Install &amp; Get Started
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#before-you-start">
+<span class="md-ellipsis">
+      
+        Before You Start
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#build-on-your-pc">
+<span class="md-ellipsis">
+      
+        Build On Your PC
+      
+    </span>
+</a>
+<nav aria-label="Build On Your PC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-prepare-the-source-checkout">
+<span class="md-ellipsis">
+      
+        1. Prepare The Source Checkout
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-install-pc-dependencies">
+<span class="md-ellipsis">
+      
+        2. Install PC Dependencies
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-build-native-applications">
+<span class="md-ellipsis">
+      
+        3. Build Native Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-it-without-hardware">
+<span class="md-ellipsis">
+      
+        Try It Without Hardware
+      
+    </span>
+</a>
+<nav aria-label="Try It Without Hardware" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#fly-a-full-simulation-in-paparazzi-center">
+<span class="md-ellipsis">
+      
+        Fly A Full Simulation In Paparazzi Center
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#start-standalone-local-usher">
+<span class="md-ellipsis">
+      
+        Start Standalone Local USHER
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#connect-a-simulated-aircraft">
+<span class="md-ellipsis">
+      
+        Connect A Simulated Aircraft
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#try-the-real-board-on-your-desk">
+<span class="md-ellipsis">
+      
+        Try The Real Board On Your Desk
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#prepare-the-reference-pi-board">
+<span class="md-ellipsis">
+      
+        Prepare The Reference Pi Board
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#deploy-to-mora">
+<span class="md-ellipsis">
+      
+        Deploy To MORA
+      
+    </span>
+</a>
+<nav aria-label="Deploy To MORA" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#1-cross-build-and-package-on-the-pc">
+<span class="md-ellipsis">
+      
+        1. Cross-Build And Package On The PC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#2-choose-your-camera-cameraconf-or-camera">
+<span class="md-ellipsis">
+      
+        2. Choose Your Camera (camera.conf Or CAMERA=...)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#3-upload-and-activate">
+<span class="md-ellipsis">
+      
+        3. Upload And Activate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#4-confirm-the-installed-release">
+<span class="md-ellipsis">
+      
+        4. Confirm The Installed Release
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#choose-your-next-guide">
+<span class="md-ellipsis">
+      
+        Choose Your Next Guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../getting-started.html#if-something-stops">
+<span class="md-ellipsis">
+      
+        If Something Stops
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../glossary.html">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../setup-os-rpi-zero-2w.html">
+<span class="md-ellipsis">
+    
+  
+    Pi Zero 2 W Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../usher-camera-pipeline.html">
+<span class="md-ellipsis">
+    
+  
+    Capture &amp; Results
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Your Sensors
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Your Sensors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raspberry-pi-ai-camera.html">
+<span class="md-ellipsis">
+    
+  
+    AI Camera (IMX500)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge.html">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwircam.html">
+<span class="md-ellipsis">
+    
+  
+    LWIRcam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../lwir-calibration.html">
+<span class="md-ellipsis">
+    
+  
+    LWIR Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../spottercam.html">
+<span class="md-ellipsis">
+    
+  
+    Spottercam
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../earcam-loudest-spot-explained.html">
+<span class="md-ellipsis">
+    
+  
+    EARcam Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chemical-vapors-and-emissions.html">
+<span class="md-ellipsis">
+    
+  
+    Vapors &amp; Emissions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../loom-cam.html">
+<span class="md-ellipsis">
+    
+  
+    LOOM_cam / Visual Return
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Simulation &amp; Mapping
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Simulation &amp; Mapping
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autopilot-integration.html">
+<span class="md-ellipsis">
+    
+  
+    Autopilot Integration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../desk-test.html">
+<span class="md-ellipsis">
+    
+  
+    FTDI Desk Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mimic.html">
+<span class="md-ellipsis">
+    
+  
+    MIMIC / Map Photos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-lens.html">
+<span class="md-ellipsis">
+    
+  
+    Lens / Shutter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../pangea.html">
+<span class="md-ellipsis">
+    
+  
+    PANGEA / Photo Maps
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../diplacam.html">
+<span class="md-ellipsis">
+    
+  
+    Diplacam / XY Planning
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-control.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../camera-speedtest.html">
+<span class="md-ellipsis">
+    
+  
+    Camera Speed Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exif.html">
+<span class="md-ellipsis">
+    
+  
+    Image Metadata &amp; Timing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../onnxruntime.html">
+<span class="md-ellipsis">
+    
+  
+    AI Models
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Complete Sensoraia API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Complete Sensoraia API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/topics.html">
+<span class="md-ellipsis">
+    
+  
+    Topics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/inherits.html">
+<span class="md-ellipsis">
+    
+  
+    Graphical Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Member Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/functions_rela.html">
+<span class="md-ellipsis">
+    
+  
+    Related Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_type.html">
+<span class="md-ellipsis">
+    
+  
+    Type Definitions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Diplacam API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Diplacam API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/pages.html">
+<span class="md-ellipsis">
+    
+  
+    Related Pages
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/hierarchy.html">
+<span class="md-ellipsis">
+    
+  
+    Type Hierarchy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_func.html">
+<span class="md-ellipsis">
+    
+  
+    Member Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/functions_type.html">
+<span class="md-ellipsis">
+    
+  
+    Member Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespaces.html">
+<span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_func.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_type.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/namespacemembers_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Namespace Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../api/diplacam/todo.html">
+<span class="md-ellipsis">
+    
+  
+    Todo Items
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CHDKbridge API
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CHDKbridge API
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/index.html">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/files.html">
+<span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/annotated.html">
+<span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/classes.html">
+<span class="md-ellipsis">
+    
+  
+    Type Index
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions.html">
+<span class="md-ellipsis">
+    
+  
+    All Members
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/functions_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Member Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals.html">
+<span class="md-ellipsis">
+    
+  
+    All Global Symbols
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_func.html">
+<span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_vars.html">
+<span class="md-ellipsis">
+    
+  
+    Variables
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_enum.html">
+<span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_eval.html">
+<span class="md-ellipsis">
+    
+  
+    Enumeration Values
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../chdkbridge/api/html/globals_defs.html">
+<span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div></div></div></div><!-- do not remove this div, it is closed by doxygen! -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script src="menudata.js" type="text/javascript"></script>
+<script src="menu.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div class="ui-resizable side-nav-resizable" id="side-nav">
+<div id="nav-tree">
+<div id="nav-tree-contents">
+<div class="sync" id="nav-sync"></div>
+</div>
+</div>
+<div class="ui-resizable-handle" id="splitbar" style="-moz-user-select:none;">
+</div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('ear__inference_8c.html','',''); });
+</script>
+<div id="container">
+<main data-md-component="main"><div class="md-main__inner" data-md-component="content" id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow" onkeydown="return searchBox.OnSearchSelectKey(event)" onmouseout="return searchBox.OnSearchSelectHide()" onmouseover="return searchBox.OnSearchSelectShow()">
+</div>
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+<div class="header">
+<div class="headertitle"><div class="title">ear_inference.c File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<p>One-window acoustic inference worker with source-time and measured-level evidence.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include "<a class="el" href="ear__inference_8h_source.html">ear_inference.h</a>"</code><br/>
+<code>#include "<a class="el" href="inference__model_8h_source.html">../../src/inference_model.h</a>"</code><br/>
+<code>#include &lt;math.h&gt;</code><br/>
+<code>#include &lt;pthread.h&gt;</code><br/>
+<code>#include &lt;stdatomic.h&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
+<code>#include &lt;sys/stat.h&gt;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for ear_inference.c:</div>
+<div class="dyncontent">
+<div class="center"><img alt="" border="0" loading="lazy" src="ear__inference_8c__incl.png" usemap="#amodules_2ear__cam_2ear__inference_8c"/></div>
+<map id="amodules_2ear__cam_2ear__inference_8c" name="amodules_2ear__cam_2ear__inference_8c">
+<area alt="" coords="1120,36,1115,26,1100,18,1077,11,1049,7,1017,5,985,7,956,11,933,18,918,26,913,36,918,45,933,53,956,60,985,64,1017,66,1049,64,1077,60,1100,53,1115,45" shape="poly" title="One-window acoustic inference worker with source-time and measured-level evidence."/>
+<area alt="" coords="199,327,195,321,184,315,166,311,145,309,121,308,96,309,75,311,57,315,46,321,43,327,46,332,57,338,75,342,96,345,121,345,145,345,166,342,184,338,195,332" href="ear__inference_8h.html" shape="poly" title="Bounded PCM classification without allowing model latency to stall ALSA capture."/>
+<area alt="" coords="911,40,809,49,683,62,549,84,417,116,352,137,302,156,255,183,201,224,167,259,141,296,136,293,163,256,197,220,252,178,299,151,350,132,416,111,548,79,683,57,808,44,916,39" shape="poly" title=" "/>
+<area alt="" coords="599,144,595,135,583,126,564,119,540,115,514,114,488,115,464,119,445,126,433,135,429,144,433,153,445,162,464,168,488,173,514,174,540,173,564,168,583,162,595,153" href="inference__model_8h.html" shape="poly" title="Integrity-checked model contracts and independently owned tensor workspaces."/>
+<area alt="" coords="929,54,636,116,598,125,596,120,635,111,934,52" shape="poly" title=" "/>
+<area alt="" coords="476,412,474,406,466,401,455,397,440,394,423,393,407,394,392,397,380,401,373,406,370,412,373,418,380,423,392,428,407,430,423,431,440,430,455,428,466,423,474,418" shape="poly" title=" "/>
+<area alt="" coords="977,65,462,390,460,385,972,62" shape="poly" title=" "/>
+<area alt="" coords="1151,412,1148,406,1142,401,1133,397,1121,394,1107,393,1094,394,1082,397,1072,401,1066,406,1064,412,1066,418,1072,423,1082,428,1094,430,1107,431,1121,430,1133,428,1142,423,1148,418" shape="poly" title=" "/>
+<area alt="" coords="1011,64,1002,121,997,192,1002,270,1011,308,1026,344,1044,369,1069,390,1064,389,1040,372,1021,347,1006,310,997,271,991,192,997,120,1008,68" shape="poly" title=" "/>
+<area alt="" coords="1266,412,1264,406,1257,401,1247,397,1235,394,1221,393,1207,394,1194,397,1184,401,1177,406,1175,412,1177,418,1184,423,1194,428,1207,430,1221,431,1235,430,1247,428,1257,423,1264,418" shape="poly" title=" "/>
+<area alt="" coords="1020,64,1038,215,1054,292,1064,323,1076,344,1091,356,1115,369,1174,395,1169,394,1112,373,1088,360,1072,347,1059,325,1049,294,1033,215,1017,68" shape="poly" title=" "/>
+<area alt="" coords="1402,412,1399,406,1391,401,1379,397,1363,394,1346,393,1329,394,1313,397,1301,401,1293,406,1290,412,1293,418,1301,423,1313,428,1329,430,1346,431,1363,430,1379,428,1391,423,1399,418" shape="poly" title=" "/>
+<area alt="" coords="1037,63,1120,172,1228,291,1320,384,1315,383,1224,294,1116,176,1035,68" shape="poly" title=" "/>
+<area alt="" coords="1256,144,1253,138,1244,133,1230,129,1212,126,1193,125,1173,126,1155,129,1141,133,1132,138,1129,144,1132,150,1141,155,1155,159,1173,162,1193,163,1212,162,1230,159,1244,155,1253,150" shape="poly" title=" "/>
+<area alt="" coords="1061,61,1155,119,1150,118,1060,66" shape="poly" title=" "/>
+<area alt="" coords="1365,144,1362,138,1356,133,1347,129,1335,126,1322,125,1309,126,1297,129,1287,133,1281,138,1279,144,1281,150,1287,155,1297,159,1309,162,1322,163,1335,162,1347,159,1356,155,1362,150" shape="poly" title=" "/>
+<area alt="" coords="1093,54,1178,79,1268,111,1286,121,1281,121,1266,116,1177,84,1093,59" shape="poly" title=" "/>
+<area alt="" coords="110,412,108,406,100,401,89,397,74,394,58,393,42,394,27,397,15,401,8,406,5,412,8,418,15,423,27,428,42,430,58,431,74,430,89,428,100,423,108,418" shape="poly" title=" "/>
+<area alt="" coords="109,344,82,384,78,380,105,347" shape="poly" title=" "/>
+<area alt="" coords="232,412,229,406,222,401,212,397,198,394,183,393,168,394,155,397,144,401,137,406,135,412,137,418,144,423,155,428,168,430,183,431,198,430,212,428,222,423,229,418" shape="poly" title=" "/>
+<area alt="" coords="135,343,164,382,159,382,133,348" shape="poly" title=" "/>
+<area alt="" coords="346,412,344,406,337,401,327,397,315,394,301,393,287,394,274,397,264,401,257,406,255,412,257,418,264,423,274,428,287,430,301,431,315,430,327,428,337,423,344,418" shape="poly" title=" "/>
+<area alt="" coords="156,341,260,390,255,392,155,347" shape="poly" title=" "/>
+<area alt="" coords="392,241,388,235,375,230,355,226,330,223,302,222,274,223,249,226,229,230,216,235,212,241,216,247,229,252,249,256,274,259,302,260,330,259,355,256,375,252,388,247" href="inference__image_8h.html" shape="poly" title="Source-independent, bounded model preprocessing with reversible coordinate bookkeeping."/>
+<area alt="" coords="460,170,354,219,351,215,464,167" shape="poly" title=" "/>
+<area alt="" coords="612,241,607,235,593,230,571,226,544,223,514,222,484,223,456,226,435,230,421,235,416,241,421,247,435,252,456,256,484,259,514,260,544,259,571,256,593,252,607,247" href="inference__settings_8h.html" shape="poly" title="Shared application_settings.ini discovery with module-owned extra keys."/>
+<area alt="" coords="515,172,516,208,512,205,512,177" shape="poly" title=" "/>
+<area alt="" coords="381,327,377,321,366,315,349,311,326,309,302,308,277,309,255,311,238,315,226,321,222,327,226,332,238,338,255,342,277,345,302,345,326,345,349,342,366,338,377,332" href="onnx__session_8h.html" shape="poly" title="Bounded tensor bindings and cooperative execution policy, independent of CAM semantics."/>
+<area alt="" coords="303,258,304,293,300,291,300,262" shape="poly" title=" "/>
+<area alt="" coords="259,345,110,396,108,391,257,340" shape="poly" title=" "/>
+<area alt="" coords="280,344,219,389,217,384,275,346" shape="poly" title=" "/>
+<area alt="" coords="303,344,303,379,299,376,300,348" shape="poly" title=" "/>
+<area alt="" coords="327,342,390,387,385,386,326,347" shape="poly" title=" "/>
+<area alt="" coords="500,259,455,305,426,328,395,348,236,398,234,393,393,343,423,323,452,301,495,261" shape="poly" title=" "/>
+<area alt="" coords="511,259,493,304,479,327,461,348,414,373,350,397,349,392,412,368,458,343,475,324,488,301,506,262" shape="poly" title=" "/>
+<area alt="" coords="838,327,834,321,824,315,808,311,788,309,766,308,744,309,724,311,708,315,698,321,694,327,698,332,708,338,724,342,744,345,766,345,788,345,808,342,824,338,834,332" href="bounded__ini_8h.html" shape="poly" title="Allocation-free flat key=value mechanics; callers own schemas and storage."/>
+<area alt="" coords="562,255,711,306,706,307,561,260" shape="poly" title=" "/>
+<area alt="" coords="693,332,443,353,283,371,124,396,113,398,111,393,123,391,283,366,442,348,699,331" shape="poly" title=" "/>
+<area alt="" coords="695,333,494,356,369,374,244,396,234,398,233,393,243,391,368,368,493,351,700,333" shape="poly" title=" "/>
+<area alt="" coords="704,335,545,360,358,396,350,398,349,393,357,391,544,355,699,336" shape="poly" title=" "/>
+<area alt="" coords="591,412,589,406,583,401,573,397,560,394,546,393,532,394,519,397,509,401,503,406,500,412,503,418,509,423,519,428,532,430,546,431,560,430,573,428,583,423,589,418" shape="poly" title=" "/>
+<area alt="" coords="729,342,593,396,592,391,724,343" shape="poly" title=" "/>
+<area alt="" coords="703,412,700,406,694,401,685,397,673,394,659,393,646,394,634,397,624,401,618,406,616,412,618,418,624,423,634,428,646,430,659,431,673,430,685,428,694,423,700,418" shape="poly" title=" "/>
+<area alt="" coords="746,344,692,389,690,384,741,346" shape="poly" title=" "/>
+<area alt="" coords="808,412,806,406,800,401,791,397,780,394,767,393,755,394,743,397,734,401,729,406,727,412,729,418,734,423,743,428,755,430,767,431,780,430,791,428,800,423,806,418" shape="poly" title=" "/>
+<area alt="" coords="768,344,769,380,765,376,764,348" shape="poly" title=" "/>
+<area alt="" coords="821,336,929,360,1053,391,1062,396,1057,395,1052,396,928,365,821,342" shape="poly" title=" "/>
+<area alt="" coords="921,412,919,406,913,401,903,397,890,394,877,393,863,394,850,397,840,401,834,406,832,412,834,418,840,423,850,428,863,430,877,431,890,430,903,428,913,423,919,418" shape="poly" title=" "/>
+<area alt="" coords="789,342,846,387,841,386,787,347" shape="poly" title=" "/>
+<area alt="" coords="830,333,983,356,1164,391,1174,396,1169,395,1163,396,982,361,829,338" shape="poly" title=" "/>
+<area alt="" coords="833,331,1033,353,1156,370,1278,391,1292,396,1287,396,1277,396,1155,375,1033,358,833,336" shape="poly" title=" "/>
+<area alt="" coords="1040,412,1038,406,1031,401,1021,397,1007,394,993,393,978,394,965,397,954,401,947,406,945,412,947,418,954,423,965,428,978,430,993,431,1007,430,1021,428,1031,423,1038,418" shape="poly" title=" "/>
+<area alt="" coords="806,340,947,393,942,393,805,345" shape="poly" title=" "/>
+</map>
+</div>
+</div>
+<p><a href="ear__inference_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-define-members"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a5675f02078449d44da6fe40264ee5cdf" id="r_a5675f02078449d44da6fe40264ee5cdf"><td align="right" class="memItemLeft" valign="top">#define </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5675f02078449d44da6fe40264ee5cdf">EAR_INFERENCE_SAMPLE_LIMIT</a>   192000U</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-func-members"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a86df3b68d8740d5f66b58bcdef74ee36" id="r_a86df3b68d8740d5f66b58bcdef74ee36"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a86df3b68d8740d5f66b58bcdef74ee36">model_setting</a> (void *unused, const char *key, const char *value)</td></tr>
+<tr class="memdesc:a86df3b68d8740d5f66b58bcdef74ee36"><td class="mdescLeft"> </td><td class="mdescRight">Keep class/threshold selection module-owned rather than assigning acoustic semantics to the common parser.  <br/></td></tr>
+<tr class="memitem:ac957cfbea02321503681348c8a740d74" id="r_ac957cfbea02321503681348c8a740d74"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#ac957cfbea02321503681348c8a740d74">ear_inference_configure</a> (const char *settings_path, unsigned rate, bool *<a class="el" href="dipla__camera__backend_8c.html#adce2780be75006bfa4c58fd8cc706556">enabled</a>, char *<a class="el" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</td></tr>
+<tr class="memdesc:ac957cfbea02321503681348c8a740d74"><td class="mdescLeft"> </td><td class="mdescRight">Select the explicit detector and qualify an ONNX PCM contract before capture starts.  <br/></td></tr>
+<tr class="memitem:add0464cb9292be6f52cba0de802a2e52" id="r_add0464cb9292be6f52cba0de802a2e52"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#add0464cb9292be6f52cba0de802a2e52">run_window</a> (struct <a class="el" href="structear__inference__result.html">ear_inference_result</a> *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>)</td></tr>
+<tr class="memdesc:add0464cb9292be6f52cba0de802a2e52"><td class="mdescLeft"> </td><td class="mdescRight">Accept finite probabilities without confusing them with measured loudness or localization confidence.  <br/></td></tr>
+<tr class="memitem:a2340f6b6ee7ceb394bb395e776fe76d1" id="r_a2340f6b6ee7ceb394bb395e776fe76d1"><td align="right" class="memItemLeft" valign="top">static void * </td><td class="memItemRight" valign="bottom"><a class="el" href="#a2340f6b6ee7ceb394bb395e776fe76d1">classify_windows</a> (void *unused)</td></tr>
+<tr class="memdesc:a2340f6b6ee7ceb394bb395e776fe76d1"><td class="mdescLeft"> </td><td class="mdescRight">Own the model session off the ALSA thread and publish only still-current capture generations.  <br/></td></tr>
+<tr class="memitem:a4998196dfd6229e0ae161d19a15bf347" id="r_a4998196dfd6229e0ae161d19a15bf347"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a4998196dfd6229e0ae161d19a15bf347">ear_inference_start</a> (char *<a class="el" href="lwir__image_8c.html#aded4335c2df32c709945a69dfe77220d">error</a>, size_t <a class="el" href="capture__arbiter_8c.html#a6d68504c09ee186ab8deb6b756b4bd66">capacity</a>)</td></tr>
+<tr class="memdesc:a4998196dfd6229e0ae161d19a15bf347"><td class="mdescLeft"> </td><td class="mdescRight">Start the sole classifier thread after successful ONNX configuration.  <br/></td></tr>
+<tr class="memitem:ae435a9045329583af1e0527e82b35250" id="r_ae435a9045329583af1e0527e82b35250"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae435a9045329583af1e0527e82b35250">ear_inference_push</a> (const int16_t *<a class="el" href="ear__heatmap__replay_8c.html#ae0abbe47bb81d82a4e2215c9f6ffad26">samples</a>, size_t <a class="el" href="pose__log_8c.html#a76d971a3c552bc58ba9f0d5fceae9806">count</a>, uint64_t end_us, uint64_t error_us)</td></tr>
+<tr class="memdesc:ae435a9045329583af1e0527e82b35250"><td class="mdescLeft"> </td><td class="mdescRight">Supply capture samples without waiting for model execution or a busy model mailbox.  <br/></td></tr>
+<tr class="memitem:a5cf9276f6adabecddb5e0e8213f19976" id="r_a5cf9276f6adabecddb5e0e8213f19976"><td align="right" class="memItemLeft" valign="top">bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a5cf9276f6adabecddb5e0e8213f19976">ear_inference_take</a> (struct <a class="el" href="structear__inference__result.html">ear_inference_result</a> *<a class="el" href="usher_8c.html#a349e1179d2a6ecbcc88c95eb2751e226">result</a>)</td></tr>
+<tr class="memdesc:a5cf9276f6adabecddb5e0e8213f19976"><td class="mdescLeft"> </td><td class="mdescRight">Consume at most one completed original-window result without blocking capture.  <br/></td></tr>
+<tr class="memitem:aeccbe9f4d3183231e65dfa4b99bbc4b7" id="r_aeccbe9f4d3183231e65dfa4b99bbc4b7"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#aeccbe9f4d3183231e65dfa4b99bbc4b7">ear_inference_discontinuity</a> (void)</td></tr>
+<tr class="memdesc:aeccbe9f4d3183231e65dfa4b99bbc4b7"><td class="mdescLeft"> </td><td class="mdescRight">Invalidate queued/completed evidence after capture continuity breaks, including in-flight generations.  <br/></td></tr>
+<tr class="memitem:a29a5407def73f3e8bc6cb43243aceb9e" id="r_a29a5407def73f3e8bc6cb43243aceb9e"><td align="right" class="memItemLeft" valign="top">void </td><td class="memItemRight" valign="bottom"><a class="el" href="#a29a5407def73f3e8bc6cb43243aceb9e">ear_inference_stop</a> (void)</td></tr>
+<tr class="memdesc:a29a5407def73f3e8bc6cb43243aceb9e"><td class="mdescLeft"> </td><td class="mdescRight">Request termination, join the classifier and release its model; repeat calls are harmless.  <br/></td></tr>
+<tr class="memitem:a6c6ce7db86f44de3d5ba14ed9adcab64" id="r_a6c6ce7db86f44de3d5ba14ed9adcab64"><td align="right" class="memItemLeft" valign="top">int </td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c6ce7db86f44de3d5ba14ed9adcab64">ear_inference_file</a> (const char *filename)</td></tr>
+<tr class="memdesc:a6c6ce7db86f44de3d5ba14ed9adcab64"><td class="mdescLeft"> </td><td class="mdescRight">Classify exact whole windows from a regular little-endian signed-16 mono PCM file.  <br/></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader" id="header-var-members"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a9d7475c1fcdbe454f3c09344c794b6b0" id="r_a9d7475c1fcdbe454f3c09344c794b6b0"><td align="right" class="memItemLeft" valign="top">static struct <a class="el" href="structinference__context.html">inference_context</a> </td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d7475c1fcdbe454f3c09344c794b6b0">network</a></td></tr>
+<tr class="memitem:a19bc207bc4a8834bbc85d93f9f0571d6" id="r_a19bc207bc4a8834bbc85d93f9f0571d6"><td align="right" class="memItemLeft" valign="top">static pthread_mutex_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a19bc207bc4a8834bbc85d93f9f0571d6">inference_mutex</a> = PTHREAD_MUTEX_INITIALIZER</td></tr>
+<tr class="memitem:af1a4aa462e39cbe9eeab078754bc49fe" id="r_af1a4aa462e39cbe9eeab078754bc49fe"><td align="right" class="memItemLeft" valign="top">static pthread_cond_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#af1a4aa462e39cbe9eeab078754bc49fe">inference_available</a> = PTHREAD_COND_INITIALIZER</td></tr>
+<tr class="memitem:afeb38046ecb4b6a5f56ec4dbd73b34d2" id="r_afeb38046ecb4b6a5f56ec4dbd73b34d2"><td align="right" class="memItemLeft" valign="top">static pthread_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#afeb38046ecb4b6a5f56ec4dbd73b34d2">inference_thread</a></td></tr>
+<tr class="memitem:a43c08d193d555a2b2a61c53d2a4e5a63" id="r_a43c08d193d555a2b2a61c53d2a4e5a63"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a43c08d193d555a2b2a61c53d2a4e5a63">started</a></td></tr>
+<tr class="memitem:a3065b71ea2455fb184ad978b7a8bd496" id="r_a3065b71ea2455fb184ad978b7a8bd496"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a3065b71ea2455fb184ad978b7a8bd496">stopping</a></td></tr>
+<tr class="memitem:a39f16d585c4531d2bf2562631a775d73" id="r_a39f16d585c4531d2bf2562631a775d73"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a39f16d585c4531d2bf2562631a775d73">pending</a></td></tr>
+<tr class="memitem:a65cf7d7f8e531611b245355ab91fd749" id="r_a65cf7d7f8e531611b245355ab91fd749"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a65cf7d7f8e531611b245355ab91fd749">ready</a></td></tr>
+<tr class="memitem:af6e8e8ec12eb953825281fefeb23d036" id="r_af6e8e8ec12eb953825281fefeb23d036"><td align="right" class="memItemLeft" valign="top">static int16_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#af6e8e8ec12eb953825281fefeb23d036">collected</a> [<a class="el" href="#a5675f02078449d44da6fe40264ee5cdf">EAR_INFERENCE_SAMPLE_LIMIT</a>]</td></tr>
+<tr class="memitem:a582101b8298240f74339f3c5d6d05f1d" id="r_a582101b8298240f74339f3c5d6d05f1d"><td align="right" class="memItemLeft" valign="top">static int16_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a582101b8298240f74339f3c5d6d05f1d">queued</a> [<a class="el" href="#a5675f02078449d44da6fe40264ee5cdf">EAR_INFERENCE_SAMPLE_LIMIT</a>]</td></tr>
+<tr class="memitem:aaa26f45a739dd48d7a9b38d8727c3d2a" id="r_aaa26f45a739dd48d7a9b38d8727c3d2a"><td align="right" class="memItemLeft" valign="top">static size_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa26f45a739dd48d7a9b38d8727c3d2a">collected_count</a></td></tr>
+<tr class="memitem:a8a2d3c52ddc0f1a27ddd7a6d584a5250" id="r_a8a2d3c52ddc0f1a27ddd7a6d584a5250"><td align="right" class="memItemLeft" valign="top">static bool </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a2d3c52ddc0f1a27ddd7a6d584a5250">collected_timing_valid</a></td></tr>
+<tr class="memitem:a400c633d14c8b24435a0ca8c1f748347" id="r_a400c633d14c8b24435a0ca8c1f748347"><td align="right" class="memItemLeft" valign="top">static uint64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a400c633d14c8b24435a0ca8c1f748347">collected_error_us</a></td></tr>
+<tr class="memitem:ae661d032a700353e3aa966b8bb11e7c5" id="r_ae661d032a700353e3aa966b8bb11e7c5"><td align="right" class="memItemLeft" valign="top">static atomic_uint_fast64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#ae661d032a700353e3aa966b8bb11e7c5">generation</a></td></tr>
+<tr class="memitem:a0cf39a311498c6a08c25c133c46a25bd" id="r_a0cf39a311498c6a08c25c133c46a25bd"><td align="right" class="memItemLeft" valign="top">static uint64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a0cf39a311498c6a08c25c133c46a25bd">queued_generation</a></td></tr>
+<tr class="memitem:a57beb81923407840ae4beaf0475eea37" id="r_a57beb81923407840ae4beaf0475eea37"><td align="right" class="memItemLeft" valign="top">static uint64_t </td><td class="memItemRight" valign="bottom"><a class="el" href="#a57beb81923407840ae4beaf0475eea37">completed_generation</a></td></tr>
+<tr class="memitem:a8fc6d272d1d1bfd9e8035d5a92fc97a7" id="r_a8fc6d272d1d1bfd9e8035d5a92fc97a7"><td align="right" class="memItemLeft" valign="top">static struct <a class="el" href="structear__inference__result.html">ear_inference_result</a> queued_evidence </td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fc6d272d1d1bfd9e8035d5a92fc97a7">completed</a></td></tr>
+<tr class="memitem:a78be9e7d37571059456305628ab17557" id="r_a78be9e7d37571059456305628ab17557"><td align="right" class="memItemLeft" valign="top">static double </td><td class="memItemRight" valign="bottom"><a class="el" href="#a78be9e7d37571059456305628ab17557">score_threshold</a> = 0.6</td></tr>
+<tr class="memitem:a99c22b92faa0e14957fef6d571fa1b29" id="r_a99c22b92faa0e14957fef6d571fa1b29"><td align="right" class="memItemLeft" valign="top">static unsigned </td><td class="memItemRight" valign="bottom"><a class="el" href="#a99c22b92faa0e14957fef6d571fa1b29">class_index</a></td></tr>
+<tr class="memitem:a505be7836113ea54d1a2e4492420cb95" id="r_a505be7836113ea54d1a2e4492420cb95"><td align="right" class="memItemLeft" valign="top">static unsigned </td><td class="memItemRight" valign="bottom"><a class="el" href="#a505be7836113ea54d1a2e4492420cb95">option_seen</a></td></tr>
+</table>
+<a id="details" name="details"></a><h2 class="groupheader" id="header-details">Detailed Description</h2>
+<div class="textblock"><p>One-window acoustic inference worker with source-time and measured-level evidence. </p>
+<p>The capture thread never shares its live sample buffer with ORT; stale generations are discarded. </p>
+<p class="definition">Definition in file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div><a id="doc-define-members" name="doc-define-members"></a><h2 class="groupheader" id="header-doc-define-members">Macro Definition Documentation</h2>
+<a id="a5675f02078449d44da6fe40264ee5cdf" name="a5675f02078449d44da6fe40264ee5cdf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5675f02078449d44da6fe40264ee5cdf">◆ </a></span>EAR_INFERENCE_SAMPLE_LIMIT</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">#define EAR_INFERENCE_SAMPLE_LIMIT   192000U</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00031">31</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="doc-func-members" name="doc-func-members"></a><h2 class="groupheader" id="header-doc-func-members">Function Documentation</h2>
+<a id="a2340f6b6ee7ceb394bb395e776fe76d1" name="a2340f6b6ee7ceb394bb395e776fe76d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2340f6b6ee7ceb394bb395e776fe76d1">◆ </a></span>classify_windows()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">void * classify_windows </td>
+<td>(</td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>unused</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Own the model session off the ALSA thread and publish only still-current capture generations. </p>
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00122">122</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="ac957cfbea02321503681348c8a740d74" name="ac957cfbea02321503681348c8a740d74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac957cfbea02321503681348c8a740d74">◆ </a></span>ear_inference_configure()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool ear_inference_configure </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>settings</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">unsigned</td> <td class="paramname"><span class="paramname"><em>rate</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">bool *</td> <td class="paramname"><span class="paramname"><em>enabled</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>error</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>capacity</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Select the explicit detector and qualify an ONNX PCM contract before capture starts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">settings</td><td>EARcam application settings path. </td></tr>
+<tr><td class="paramname">rate</td><td>Exact capture sample rate; no implicit resampling is performed. </td></tr>
+<tr><td class="paramname">enabled</td><td>Set true for ONNX, false for a successfully selected native detector. </td></tr>
+<tr><td class="paramname">error</td><td>Writable failure diagnostic. </td></tr>
+<tr><td class="paramname">capacity</td><td>Available bytes in error. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for an accepted native or ONNX selection; false never means native fallback. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>No inference thread or previously configured model is active. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00069">69</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="aeccbe9f4d3183231e65dfa4b99bbc4b7" name="aeccbe9f4d3183231e65dfa4b99bbc4b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeccbe9f4d3183231e65dfa4b99bbc4b7">◆ </a></span>ear_inference_discontinuity()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void ear_inference_discontinuity </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Invalidate queued/completed evidence after capture continuity breaks, including in-flight generations. </p>
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00209">209</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a6c6ce7db86f44de3d5ba14ed9adcab64" name="a6c6ce7db86f44de3d5ba14ed9adcab64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c6ce7db86f44de3d5ba14ed9adcab64">◆ </a></span>ear_inference_file()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">int ear_inference_file </td>
+<td>(</td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>filename</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Classify exact whole windows from a regular little-endian signed-16 mono PCM file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">filename</td><td>Immutable replay input; no hardware or simulated exposure timing is invented. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Zero after complete replay, otherwise one for invalid input or model failure. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The model is configured but its capture worker is not running. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00233">233</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="ae435a9045329583af1e0527e82b35250" name="ae435a9045329583af1e0527e82b35250"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae435a9045329583af1e0527e82b35250">◆ </a></span>ear_inference_push()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void ear_inference_push </td>
+<td>(</td>
+<td class="paramtype">const int16_t *</td> <td class="paramname"><span class="paramname"><em>samples</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>count</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>end_us</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">uint64_t</td> <td class="paramname"><span class="paramname"><em>error_us</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Supply capture samples without waiting for model execution or a busy model mailbox. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">samples</td><td>Borrowed signed mono PCM; no pointer survives this call. </td></tr>
+<tr><td class="paramname">count</td><td>Number of samples in this continuous capture chunk. </td></tr>
+<tr><td class="paramname">end_us</td><td>Capture end of the chunk in CLOCK_MONOTONIC microseconds, or zero when unknown. </td></tr>
+<tr><td class="paramname">error_us</td><td>Bound on capture-window timing uncertainty, not inference duration.</td></tr>
+</table>
+</dd>
+</dl>
+<p>Complete windows may replace pending work; overload loses evidence rather than blocking ALSA. </p><dl class="section pre"><dt>Precondition</dt><dd>One capture producer owns push/discontinuity calls until stop begins. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00166">166</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a4998196dfd6229e0ae161d19a15bf347" name="a4998196dfd6229e0ae161d19a15bf347"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4998196dfd6229e0ae161d19a15bf347">◆ </a></span>ear_inference_start()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool ear_inference_start </td>
+<td>(</td>
+<td class="paramtype">char *</td> <td class="paramname"><span class="paramname"><em>error</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">size_t</td> <td class="paramname"><span class="paramname"><em>capacity</em></span> )</td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Start the sole classifier thread after successful ONNX configuration. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">error</td><td>Writable failure diagnostic. </td></tr>
+<tr><td class="paramname">capacity</td><td>Available bytes in error. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True after thread creation, not proof of a classified acoustic event. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00155">155</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a29a5407def73f3e8bc6cb43243aceb9e" name="a29a5407def73f3e8bc6cb43243aceb9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29a5407def73f3e8bc6cb43243aceb9e">◆ </a></span>ear_inference_stop()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">void ear_inference_stop </td>
+<td>(</td>
+<td class="paramtype">void</td> <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Request termination, join the classifier and release its model; repeat calls are harmless. </p>
+<dl class="section pre"><dt>Precondition</dt><dd>The capture producer has stopped supplying new chunks. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00219">219</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a5cf9276f6adabecddb5e0e8213f19976" name="a5cf9276f6adabecddb5e0e8213f19976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cf9276f6adabecddb5e0e8213f19976">◆ </a></span>ear_inference_take()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr>
+<td class="memname">bool ear_inference_take </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structear__inference__result.html">ear_inference_result</a> *</td> <td class="paramname"><span class="paramname"><em>result</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Consume at most one completed original-window result without blocking capture. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+<table class="params">
+<tr><td class="paramname">result</td><td>Writable destination, unchanged when no result is available. </td></tr>
+</table>
+</dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True for a newly consumed completion; its window time is not its inference completion time. </dd></dl>
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00199">199</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a86df3b68d8740d5f66b58bcdef74ee36" name="a86df3b68d8740d5f66b58bcdef74ee36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86df3b68d8740d5f66b58bcdef74ee36">◆ </a></span>model_setting()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool model_setting </td>
+<td>(</td>
+<td class="paramtype">void *</td> <td class="paramname"><span class="paramname"><em>unused</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+</tr>
+<tr>
+<td class="paramkey"></td>
+<td></td>
+<td class="paramtype">const char *</td> <td class="paramname"><span class="paramname"><em>value</em></span> )</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Keep class/threshold selection module-owned rather than assigning acoustic semantics to the common parser. </p>
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00050">50</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="add0464cb9292be6f52cba0de802a2e52" name="add0464cb9292be6f52cba0de802a2e52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add0464cb9292be6f52cba0de802a2e52">◆ </a></span>run_window()</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool run_window </td>
+<td>(</td>
+<td class="paramtype">struct <a class="el" href="structear__inference__result.html">ear_inference_result</a> *</td> <td class="paramname"><span class="paramname"><em>result</em></span></td><td>)</td>
+<td></td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p>Accept finite probabilities without confusing them with measured loudness or localization confidence. </p>
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00100">100</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="doc-var-members" name="doc-var-members"></a><h2 class="groupheader" id="header-doc-var-members">Variable Documentation</h2>
+<a id="a99c22b92faa0e14957fef6d571fa1b29" name="a99c22b92faa0e14957fef6d571fa1b29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99c22b92faa0e14957fef6d571fa1b29">◆ </a></span>class_index</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">unsigned class_index</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00047">47</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="af6e8e8ec12eb953825281fefeb23d036" name="af6e8e8ec12eb953825281fefeb23d036"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6e8e8ec12eb953825281fefeb23d036">◆ </a></span>collected</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int16_t collected[<a class="el" href="#a5675f02078449d44da6fe40264ee5cdf">EAR_INFERENCE_SAMPLE_LIMIT</a>]</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00039">39</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="aaa26f45a739dd48d7a9b38d8727c3d2a" name="aaa26f45a739dd48d7a9b38d8727c3d2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa26f45a739dd48d7a9b38d8727c3d2a">◆ </a></span>collected_count</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">size_t collected_count</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00040">40</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a400c633d14c8b24435a0ca8c1f748347" name="a400c633d14c8b24435a0ca8c1f748347"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a400c633d14c8b24435a0ca8c1f748347">◆ </a></span>collected_error_us</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint64_t collected_error_us</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00042">42</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a8a2d3c52ddc0f1a27ddd7a6d584a5250" name="a8a2d3c52ddc0f1a27ddd7a6d584a5250"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a2d3c52ddc0f1a27ddd7a6d584a5250">◆ </a></span>collected_timing_valid</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool collected_timing_valid</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00041">41</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a8fc6d272d1d1bfd9e8035d5a92fc97a7" name="a8fc6d272d1d1bfd9e8035d5a92fc97a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fc6d272d1d1bfd9e8035d5a92fc97a7">◆ </a></span>completed</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">struct <a class="el" href="structear__inference__result.html">ear_inference_result</a> queued_evidence completed</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00045">45</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a57beb81923407840ae4beaf0475eea37" name="a57beb81923407840ae4beaf0475eea37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57beb81923407840ae4beaf0475eea37">◆ </a></span>completed_generation</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint64_t completed_generation</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00044">44</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="ae661d032a700353e3aa966b8bb11e7c5" name="ae661d032a700353e3aa966b8bb11e7c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae661d032a700353e3aa966b8bb11e7c5">◆ </a></span>generation</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">atomic_uint_fast64_t generation</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00043">43</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="af1a4aa462e39cbe9eeab078754bc49fe" name="af1a4aa462e39cbe9eeab078754bc49fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1a4aa462e39cbe9eeab078754bc49fe">◆ </a></span>inference_available</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">pthread_cond_t inference_available = PTHREAD_COND_INITIALIZER</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00036">36</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a19bc207bc4a8834bbc85d93f9f0571d6" name="a19bc207bc4a8834bbc85d93f9f0571d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19bc207bc4a8834bbc85d93f9f0571d6">◆ </a></span>inference_mutex</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">pthread_mutex_t inference_mutex = PTHREAD_MUTEX_INITIALIZER</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00035">35</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="afeb38046ecb4b6a5f56ec4dbd73b34d2" name="afeb38046ecb4b6a5f56ec4dbd73b34d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afeb38046ecb4b6a5f56ec4dbd73b34d2">◆ </a></span>inference_thread</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">pthread_t inference_thread</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00037">37</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a9d7475c1fcdbe454f3c09344c794b6b0" name="a9d7475c1fcdbe454f3c09344c794b6b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d7475c1fcdbe454f3c09344c794b6b0">◆ </a></span>network</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">struct <a class="el" href="structinference__context.html">inference_context</a> network</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00034">34</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a505be7836113ea54d1a2e4492420cb95" name="a505be7836113ea54d1a2e4492420cb95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a505be7836113ea54d1a2e4492420cb95">◆ </a></span>option_seen</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">unsigned option_seen</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00047">47</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a39f16d585c4531d2bf2562631a775d73" name="a39f16d585c4531d2bf2562631a775d73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39f16d585c4531d2bf2562631a775d73">◆ </a></span>pending</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool pending</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00038">38</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a582101b8298240f74339f3c5d6d05f1d" name="a582101b8298240f74339f3c5d6d05f1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a582101b8298240f74339f3c5d6d05f1d">◆ </a></span>queued</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">int16_t queued[<a class="el" href="#a5675f02078449d44da6fe40264ee5cdf">EAR_INFERENCE_SAMPLE_LIMIT</a>]</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00039">39</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a0cf39a311498c6a08c25c133c46a25bd" name="a0cf39a311498c6a08c25c133c46a25bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cf39a311498c6a08c25c133c46a25bd">◆ </a></span>queued_generation</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">uint64_t queued_generation</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00044">44</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a65cf7d7f8e531611b245355ab91fd749" name="a65cf7d7f8e531611b245355ab91fd749"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65cf7d7f8e531611b245355ab91fd749">◆ </a></span>ready</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool ready</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00038">38</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a78be9e7d37571059456305628ab17557" name="a78be9e7d37571059456305628ab17557"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78be9e7d37571059456305628ab17557">◆ </a></span>score_threshold</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">double score_threshold = 0.6</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00046">46</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a43c08d193d555a2b2a61c53d2a4e5a63" name="a43c08d193d555a2b2a61c53d2a4e5a63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43c08d193d555a2b2a61c53d2a4e5a63">◆ </a></span>started</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool started</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00038">38</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+<a id="a3065b71ea2455fb184ad978b7a8bd496" name="a3065b71ea2455fb184ad978b7a8bd496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3065b71ea2455fb184ad978b7a8bd496">◆ </a></span>stopping</h2>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+<tr>
+<td class="mlabels-left">
+<table class="memname">
+<tr>
+<td class="memname">bool stopping</td>
+</tr>
+</table>
+</td>
+<td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span> </td>
+</tr>
+</table>
+</div><div class="memdoc">
+<p class="definition">Definition at line <a class="el" href="ear__inference_8c_source.html#l00038">38</a> of file <a class="el" href="ear__inference_8c_source.html">ear_inference.c</a>.</p>
+</div>
+</div>
+</div><!-- contents -->
+</div></main><!-- doc-content -->
+<div class="page-nav-panel" id="page-nav">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div class="navpath" id="nav-path"><div data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr" id="sensoraia-api-footer"><footer class="md-footer ou-site-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">Copyright 2026 OpenUAS</div>
+<a class="ou-footer-link" href="../licensing.html">Licensing</a>
+</div>
+</div>
+</footer></div></div>
+<div data-sensoraia-runtime=""><script>__md_scope=new URL("../",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/material/offline-search.js"></script>
+<script src="../assets/javascripts/bundle.d7400e89.min.js"></script></div></body>
+</html>

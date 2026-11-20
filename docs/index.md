@@ -26,6 +26,10 @@ connect them to the flight.
 
 [New to the names? The Sensoraia glossary explains the shared vocabulary and each module's terms.](glossary.md)
 
+## I Just want the code
+
+So in a hurry huh? Just want the code, [find all sourcecode on github](https://github.com/OpenUAS/sensoraia/). But advised is to read the [getting started page](getting-started.md) before you confuse yourself.
+
 ## Why Use It?
 
 ### Spend Less Time Joining The Pieces

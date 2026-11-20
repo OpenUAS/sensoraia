@@ -123,6 +123,7 @@ $(BUILD_DIR)/lens-sha256fst.o: src/sha256fst.c src/sha256fst.h $(CONFIG_STAMP)
 
 $(LENS_OPENCV_STAMP): FORCE
 	@mkdir -p '$(@D)'
+	@bash build-support/prepare_opencv_submodule.sh --verify-only '$(OPENCV_SOURCE)'
 	@bash -e -o pipefail -c ' \
 	  temporary=$$(mktemp "$$1.tmp.XXXXXX"); \
 	  trap '\''rm -f -- "$$temporary"'\'' EXIT; \

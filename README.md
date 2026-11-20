@@ -83,11 +83,11 @@ guaranteed hard real-time deadline.
 ## Build On Your Linux PC
 
 Install the [PC dependencies](docs/README.md#2-install-pc-dependencies)
-first. From the Sensoraia root, initialize the bundled source submodules and
-build the complete suite:
+first. From the Sensoraia root, build the complete suite (`make` automatically
+syncs, initializes, and verifies the pinned OpenCV `4.14.0` submodule in
+`ext/opencv` on first run):
 
 ```sh
-git submodule update --init --recursive
 make help
 make all
 ./usher --version

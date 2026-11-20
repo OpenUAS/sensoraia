@@ -74,9 +74,13 @@ release aggregation and package/deploy ordering. Module files own compilation
 only where they define a real independent build. This table is an orientation
 map; the linked build files remain authoritative.
 
-OpenCV source lives at `ext/opencv`. After cleaning, `make all` configures and
-builds it directly from that location. All application JPEG code uses
-`ext/opencv/3rdparty/libjpeg` directly.
+OpenCV source lives at `ext/opencv` as a Git submodule strictly pinned to
+upstream release tag `4.14.0` (`0654a42e19215ef25b1d367d822f3c630447e7c7`).
+Before source discovery or compilation, `build-support/prepare_opencv_submodule.sh`
+syncs `.gitmodules`, initializes/updates `ext/opencv` on fresh clones, and
+verifies the exact `4.14.0` commit, tag, clean working tree and version header.
+After cleaning, `make all` configures and builds it directly from that location.
+All application JPEG code uses `ext/opencv/3rdparty/libjpeg` directly.
 There is no separate JPEG download, provider selection or image-codec library.
 OpenCV's `imgcodecs` module and its JPEG provider remain disabled. LWIRcam
 retains its direct-object link audit, without a JPEG-specific CMake project.

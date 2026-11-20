@@ -46,13 +46,13 @@ logic**, crossed TX/RX and a common ground.
 
 ### 1. Prepare The Source Checkout
 
-Clone the repository with its bundled OpenCV submodule (or initialize submodules
-in an existing clone):
+Clone the repository (`make` automatically syncs and checks out the pinned
+OpenCV `4.14.0` submodule into `ext/opencv` on first build, or pass
+`--recurse-submodules` to prefetch it during clone):
 
 ```sh
-git clone --recurse-submodules https://github.com/OpenUAS/sensoraia.git ~/develop/sensoraia
+git clone https://github.com/OpenUAS/sensoraia.git ~/develop/sensoraia
 cd ~/develop/sensoraia
-git submodule update --init --recursive
 make help
 ```
 
@@ -98,10 +98,11 @@ PC and ARM64. Parallel jobs are selected automatically; you do not need to
 remember `-j` or individual module targets.
 
 The native camera library, YAML support and OpenCV are built from pinned or
-bundled sources. OpenCV lives at `ext/opencv` in the checkout. Every
-application's JPEG codec is built directly from OpenCV's bundled IJG sources;
-no system JPEG development package or separate JPEG download is required.
-OpenCV image-codec modules are not added.
+bundled sources. OpenCV `4.14.0` lives as a pinned Git submodule at
+`ext/opencv` in the checkout and is initialized automatically on first `make`.
+Every application's JPEG codec is built directly from OpenCV's bundled IJG
+sources; no system JPEG development package or separate JPEG download is
+required. OpenCV image-codec modules are not added.
 The ARM64 sysroot is prepared from
 signed Trixie packages, including camera and ALSA development files. All of
 this happens on the PC; no running MORA or SSH connection is needed to build.
@@ -341,7 +342,7 @@ Ctrl+C stops log following, not the service.
 
 | Symptom | Try this first |
 | --- | --- |
-| Missing OpenCV source | Run `git submodule update --init --recursive` in the checkout |
+| Missing or mismatched OpenCV source | Run `make opencv-submodule` (or `make all`); `ext/opencv` must be unmodified OpenCV tag `4.14.0` |
 | A build tool or PC header is missing | Rerun the PC prerequisite-install command above, then `make all` |
 | Download or archive-signature check fails | Check Internet access and the first download/signature error; rerun `make all` after resolving it |
 | Native camera SDK requested after cleaning | Run `make all`; it builds the private native camera dependency from pinned source |

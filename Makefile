@@ -23,6 +23,25 @@ override OPENCV_SOURCE := $(CURDIR)/ext/opencv
 LIBJPEG = $(OPENCV_SOURCE)/3rdparty/libjpeg
 include build-support/make/profiles.mk
 include build-support/make/rules.mk
+OPENCV_SUBMODULE_STAMP := $(CURDIR)/.build/opencv-submodule.mk
+_OPENCV_SKIP_GOALS := clean clean-apps %-clean distclean help suite-check earcam-configure-pcm2902 opencv-submodule
+_OPENCV_ACTIVE_GOALS := $(if $(MAKECMDGOALS),$(filter-out $(_OPENCV_SKIP_GOALS),$(MAKECMDGOALS)),$(.DEFAULT_GOAL))
+_OPENCV_TOP_FIRST_PASS := $(and $(filter 0,$(MAKELEVEL)),$(if $(MAKE_RESTARTS),,top))
+_OPENCV_SUBMODULE_DEPS = $(if $(_OPENCV_TOP_FIRST_PASS),FORCE) \
+	$(if $(and $(wildcard $(OPENCV_SOURCE)/CMakeLists.txt),$(wildcard $(LIBJPEG)/jpeglib.h)),,FORCE)
+
+.PHONY: opencv-submodule
+opencv-submodule:
+	@bash build-support/prepare_opencv_submodule.sh '$(OPENCV_SOURCE)' '$(OPENCV_SUBMODULE_STAMP)'
+
+$(OPENCV_SUBMODULE_STAMP): build-support/prepare_opencv_submodule.sh $(_OPENCV_SUBMODULE_DEPS)
+	@bash build-support/prepare_opencv_submodule.sh '$(OPENCV_SOURCE)' '$@'
+
+ifneq ($(_OPENCV_ACTIVE_GOALS),)
+ifeq ($(MAKE_DRY_RUN),)
+include $(OPENCV_SUBMODULE_STAMP)
+endif
+endif
 include build-support/make/onnxruntime.mk
 -include camera.conf
 CAMERA ?= spottercam
@@ -167,7 +186,7 @@ SUITE_APPLICATIONS = $(USHER_OUTPUT) soda camera_lens pangea lwircam lwir_calibr
 	earcam ear_heatmap_replay loomcam spottercam $(if $(filter 1,$(CAMERA_CAPTURE)),aicam) chdkbridge diplacam
 SUITE_NATIVE_OUTPUTS = usher $(addprefix $(BIN_DIR)/,$(filter-out $(USHER_OUTPUT),$(SUITE_APPLICATIONS)))
 SUITE_ARM64_OUTPUTS = $(addsuffix -arm64,$(SUITE_NATIVE_OUTPUTS))
-SUITE_PREPARATION_TARGETS = $(if $(and $(filter 1,$(CAMERA_CAPTURE)),$(filter-out 1,$(IMX500_USE_HOST_LIBS))),imx500-native-sdk) $(if $(IMX500_SYSROOT),,imx500-sdk)
+SUITE_PREPARATION_TARGETS = opencv-submodule $(if $(and $(filter 1,$(CAMERA_CAPTURE)),$(filter-out 1,$(IMX500_USE_HOST_LIBS))),imx500-native-sdk) $(if $(IMX500_SYSROOT),,imx500-sdk)
 
 .PHONY: suite-prerequisites suite-check
 all: suite-prerequisites
@@ -262,6 +281,7 @@ help::
 	  'make native                               Build all PC applications' \
 	  'make arm64 / make mora                    Cross-build all MORA applications on the PC; no SSH' \
 	  'make clean-apps                           Remove compiled application objects/binaries while keeping SDKs' \
+	  'make opencv-submodule                     Sync, initialize, and verify the OpenCV 4.14.0 submodule' \
 	  'make -C modules/<module> [arm64|clean]    Build, verify, or clean an individual module from its directory' \
 	  'make imx500-sdk                           Prepare the Trixie ARM64 camera SDK on the PC' \
 	  'make imx500-native-sdk                    Build the pinned-source native camera SDK locally' \

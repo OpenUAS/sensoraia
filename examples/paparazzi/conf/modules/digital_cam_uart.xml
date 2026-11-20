@@ -1,0 +1,194 @@
+<!DOCTYPE module SYSTEM "module.dtd">
+<module name="digital_cam_uart" dir="digital_cam">
+  <doc>
+    <description>
+      Digital Photo Camera Triggering (using a UART link)
+
+      This module controls triggering of an attached external digital camera via UART commands.
+
+      This module fullfills 4 functions:
+      1) send shoot commands over UART
+      2) Besides triggering the shooting of images, the module also sends attitude and other relevant data.
+      Typically an external linux camera or linux computer will receive the attitude and position data and add
+      it to the photos.
+      3) The module will also parse the replies received over the UART. This contains status but can also
+      contain sensor results, e.g. computer vision, to able to interact with the flightplan.
+      4) Finally, the module can also relay over telemetry all data it receives from the attached computer
+      or camera using the PAYLOAD message. This can for instance be used to downlink thumbnails.
+      5) Targeted commands digital_cam_uart_shoot(id, report), digital_cam_uart_start(id),
+      and digital_cam_uart_stop(id) address one camera
+      (0=all, 1=CHDK, 2=AI cam, 3=LWIR, 4=EARcam, 5=Diplacam). These IDs are not masks.
+      Regular DC_SHOOT uses digital_cam_uart_camera_mask: bit 0=CHDK, bit 1=AIcam,
+      bit 2=LWIR, bit 3=EARcam, bit 4=Diplacam. Bits 5 through 7 address reserved future cameras;
+      USHER reports them UNSUPPORTED until an actual backend exists.
+      Examples: 0=none, 5=CHDK+LWIR, 10=AIcam+EARcam, 15=first four, 255=all eight slots.
+      Define DIGITAL_CAM_UART_CAMERA_MASK for the startup mask (default: all eight slots).
+      The obsolete DIGITAL_CAM_UART_CAMERA_ID define is rejected at build time.
+      Flight plans and the GCS setting use uart_cam_ctrl_set_camera_mask(mask), which
+      accepts integer masks 0 through 255 and retains the old mask on invalid input.
+      uart_cam_ctrl_set_camera(id) selects one camera slot (IDs 1 through 8; 0=all).
+      Selecting sends no command, does not reset autoshoot, and does not change numbering.
+      A zero mask suppresses normal shots entirely. Each nonzero trigger sends one
+      USHER_SHOOT_MASK frame with one photo number shared by all selected cameras.
+      Build and deploy matching FC and MORA software; the session and point-result
+      messages are a breaking protocol change and old peers are not compatible.
+      Physical optical captures are serialized; they are not exposure-synchronized.
+      Other modules can register a receive handler for USHER messages this module does
+      not consume. A camera that reports a deduced geographic point needs no handler:
+      the transport validates USHER_CAM_POINT_RESULT into digital_cam_uart_camera_point,
+      and digital_cam_point applies it to a waypoint.
+      digital_cam_uart_start(id) and digital_cam_uart_stop(id) open and close a camera
+      session; a camera that accumulates evidence over time answers the stop with one point.
+      Start invalidates the selected cameras' previous answers and allocates a nonzero
+      session token. Stop echoes the same token; only one matching answer is accepted
+      after stop. Replies from previous sessions or peers cannot satisfy the wait.
+      Session commands contain camera_id and session_id (8 bytes); point replies contain
+      camera_id, session_id, status and six signed fields (36 bytes). Deploy both peers.
+      Stopping all cameras reserves the complete batch before emitting any frame and
+      retains each camera's own token. A camera without a point backend returns INVALID.
+
+      Pose samples can be enabled unconditionally with DIGITAL_CAM_UART_POSE_STREAM=1
+      or leased by USHER clock probes. The stream emits USHER_POSE_SAMPLE from the
+      existing 10 Hz periodic task; a camera session that relies on pose-driven
+      evidence needs one of these mechanisms enabled.
+      Unclocked frames use 105 UART bytes and require 158 free bytes. After a clock
+      handshake, USHER_POSE_CLOCKED uses 113 bytes and requires 166 free bytes to leave
+      space for one masked shot command. A full or smaller buffer skips the sample.
+      The stream does not trigger a shot or alter the configured shot interval.
+      The FC sends only requested shots and transport timing data. Flight plans
+      select cameras and decide when to shoot; USHER owns capture processing.
+      Timed, distance, circle and survey autoshoot evaluate a tick only when
+      a complete ordinary shot frame fits; otherwise that tick is deferred.
+      Reply consumers register by message ID so independent applications cannot
+      replace one another. Unknown reply IDs are ignored.
+      By default, every admitted FC trigger sends DC_SHOT telemetry once, showing
+      one number on the GCS even for multiple cameras. DIGITAL_CAM_UART_SHOT_REPORT_MASK
+      selects which camera bits permit that report (default: 255). Set it to 239
+      to silence Diplacam-only requests, 255 to report all, or 0 to report none.
+      A mixed request reports once if any requested bit is enabled. Flight plans
+      and the GCS shot report mask setting use uart_cam_ctrl_set_shot_report_mask(mask),
+      which accepts only integer values 0 through 255. Invalid values leave the
+      policy unchanged. The runtime policy survives peer reconnection and is
+      independent of capture selection, autoshoot, session and point handling.
+      Targeted digital_cam_uart_shoot(id, false) always suppresses the report;
+      true permits it only when the reporting mask includes a requested camera.
+      Every admitted trigger still advances shot numbering, including silent
+      requests; a rejected trigger advances neither numbering nor reports.
+      USHER returns one token/shot-number
+      correlated terminal result per requested camera bit. FC arrays
+      digital_cam_uart_camera_result_number[ID-1] and
+      digital_cam_uart_camera_result_status[ID-1] expose results for flight plans;
+      SAVED means original + required EXIF published, RECORDED is only an acoustic
+      sample, FAILED/SUPERSEDED/UNSUPPORTED are not saved images. Missing feedback
+      is unknown, not proof of failure. UART admission never proves capture.
+      Generic camera controls use uart_cam_ctrl_command(mask, command, value),
+      uart_cam_ctrl_zoom(mask, value) and uart_cam_ctrl_retract(mask). They return
+      a nonzero ticket only after whole-frame admission; zero means not sent.
+      Use call_once with assignment in flight plans, then read-only
+      uart_cam_ctrl_command_pending(ticket) and uart_cam_ctrl_command_result(ticket).
+      Check CAM_CONTROL_APPLIED explicitly; ending a wait is not success.
+      The 70-second deadline becomes UNKNOWN, with no automatic replay.
+      uart_cam_ctrl_control_ready() requires a fresh confirmed control session;
+      uart_cam_ctrl_supports(mask, command) queries capabilities without sending.
+      Result/value/evidence helpers use camera IDs 1..8, not masks.
+      Controls use 188 bytes of additional fixed FC state and do not change
+      photo numbers, capture selection, autoshoot or DC_SHOT reporting.
+      Live CHDK supports optical zoom 0..255 and powered playback-mode retract.
+      Playback evidence does not sense physical retraction; later capture or zoom
+      can extend the lens. Other backends and keep-awake controls are unsupported.
+      See Sensoraia docs/camera-control-proposal.md for examples and the contract.
+      Updated USHER automatically probes the clock for live cameras. An accepted
+      probe leases 10 Hz pose streaming for two seconds without activating survey
+      mode; USHER --no-clock-align opts out. A clocked pose plus a reserved shot
+      command needs 166 free bytes. No partial frame is emitted under backpressure.
+      USHER --pose-log DIR stores optional schema-2 evidence; mapped poses also
+      supply observation-time geotags independently of logging and survey profiles.
+      Pose flags retain GPS-present in bit 0. Bit 1 marks GPS-held horizontal
+      position, bit 2 validates GPS age, and bits 8 through 31 hold that age in ms.
+      Physical ins_alt_float with its default GPS source advertises this evidence;
+      NPS, other estimators and custom INS_ALT_GPS_ID overrides do not. USHER may
+      advance only marked positions using NED velocity and at most 500 ms of GPS
+      receipt age. Navigation state and original shot messages are unchanged.
+      The payload sizes remain unchanged. Upgrade both peers to interpret the
+      new flags. Receiver-internal latency and absolute target accuracy still
+      require measurement; clock alignment alone does not establish either.
+
+      On sim and nps targets, this module owns its serial transport. It prefers
+      DIGITAL_CAM_UART_LOCAL_DEVICE (/tmp/usher-sim) whenever local USHER is
+      available and otherwise uses DIGITAL_CAM_UART_FALLBACK_DEVICE
+      (/dev/ttyUSB0). It checks every 200 ms and switches at runtime; hardware
+      targets require an explicit CAMERA_PORT configuration, for example UART2
+      for the Bebop USB serial device /dev/ttyUSB0, at 115200 baud. Simulation
+      device settings do not select a hardware UART.
+
+      The linux program used to parse the UART command is given in the subdirectory.
+    </description>
+    <section name="DIGITAL_CAM_UART" prefix="DIGITAL_CAM_UART_">
+      <define name="SHOT_REPORT_MASK" value="0..255" description="Camera bits permitting DC_SHOT reports; default 255, 239 silences Diplacam-only triggers"/>
+    </section>
+  </doc>
+  <settings>
+    <dl_settings name="control">
+      <dl_settings name="tb">
+        <dl_setting max="2" min="0" step="1" var="digital_cam_uart_thumbnails" shortname="thumbs">
+          <strip_button name="DL Thumbs High" icon="on.png" value="2" group="ticket"/>
+          <strip_button name="DL Thumbs Low" icon="on.png" value="1" group="ticket"/>
+          <strip_button name="DL Thumbs STOP" icon="off.png" value="0" group="ticket"/>
+        </dl_setting>
+        <dl_setting max="2" min="0" step="1" var="digital_cam_uart_status" shortname="status" />
+        <dl_setting max="255" min="0" step="1" var="digital_cam_uart_camera_mask" shortname="camera mask" header="modules/digital_cam/uart_cam_ctrl" handler="set_camera_mask"/>
+        <dl_setting max="255" min="0" step="1" var="digital_cam_uart_shot_report_mask" shortname="shot report mask" header="modules/digital_cam/uart_cam_ctrl" handler="set_shot_report_mask"/>
+      </dl_settings>
+    </dl_settings>
+  </settings>
+  <dep>
+    <depends>digital_cam_common,mcu,threads</depends>
+    <conflicts>digital_cam_gpio,digital_cam_servo,digital_cam_i2c,digital_cam_pprzlink</conflicts>
+  </dep>
+  <header>
+    <file name="uart_cam_ctrl.h"/>
+    <file name="uart.h" dir="mcu_periph"/>
+  </header>
+  <init fun="digital_cam_uart_init()"/>
+  <periodic fun="digital_cam_uart_periodic()" freq="10" autorun="TRUE"/>
+  <event fun="digital_cam_uart_event()"/>
+  <makefile target="ap|sim|nps">
+    <file name="uart_cam_ctrl.c"/>
+    <configure name="SENSORAIA_SRC" default="$(HOME)/develop/sensoraia"/>
+    <raw>
+      vpath usher_protocol.c $(SENSORAIA_SRC)/src
+      vpath camera_control.c $(SENSORAIA_SRC)/src
+      $(TARGET).CFLAGS += -I$(SENSORAIA_SRC)/src
+      $(TARGET).srcs += usher_protocol.c camera_control.c
+    </raw>
+    <test>
+      <define name="CAMERA_LINK" value="uart0"/>
+      <define name="USE_UART0"/>
+    </test>
+  </makefile>
+  <makefile target="ap">
+    <configure name="CAMERA_PORT" case="upper|lower"/>
+    <raw>
+      ifeq ($(strip $(CAMERA_PORT)),)
+      $(error digital_cam_uart: configure CAMERA_PORT with the hardware UART, for example UART2 on Bebop)
+      endif
+    </raw>
+    <define name="USE_$(CAMERA_PORT_UPPER)"/>
+    <define name="CAMERA_LINK" value="$(CAMERA_PORT_LOWER)"/>
+    <define name="$(CAMERA_PORT_UPPER)_BAUD" value="B115200"/>
+    <file name="uart.c" dir="mcu_periph"/>
+    <file_arch name="uart_arch.c" dir="mcu_periph"/>
+    <file name="serial_port.c" dir="arch/linux" cond="ifeq ($(ARCH), linux)"/>
+    <file_arch name="usb_ser_hw.c" dir="." cond="ifneq ($(filter $(ARCH),chibios stm32),)"/>
+  </makefile>
+  <makefile target="sim|nps">
+    <file name="serial_port.c" dir="arch/linux"/>
+    <configure name="DIGITAL_CAM_UART_LOCAL_DEVICE" default="/tmp/usher-sim"/>
+    <configure name="DIGITAL_CAM_UART_FALLBACK_DEVICE" default="/dev/ttyUSB0"/>
+    <define name="DIGITAL_CAM_UART_SIM_BACKEND"/>
+    <define name="DIGITAL_CAM_UART_LOCAL_DEVICE" value="$(DIGITAL_CAM_UART_LOCAL_DEVICE)"/>
+    <define name="DIGITAL_CAM_UART_FALLBACK_DEVICE" value="$(DIGITAL_CAM_UART_FALLBACK_DEVICE)"/>
+    <define name="CAMERA_LINK" value="digital_cam_uart_sim_link"/>
+  </makefile>
+</module>
+

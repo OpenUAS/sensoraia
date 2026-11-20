@@ -1,0 +1,38 @@
+/*
+ * Copyright 2026 OpenUAS
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+digraph PANGEA {
+  graph [rankdir=TB, bgcolor="white", pad=0.3, nodesep=0.45, ranksep=0.5,
+         fontname="DejaVu Sans", fontsize=22, label="PANGEA | Optional photo-map assembly", labelloc=t];
+  node [shape=box, style="rounded,filled", fillcolor="#f3f4f6", color="#374151",
+        fontname="DejaVu Sans", fontsize=14, margin="0.18,0.14", penwidth=1.7];
+  edge [fontname="DejaVu Sans", fontsize=12, color="#374151", penwidth=1.6];
+  capture [label="USHER capture + atomic flight EXIF", fillcolor="#fef9c3"];
+  archive [label="Saved original real / clean MIMIC JPEGs\noriginals retained on disk", fillcolor="#dcfce7"];
+  soda [label="SODA\nnormal analysis / optional lens worker", fillcolor="#fee2e2"];
+  gate [label="PANGEA idle worker\nCPU + memory / optional pause-file gate\n128 MiB ceiling; no realtime deadline", fillcolor="#e0f2fe"];
+  project [label="Recorded pose + real profile / MIMIC FOV\nOpenCV inverse perspective warp\nno added optical effects or invented pixels"];
+  tiles [label="256x256 disk tiles / 16-row work units\nRGB sums + feather weights\nSHA-256 + replay-safe photo sequence", fillcolor="#dcfce7"];
+  export [label="Backlog quiet for 10 seconds\nstream JPEG + coverage mask + GIS metadata"];
+  latest [label="Atomic latest snapshot\nmap.jpg / map.vrt\nno invented ground", fillcolor="#fef9c3"];
+  capture -> archive;
+  archive -> soda;
+  archive -> gate [style=dashed, label="read-only directory scan\nno capture-path queue or wait"];
+  gate -> project;
+  project -> tiles;
+  tiles -> export;
+  export -> latest;
+}

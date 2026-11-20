@@ -1,0 +1,44 @@
+/*
+ * Copyright 2026 OpenUAS
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+digraph chdkbridge_capture {
+  graph [rankdir=TB, bgcolor="white", pad=0.25];
+  node [shape=box, fontname="DejaVu Sans", fontsize=11, color="#444444"];
+  edge [fontname="DejaVu Sans", fontsize=10, color="#555555"];
+  parse [label="Parse CLI and select one Canon PTP device"];
+  reserve [label="Reserve same-directory temporary output"];
+  open [label="Claim USB interface and open PTP session"];
+  script [label="Check CHDK protocol and Lua support\nPreflight properties; write only changed values\nRead back all settings before shooting"];
+  focus [label="Optional verified focus policy\nPreflight mode/API/distance support\nBounded mode, AF and distance checks\nRetain half-press through one exposure"];
+  result [label="Poll status and correlate script return"];
+  exposure_stage [label="Optional exposure overrides\nStage Tv/Sv/Av/ND before half-press"];
+  exposure [label="Verify complete exposure set while held\nThen shoot once"];
+  exposure_cleanup [label="Release owned half-press\nWait up to 1 second for not shooting\nClear requested pending overrides only when safe"];
+  download [label="Send remote pathname with TempData\nStream directly from fixed 64 KiB USB storage\nEnforce file limit and USB/operation deadlines"];
+  validate [label="Require PTP success\nFlush, fsync, and check JPEG markers"];
+  publish [label="Publish with link(): never overwrite"];
+  cleanup [label="Best-effort session close\nRelease USB and remove temporary name"];
+  failure [label="Failure or timeout: no automatic shot retry", color="#a32929"];
+  parse -> reserve -> open -> script -> exposure_stage -> focus -> exposure -> exposure_cleanup -> result -> download -> validate -> publish -> cleanup;
+  script -> failure [style=dashed];
+  focus -> failure [style=dashed];
+  exposure_stage -> failure [style=dashed];
+  exposure -> failure [style=dashed];
+  exposure_cleanup -> failure [style=dashed];
+  download -> failure [style=dashed];
+  validate -> failure [style=dashed];
+  failure -> cleanup;
+}

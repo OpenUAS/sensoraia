@@ -1,0 +1,57 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+<flight_plan alt="100" ground_alt="0" lat0="52.168595" lon0="4.412444" max_dist_from_home="1200" name="ValkenburgDemo" security_height="40">
+  <header>
+#include "modules/digital_cam/uart_cam_ctrl.h"
+#include "firmwares/fixedwing/nav.h"
+static inline bool demo_in_survey(uint8_t southwest, uint8_t northeast)
+{
+  const float east = (*stateGetPositionUtm_f()).east - nav_utm_east0;
+  const float north = (*stateGetPositionUtm_f()).north - nav_utm_north0;
+  const float altitude = GetPosAlt();
+  const float roll = (*stateGetNedToBodyEulers_f()).phi;
+  const float pitch = (*stateGetNedToBodyEulers_f()).theta;
+  if (!nav_in_segment) return false;
+  if (!isfinite(east)) return false;
+  if (!isfinite(north)) return false;
+  if (!isfinite(altitude)) return false;
+  if (!isfinite(roll)) return false;
+  if (!isfinite(pitch)) return false;
+  if (!LessThan(fabsf(roll), RadOfDeg(10.f))) return false;
+  if (!LessThan(fabsf(pitch), RadOfDeg(10.f))) return false;
+  if (!LessThan(fabsf(altitude - WaypointAlt(southwest)), 5.f)) return false;
+  if (!LessThan(WaypointX(southwest) + 5.f, east)) return false;
+  if (!LessThan(east, WaypointX(northeast) - 5.f)) return false;
+  if (!LessThan(WaypointY(southwest) + 5.f, north)) return false;
+  return LessThan(north, WaypointY(northeast) - 5.f);
+}
+static inline void demo_survey_capture(uint8_t southwest, uint8_t northeast)
+{
+  dc_autoshoot = demo_in_survey(southwest, northeast) ? DC_AUTOSHOOT_DISTANCE : DC_AUTOSHOOT_STOP;
+}
+  </header>
+  <waypoints>
+    <waypoint name="HOME" x="0" y="0"/>
+    <waypoint name="SOUTHWEST" x="-180" y="180"/>
+    <waypoint name="NORTHEAST" x="180" y="420"/>
+  </waypoints>
+  <includes>
+    <include procedure="sensoraia_fixedwing_flight.xml" name="flight"><with from="mission" to="Start demo"/></include>
+  </includes>
+  <blocks>
+    <block name="Wait GPS">
+      <set var="autopilot.kill_throttle" value="1"/>
+      <while cond="!GpsFixValid()"/>
+      <deroute block="flight.Holding point"/>
+    </block>
+    <block name="Start demo" strip_button="Map survey" strip_icon="survey.png">
+      <call_once fun="uart_cam_ctrl_set_camera_mask(USHER_CAMERA_MASK_AICAM)"/>
+      <deroute block="Survey"/>
+    </block>
+    <block name="Survey" on_enter="dc_autoshoot = DC_AUTOSHOOT_STOP" on_exit="dc_autoshoot = DC_AUTOSHOOT_STOP" post_call="demo_survey_capture(WP_SOUTHWEST, WP_NORTHEAST)">
+      <call_once fun="dc_distance(50.f)"/>
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <survey_rectangle wp1="SOUTHWEST" wp2="NORTHEAST" grid="60" orientation="NS" until="NavBlockTime() >= 240"/>
+      <deroute block="flight.Land"/>
+    </block>
+  </blocks>
+</flight_plan>

@@ -1,0 +1,107 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+<flight_plan name="DiplaCam rotorcraft simulation" lat0="52.168595" lon0="4.412444" ground_alt="0" alt="2" security_height="2" max_dist_from_home="150" geofence_max_height="5">
+  <waypoints>
+    <waypoint name="HOME" x="0" y="0" height="2"/>
+    <waypoint name="STDBY" x="4" y="4" height="2"/>
+    <waypoint name="CENTRE" x="50" y="50" height="2"/>
+    <waypoint name="TD" x="0" y="0" height="0"/>
+    <waypoint name="P1" x="4" y="4" height="2"/>
+    <waypoint name="P2" x="4" y="4" height="2"/>
+    <waypoint name="P3" x="4" y="4" height="2"/>
+    <waypoint name="P4" x="4" y="4" height="2"/>
+    <waypoint name="P5" x="4" y="4" height="2"/>
+    <waypoint name="P6" x="4" y="4" height="2"/>
+    <waypoint name="P7" x="4" y="4" height="2"/>
+    <waypoint name="P8" x="4" y="4" height="2"/>
+  </waypoints>
+  <variables>
+    <variable var="dipla_received" type="uint8_t" init="0"/>
+    <variable var="dipla_updated_at" type="float" init="0"/>
+  </variables>
+  <modules><module name="digital_cam_point"/></modules>
+  <blocks>
+    <block name="Wait GPS" on_enter="dipla_received = 0">
+      <call_once fun="NavKillThrottle()"/>
+      <while cond="!GpsFixValid()"/>
+      <deroute block="Ground standby"/>
+    </block>
+    <block name="Ground standby" on_enter="dipla_received = 0">
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <call_once fun="digital_cam_uart_stop(USHER_CAMERA_DIPLACAM)"/>
+      <call_once fun="NavKillThrottle()"/>
+      <attitude pitch="0" roll="0" throttle="0" vmode="throttle" until="FALSE"/>
+    </block>
+    <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png" on_enter="dipla_received = 0">
+      <exception cond="!GpsFixValid() @AND !nav_is_in_flight()" deroute="Ground standby"/>
+      <exception cond="NavBlockTime() @GT 20" deroute="Standby"/>
+      <call_once fun="NavResurrect()"/>
+      <stay wp="STDBY" max_speed="0.5" vmode="climb" climb="0.4" until="GetPosHeight() @GT 1.8"/>
+      <deroute block="Standby"/>
+    </block>
+    <block name="Standby" strip_button="Standby" strip_icon="home.png" on_enter="dipla_received = 0">
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <call_once fun="digital_cam_uart_stop(USHER_CAMERA_DIPLACAM)"/>
+      <stay wp="STDBY"/>
+    </block>
+    <block name="Start Dipla" on_enter="dipla_received = 0">
+      <exception cond="!nav_is_in_flight()" deroute="Ground standby"/>
+      <exception cond="!GpsFixValid()" deroute="Standby"/>
+      <exception cond="NavBlockTime() @GT 10" deroute="Standby"/>
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <call_once fun="uart_cam_ctrl_set_camera_mask(USHER_CAMERA_MASK_DIPLA)"/>
+      <call_once fun="uart_cam_ctrl_set_shot_report_mask(USHER_CAMERA_MASK_ALL - USHER_CAMERA_MASK_DIPLA)"/>
+      <set var="dipla_received" value="0"/>
+      <set var="dc_autoshoot_period" value="0.125"/>
+      <while cond="digital_cam_uart_start(USHER_CAMERA_DIPLACAM)"><stay wp="P8"/></while>
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_PERIODIC"/>
+      <deroute block="Load eight"/>
+    </block>
+    <block name="Load eight" pre_call="state.alt_agl_f = GetPosHeight(); if (And(GpsFixValid(), nav_is_in_flight())) { dc_periodic(); (void)And(cam_point_fresh(USHER_CAMERA_DIPLACAM), And(cam_point_valid(USHER_CAMERA_DIPLACAM), And(digital_cam_uart_camera_point[USHER_CAMERA_DIPLACAM - 1].metric % 8 == dipla_received, And(cam_point_within(USHER_CAMERA_DIPLACAM, WP_CENTRE, 75.0), And(cam_point_to_waypoint(USHER_CAMERA_DIPLACAM, WP_P1 + dipla_received), (waypoint_move_xy_i(WP_P1 + dipla_received, waypoints[WP_P1 + dipla_received].enu_i.x, waypoints[WP_P1 + dipla_received].enu_i.y), ++dipla_received, dipla_updated_at = get_sys_time_float(), true)))))); }" post_call="cam_point_consume(USHER_CAMERA_DIPLACAM)">
+      <exception cond="!nav_is_in_flight()" deroute="Ground standby"/>
+      <exception cond="!GpsFixValid()" deroute="Standby"/>
+      <exception cond="NavBlockTime() @GT 15" deroute="Standby"/>
+      <exception cond="dipla_received == 8" deroute="Follow eight"/>
+      <stay wp="P8"/>
+    </block>
+    <block name="Follow eight" strip_button="Follow" strip_icon="survey.png" pre_call="state.alt_agl_f = GetPosHeight(); if (And(GpsFixValid(), nav_is_in_flight())) { dc_periodic(); (void)And(dipla_received == 8, And(cam_point_fresh(USHER_CAMERA_DIPLACAM), And(cam_point_valid(USHER_CAMERA_DIPLACAM), And(cam_point_within(USHER_CAMERA_DIPLACAM, WP_CENTRE, 75.0), And(cam_point_to_waypoint(USHER_CAMERA_DIPLACAM, WP_P1 + digital_cam_uart_camera_point[USHER_CAMERA_DIPLACAM - 1].metric % 8), (waypoint_move_xy_i(WP_P1 + digital_cam_uart_camera_point[USHER_CAMERA_DIPLACAM - 1].metric % 8, waypoints[WP_P1 + digital_cam_uart_camera_point[USHER_CAMERA_DIPLACAM - 1].metric % 8].enu_i.x, waypoints[WP_P1 + digital_cam_uart_camera_point[USHER_CAMERA_DIPLACAM - 1].metric % 8].enu_i.y), dipla_updated_at = get_sys_time_float(), true)))))); }" post_call="cam_point_consume(USHER_CAMERA_DIPLACAM)">
+      <exception cond="!nav_is_in_flight()" deroute="Ground standby"/>
+      <exception cond="!GpsFixValid()" deroute="Standby"/>
+      <exception cond="!(dipla_received == 8)" deroute="Standby"/>
+      <exception cond="get_sys_time_float() - dipla_updated_at @GT 3" deroute="Standby"/>
+      <exception cond="NavBlockTime() @GT 300" deroute="Standby"/>
+      <exception cond="stage_time @GT 180" deroute="Standby"/>
+      <while cond="TRUE">
+        <go wp="P1" max_speed="1" approaching_time="0"/>
+        <path wpts="P1,P2,P3,P4,P5,P6,P7,P8" max_speed="1" approaching_time="0"/>
+        <deroute block="Start Dipla"/>
+      </while>
+    </block>
+    <block name="Return" strip_button="Return" strip_icon="home.png" on_enter="dipla_received = 0">
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <call_once fun="digital_cam_uart_stop(USHER_CAMERA_DIPLACAM)"/>
+      <go wp="HOME"/>
+      <stay wp="HOME"/>
+    </block>
+    <block name="Land here" strip_button="Land Here" strip_icon="land-right.png" on_enter="dipla_received = 0">
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <call_once fun="digital_cam_uart_stop(USHER_CAMERA_DIPLACAM)"/>
+      <call_once fun="NavSetWaypointHere(WP_TD)"/>
+      <call_once fun="NavStartDetectGround()"/>
+      <deroute block="Descend"/>
+    </block>
+    <block name="Descend" on_enter="dipla_received = 0">
+      <exception cond="NavDetectGround() || !nav_is_in_flight()" deroute="Ground standby"/>
+      <stay wp="TD" max_speed="0.5" vmode="climb" climb="-0.4"/>
+    </block>
+    <block name="Begin survey" strip_button="Dipla" strip_icon="survey.png" on_enter="dipla_received = 0">
+      <exception cond="!nav_is_in_flight()" deroute="Ground standby"/>
+      <exception cond="!GpsFixValid()" deroute="Standby"/>
+      <exception cond="NavBlockTime() @GT 120" deroute="Standby"/>
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <call_once fun="digital_cam_uart_stop(USHER_CAMERA_DIPLACAM)"/>
+      <stay wp="CENTRE" max_speed="1" until="NavCheckWaypointTime(WP_CENTRE, 2) @AND GetPosHeight() @GT 1.8 @AND GetPosHeight() @LT 2.2"/>
+      <call_once fun="NavSetWaypointHere(WP_P8)"/>
+      <deroute block="Start Dipla"/>
+    </block>
+  </blocks>
+</flight_plan>

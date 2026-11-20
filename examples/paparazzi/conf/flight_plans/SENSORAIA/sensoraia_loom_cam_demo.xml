@@ -1,0 +1,51 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+<flight_plan alt="100" ground_alt="0" lat0="52.168595" lon0="4.412444" max_dist_from_home="1200" name="ValkenburgDemo" security_height="40">
+  <waypoints>
+    <waypoint name="HOME" x="0" y="0"/>
+    <waypoint name="SEARCH" x="0" y="300"/>
+    <waypoint name="OUT1" x="-180" y="300"/>
+    <waypoint name="OUT2" x="180" y="400"/>
+    <waypoint name="T1" x="0" y="0"/>
+  </waypoints>
+  <modules>
+    <module name="digital_cam_point"/>
+  </modules>
+  <includes>
+    <include procedure="sensoraia_fixedwing_flight.xml" name="flight"><with from="mission" to="Start demo"/></include>
+  </includes>
+  <blocks>
+    <block name="Wait GPS">
+      <set var="autopilot.kill_throttle" value="1"/>
+      <while cond="!GpsFixValid()"/>
+      <deroute block="flight.Holding point"/>
+    </block>
+    <block name="Start demo" strip_button="LOOM outbound" strip_icon="survey.png">
+      <call_once fun="uart_cam_ctrl_set_camera_mask(USHER_CAMERA_MASK_AICAM)"/>
+      <set var="dc_autoshoot_period" value="4"/>
+      <deroute block="Session start"/>
+    </block>
+    <block name="Session start">
+      <exception cond="NavBlockTime() @GT 5" deroute="flight.Standby"/>
+      <exception cond="!digital_cam_uart_start(USHER_CAMERA_AICAM)" deroute="Outbound"/>
+      <circle wp="SEARCH" radius="80"/>
+    </block>
+    <block name="Outbound">
+      <exception cond="NavBlockTime() @GT 90" deroute="Return phase"/>
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_PERIODIC"/>
+      <go wp="OUT1"/>
+      <go from="OUT1" wp="OUT2" hmode="route"/>
+      <deroute block="Return phase"/>
+    </block>
+    <block name="Return phase">
+      <exception cond="NavBlockTime() @GT 5" deroute="flight.Standby"/>
+      <exception cond="!digital_cam_uart_stop(USHER_CAMERA_AICAM)" deroute="Return"/>
+      <circle wp="OUT2" radius="80"/>
+    </block>
+    <block name="Return" pre_call="cam_point_to_waypoint(USHER_CAMERA_AICAM, WP_T1)" post_call="cam_point_consume(USHER_CAMERA_AICAM)">
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_PERIODIC"/>
+      <circle wp="T1" radius="80" until="NavBlockTime() @GT 120"/>
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <deroute block="flight.Land"/>
+    </block>
+  </blocks>
+</flight_plan>

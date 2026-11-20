@@ -1,0 +1,92 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+<flight_plan alt="100" ground_alt="0" lat0="52.168595" lon0="4.412444" max_dist_from_home="1200" name="ValkenburgDemo" security_height="40">
+  <header>
+#include "modules/digital_cam/uart_cam_ctrl.h"
+#include "modules/digital_cam/cam_point_nav.h"
+static inline bool demo_accept_point(uint8_t reference, uint8_t target)
+{
+  if (!cam_point_within(USHER_CAMERA_EARCAM, reference, 250.f)) return false;
+  return cam_point_to_waypoint(USHER_CAMERA_EARCAM, target);
+}
+  </header>
+  <waypoints>
+    <waypoint name="HOME" x="0" y="0"/>
+    <waypoint name="STDBY" x="0" y="150"/>
+    <waypoint name="CLIMB" x="0" y="250"/>
+    <waypoint name="SEARCH" x="0" y="300"/>
+    <waypoint name="EDGE" x="120" y="300"/>
+    <waypoint name="TARGET" x="0" y="300"/>
+    <waypoint name="AF" x="0" y="-250" alt="30"/>
+    <waypoint name="TD" x="0" y="0" alt="0"/>
+    <waypoint name="BASELEG" x="0" y="-250" alt="30"/>
+  </waypoints>
+  <variables>
+    <variable var="point_accepted" type="bool" init="FALSE"/>
+  </variables>
+  <modules>
+    <module name="nav" type="flower"/>
+    <module name="digital_cam_point"/>
+  </modules>
+  <blocks>
+    <block name="Wait GPS">
+      <set var="autopilot.kill_throttle" value="1"/>
+      <while cond="!GpsFixValid()"/>
+    </block>
+    <block name="Holding point">
+      <attitude roll="0" throttle="0" vmode="throttle"/>
+    </block>
+    <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
+      <set var="autopilot.kill_throttle" value="0"/>
+      <set var="autopilot.launch" value="1"/>
+      <go wp="CLIMB"/>
+      <circle wp="STDBY" radius="80" until="GetPosAlt() @GT 95"/>
+      <deroute block="Start demo"/>
+    </block>
+    <block name="Standby" strip_button="Standby" strip_icon="home.png" on_enter="dc_autoshoot = DC_AUTOSHOOT_STOP">
+      <circle wp="STDBY" radius="80"/>
+    </block>
+    <block name="Start demo" strip_button="Listen" strip_icon="survey.png">
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <set var="point_accepted" value="FALSE"/>
+      <deroute block="Session start"/>
+    </block>
+    <block name="Session start">
+      <exception cond="NavBlockTime() @GT 5" deroute="Land"/>
+      <exception cond="!digital_cam_uart_start(USHER_CAMERA_EARCAM)" deroute="Flower"/>
+      <circle wp="STDBY" radius="80"/>
+    </block>
+    <block name="Flower">
+      <call_once fun="nav_flower_setup(WP_SEARCH, WP_EDGE)"/>
+      <call fun="nav_flower_run()" until="NavBlockTime() >= 120" break="true"/>
+      <deroute block="Session stop"/>
+    </block>
+    <block name="Session stop">
+      <exception cond="NavBlockTime() @GT 5" deroute="Land"/>
+      <exception cond="!digital_cam_uart_stop(USHER_CAMERA_EARCAM)" deroute="Wait point"/>
+      <circle wp="SEARCH" radius="80"/>
+    </block>
+    <block name="Wait point">
+      <exception cond="cam_point_fresh(USHER_CAMERA_EARCAM)" deroute="Accept point"/>
+      <exception cond="NavBlockTime() @GT 15" deroute="Land"/>
+      <circle wp="SEARCH" radius="80"/>
+    </block>
+    <block name="Accept point">
+      <call_once fun="point_accepted = demo_accept_point(WP_SEARCH, WP_TARGET)"/>
+      <call_once fun="cam_point_consume(USHER_CAMERA_EARCAM)"/>
+      <deroute block="Land"/>
+    </block>
+    <block name="Land" strip_button="Land" strip_icon="land-right.png" on_enter="dc_autoshoot = DC_AUTOSHOOT_STOP">
+      <call_once fun="nav_compute_baseleg(WP_AF, WP_TD, WP_BASELEG, 80.f)"/>
+      <circle wp="BASELEG" radius="80" until="NavCircleCount() @GT 0.5"/>
+      <circle wp="BASELEG" radius="80" until="NavQdrCloseTo(DegOfRad(baseleg_out_qdr)-10) @AND fabs(GetPosAlt()-WaypointAlt(WP_BASELEG)) @LT 5"/>
+    </block>
+    <block name="Final">
+      <exception cond="GetPosAlt() @LT 8" deroute="Flare"/>
+      <go from="AF" wp="TD" hmode="route" vmode="glide"/>
+    </block>
+    <block name="Flare">
+      <go from="AF" wp="TD" hmode="route" vmode="throttle" throttle="0" approaching_time="0"/>
+      <attitude roll="0" throttle="0" vmode="throttle"/>
+    </block>
+  </blocks>
+</flight_plan>

@@ -1,0 +1,36 @@
+<flight_plan name="Camera Control Example" lat0="43.46223" lon0="1.27289"
+             alt="345" ground_alt="295" security_height="25" max_dist_from_home="1500">
+  <header>
+#include "modules/digital_cam/uart_cam_ctrl.h"
+  </header>
+  <waypoints>
+    <waypoint name="HOME" x="0" y="0"/>
+  </waypoints>
+  <variables>
+    <variable var="camera_request" type="uint32_t" init="0"/>
+  </variables>
+  <blocks>
+    <block name="Standby">
+      <circle wp="HOME" radius="80"/>
+    </block>
+    <block name="Zoom CHDK">
+      <call_once fun="camera_request = uart_cam_ctrl_zoom(USHER_CAMERA_MASK_CHDK, 128)"/>
+      <circle wp="HOME" radius="80" until="!uart_cam_ctrl_command_pending(camera_request)"/>
+      <while cond="!(uart_cam_ctrl_command_result(camera_request) == CAM_CONTROL_APPLIED)">
+        <deroute block="Control failed"/>
+      </while>
+      <deroute block="Standby"/>
+    </block>
+    <block name="Retract CHDK">
+      <call_once fun="camera_request = uart_cam_ctrl_retract(USHER_CAMERA_MASK_CHDK)"/>
+      <circle wp="HOME" radius="80" until="!uart_cam_ctrl_command_pending(camera_request)"/>
+      <while cond="!(uart_cam_ctrl_command_result(camera_request) == CAM_CONTROL_APPLIED)">
+        <deroute block="Control failed"/>
+      </while>
+      <deroute block="Standby"/>
+    </block>
+    <block name="Control failed">
+      <circle wp="HOME" radius="80"/>
+    </block>
+  </blocks>
+</flight_plan>

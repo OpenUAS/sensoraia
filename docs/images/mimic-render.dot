@@ -1,0 +1,49 @@
+/*
+ * Copyright 2026 OpenUAS
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+digraph mimic_render {
+  graph [rankdir=TB, bgcolor="white", pad="0.28", nodesep="0.38", ranksep="0.36",
+         fontname="DejaVu Sans", fontsize=19, splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="white", color="#b8b8b8",
+        fontname="DejaVu Sans", fontsize=16, fontcolor="#111111", margin="0.18,0.13", penwidth=1.4];
+  edge [color="#595959", penwidth=1.8, arrowsize=0.8, fontname="DejaVu Sans",
+        fontsize=12, fontcolor="#595959"];
+
+  pose [label="SHOT POSE\nLatitude / longitude; positive AGL\nRoll / pitch / yaw",
+        fillcolor="#fff4b0", color="#b69b00"];
+  geometry [label="01   LOCATE THE FOOTPRINT\nFixed nadir mount + configured FOV\nIntersect corner rays with flat ground",
+            fillcolor="#e4f2eb", color="#39765e"];
+  coverage [label="02   CHECK THE LIMITS\nAll rays point toward ground\nView fits aircraft-centered 3 x 3 tiles",
+            fillcolor="#e4f2eb", color="#39765e"];
+  load [label="03   ASSEMBLE THE MOSAIC\nLoad only the required rectangle\n256 x 256 JPEG tiles at zoom 18",
+        fillcolor="#e6f0f5", color="#447a92"];
+  sample [label="04   SAMPLE THE CAMERA VIEW\nProject each output pixel into the mosaic\nBilinear interpolation; JPEG encoding",
+          fillcolor="#e4f2eb", color="#39765e"];
+  publish [label="05   PUBLISH THE PHOTO\nAtomic image write\nThen USHER adds EXIF and runs SODA",
+           fillcolor="#fff4b0", color="#b69b00"];
+  fail [label="CAPTURE FAILS\nDiagnostic names the problem\nNo stock-photo or lower-zoom fallback\nA later shot may retry",
+        fillcolor="#f9e8e6", color="#a84a40", fontsize=14];
+
+  pose -> geometry;
+  geometry -> coverage [label="valid viewing rays"];
+  geometry -> fail [label="invalid pose / horizon", color="#a84a40"];
+  coverage -> load [label="footprint fits"];
+  coverage -> fail [label="too wide", color="#a84a40"];
+  load -> sample [label="tiles decoded"];
+  load -> fail [label="missing / corrupt tile", color="#a84a40"];
+  sample -> publish;
+  {rank=same; load; fail;}
+}

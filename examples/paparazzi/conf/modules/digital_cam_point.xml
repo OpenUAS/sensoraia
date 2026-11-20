@@ -1,0 +1,63 @@
+<!DOCTYPE module SYSTEM "module.dtd">
+<module name="digital_cam_point" dir="digital_cam">
+  <doc>
+    <description>
+      Apply a point deduced by any USHER camera to a flight plan waypoint.
+
+      A specialized camera on the MORA companion computer is driven like an ordinary
+      camera: digital_cam_uart_start(CAM) begins its session, digital_cam_uart_stop(CAM)
+      ends it. On stop the camera answers with one geographic point it deduced from that
+      session (USHER_CAM_POINT_RESULT). The reply carries the camera ID, so this module is
+      camera-agnostic: EARcam reports the loudest acoustic spot, and a future camera
+      reporting a point needs no new flight controller code.
+
+      Typical flight plan sequence:
+        digital_cam_uart_start(USHER_CAMERA_EARCAM), fly the search pattern,
+        digital_cam_uart_stop(USHER_CAMERA_EARCAM), wait for cam_point_fresh(CAM),
+        then validate the answer, cam_point_to_waypoint(CAM, WP_TARGET),
+        and explicitly cam_point_consume(CAM).
+
+      Block exceptions run before the block body, so never stop a camera and test
+      cam_point_fresh() in the same block: command in one block, wait in the next.
+      Only one reply with the matching nonzero session token is accepted after an
+      admitted stop. Duplicate, unsolicited, and delayed previous-session replies
+      are ignored. Start and peer reset invalidate the old answer. A new session
+      token is not reused during the FC runtime, including endpoint switches.
+      cam_point_fresh() becomes true for an accepted VALID or INVALID answer and
+      is cleared only by cam_point_consume(), start, or peer reset. Applying a
+      waypoint does not consume the answer. An INVALID answer retains coordinates
+      for diagnostics but makes cam_point_valid() false. Always test validity.
+
+      cam_point_to_waypoint() preserves the waypoint altitude and refuses a point outside
+      the fixed-wing max_dist_from_home rectangular limits before changing any
+      coordinate; rejection leaves the waypoint unchanged. It uses the generated
+      HOME ID and the existing waypoint accessors without modifying common navigation.
+      It returns true on success and consumes the fresh flag; on failure it returns
+      false without consuming the point. Use !cam_point_to_waypoint(CAM, WP_TARGET)
+      in a failure exception.
+      cam_point_within(CAM, WP_REF, radius) is a plausibility gate against a known search
+      area; it bounds where the camera says the point is, and is not evidence that the
+      estimate is accurate. Camera quality values are camera-defined and are not
+      comparable between different camera types.
+      Radius, quality threshold, timeout, retries and fallback remain flight-plan policy.
+      LOOM_cam uses camera ID 2 and repeated USHER_CAM_POINT_UPDATE replies rather
+      than a stopped-session estimate. Each update is independently correlated to
+      a recently requested photo, even after its JPEG acknowledgement. The same
+      validity, freshness, quality and altitude-preserving waypoint helpers apply.
+      LOOM START selects outbound references and STOP selects return matching;
+      there is no final point on STOP. Its current neural matcher is an invalid-only
+      framework stub. See OPENUAS/loom_cam_demo.xml and USHER documentation/loom_cam.md.
+      Start/stop return zero on complete command admission, not camera execution.
+      The demo waits for admission before searching or waiting for a reply.
+    </description>
+  </doc>
+  <dep>
+    <depends>digital_cam_uart</depends>
+  </dep>
+  <header>
+    <file name="cam_point_nav.h"/>
+  </header>
+  <makefile target="ap|sim|nps">
+    <file name="cam_point_nav.c"/>
+  </makefile>
+</module>

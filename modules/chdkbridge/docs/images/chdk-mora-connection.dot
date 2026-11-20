@@ -1,0 +1,24 @@
+digraph chdk_mora_connection {
+  graph [rankdir=TB, compound=true, bgcolor="white", pad=0.25, nodesep=0.35, ranksep=0.55];
+  node [shape=box, style=filled, fontname="DejaVu Sans", fontsize=12,
+        margin="0.20,0.15", color="#444444", fillcolor="#f3f4f5"];
+  edge [fontname="DejaVu Sans", fontsize=11, color="#555555", penwidth=1.5];
+
+  controller [label="Flight Controller\nCapture requests and flight metadata"];
+
+  subgraph cluster_mora {
+    label="MORA companion board";
+    fontname="DejaVu Sans";
+    fontsize=14;
+    color="#288066";
+    margin=18;
+    usher [label="USHER\nCHDK camera backend/plugin", fillcolor="#e4f2ed"];
+    bridge [label="CHDKbridge\nNative camera controller", fillcolor="#e4f2ed"];
+    usher -> bridge [label="Invokes"];
+  }
+
+  camera [label="Canon Camera\nCHDK v1.6 running from its SD card\nOriginal JPEG saved on SD", fillcolor="#fff4d8"];
+
+  controller -> usher [label="UART bus\nRequests / metadata / replies", dir=both, lhead=cluster_mora];
+  bridge -> camera [label="USB data connection\nCamera commands / JPEG download", dir=both, ltail=cluster_mora];
+}

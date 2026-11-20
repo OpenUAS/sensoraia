@@ -1,0 +1,184 @@
+/*
+ * Copyright 2026 OpenUAS
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "serial_tx.h"
+#include "usher_protocol.h"
+#include <errno.h>
+#include <fcntl.h>
+#include <pthread.h>
+#include <unistd.h>
+
+/**
+ * @file serial_tx.c
+ * @brief Bounded mutex-protected output queue for USHER UART frames.
+ * @details Writes are non-blocking and may be partial. The ring buffer retains the
+ * unsent suffix until the main event loop sees POLLOUT. A permanent write failure is
+ * latched instead of silently dropping later messages, allowing USHER to exit and
+ * let systemd recover the UART connection.
+ */
+
+#define SERIAL_TX_CAPACITY 4096
+
+static pthread_mutex_t transmit_mutex = PTHREAD_MUTEX_INITIALIZER;
+static uint8_t pending[SERIAL_TX_CAPACITY];
+static size_t head, count;
+static int output_fd = -1;
+static int output_error;
+
+/** @brief Flush as much queued output as the descriptor currently accepts.
+ * @pre transmit_mutex is held.
+ * @return 0 for success or temporary backpressure, -1 for a latched terminal error.
+ * @details EAGAIN/EINTR deliberately retain the ring contents. Other errors are
+ * retained in @c output_error so the owning event loop can surface the failure. */
+static int flush_locked(void)
+{
+  if (output_fd < 0 || output_error != 0) {
+    errno = output_error != 0 ? output_error : ENOTCONN;
+    return -1;
+  }
+  while (count > 0) {
+    size_t length = SERIAL_TX_CAPACITY - head;
+    if (length > count) length = count;
+    ssize_t sent = write(output_fd, pending + head, length);
+    if (sent > 0) {
+      head = (head + (size_t)sent) % SERIAL_TX_CAPACITY;
+      count -= (size_t)sent;
+    } else if (sent < 0 && (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR)) {
+      return 0;
+    } else {
+      output_error = sent < 0 ? errno : EIO;
+      errno = output_error;
+      return -1;
+    }
+  }
+  return 0;
+}
+
+int serial_tx_start(int descriptor)
+{
+  const int flags = fcntl(descriptor, F_GETFL);
+  if (flags < 0) return -1;
+  if (!(flags & O_NONBLOCK)) {
+    errno = EINVAL;
+    return -1;
+  }
+  pthread_mutex_lock(&transmit_mutex);
+  if (output_fd >= 0) {
+    pthread_mutex_unlock(&transmit_mutex);
+    errno = EBUSY;
+    return -1;
+  }
+  output_fd = descriptor;
+  output_error = 0;
+  head = count = 0;
+  pthread_mutex_unlock(&transmit_mutex);
+  return 0;
+}
+
+void serial_tx_stop(void)
+{
+  pthread_mutex_lock(&transmit_mutex);
+  output_fd = -1;
+  output_error = 0;
+  head = count = 0;
+  pthread_mutex_unlock(&transmit_mutex);
+}
+
+/** @brief Construct, enqueue, and opportunistically transmit one framed message.
+ * @param message Protocol ID.
+ * @param payload Payload, if any.
+ * @param length Payload byte count.
+ * @param idle_only Whether low-priority traffic must avoid an occupied queue.
+ * @return 0 on acceptance or -1 with errno on validation, queue, or I/O failure.
+ * @details The frame is first built on the stack, then copied atomically while the
+ * mutex is held. This avoids exposing an incomplete frame to another producer. */
+static int send_frame(uint8_t message, const uint8_t *payload, size_t length, bool idle_only)
+{
+  if (length > 250 || (length > 0 && payload == NULL)) {
+    errno = EINVAL;
+    return -1;
+  }
+  uint8_t frame[255];
+  const size_t frame_length = length + 5;
+  frame[0] = STX;
+  frame[1] = (uint8_t)frame_length;
+  frame[2] = message;
+  uint8_t checksum_a = frame[1], checksum_b = checksum_a;
+  for (size_t index = 0; index <= length; ++index) {
+    if (index > 0) frame[index + 2] = payload[index - 1];
+    checksum_a += frame[index + 2];
+    checksum_b += checksum_a;
+  }
+  frame[frame_length - 2] = checksum_a;
+  frame[frame_length - 1] = checksum_b;
+  if (idle_only) {
+    if (pthread_mutex_trylock(&transmit_mutex) != 0) {
+      errno = EAGAIN;
+      return -1;
+    }
+    if (count > 0) {
+      pthread_mutex_unlock(&transmit_mutex);
+      errno = EAGAIN;
+      return -1;
+    }
+  } else {
+    pthread_mutex_lock(&transmit_mutex);
+  }
+  int result = flush_locked();
+  if (result == 0 && frame_length > SERIAL_TX_CAPACITY - count) {
+    errno = ENOBUFS;
+    result = -1;
+  } else if (result == 0) {
+    for (size_t index = 0; index < frame_length; ++index) {
+      pending[(head + count + index) % SERIAL_TX_CAPACITY] = frame[index];
+    }
+    count += frame_length;
+    result = flush_locked();
+  }
+  pthread_mutex_unlock(&transmit_mutex);
+  return result;
+}
+
+int serial_tx_send(uint8_t message, const uint8_t *payload, size_t length)
+{
+  return send_frame(message, payload, length, false);
+}
+
+int serial_tx_send_if_idle(uint8_t message, const uint8_t *payload, size_t length)
+{
+  return send_frame(message, payload, length, true);
+}
+
+int serial_tx_flush(void)
+{
+  pthread_mutex_lock(&transmit_mutex);
+  int result = flush_locked();
+  pthread_mutex_unlock(&transmit_mutex);
+  return result;
+}
+
+bool serial_tx_pending(void)
+{
+  pthread_mutex_lock(&transmit_mutex);
+  /** Once set, output_error never clears itself; also report pending when it is set
+   * (even with an empty queue) so the caller's poll loop keeps asking for POLLOUT and
+   * promptly calls serial_tx_flush(), which surfaces the failure instead of leaving
+   * UART output silently and permanently stuck. */
+  bool result = output_fd >= 0 && (count > 0 || output_error != 0);
+  pthread_mutex_unlock(&transmit_mutex);
+  return result;
+}

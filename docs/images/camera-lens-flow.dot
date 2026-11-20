@@ -1,0 +1,42 @@
+/*
+ * Copyright 2026 OpenUAS
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+digraph Lens {
+  graph [rankdir=TB, bgcolor="white", pad=0.4, nodesep=0.4, ranksep=0.5,
+         fontname="DejaVu Sans", fontsize=23, label="MIMIC  /  OPTIONAL LENS STAGE", labelloc=t];
+  node [shape=box, style=filled, fillcolor="white", color="#111111", penwidth=2,
+        fontname="DejaVu Sans", fontsize=16, margin="0.2,0.15"];
+  edge [color="#111111", penwidth=2, arrowsize=0.9, fontname="DejaVu Sans", fontsize=13];
+  clean [label="USHER: CLEAN MIMIC JPEG\nmap provenance + flight EXIF\nmaNNNNNN.jpg", fillcolor="#ffdd00"];
+  gate [label="SODA: opt-in local AIcam\n--lens-profile FILE", shape=diamond];
+  resources [label="NATIVE RESOURCE GUARDS\none worker per executable\nJPEG headers + RAM admission\nlow-memory CPU thread limit"];
+  profile [label="JSON PROFILE\nlens + exposure + shutter\nsynthetic / measured values identified"];
+  cache [label="READ-ONLY XYZ CACHE\nzoom 18\npprzgcs legacy path: GOOGLE/18\nextra ground for wider rays"];
+  render [label="COMPILED C++ / OPENCV\nno Python runtime\nbounded strips + 16-tile cache\ninverse lens rays + global row times\nreused exposure maps + colour offsets\nlinear-light exposure integration", fillcolor="#e6f3ef"];
+  saved [label="ATOMIC DERIVATIVE\nmaNNNNNN.lens.jpg\nflight EXIF + USHER_LENS_V1", fillcolor="#ffdd00"];
+  fail [label="FAILURE\nkeep clean source\nskip analysis", color="#b63737"];
+  analysis [label="EXISTING SODA ANALYSIS\nuse derivative only after success"];
+  clean -> gate;
+  gate -> resources [label=" enabled"];
+  resources -> render;
+  resources -> fail [color="#b63737", label=" busy / oversized"];
+  gate -> analysis [label=" disabled: clean image"];
+  profile -> render;
+  cache -> render;
+  render -> saved;
+  render -> fail [color="#b63737"];
+  saved -> analysis;
+}

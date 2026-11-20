@@ -1,0 +1,67 @@
+/*
+ * Copyright 2026 OpenUAS
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// EARcam position/sound data flow. Render: dot -Tsvg earcam-dataflow.dot -o earcam-dataflow.svg
+digraph earcam_dataflow {
+  graph [rankdir=LR, bgcolor="#ffffff", fontname="DejaVu Sans Bold", fontsize=26,
+         fontcolor="#111111", pad=0.5, nodesep=0.55, ranksep=0.8, splines=spline, newrank=true,
+         label="How a sound sample gets its position\nUSHER mediates; the EAR backend and core own acoustic processing\n ", labelloc=t];
+  node  [shape=box, style="rounded,filled", fontname="DejaVu Sans Bold", fontsize=18,
+         fontcolor="#111111", color="#111111", penwidth=2.5, margin="0.30,0.18"];
+  edge  [fontname="DejaVu Sans Bold", fontsize=16, fontcolor="#111111", color="#111111",
+         penwidth=3.0, arrowsize=1.2];
+
+  subgraph cluster_fc {
+    label="FLIGHT CONTROLLER  (digital_cam_uart)"; fontsize=20; color="#2563eb";
+    fillcolor="#eff6ff"; style="rounded,filled"; margin=22; fontcolor="#111111";
+    ins   [label="INS / GNSS\nlat  lon  alt  AGL", fillcolor="#dbeafe", color="#2563eb"];
+    start [label="START_TARGETED(EAR)\nopen camera session", fillcolor="#dbeafe", color="#2563eb"];
+    pose  [label="POSE_SAMPLE\nposition, altitude, attitude\nstream enabled in FC build", fillcolor="#dbeafe", color="#2563eb"];
+    stop  [label="STOP_TARGETED(EAR)\nfinalize session", fillcolor="#dbeafe", color="#2563eb"];
+  }
+
+  mic [label="earcam --server\nUSB microphone\n48 kHz, 1.8-3.2 kHz band", fillcolor="#fed7aa", color="#ea580c"];
+
+  subgraph cluster_mora {
+    label="USHER process on MORA (existing process boundary)"; fontsize=20; color="#16a34a";
+    fillcolor="#f0fdf4"; style="rounded,filled"; margin=22; fontcolor="#111111";
+    mediator [label="usher.c: generic mediator\nUART, clock/pose, session tokens\nresult cache + TX retries", fillcolor="#dbeafe", color="#2563eb"];
+    newest [label="ear_cam_pipe.c: audio reader\nnewest 50 ms window\nlevel  trend  contrast  clip", fillcolor="#dcfce7", color="#16a34a"];
+    fuse   [label="ear_cam_pipe.c: serial-owned adapter\npose + window = geotagged sample", fillcolor="#dcfce7", color="#16a34a"];
+    buffer [label="2 owned buffers (16384 each)\n4 MiB + session-tagged audit CSV", fillcolor="#dcfce7", color="#16a34a"];
+    solve  [label="ear_camera_backend.c: one finalizer\ncalls EARcam core solver once", fillcolor="#fef08a", color="#ca8a04"];
+    evidence [label="EARcam core: sound/field JPEG + geo\nadapter: frozen CSV + EXIF\nthen shared deferred SODA review", fillcolor="#dcfce7", color="#16a34a"];
+  }
+
+  drop [label="move target waypoint\nto loudest spot", fillcolor="#fef9c3", color="#ca8a04", penwidth=3.0];
+
+  ins    -> pose   [label="navigation state"];
+  pose   -> mediator [label="UART frame", color="#2563eb"];
+  mediator -> fuse [label="generic pose hooks", color="#2563eb"];
+  mic    -> newest [label="SAMPLE every 50 ms", color="#ea580c"];
+  newest -> fuse   [label="copy (<= 50 ms old)"];
+  fuse   -> buffer;
+  buffer -> solve [label="backend stop: freeze + queue\n(no sample copy)"];
+  start  -> mediator [label="UART frame", color="#2563eb"];
+  stop   -> mediator [label="UART frame", color="#2563eb"];
+  mediator -> buffer [label="generic start/stop hooks", color="#2563eb"];
+  solve  -> mediator [label="generic point completion\n(no UART on worker)", color="#ca8a04"];
+  mediator -> drop [label="CAM_POINT_RESULT\ncamera_id session_id status lat lon alt AGL quality", color="#ca8a04"];
+  solve  -> evidence [label="after estimate publication"];
+
+  { rank=same; ins; mic; }
+  { rank=same; buffer; stop; }
+}

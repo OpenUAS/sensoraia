@@ -1,0 +1,54 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+<flight_plan alt="100" ground_alt="0" lat0="52.168595" lon0="4.412444" max_dist_from_home="1200" name="ValkenburgDemo" security_height="40">
+  <header><![CDATA[
+#include "modules/digital_cam/uart_cam_ctrl.h"
+#include "modules/digital_cam/cam_point_nav.h"
+#include "modules/nav/common_nav.h"
+static inline void spotter_accept_point(uint8_t wp_t1)
+{
+  if (!cam_point_fresh(USHER_CAMERA_AICAM)) return;
+  const int32_t slot = digital_cam_uart_camera_point[USHER_CAMERA_AICAM - 1].metric;
+  if (cam_point_valid(USHER_CAMERA_AICAM) && slot >= 0 && slot < 5) {
+    const uint8_t wp_id = wp_t1 + (uint8_t)slot;
+    if (cam_point_to_waypoint(USHER_CAMERA_AICAM, wp_id)) {
+      nav_send_waypoint(wp_id);
+    }
+  }
+  cam_point_consume(USHER_CAMERA_AICAM);
+}
+]]></header>
+  <waypoints>
+    <waypoint name="HOME" x="0" y="0"/>
+    <waypoint name="T1" x="0" y="0"/>
+    <waypoint name="T2" x="0" y="0"/>
+    <waypoint name="T3" x="0" y="0"/>
+    <waypoint name="T4" x="0" y="0"/>
+    <waypoint name="T5" x="0" y="0"/>
+    <waypoint name="SOUTHWEST" x="-180" y="180" alt="44"/>
+    <waypoint name="NORTHEAST" x="180" y="420" alt="44"/>
+  </waypoints>
+  <modules>
+    <module name="digital_cam_point"/>
+  </modules>
+  <includes>
+    <include procedure="sensoraia_fixedwing_flight.xml" name="flight"><with from="mission" to="Start demo"/></include>
+  </includes>
+  <blocks>
+    <block name="Wait GPS">
+      <set var="autopilot.kill_throttle" value="1"/>
+      <while cond="!GpsFixValid()"/>
+      <deroute block="flight.Holding point"/>
+    </block>
+    <block name="Start demo" strip_button="Find vehicle" strip_icon="survey.png">
+      <call_once fun="uart_cam_ctrl_set_camera_mask(USHER_CAMERA_MASK_AICAM)"/>
+      <set var="dc_autoshoot_period" value="3"/>
+      <circle wp="SOUTHWEST" radius="60" until="LessThan(GetPosAlt(), 46) @AND NavCircleCount() @GT 0.25"/>
+      <deroute block="Survey"/>
+    </block>
+    <block name="Survey" pre_call="spotter_accept_point(WP_T1)" post_call="dc_autoshoot = And(nav_in_segment, LessThan(fabsf((*stateGetNedToBodyEulers_f()).phi), RadOfDeg(12.f))) ? DC_AUTOSHOOT_PERIODIC : DC_AUTOSHOOT_STOP" on_exit="dc_autoshoot = DC_AUTOSHOOT_STOP">
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <survey_rectangle wp1="SOUTHWEST" wp2="NORTHEAST" grid="60" orientation="NS" until="NavBlockTime() @GT 160"/>
+      <deroute block="flight.Land"/>
+    </block>
+  </blocks>
+</flight_plan>

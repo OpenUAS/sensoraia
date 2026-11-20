@@ -1,0 +1,31 @@
+[Unit]
+Description=USHER MORA selectable camera service
+Documentation=https://github.com/OpenUAS/sensoraia
+After=local-fs.target systemd-udevd.service
+RequiresMountsFor=@USHER_INSTALL_DIR@
+StartLimitIntervalSec=0
+
+[Service]
+Type=notify
+NotifyAccess=main
+User=air
+Group=air
+SupplementaryGroups=dialout plugdev video
+WorkingDirectory=@USHER_INSTALL_DIR@
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStartPre=/usr/bin/test -x @USHER_INSTALL_DIR@/usher
+ExecStartPre=/usr/bin/test -x @USHER_INSTALL_DIR@/bin/spottercam
+ExecStartPre=/usr/bin/test -x @USHER_INSTALL_DIR@/bin/soda
+ExecStartPre=/usr/bin/test -r @USHER_INSTALL_DIR@/models/ai_cam/nn_vehicles.rpk
+ExecStartPre=/usr/bin/test -r @USHER_INSTALL_DIR@/share/spottercam/spottercam_settings.ini
+ExecStartPre=/usr/bin/test -c /dev/serial0
+ExecStart=@USHER_INSTALL_DIR@/usher --spottercam
+Restart=always
+RestartSec=3s
+TimeoutStartSec=45s
+KillMode=control-group
+TimeoutStopSec=15s
+UMask=0022
+
+[Install]
+WantedBy=multi-user.target

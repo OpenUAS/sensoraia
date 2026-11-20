@@ -1,0 +1,38 @@
+<!DOCTYPE procedure SYSTEM "../flight_plan.dtd">
+<procedure>
+  <waypoints>
+    <waypoint name="STDBY" x="0" y="150"/>
+    <waypoint name="CLIMB" x="0" y="250"/>
+    <waypoint name="AF" x="0" y="-250" alt="30"/>
+    <waypoint name="TD" x="0" y="0" alt="0"/>
+    <waypoint name="BASELEG" x="0" y="-250" alt="30"/>
+  </waypoints>
+  <blocks>
+    <block name="Holding point">
+      <attitude roll="0" throttle="0" vmode="throttle"/>
+    </block>
+    <block name="Takeoff" strip_button="Takeoff" strip_icon="takeoff.png">
+      <set var="autopilot.kill_throttle" value="0"/>
+      <set var="autopilot.launch" value="1"/>
+      <go wp="CLIMB"/>
+      <circle wp="STDBY" radius="80" until="GetPosAlt() @GT 95"/>
+      <deroute block="mission"/>
+    </block>
+    <block name="Standby" strip_button="Standby" strip_icon="home.png" on_enter="dc_autoshoot = DC_AUTOSHOOT_STOP">
+      <circle wp="STDBY" radius="80"/>
+    </block>
+    <block name="Land" strip_button="Land" strip_icon="land-right.png" on_enter="dc_autoshoot = DC_AUTOSHOOT_STOP">
+      <call_once fun="nav_compute_baseleg(WP_AF, WP_TD, WP_BASELEG, 80.0)"/>
+      <circle wp="BASELEG" radius="80" until="NavCircleCount() @GT 0.5"/>
+      <circle wp="BASELEG" radius="80" until="NavQdrCloseTo(DegOfRad(baseleg_out_qdr)-10) @AND LessThan(fabs(GetPosAlt()-WaypointAlt(WP_BASELEG)), 5.0)"/>
+    </block>
+    <block name="Final">
+      <exception cond="LessThan(GetPosAlt(), 8.0)" deroute="Flare"/>
+      <go from="AF" wp="TD" hmode="route" vmode="glide"/>
+    </block>
+    <block name="Flare">
+      <go from="AF" wp="TD" hmode="route" vmode="throttle" throttle="0" approaching_time="0"/>
+      <attitude roll="0" throttle="0" vmode="throttle"/>
+    </block>
+  </blocks>
+</procedure>

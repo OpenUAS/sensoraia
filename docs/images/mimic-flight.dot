@@ -1,0 +1,59 @@
+/*
+ * Copyright 2026 OpenUAS
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+digraph mimic_flight {
+  graph [rankdir=TB, bgcolor="white", pad="0.28", nodesep="0.35", ranksep="0.40",
+         fontname="DejaVu Sans", fontsize=19, splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="white", color="#b8b8b8",
+        fontname="DejaVu Sans", fontsize=16, fontcolor="#111111", margin="0.18,0.13", penwidth=1.4];
+  edge [color="#595959", penwidth=1.8, arrowsize=0.8, fontname="DejaVu Sans",
+        fontsize=12, fontcolor="#595959"];
+
+  subgraph cluster_pc {
+    label="ONE DEVELOPMENT PC  /  no MORA board required";
+    labelloc=t; color="#dedede"; style=rounded; margin=20;
+
+    ground [label="Paparazzi Center + pprzgcs\nStart NPS; monitor the aircraft\nSelect camera settings / flight block",
+            fillcolor="#fff4b0", color="#b69b00"];
+    nps [label="1   NPS AIRCRAFT\nFlight plan or manual camera command\nDC_SHOOT + current flight pose",
+         fillcolor="#fff4b0", color="#b69b00"];
+    bridge [label="2   LOCAL SERIAL BRIDGE\n/tmp/usher-sim  >  /tmp/usher-app\nUSHER owns the socat bridge",
+            fillcolor="#f5f5f5"];
+    job [label="3   USHER CAPTURE JOB\nDecode frame; queue shot number\nKeep camera mask + GPS + AGL + attitude",
+         fillcolor="#e4f2eb", color="#39765e"];
+      render [label="4   MIMIC\nRead zoom-18 tiles from disk\nProject the selected camera view",
+            fillcolor="#e4f2eb", color="#39765e"];
+      cache [shape=cylinder, label="OFFLINE XYZ MAP CACHE\npprzgcs path: GOOGLE/18/x/y.jpeg\nread-only; no download",
+           fillcolor="#e6f0f5", color="#447a92"];
+    exif [label="5   PHOTO + FLIGHT EXIF\nNormal local mock output directory\nSame shot pose as the renderer",
+          fillcolor="#fff4b0", color="#b69b00"];
+    soda [label="6   SODA HAND-OFF\nCamera-specific handler\nSeparate from photo generation",
+          fillcolor="#f5f5f5"];
+    photo [shape=note, label="YOUR RESULT\nma000006.jpg\nOpen it; inspect flight EXIF",
+           fillcolor="#fff4b0", color="#b69b00"];
+
+    ground -> nps [label="flight control / settings"];
+    nps -> bridge [label="USHER shot frame, not an image"];
+    bridge -> job;
+    job -> render;
+    cache -> render [label="required tiles", color="#447a92"];
+    {rank=same; cache; render;}
+    render -> exif [label="rendered JPEG"];
+    exif -> soda;
+    exif -> photo;
+    {rank=same; soda; photo;}
+  }
+}

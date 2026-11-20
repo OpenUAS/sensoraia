@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.20)
+project(dipla_aigenlib LANGUAGES CXX)
+set(CMAKE_CXX_ARCHIVE_CREATE "<CMAKE_AR> crs <TARGET> <LINK_FLAGS> <OBJECTS>")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_library(dipla_aigenlib STATIC aigenlib.cpp)
+find_package(Threads REQUIRED)
+target_link_libraries(dipla_aigenlib PUBLIC Threads::Threads)
+target_include_directories(dipla_aigenlib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/..")
+target_compile_options(dipla_aigenlib PRIVATE -Wall -Wextra -Werror -Wpedantic -fno-fast-math)

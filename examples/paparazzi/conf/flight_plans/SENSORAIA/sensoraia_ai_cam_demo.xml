@@ -1,0 +1,31 @@
+<!DOCTYPE flight_plan SYSTEM "../flight_plan.dtd">
+<flight_plan alt="100" ground_alt="0" lat0="52.168595" lon0="4.412444" max_dist_from_home="1200" name="ValkenburgDemo" security_height="40">
+  <header>
+#include "modules/digital_cam/uart_cam_ctrl.h"
+  </header>
+  <waypoints>
+    <waypoint name="HOME" x="0" y="0"/>
+    <waypoint name="SOUTHWEST" x="-180" y="180"/>
+    <waypoint name="NORTHEAST" x="180" y="420"/>
+  </waypoints>
+  <includes>
+    <include procedure="sensoraia_fixedwing_flight.xml" name="flight"><with from="mission" to="Start demo"/></include>
+  </includes>
+  <blocks>
+    <block name="Wait GPS">
+      <set var="autopilot.kill_throttle" value="1"/>
+      <while cond="!GpsFixValid()"/>
+      <deroute block="flight.Holding point"/>
+    </block>
+    <block name="Start demo" strip_button="AIcam survey" strip_icon="survey.png">
+      <call_once fun="uart_cam_ctrl_set_camera_mask(USHER_CAMERA_MASK_AICAM)"/>
+      <set var="dc_autoshoot_period" value="3"/>
+      <deroute block="Survey"/>
+    </block>
+    <block name="Survey" post_call="dc_autoshoot = And(nav_in_segment, LessThan(fabsf((*stateGetNedToBodyEulers_f()).phi), RadOfDeg(12.f))) ? DC_AUTOSHOOT_PERIODIC : DC_AUTOSHOOT_STOP" on_exit="dc_autoshoot = DC_AUTOSHOOT_STOP">
+      <set var="dc_autoshoot" value="DC_AUTOSHOOT_STOP"/>
+      <survey_rectangle wp1="SOUTHWEST" wp2="NORTHEAST" grid="60" orientation="NS" until="NavBlockTime() @GT 140"/>
+      <deroute block="flight.Land"/>
+    </block>
+  </blocks>
+</flight_plan>
